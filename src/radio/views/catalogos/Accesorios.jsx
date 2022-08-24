@@ -1,6 +1,6 @@
 
 export const Accesorios = () => {
   return (
-    <h1>Accesorios</h1>
+    <h1>Accesoriossgdfg</h1>
   )
 }
