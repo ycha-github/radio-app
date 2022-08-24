@@ -1,8 +1,10 @@
 import { AddOutlined } from '@mui/icons-material';
 import { IconButton, Typography } from '@mui/material';
+import { BrowserRouter as Router,Routes, Route } from 'react-router-dom'
 import { RadioLayout } from '../layout/RadioLayout';
+import { Accesorios, Corporaciones } from '../views';
 
-import { Accesorios } from '../views';
+
 
 
 
@@ -13,7 +15,10 @@ export const RadioPage = () => {
       {/* <NothingSelectedView /> */}
 
       {/* <NothingSelectedView /> */}
-      <Accesorios />
+      <Routes>
+          <Route path="/accesorios" element={ <Accesorios/> } />
+          <Route path="/corporaciones" element={ <Corporaciones/> }/>
+     </Routes>
       {/* <IconButton
         // size='large'
         sx={{

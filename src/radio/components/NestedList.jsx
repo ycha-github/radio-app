@@ -9,9 +9,11 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { ArtTrack, Assignment, AssignmentIndRounded, AutorenewRounded, Battery6Bar,BookmarkBorder, BusinessCenterTwoTone, DescriptionOutlined, DirectionsCarFilledOutlined, LibraryBooksRounded, LocalPolice, LockReset, LogoutTwoTone, ManageAccounts, MenuBook, MiscellaneousServices, PeopleAlt, PeopleOutline, Person, ShoppingBagTwoTone, SmartphoneTwoTone, SouthAmericaTwoTone, SwitchAccount, TextFieldsRounded, WorkRounded } from '@mui/icons-material';
 import { RadioPage } from '../pages/RadioPage';
-import { RadioPage2 } from '../pages/RadioPage2';
+import { useNavigate } from 'react-router-dom';
+
 
 export const NestedList = () => {
+  const navigate = useNavigate();
   
   const [openAdmin, setOpenAdmin] = React.useState(false);
   const [openCat, setOpenCat] = React.useState(false);
@@ -104,7 +106,7 @@ export const NestedList = () => {
       <Collapse in={openCat} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
 
-          <ListItemButton sx={{ pl: 4 }} onClick={ <RadioPage />}>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/accesorios') }>
             <ListItemIcon>
               <IconButton color='warning'>
                 <Battery6Bar />
@@ -113,7 +115,7 @@ export const NestedList = () => {
             <ListItemText primary="Accesorios" />
           </ListItemButton>
 
-          <ListItemButton sx={{ pl: 4 }} onClick={ <RadioPage2 /> }>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => navigate('/corporaciones') }>
             <ListItemIcon>
               <IconButton color='warning'>
                 <LocalPolice />
