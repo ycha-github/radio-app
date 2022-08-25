@@ -1,18 +1,19 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthRoutes } from '../auth';
 import { RadioRoutes } from '../radio';
 
 
 export const AppRouter = () => {
+
+        const authStatus='autenticated';  //'not-authenticated';
   return (
     <Routes>
-
-        {/* Login y Registro */}
-        <Route  path="/auth/*" element={ <AuthRoutes /> } />
-
-        {/* JournalApp */}
-        <Route  path="/*" element={ <RadioRoutes /> } />
-
+        {
+          (authStatus=== 'not-authenticated')
+          ?<Route  path="/auth/*" element={ <AuthRoutes /> } />
+          :<Route  path="/*" element={ <RadioRoutes /> } />
+        }
+          <Route  path="/*" element={ <Navigate to="/auth/login" /> } />  
     </Routes>
   )
 }

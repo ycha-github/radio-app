@@ -5,7 +5,6 @@ import { AuthLayout } from '../layout/AuthLayout';
 import { checkingAuthentication } from '../../store/auth';
 import { useForm } from '../../hooks';
 
-
 export const LoginPage = () => {
 
   const dispatch = useDispatch();
@@ -52,16 +51,9 @@ export const LoginPage = () => {
                   <Button type='submit' variant='contained' fullWidth >
                     Login
                   </Button>
-              </Grid>
-              <Grid  container direction='row' justifyContent='end' >
-                <Link component={ RouterLink } color="inherit" to="/auth/register">
-                  Crear una cuenta
-                </Link>
-              </Grid>
-            </Grid>
-            
+              </Grid>              
+            </Grid>           
           </form>
     </AuthLayout>
-
   )
 }

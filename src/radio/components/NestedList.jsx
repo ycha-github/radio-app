@@ -11,7 +11,6 @@ import { ArtTrack, Assignment, AssignmentIndRounded, AutorenewRounded, Battery6B
 import { RadioPage } from '../pages/RadioPage';
 import { useNavigate } from 'react-router-dom';
 
-
 export const NestedList = () => {
   const navigate = useNavigate();
   
