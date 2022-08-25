@@ -8,6 +8,6 @@ export * from './RecursoCompras';
 export * from './Servicios';
 export * from './Tipos';
 export * from './Tipos';
-export * from './Usuarios';
+export * from './UsuariosRadios';
 export * from './Vehiculos';
 export * from './ZonasRegiones';

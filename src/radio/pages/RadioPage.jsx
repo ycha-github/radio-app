@@ -1,38 +1,42 @@
-import { AddOutlined } from '@mui/icons-material';
-import { IconButton, Typography } from '@mui/material';
-import { BrowserRouter as Router,Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { RadioLayout } from '../layout/RadioLayout';
-import { Accesorios, Corporaciones } from '../views';
-
-
-
+import { Accesorios, Asignaciones, ConfiguracionReportes, Corporaciones, Estatus, GruposPermisos, HistorialEntradas, HojaServicios, Marcas, PasswordUpdate, Permisos, Puestos, Radios, RecursoCompras, RegistroVisitas, Roles, Servicios, Tipos, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
 
 
 export const RadioPage = () => {
   return (
     <RadioLayout>
-      {/* <Typography>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</Typography> */}
-      {/* <NothingSelectedView /> */}
 
-      {/* <NothingSelectedView /> */}
       <Routes>
+
+          <Route path="/users" element={ <Users /> } />
+          <Route path="/roles" element={ <Roles /> } />
+          <Route path="/permisos" element={ <Permisos /> } />
+          <Route path="/grupos-permisos" element={ <GruposPermisos /> } />
+          <Route path="/visitas" element={ <RegistroVisitas /> } />
+          
           <Route path="/accesorios" element={ <Accesorios/> } />
           <Route path="/corporaciones" element={ <Corporaciones/> }/>
+          <Route path="/marcas" element={ <Marcas/> }/>
+          <Route path="/puestos" element={ <Puestos /> }/>
+          <Route path="/radios" element={ <Radios /> }/>
+          <Route path="/recursos" element={ <RecursoCompras /> }/>
+          <Route path="/servicios" element={ <Servicios /> }/>
+          <Route path="/estatus" element={ <Estatus /> }/>
+          <Route path="/tipos" element={ <Tipos /> }/>
+          <Route path="/usuarios-radios" element={ <UsuariosRadios /> }/>
+          <Route path="/vehiculos" element={ <Vehiculos /> }/>
+          <Route path="/zonas-regiones" element={ <ZonasRegiones /> }/>
+
+          <Route path="/asignaciones" element={ <Asignaciones /> }/>
+          <Route path="/hoja-servicio" element={ <HojaServicios /> }/>
+          <Route path="/historial-entradas" element={ <HistorialEntradas /> }/>
+          <Route path="/config-reportes" element={ <ConfiguracionReportes /> }/>
+
+          <Route path="/pass-update" element={ <PasswordUpdate /> }/>
+
      </Routes>
-      {/* <IconButton
-        // size='large'
-        sx={{
-          color: 'white',
-          backgroundColor: 'error.main',
-          ':hover': { backgroundColor: 'error.main', opacity: 0.9 },
-          position: 'fixed',
-          right: 50,
-          bottom: 50
-        }}
-      > */}
-        {/* <AddOutlined sx={{ fontSize: 30 }} /> */}
-      {/* </IconButton> */}
-      {/* NothinSelected  */}
+
     </RadioLayout>
   )
 }
