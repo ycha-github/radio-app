@@ -38,7 +38,7 @@ export const RadioPage = () => {
           <Route path="/pass-update" element={ <PasswordUpdate /> }/>
 
      </Routes>
-      <ModalRadio/>
+      {/*<ModalRadio/>*/}
 
 
     </RadioLayout>
