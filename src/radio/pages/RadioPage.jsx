@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { ModalRadio } from '../components/ModalRadio';
 import { RadioLayout } from '../layout/RadioLayout';
 import { Accesorios, Asignaciones, ConfiguracionReportes, Corporaciones, Estatus, GruposPermisos, HistorialEntradas, HojaServicios, Marcas, PasswordUpdate, Permisos, Puestos, Radios, RecursoCompras, RegistroVisitas, Roles, Servicios, Tipos, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
 
@@ -9,6 +10,7 @@ export const RadioPage = () => {
 
       <Routes>
 
+          
           <Route path="/users" element={ <Users /> } />
           <Route path="/roles" element={ <Roles /> } />
           <Route path="/permisos" element={ <Permisos /> } />
@@ -36,6 +38,8 @@ export const RadioPage = () => {
           <Route path="/pass-update" element={ <PasswordUpdate /> }/>
 
      </Routes>
+      <ModalRadio/>
+
 
     </RadioLayout>
   )
