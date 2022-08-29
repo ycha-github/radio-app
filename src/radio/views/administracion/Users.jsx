@@ -7,29 +7,25 @@ import Stack from '@mui/material/Stack';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import  {useState , useEffect} from "react";
 import axios from "axios";
-
+import { Box } from '@mui/material';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'username', headerName: 'Nombre', width: 130 },
-  { field: 'rol', headerName: 'Rol', width: 130 },
+
+  { field: 'id', headerClassName: "super", headerName: 'ID', width: 70, color: 'info' },
+  { field: 'username',headerClassName: "super", headerName: 'Nombre', width: 200 },
+  { field: 'rol',headerClassName: "super", headerName: 'Rol', width: 130 },
+  { field: 'passwd',headerClassName: "super", headerName: 'Contraseña', width: 200 },
   {
-    field: 'passwd',
-    headerName: 'Contraseña',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'status',
+    field: 'status',headerClassName: "super",
     headerName: 'Estado',
-    width: 160,
+    width: 500,
   
   },
 ];
 
-
-
 export const Users=()=> {
+
+ 
   
   const [tableData, setTableData] = useState([])
 
@@ -50,20 +46,31 @@ export const Users=()=> {
 
   return (
     <>
+     <h2 className='colorAdmin'>USUARIOS</h2>
     <Stack direction="row" spacing={1} marginBottom={2}>
-      <Button variant="outlined" startIcon={<AddCircleOutlineOutlined color="secondary" />}>
+      <Button color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined  />}>
         Nuevo
       </Button>
       
     </Stack>
     <div style={{ height: 750, width: '100%' }}>
+      <Box
+       sx={{
+        height: 300,
+        width: "100%",
+        "& .super":{
+          backgroundColor: "rgba(15, 163, 248, 0.8)",
+        }
+      }}>
       <DataGrid
+        colo
         rows={tableData}
         columns={columns}
         pageSize={12}
         rowsPerPageOptions={[12]}
         checkboxSelection
       />
+      </Box>
     </div>
     </>
   );

@@ -32,7 +32,7 @@ export const Servicios = () => {
     
   return (
     <>
-        <h2 >Servicios</h2>
+        <h2  >Servicios</h2>
  
     <Stack direction="row" spacing={1} marginBottom={2}>
       <Button variant="outlined" startIcon={<AddCircleOutlineOutlined />} color="warning" >

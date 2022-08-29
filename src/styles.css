@@ -21,3 +21,8 @@ tbody tr td {
     border-width: 3px;
     border-color: rgb(228, 125, 35);
 } 
+.colorAdmin{
+    background-color: rgb(66, 165, 231);
+    color: white;
+    text-align: center;
+}
