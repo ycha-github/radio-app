@@ -1,8 +1,12 @@
+import { AddCircleOutlineOutlined } from '@mui/icons-material';
+import { Button, Stack } from '@mui/material';
 import Modal from 'react-modal';
+import { useModalHook } from '../../hooks/useModalHook';
+
 const customStyles = {
     content: {
       top: '50%',
-      left: '60%',
+      left: '50%',
       right: 'auto',
       bottom: 'auto',
       marginRight: '-50%',
@@ -11,18 +15,25 @@ const customStyles = {
   };
   Modal.setAppElement('#root');
 
-export const ModalRadio = () => {
-
-  const onCloseModal=()=>{
-    console.log('cerrando modal');
-  }
+  export const ModalRadio = ({children}) => {
+    const {isOpen,onCloseModal, onOpenModal}=useModalHook();
   return (
+    <>
+   <Stack direction="row" spacing={1} marginBottom={2}>
+      <Button onClick={onOpenModal} color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
+        Nuevo
+      </Button>
+    </Stack>
     <Modal
-      isOpen={true}
+      isOpen={isOpen}
       onRequestClose={onCloseModal}
       style={customStyles}
+      className="modal"
+      overlayClassName="modal-fondo"
+      closeTimeoutMS={200}
       >
-        <h1>dgdghhdfghjdfjgjjklhgkñjlñklñeteuoifoasoigoisdjgosdgijihdibiasidjidfhiajsdff</h1>
+        {children}          
     </Modal>
+    </>
   )
 }

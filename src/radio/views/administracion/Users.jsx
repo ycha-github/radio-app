@@ -1,76 +1,67 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
-import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import  {useState , useEffect} from "react";
-import axios from "axios";
 import { Box } from '@mui/material';
+import { ModalRadio } from '../../components/ModalRadio';
+import { FormUser } from '../../components/formAdmin/FormUser';
+
 
 const columns = [
 
-  { field: 'id', headerClassName: "super", headerName: 'ID', width: 70, color: 'info' },
+  { field: 'idusers', headerClassName: "super", headerName: 'ID', width: 90,  },
   { field: 'username',headerClassName: "super", headerName: 'Nombre', width: 200 },
-  { field: 'rol',headerClassName: "super", headerName: 'Rol', width: 130 },
-  { field: 'passwd',headerClassName: "super", headerName: 'Contraseña', width: 200 },
-  {
-    field: 'status',headerClassName: "super",
-    headerName: 'Estado',
-    width: 500,
-  
-  },
+  { field: 'email',headerClassName: "super", headerName: 'Rol', width: 130 },
+  { field: 'password',headerClassName: "super", headerName: 'Contraseña', width: 200 },
+  {field: 'estatus',headerClassName: "super",headerName: 'Estado',width: 1009,},
+
 ];
 
-export const Users=()=> {
+export const Users=()=> { 
 
- 
-  
   const [tableData, setTableData] = useState([])
 
  useEffect(() => {
-   fetch("http://localhost:3001/usuario")
+   fetch("http://localhost:8000/api/v0/users")
      .then((data) => data.json())
      .then((data) => setTableData(data))
  }, [])
-  console.log(tableData)
-  ;
-// useEffect(() => {
-//    axios.get("http://localhost:3001/usuario")
-//  .then((response) => {
-//      setTableData = response.data.json();
-//      console.log(setTableData);
-//   });
-//});
+  console.log(tableData);
 
   return (
     <>
      <h2 className='colorAdmin'>USUARIOS</h2>
-    <Stack direction="row" spacing={1} marginBottom={2}>
-      <Button color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined  />}>
-        Nuevo
-      </Button>
-      
-    </Stack>
-    <div style={{ height: 750, width: '100%' }}>
+     
+    <div style={{ height: '100%', width: '100%' }}>
       <Box
        sx={{
-        height: 300,
+        height:750,
         width: "100%",
         "& .super":{
           backgroundColor: "rgba(15, 163, 248, 0.8)",
         }
-      }}>
+
+      }}> 
+      
+        <FormUser/>
+      
       <DataGrid
-        colo
+      autoHeight={true}
         rows={tableData}
         columns={columns}
         pageSize={12}
         rowsPerPageOptions={[12]}
-        checkboxSelection
+        sx={{
+          boxShadow:5,
+          border:4,
+          borderColor:'rgba(15, 163, 248, 0.8)',
+          '& .MuiDataGrid-cell:hover':{
+          color:'rgba(15, 163, 248, 0.8)',
+        },
+      }}
       />
       </Box>
+     
+        
     </div>
     </>
   );

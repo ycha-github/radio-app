@@ -36,22 +36,21 @@ export const Corporaciones=()=> {
   
   const [tableData, setTableData] = useState([])
 
- //useEffect(() => {
- //  fetch("http://localhost:3001/usuario")
- //    .then((data) => data.json())
- //    .then((data) => setTableData(data))
- //}, [])
- // console.log(tableData)
- // ;
-  
  useEffect(() => {
-    axios.get("http://localhost:3001/usuario")
-  .then((response) => {
-      setTableData = response.data.json();
-      console.log(setTableData);
-   });
-});
-
+   fetch("http://localhost:3001/usuario")
+     .then((data) => data.json())
+     .then((data) => setTableData(data))
+ }, [])
+  console.log(tableData)
+  ;
+  
+//useEffect(() => {
+//   axios.get("http://localhost:3001/usuario")
+// .then((response) => {
+//     setTableData = response.data.json();
+//     console.log(setTableData);
+//  });
+//);
 
   return (
     <>

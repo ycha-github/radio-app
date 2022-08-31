@@ -52,7 +52,7 @@ export const Accesorios=()=> {
       <Button variant="outlined" startIcon={<AddCircleOutlineOutlined color="secondary" />}>
         Nuevo
       </Button>
-      
+  
     </Stack>
     <div style={{ height: 750, width: '100%' }}>
       <DataGrid
