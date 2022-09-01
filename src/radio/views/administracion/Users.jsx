@@ -1,37 +1,84 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import  {useState , useEffect} from "react";
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
+
 import { ModalRadio } from '../../components/ModalRadio';
 import { FormUser } from '../../components/formAdmin/FormUser';
-
-
+import axios from 'axios';
+import { Block, Edit, EditNotifications } from '@mui/icons-material';
+import { useModalHook } from '../../../hooks/useModalHook';
+import {FormUpdateUser} from '../../../radio/components/formAdmin/FormUpdateUser'
 const columns = [
 
-  { field: 'idusers', headerClassName: "super", headerName: 'ID', width: 90,  },
-  { field: 'username',headerClassName: "super", headerName: 'Nombre', width: 200 },
-  { field: 'email',headerClassName: "super", headerName: 'Rol', width: 130 },
-  { field: 'password',headerClassName: "super", headerName: 'Contraseña', width: 200 },
-  {field: 'estatus',headerClassName: "super",headerName: 'Estado',width: 1009,},
-
+  { field: 'idusers', headerClassName: "super", headerName: 'ID', flex:1, minWidth: 90  },
+  { field: 'username',headerClassName: "super", headerName: 'Nombre', flex:1,minWidth: 90 },
+  { field: 'email',headerClassName: "super", headerName: 'Rol', flex:1, minWidth: 90},
+  { field: 'password',headerClassName: "super", headerName: 'Contraseña', flex:1,minWidth: 90 },
+  {field: 'estatus',headerClassName: "super",headerName: 'Estado', flex:1,minWidth: 90 },
+  {
+    field: 'actions',
+    headerName: 'Actions',
+    renderCell: RowMenuCell,
+    sortable: false,
+    width: 100,
+    headerClassName: "super",
+    headerAlign: 'center',
+    filterable: false,
+    align: 'center',
+    disableColumnMenu: true,
+    disableReorder: true,
+  },
 ];
+function RowMenuCell(props) { 
 
+  const { onOpenModal}=useModalHook();
+  
+  const mensaje = () => {
+    console.log("mensaje");
+  };
+  return (
+    <div>
+     <FormUpdateUser/>
+      <IconButton
+        onClick={onOpenModal}
+        color="inherit"
+        size="small"
+        aria-label="delete"
+      >
+        <Block fontSize="small" />
+      </IconButton>
+    </div>
+  );
+}
 export const Users=()=> { 
 
   const [tableData, setTableData] = useState([])
+ 
+//  useEffect(() => {
+//    fetch("http://localhost:8000/api/v0/users")
+//      .then((data) => data.json())
+//      .then((data) => setTableData(data))
+//  }, [])
+//   console.log(tableData);
 
- useEffect(() => {
-   fetch("http://localhost:8000/api/v0/users")
-     .then((data) => data.json())
-     .then((data) => setTableData(data))
- }, [])
-  console.log(tableData);
-
+const consultar = async() =>{
+ await axios.get('http://localhost:8000/api/v0/users').then((response)=>{
+     return setTableData(response.data);
+  
+ });
+};
+useEffect(()=>{
+ consultar();
+}, []);
+ //const rows= Object.entries(tableData);
   return (
     <>
      <h2 className='colorAdmin'>USUARIOS</h2>
      
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ display: 'flex', height: '100%' }}>
+        <div style={{ flexGrow: 1 }}>
       <Box
        sx={{
         height:750,
@@ -41,10 +88,12 @@ export const Users=()=> {
         }
 
       }}> 
-      
+      {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
         <FormUser/>
-      
+  
       <DataGrid
+      
+      getRowId={(row) => row.idusers}
       autoHeight={true}
         rows={tableData}
         columns={columns}
@@ -59,9 +108,9 @@ export const Users=()=> {
         },
       }}
       />
-      </Box>
-     
-        
+      </Box>    
+    </div>
+    </div>
     </div>
     </>
   );

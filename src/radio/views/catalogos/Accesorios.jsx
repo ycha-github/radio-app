@@ -1,67 +1,80 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
-import { AddCircleOutlineOutlined } from '@mui/icons-material';
+import  {useState , useEffect} from "react";
+import { Box } from '@mui/material';
+import { ModalRadio } from '../../components/ModalRadio';
+import { FormUser } from '../../components/formAdmin/FormUser';
+import axios from 'axios';
+
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
+
+  { field: 'idusers', headerClassName: "super", headerName: 'ID', width: 90,  },
+  { field: 'username',headerClassName: "super", headerName: 'Nombre', width: 200 },
+  { field: 'email',headerClassName: "super", headerName: 'Rol', width: 130 },
+  { field: 'password',headerClassName: "super", headerName: 'Contraseña', width: 200 },
+  {field: 'estatus',headerClassName: "super",headerName: 'Estado',width: 1009,},
+
 ];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  { id: 10, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  { id: 11, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  { id: 13, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  { id: 14, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  { id: 15, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  { id: 16, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+export const Accesorios=()=> { 
 
-export const Accesorios=()=> {
+  const [tableData, setTableData] = useState([])
+
+//  useEffect(() => {
+//    fetch("http://localhost:8000/api/v0/users")
+//      .then((data) => data.json())
+//      .then((data) => setTableData(data))
+//  }, [])
+//   console.log(tableData);
+ 
+
+const consultar = async() =>{
+ await axios.get('http://localhost:8000/api/v0/users').then((response)=>{
+     return setTableData(response.data);
+  
+ });console.log(tableData);
+};
+useEffect(()=>{
+ consultar();
+}, []);
+ //const rows= Object.entries(tableData);
   return (
     <>
-    <Stack direction="row" spacing={1} marginBottom={2}>
-      <Button variant="outlined" startIcon={<AddCircleOutlineOutlined color="secondary" />}>
-        Nuevo
-      </Button>
-  
-    </Stack>
-    <div style={{ height: 750, width: '100%' }}>
+     <h2 className='colorAdmin'>USUARIOS</h2>
+     
+    <div style={{ height: '100%', width: '100%' }}>
+      <Box
+       sx={{
+        height:750,
+        width: "100%",
+        "& .super":{
+          backgroundColor: "rgba(15, 163, 248, 0.8)",
+        }
+
+      }}> 
+      {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
+        <FormUser/>
+      
       <DataGrid
-        rows={rows}
+      getRowId={(row) => row.idusers}
+      autoHeight={true}
+        rows={tableData}
         columns={columns}
         pageSize={12}
         rowsPerPageOptions={[12]}
-        checkboxSelection
+        sx={{
+          boxShadow:5,
+          border:4,
+          borderColor:'rgba(15, 163, 248, 0.8)',
+          '& .MuiDataGrid-cell:hover':{
+          color:'rgba(15, 163, 248, 0.8)',
+        },
+      }}
       />
+      </Box>
+     
+        
     </div>
     </>
   );

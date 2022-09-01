@@ -15,15 +15,11 @@ const customStyles = {
   };
   Modal.setAppElement('#root');
 
-  export const ModalRadio = ({children}) => {
-    const {isOpen,onCloseModal, onOpenModal}=useModalHook();
+  export const ModalRadio = ({children, isOpen, onCloseModal}) => {
+    
   return (
     <>
-   <Stack direction="row" spacing={1} marginBottom={2}>
-      <Button onClick={onOpenModal} color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
-        Nuevo
-      </Button>
-    </Stack>
+
     <Modal
       isOpen={isOpen}
       onRequestClose={onCloseModal}
