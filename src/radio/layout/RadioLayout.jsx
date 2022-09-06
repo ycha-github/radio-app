@@ -17,7 +17,7 @@ export const RadioLayout = ({ children }) => {
         >
             <Toolbar />
 
-            { children }
+            {children}
         </Box>
 
     </Box>

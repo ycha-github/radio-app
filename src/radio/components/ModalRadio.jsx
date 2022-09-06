@@ -5,21 +5,21 @@ import { useModalHook } from '../../hooks/useModalHook';
 
 const customStyles = {
     content: {
-      top: '50%',
+      position: 'absolute',
+      top: '40%',
       left: '50%',
       right: 'auto',
       bottom: 'auto',
       marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+      transform: 'translate(-25%, -50%)',
     },
   };
   Modal.setAppElement('#root');
 
   export const ModalRadio = ({children, isOpen, onCloseModal}) => {
-    
+
   return (
     <>
-
     <Modal
       isOpen={isOpen}
       onRequestClose={onCloseModal}
@@ -28,7 +28,7 @@ const customStyles = {
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
       >
-        {children}          
+        {children}
     </Modal>
     </>
   )
