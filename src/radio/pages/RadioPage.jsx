@@ -2,19 +2,18 @@ import { Routes, Route } from 'react-router-dom';
 import { RadioLayout } from '../layout/RadioLayout';
 import { Accesorios, Asignaciones, ConfiguracionReportes, Corporaciones, Estatus, GruposPermisos, HistorialEntradas, HojaServicios, Marcas, PasswordUpdate, Permisos, Puestos, Radios, RecursoCompras, RegistroVisitas, Roles, Servicios, Tipos, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
 
-
 export const RadioPage = () => {
   return (
     <RadioLayout>
 
       <Routes>
-          
+
           <Route path="/users" element={ <Users /> } />
           <Route path="/roles" element={ <Roles /> } />
           <Route path="/permisos" element={ <Permisos /> } />
           <Route path="/grupos-permisos" element={ <GruposPermisos /> } />
           <Route path="/visitas" element={ <RegistroVisitas /> } />
-          
+
           <Route path="/accesorios" element={ <Accesorios/> } />
           <Route path="/corporaciones" element={ <Corporaciones/> }/>
           <Route path="/marcas" element={ <Marcas/> }/>
@@ -36,7 +35,6 @@ export const RadioPage = () => {
           <Route path="/pass-update" element={ <PasswordUpdate /> }/>
 
      </Routes>
-
 
     </RadioLayout>
   )

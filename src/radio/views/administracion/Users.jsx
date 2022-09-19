@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, esES } from '@mui/x-data-grid';
 import { useState, useEffect } from "react";
-import { Box, IconButton } from '@mui/material';
-
+import { Box, Button, IconButton,Stack } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ModalRadio } from '../../components/ModalRadio';
 import { FormUser } from '../../components/formAdmin/FormUser';
 import axios from 'axios';
-import { Block} from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Block, Edit} from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
-import { FormUpdateUser } from '../../../radio/components/formAdmin/FormUpdateUser'
 const columns = [
 
   { field: 'idusers', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
-  { field: 'username', headerClassName: "super", headerName: 'Nombre', flex: 1, minWidth: 90 },
+  { field: 'username', headerClassName: "super", headerName: 'Usuario', flex: 1, minWidth: 90 },
   { field: 'email', headerClassName: "super", headerName: 'Rol', flex: 1, minWidth: 90 },
   { field: 'password', headerClassName: "super", headerName: 'Contraseña', flex: 1, minWidth: 90 },
   { field: 'estatus', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
@@ -31,13 +30,18 @@ const columns = [
   },
 ];
 function RowMenuCell(props) {
-
-  const { onOpenModal } = useModalHook();
+  const {OpenModal}=useModalHook();
   return (
     <div>
-      <FormUpdateUser />
       <IconButton
-        onClick={onOpenModal}
+        onClick={OpenModal}
+        color="inherit"
+        size="small"
+        aria-label="edit">
+        <Edit fontSize="small"/>
+      </IconButton>
+      <IconButton
+        
         color="inherit"
         size="small"
         aria-label="delete"
@@ -48,8 +52,9 @@ function RowMenuCell(props) {
   );
 }
 export const Users = () => {
-
+  const { OpenModal } = useModalHook();
   const [tableData, setTableData] = useState([]);
+  
 
   const consultar = async () => {
     await axios.get('http://localhost:8000/api/v0/users').then((response) => {
@@ -60,6 +65,14 @@ export const Users = () => {
     consultar();
   }, []);
   //const rows= Object.entries(tableData);
+  const theme = createTheme(
+    {
+      palette: {
+        primary: { main: '#1976d2' },
+      },
+    },
+    esES,
+  );
   return (
     <>
       <h2 className='colorAdmin'>USUARIOS</h2>
@@ -78,9 +91,14 @@ export const Users = () => {
               }}>
               {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
               <FormUser />
-
+              <Stack direction="row" spacing={1} marginBottom={2}>
+                <Button onClick={OpenModal} color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
+                    Nuevo
+                </Button>
+            </Stack>
+              
+              <ThemeProvider theme={theme}>
               <DataGrid
-
                 getRowId={(row) => row.idusers}
                 autoHeight={true}
                 rows={tableData}
@@ -96,6 +114,7 @@ export const Users = () => {
                   },
                 }}
               />
+              </ThemeProvider>
             </Box>
           </div>
         </div>

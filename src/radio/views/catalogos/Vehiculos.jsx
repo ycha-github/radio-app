@@ -7,18 +7,17 @@ import { ModalRadio } from '../../components/ModalRadio';
 import { FormUser } from '../../components/formAdmin/FormUser';
 import axios from 'axios';
 
-
 const columns = [
 
-  { field: 'idvehiculo', headerClassName: "super", headerName: 'ID', width: 90,  },
-  { field: 'nombreVehiculo',headerClassName: "super", headerName: 'Modelo', width: 200 },
-  { field: 'placa',headerClassName: "super", headerName: 'Placa', width: 130 },
-  { field: 'color',headerClassName: "super", headerName: 'Color', width: 200 },
-  {field: 'anio',headerClassName: "super",headerName: 'Año',width: 200,},
-  {field: 'marcas_idmarcas',headerClassName: "super",headerName: 'Id Marca',width: 200,},
-  {field: 'estatus',headerClassName: "super",headerName: 'Estatus',width: 200,},
-  {field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',width: 200,},
-  {field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',width: 398,},
+  { field: 'idvehiculo', headerClassName: "super", headerName: 'ID', width: 90, },
+  { field: 'nombreVehiculo', headerClassName: "super", headerName: 'Modelo', width: 200 },
+  { field: 'placa', headerClassName: "super", headerName: 'Placa', width: 130 },
+  { field: 'color', headerClassName: "super", headerName: 'Color', width: 200 },
+  { field: 'anio', headerClassName: "super", headerName: 'Año', width: 200, },
+  { field: 'marcas_idmarcas', headerClassName: "super", headerName: 'Id Marca', width: 200, },
+  { field: 'estatus', headerClassName: "super", headerName: 'Estatus', width: 200, },
+  { field: 'createdAt', headerClassName: "super", headerName: 'Fecha de creacion', width: 200, },
+  { field: 'updatedAt', headerClassName: "super", headerName: 'Fecha de actualizacion', width: 398, },
 
 ];
 
