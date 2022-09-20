@@ -3,7 +3,6 @@ import { Button, Stack } from '@mui/material';
 import Modal from 'react-modal';
 import { useModalHook } from '../../hooks/useModalHook';
 
-
 const customStyles = {
   content: {
     position: 'absolute',

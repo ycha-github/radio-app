@@ -12,7 +12,7 @@ export const FormUser = () => {
     const [formValues, setFormValues] = useState({
         name: "",
         passwd: "",
-        confirmPasswd: "",
+        email: "",
         rol: "",
         estado: "",
     });
@@ -35,11 +35,11 @@ export const FormUser = () => {
     const guardar = () => {
         console.log('guardado!');
         let datosUser = {
-        name: formValues.name,
-        passwd: formValues.passwd,
-        confirmPasswd: formValues.confirmPasswd,
-        rol: formValues.rol,
-        estado: formValues.estado,
+        username: formValues.name,
+        password: formValues.passwd,
+        email: formValues.email,
+        roles_idrol: formValues.rol,
+        estatus: formValues.estado,
         };
         console.log(datosUser);
         
@@ -62,7 +62,7 @@ export const FormUser = () => {
                         <Grid item>
                             <TextField
                                 id="name-input"
-                                sx={{ border: 'none', mb: 1, mt: 2, width: 400 }}
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="name"
                                 color='info'
@@ -74,7 +74,7 @@ export const FormUser = () => {
                         <Grid item>
                             <TextField
                                 id="passwd-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
+                                sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="password"
                                 color='info'
                                 name="passwd"
@@ -85,33 +85,40 @@ export const FormUser = () => {
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="confirmPasswd-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                type="password"
+                                id="email-input"
+                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                type="email"
                                 color='info'
-                                name="confirmPasswd"
-                                label="Confirmar Contraseña"
+                                name="email"
+                                label="Correo"
                                 variant="outlined"
-                                value={formValues.confirmPasswd}
+                                value={formValues.email}
                                 onChange={handleInputChange} />
                         </Grid>
+                        
                         <Grid item>
-                            <TextField
-                                id="rol-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                type="text"
-                                name="rol"
-                                color='info'
-                                label="Rol"
-                                variant="outlined"
-                                value={formValues.rol}
-                                onChange={handleInputChange} />
+                            <FormControl fullWidth>
+                                <InputLabel id="rol-input">Rol</InputLabel>
+                                <Select
+                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    labelId="demo-simple-select-label"
+                                    id="rol-input"
+                                    name="rol"
+                                    color='info'
+                                    value={formValues.rol}
+                                    label="Rol"
+                                    onChange={handleInputChange}>
+                                    <MenuItem value={1}>Addministrador</MenuItem>
+                                    <MenuItem value={2}>Invitado</MenuItem>
+                                    
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estado-input">Estado</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 400 }}
+                                    sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estado-input"
                                     name="estado"
