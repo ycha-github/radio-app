@@ -16,7 +16,7 @@ const customStyles = {
 };
 Modal.setAppElement('#root');
 
-export const ModalRadio = ({ children, isOpen, onCloseModal }) => {
+export const ModalRadio = ({ children, isOpen, onCloseModal }, props) => {
   const {isModalOpen, CloseModal}= useModalHook();
 
   return (
