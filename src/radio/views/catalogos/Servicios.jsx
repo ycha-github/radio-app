@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
+import { DataGrid } from '@mui/x-data-grid';
 import { Box, IconButton, Switch } from '@mui/material';
+import { Edit } from '@mui/icons-material';
 
-import { ModalRadio } from '../../components/ModalRadio';
-import { FormUser } from '../../components/formAdmin/FormUser';
-import { Block, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
-import {FormUpdateUser} from '../../../radio/components/formAdmin/FormUpdateUser'
 import { FormServicio } from '../../components/formCat/FormServicio';
 
 
@@ -37,11 +33,11 @@ const columns = [
 
 function RowMenuCell(props) { 
 
-  const { OpenModal}=useModalHook();
+  const { IsUpdate }=useModalHook();
   
   const [checked, setChecked] = useState(true);
-  // const [isActualizar, setIsActualizar]     = useState(true);
-  const  isActualizar  = useSelector( state => state.servicios );
+
+
 //   const [idActualizar, setIdActualizar]     = useState('');
   
 //   const actualizar = () => {
@@ -68,26 +64,17 @@ const handleChangeEst = (e) => {
   setChecked(e.target.checked);
 };
 
-const handleChangeAct = (e) => {
-    //setIsActualizar(true);
-    OpenModal();
-    // isActualizar
-    //console.log(isActualizar)
-};
-
-
-
   const mensaje = () => {
     console.log("mensaje");
   };
   return (
     <div>
       <IconButton
-        onClick={handleChangeAct}
+        onClick={IsUpdate}
         color="inherit"
         size="small"
         aria-label="edit" >
-        <Edit fontSize="small" color='warning'  />
+        <Edit fontSize="small" color='warning'/>
       </IconButton>
      
       <IconButton
@@ -108,16 +95,9 @@ export const Servicios = () => {
 
   const {CloseModal}=useModalHook();
   const [elementos, setElementos] = useState([]);
-  // const [isActualizar, setIsActualizar]     = useState();
 
   const nuevo = (elementos.length) + 1;
  
-  const handleChangeClose = async () => {
-    setIsActualizar(false);
-    CloseModal();
-   console.log(isActualizar)
-  };
-
     const consultar = async() =>{
       await axios.get('http://localhost:8000/api/v0/servicios').then((response)=>{
            return setElementos((response.data).reverse());
@@ -145,7 +125,7 @@ export const Servicios = () => {
                 }
               }}> 
             {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-            <FormServicio nombre={'Servicio'} color={'warning'} nuevo={nuevo} /*opcion={isActualizar}*/ close={handleChangeClose} />
+            <FormServicio nombre={'Servicio'} color={'warning'} nuevo={nuevo} close={CloseModal} />
         
             <DataGrid
               getRowId={(row) => row.idservicios}

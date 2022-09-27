@@ -23,7 +23,7 @@ export const ModalRadio = ({ children, isOpen, onCloseModal }, props) => {
     <>
       <Modal
         isOpen={isModalOpen}
-        onRequestClose={CloseModal}
+        // onRequestClose={CloseModal}
         style={customStyles}
         className="modal"
         overlayClassName="modal-fondo"

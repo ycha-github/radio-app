@@ -3,15 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 export const serviciosSlice = createSlice({
     name: 'servicios',
     initialState: {
-        counter: 10
+        isActualizar: false,
     },
     reducers: {
-        increment: (state, /* action */ ) => {
-            state.counter += 1;
+        IsUpdate: (state) => {
+            state.isActualizar = true;
         },
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { increment } = serviciosSlice.actions;
+export const { IsUpdate } = serviciosSlice.actions;

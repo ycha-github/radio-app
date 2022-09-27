@@ -4,26 +4,19 @@ import { useSelector } from 'react-redux';
 import axios from "axios";
 import { Box, Button, FormGroup, FormLabel, Input, Stack, Switch } from '@mui/material';
 import { ModalRadio } from '../ModalRadio';
-import { AddCircleOutlineOutlined,  Save } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Close, Save } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
+//import { IsUpdate } from '../../../store';
 
 export const FormServicio = (props) => {
-    //const [isOpen1, onCloseModal1, onOpenModal1] = useModalHook();
-    const {OpenModal}=useModalHook();
-    const {CloseModal}=useModalHook();
+    const { OpenModal, CloseModal, IsUpdate } = useModalHook();
     const [nombreServicio, setNombreServicio] = useState('');
     const [descripcionServicio, setDescripcionServicio] = useState('');
     const [estatusServicio, setEstatusServicio] = useState(true);
     const [checked, setChecked] = useState(true);
-    //const [isActualizar, setIsActualizar]     = useState();
 
     const [idActualizar, setIdActualizar]     = useState('');
 
-    // const { isActualizar } = useSelector( );
-
-
-
-    
     const handleChangeNom = (e) => {
         setNombreServicio(e.target.value);
     };
@@ -35,9 +28,7 @@ export const FormServicio = (props) => {
     const handleChangeEst = (e) => {
         setChecked(e.target.checked);
         setEstatusServicio(e.target.checked);
-    };
-
-    
+    };   
 
     const guardar = (e) => {
         e.prevent.default;
@@ -52,29 +43,29 @@ export const FormServicio = (props) => {
         //     alert('Incorrecto');
         //     return;
         // }
-        if(props.isActualizar){
-            ejecutarActualizacion(datosServicios);
-        }else{
+        // if(props.isActualizar){
+        //     ejecutarActualizacion(datosServicios);
+        // }else{
             axios.post('http://localhost:8000/api/v0/servicios', datosServicios).then((response)=> {
                 if(response.data.insertId){
                     alert('Guardado!');
                 }            
             });
-        }
+        //}
     };
 
-    const ejecutarActualizacion = (datosServicios) => {
-        datosServicios['id'] = idActualizar;
+    // const ejecutarActualizacion = (datosServicios) => {
+    //     datosServicios['id'] = idActualizar;
 
-        axios.put('http://localhost:8000/api/v0/servicios', datosServicios).then((response) => {
-            if(response.data.affectedRows){
-                consultar();
+    //     axios.put('http://localhost:8000/api/v0/servicios', datosServicios).then((response) => {
+    //         if(response.data.affectedRows){
+    //             consultar();
                
-                alert('Actualizado!');
-                document.getElementById('formServ').reset();
-            }
-        });
-    };
+    //             alert('Actualizado!');
+    //             document.getElementById('formServ').reset();
+    //         }
+    //     });
+    // };
 
 
     return (
@@ -92,7 +83,7 @@ export const FormServicio = (props) => {
                 <form className='container' onSubmit={guardar} id={'formServ'} >
                     <FormGroup>
                         <Input id="my-input" type='text' placeholder="Nombre" name='nombre' required autoFocus 
-                            onChange={handleChangeNom} /*disabled={props.isActualizar}*/ />
+                            onChange={handleChangeNom} hidden/*disabled={props.isActualizar}*/ />
                     </FormGroup>
                     <FormGroup>
                         <Input id="my-input" type='text' placeholder="Descripción" name='descripcion' required 
@@ -107,10 +98,12 @@ export const FormServicio = (props) => {
                         </div>
                     </FormGroup>
                     <div className='alinear-c'>
-                    <button >Guardar</button>
-                    {/* <button onClick={props.close}> Cerrar</button> */}
-                    {/* <Button type={'submit'}  color='warning' className='btn-modal-cat' onClick={() => {actualizar} } ><Save />Actualizar</Button> 
-                    <Button type={'submit'}  color='warning' className='btn-modal-cat' onClick={() => {guardar}} ><Save />Guardar</Button>  */}
+                    {
+                        IsUpdate ?
+                        <Button type={'submit'} color='warning' className='btn-modal-cat' onClick={() => {}} startIcon={<Save />} > Actualizar </Button>  :
+                        <Button type={'submit'} color='warning' className='btn-modal-cat' onClick={() => {guardar}} startIcon={<Save />}> Guardar </Button>   
+                    }
+                    <Button type={'submit'}  color='warning' className='btn-modal-cat' onClick={CloseModal} ><Close />Cerrar</Button>  
                     <br /> 
                     </div>
                 </form>
