@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, IconButton, Switch } from '@mui/material';
 import { Edit } from '@mui/icons-material';
+import { Box, IconButton, Switch } from '@mui/material';
 
 import { useModalHook } from '../../../hooks/useModalHook';
 import { FormServicio } from '../../components/formCat/FormServicio';
@@ -32,45 +32,23 @@ const columns = [
 
 
 function RowMenuCell(props) { 
-
-  const { IsUpdate }=useModalHook();
   
+  const { OpenModal, ModalActualizar }=useModalHook();
   const [checked, setChecked] = useState(true);
 
-
-//   const [idActualizar, setIdActualizar]     = useState('');
-  
-//   const actualizar = () => {
-//     console.log('guardado!');
-//     setIdActualizar()
-//     setIsActualizar(true)
-//     let datosServicios = {
-//       nombreServicios: nombreServicio,
-//       descripcion: descripcionServicio,
-//       estatus: estatusServicio
-//     };
-//     console.log(datosServicios);
-    
-//     axios.put('http://localhost:8000/api/v0/servicios', datosServicios).then((response)=> {
-//         if(response.data.actualizarId){
-//           alert('Guardado!');
-//           e.prevent.default;
-//         }            
-//     });
-// };
-
-
-const handleChangeEst = (e) => {
-  setChecked(e.target.checked);
-};
-
-  const mensaje = () => {
-    console.log("mensaje");
+  const handleChangeEst = (e) => {
+    setChecked(e.target.checked);
   };
+
+  const isUpdate = () => {
+    OpenModal();
+    ModalActualizar();
+  }
+
   return (
     <div>
       <IconButton
-        onClick={IsUpdate}
+        onClick={isUpdate}
         color="inherit"
         size="small"
         aria-label="edit" >
@@ -125,7 +103,7 @@ export const Servicios = () => {
                 }
               }}> 
             {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-            <FormServicio nombre={'Servicio'} color={'warning'} nuevo={nuevo} close={CloseModal} />
+            <FormServicio nombre={'Servicio'} color={'warning'} nuevo={nuevo} />
         
             <DataGrid
               getRowId={(row) => row.idservicios}
