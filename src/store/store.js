@@ -9,6 +9,7 @@ export const store = configureStore({
     ui: uiSlice.reducer,
     zonas: zonasSlice.reducer,
     auth: authSlice.reducer,
+    //serv: serviciosSlice.reducer,
   },
   middleware:(getDefaultMiddleware)=>getDefaultMiddleware({
     serializableCheck: false

@@ -6,7 +6,6 @@
     background-color: rgb(228, 125, 35);
     color: white;
     text-align: center;
-    
 }
 
 .colorCatModal{
@@ -21,6 +20,16 @@
 
 .alinear-l{
     text-align: left;
+}
+
+.alinear-r {
+    text-align: right;
+}
+
+.color-red {
+    color: red;  
+    font-weight: bold;
+    padding-left: 50px; 
 }
 
 
@@ -82,16 +91,6 @@ tbody tr td {
     padding: 20px;
 }
 
-.modal {
-    background: white;
-    border-radius: 5px;
-    color: rgb(51, 51, 51);
-    display: inline;
-    max-height: 640px;
-    max-width: 340px;
-    outline: none;
-    padding: 20px;
-}
 
 .franja {
     background: rgba(230,190,87,1);
@@ -106,10 +105,6 @@ box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     width: 100%;
     /* float: left; */
     /* padding-left: 10%; */
-}
-
-.alineado-c {
-    text-align: center;
 }
 
 .btn-modal-cat {

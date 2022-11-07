@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import { Box, IconButton } from '@mui/material';
 import { Block, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { FormServicio } from '../../components/formCat/FormServicio';
 
-const columns = [
 
+
+const columns = [
   { field: 'idservicios', headerClassName: "super", headerName: 'ID', flex:1, minWidth: 90 },
   { field: 'nombreServicios', headerClassName: "super", headerName: 'Nombre', flex:1, minWidth: 90 },
   { field: 'descripcion', headerClassName: "super", headerName: 'Descripción', flex:1, minWidth: 90 },
@@ -27,19 +27,19 @@ const columns = [
   },
 ];
 
-function RowMenuCell(props) { 
 
-  const { OpenModal}=useModalHook();
+
+function RowMenuCell(props) { 
   
   
   return (
     <div>
       <IconButton
-        onClick={OpenModal}
+        onClick={isUpdate}
         color="inherit"
         size="small"
-        aria-label="edit">
-        <Edit fontSize="small"/>
+        aria-label="edit" >
+        <Edit fontSize="small" color='warning'/>
       </IconButton>
      
       <IconButton
@@ -48,7 +48,8 @@ function RowMenuCell(props) {
         size="small"
         aria-label="delete"
       >
-        <Block fontSize="small" />
+        <Switch color='warning' checked={checked} onChange={handleChangeEst} inputProps={{ 'aria-label': 'controlled' }} />
+        {/* <Block fontSize="small" /> */}
       </IconButton>
     </div>
   );
@@ -56,12 +57,14 @@ function RowMenuCell(props) {
 
 export const Servicios = () => {
 
+  const {CloseModal}=useModalHook();
   const [elementos, setElementos] = useState([]);
 
+  const nuevo = (elementos.length) + 1;
+ 
     const consultar = async() =>{
       await axios.get('http://localhost:8000/api/v0/servicios').then((response)=>{
-           return setElementos(response.data);
-           //return setElementos((response.data).reverse());
+           return setElementos((response.data).reverse());
       });
      };
      useEffect(()=>{
@@ -85,7 +88,7 @@ export const Servicios = () => {
                 }
               }}> 
             {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-              <FormServicio nombre={'Servicio'} color={'warning'}/>
+            <FormServicio nombre={'Servicio'} color={'warning'} nuevo={nuevo} />
         
             <DataGrid
               getRowId={(row) => row.idservicios}
