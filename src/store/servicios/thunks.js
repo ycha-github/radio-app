@@ -5,3 +5,5 @@ export const checkingAuthentication = ( email, password ) => {
         dispatch( checkingCredentials() );
     }
 }
+
+//HOOOOLAAAAAAAAA
