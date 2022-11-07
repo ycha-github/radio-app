@@ -1,24 +1,28 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { onCloseModal, onOpenModal } from "../store";
+import { onActualizar, onCloseModal, onGuardar, onOpenModal } from "../store";
 
  export const useModalHook= (initialvalue=true) => {
-    
-const dispatch= useDispatch();
-    const { 
-      isModalOpen
-    }= useSelector(state=> state.ui );
-    
-    const OpenModal = ()=>{
-      dispatch (onOpenModal());
-    }
-    const CloseModal  = () => {
-      dispatch (onCloseModal());
-    };
+  
+  const dispatch= useDispatch();
+      const { isModalOpen, isActualizar }= useSelector(state=> state.ui );
+  
+      const OpenModal = ()=>{
+        dispatch (onOpenModal());
+      }; 
+      const CloseModal  = () => {
+        dispatch (onCloseModal());
+      };
+      const mostrarGuardar  = () => {
+        dispatch (onGuardar());
+      };
+      const mostrarActualizar  = () => {
+        dispatch (onActualizar());
+      };
 
-  return{
-    // Propiedades
-    isModalOpen,
-    // metodos
-    CloseModal,OpenModal}
- }
+    return{
+      // Propiedades
+      isModalOpen,isActualizar,
+      // metodos
+      CloseModal,OpenModal,mostrarGuardar,mostrarActualizar,
+    }
+  }

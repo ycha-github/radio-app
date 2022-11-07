@@ -1,6 +1,7 @@
 
 export const Puestos = () => {
   return (
-    <h1>Puestos</h1>
+    <h1>Puesto 
+    </h1>
   )
 }

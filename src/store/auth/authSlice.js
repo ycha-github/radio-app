@@ -3,32 +3,34 @@ import { createSlice } from '@reduxjs/toolkit';
 export const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        status: 'not-authenticcated', //  'checking', 'authenticated
-        uid: null,
-        email: null,
-        displayName: null,
-        photoURL: null,
-        errorMessage: null,
+        status: 'checking', //'not-authenticated',  'authenticated
+        user:{},
+        errorMessage: undefined,
     },
-    reducers: {
-        login:( state, action ) => {
-
-        },
-        logout: ( state, { payload } ) => {
-            state.status = 'not-authenticcated'; //  'checking', 'authenticated
-            state.uid    = null;
-            state.email  = null;
-            state.displayName  = null;
-            state.photoURL     = null;
-            state.errorMessage = payload.errorMessage;
-        },
-        checkingCredentials: ( state ) => {
+    reducers: {      
+        onChecking: ( state ) => {
             state.status = 'checking';
-        }
+            state.user = {};
+            state.errorMessage = undefined;
+        },
+        onLogin:( state, {payload} ) => {
+            //console.log(payload)
+            state.status = 'authenticated';
+            state.user= payload;
+            state.errorMessage = undefined;
 
+        },
+        onLogout: ( state, { payload } ) => {
+            state.status = 'not-authenticated'; 
+            state.user = {};
+            state.errorMessage = payload;
+        },
+        clearErrorMessage:(state)=>{
+            state.errorMessage = undefined;
+        },
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { login, logout, checkingCredentials } = authSlice.actions;
+export const { onLogin, onLogout, onChecking, clearErrorMessage } = authSlice.actions;

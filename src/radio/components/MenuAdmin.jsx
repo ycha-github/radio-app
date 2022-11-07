@@ -15,27 +15,27 @@ export const MenuAdmin = () => {
         { 
           text: 'Usuarios', 
           icon: <Person color={ iconColorAdmin } />, 
-          path: '/users',
+          path: 'users',
         },
         { 
           text: 'Roles', 
           icon: <PeopleOutline color={ iconColorAdmin } />, 
-          path: '/roles',
+          path: 'roles',
         },
         { 
           text: 'Permisos', 
           icon: <ManageAccounts color={ iconColorAdmin } />, 
-          path: '/permisos',
+          path: 'permisos',
         },
         { 
           text: 'Grupos de permisos', 
           icon: <PeopleAlt color={ iconColorAdmin } />, 
-          path: '/grupos-permisos', 
+          path: 'grupos-permisos', 
         },
         { 
           text: 'Registro de visita', 
           icon: <SwitchAccount color={ iconColorAdmin } />, 
-          path: '/visitas', 
+          path: 'visitas', 
         },
       ];
 

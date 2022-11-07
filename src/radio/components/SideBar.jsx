@@ -1,9 +1,13 @@
 import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
 import { TurnedInNot } from '@mui/icons-material';
 import { NestedList } from './NestedList';
+import { useAuthStore } from '../../hooks';
 
 
 export const SideBar = ({ drawerWidth = 240 }) => {
+
+    const {user}= useAuthStore();
+
   return (
     <Box
         component='nav'
@@ -19,7 +23,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
         >
             <Toolbar>
                 <Typography variant='h6' noWrap component='div'>
-                    Yuliana Hernández
+                      {user.username}
                 </Typography>
             </Toolbar>
             <Divider />

@@ -12,8 +12,7 @@ const columns = [
 
   { field: 'idusers', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
   { field: 'username', headerClassName: "super", headerName: 'Usuario', flex: 1, minWidth: 90 },
-  { field: 'email', headerClassName: "super", headerName: 'Correo', flex: 1, minWidth: 90 },
-  { field: 'password', headerClassName: "super", headerName: 'Contraseña', flex: 1, minWidth: 90 },
+  { field: 'roles_idrol', headerClassName: "super", headerName: 'Rol', flex: 1, minWidth: 90 },
   { field: 'estatus', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
   {
     field: 'actions',
@@ -30,11 +29,16 @@ const columns = [
   },
 ];
 function RowMenuCell(props) {
-  const {OpenModal}=useModalHook();
+  const {OpenModal,mostrarActualizar}=useModalHook();
+  
+  const cambiar =()=>{
+    OpenModal();
+    mostrarActualizar();
+  }
   return (
     <div>
       <IconButton
-        onClick={OpenModal}
+        onClick={cambiar}
         color="inherit"
         size="small"
         aria-label="edit">
@@ -51,9 +55,13 @@ function RowMenuCell(props) {
   );
 }
 export const Users = () => {
-  const { OpenModal } = useModalHook();
+  const { OpenModal,mostrarGuardar } = useModalHook();
   const [tableData, setTableData] = useState([]);
   
+  const cambiar2=()=>{
+    OpenModal();
+    mostrarGuardar();
+  }
   const consultar = async () => {
     await axios.get('http://localhost:8000/api/v0/users').then((response) => {
       return setTableData(response.data);
@@ -87,13 +95,12 @@ export const Users = () => {
                 }
               }}>
               {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-              <FormUser />
+              <FormUser  />
               <Stack direction="row" spacing={1} marginBottom={2}>
-                <Button onClick={OpenModal} color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
+                <Button onClick={cambiar2} color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
                     Nuevo
                 </Button>
             </Stack>
-
               <ThemeProvider theme={theme}>
                 <DataGrid
                   getRowId={(row) => row.idusers}
@@ -107,7 +114,7 @@ export const Users = () => {
                     border: 4,
                     borderColor: 'rgba(15, 163, 248, 0.8)',
                     '& .MuiDataGrid-cell:hover': {
-                      color: 'rgba(15, 163, 248, 0.8)',
+                    color: 'rgba(15, 163, 248, 0.8)',
                     },
                   }}
                 />

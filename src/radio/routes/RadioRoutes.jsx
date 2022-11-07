@@ -7,7 +7,7 @@ export const RadioRoutes = () => {
 
         <Route path="*" element={ <RadioPage /> } />
 
-        <Route path="/*" element={ <Navigate to="/" /> } />
+        {/* <Route path="/*" element={ <Navigate to="/asignaciones" /> } /> */}
 
     </Routes>
   )

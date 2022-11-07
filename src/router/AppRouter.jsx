@@ -1,19 +1,44 @@
+import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthRoutes } from '../auth';
-import { RadioRoutes } from '../radio';
-
+import { getEnvVariables } from '../helpers';
+import { useAuthStore } from '../hooks';
+import { RadioPage, RadioRoutes } from '../radio';
 
 export const AppRouter = () => {
 
-        const authStatus='autenticated';  //'not-authenticated';
+  const {status, checkAuthToken} = useAuthStore();
+
+  useEffect(() => {
+   checkAuthToken();
+  }, [])
+
+  
+  if( status === 'checking'){
+    return(
+      <h3> Cargando...</h3>
+    )
+  }
+  
+      //  const authStatus='not-authenticated'//'Authenticated'//'checking';  //;
+
   return (
     <Routes>
         {
-          (authStatus=== 'not-authenticated')
-          ?<Route  path="/auth/*" element={ <AuthRoutes /> } />
-          :<Route  path="/*" element={ <RadioRoutes /> } />
+          (status=== 'not-authenticated')
+          ?(
+            <>
+            <Route  path="/auth/*" element={ <AuthRoutes /> } />
+            <Route  path="/*" element={ <Navigate to="/auth/login" /> } />
+            </>
+          )
+          :(
+            <>
+            <Route  path="/radio/*" element={ <RadioPage /> } />
+             <Route  path="/*" element={ <Navigate to="/radio/" /> } />
+            </>
+          )
         }
-          <Route  path="/*" element={ <Navigate to="/auth/login" /> } />  
     </Routes>
   )
 }

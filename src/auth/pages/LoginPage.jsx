@@ -3,23 +3,34 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { checkingAuthentication } from '../../store/auth';
-import { useForm } from '../../hooks';
+import { useAuthStore, useForm } from '../../hooks';
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
+
+const loginFormFields={
+  username:'',
+  password:'',
+}
 
 export const LoginPage = () => {
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
+  const {startLogin, errorMessage}= useAuthStore();
 
-  const { email, password, user, onInputChange } = useForm({
-    email: 'nombre@google.com',
-    password: '123456',
-    user: 'usuario12'
-  });
+  const { username, password, onInputChange } = useForm(loginFormFields);
 
   const onSubmit = ( event ) => {
     event.preventDefault();
-    console.log({ email, password });
-    dispatch( checkingAuthentication() );
+    startLogin({ username, password });
+
+    //dispatch( checkingAuthentication() );
   }
+
+  useEffect(() => {
+    if (errorMessage !== undefined){
+      Swal.fire('Error en la autenticacion', errorMessage, 'error');
+    }
+  }, [errorMessage])
 
   return (
     <AuthLayout title="Login">
@@ -27,12 +38,12 @@ export const LoginPage = () => {
             <Grid container>
               <Grid item xs={ 12 } sx={{ mt: 2 }}>
                 <TextField 
-                  label="Correo" 
-                  type="email" 
-                  placeholder='correo@google.com'
+                  label="Usuario" 
+                  type="text" 
+                  placeholder='Usuario'
                   fullWidth
-                  name='email' 
-                  value={ email }
+                  name='username'
+                  value={username} 
                   onChange={ onInputChange }
                 />
               </Grid>
@@ -42,9 +53,9 @@ export const LoginPage = () => {
                   type="password" 
                   placeholder='Contraseña'
                   fullWidth
-                  name='password' 
-                  value={ password }
-                  onChange={ onInputChange } 
+                  name='password'
+                  value={password} 
+                  onChange={ onInputChange }
                 />
               </Grid>
               <Grid container  sx={{ mt: 2, mb: 1 }} >
@@ -52,12 +63,7 @@ export const LoginPage = () => {
                     Login
                   </Button>
               </Grid>              
-            </Grid>  <Grid container direction="row" justifyContent="end">
-              <Link component={RouterLink} color="inherit" to="/auth/register">
-                Crear una cuenta
-              </Link>
-
-            </Grid>         
+            </Grid>        
           </form>
     </AuthLayout>
   )

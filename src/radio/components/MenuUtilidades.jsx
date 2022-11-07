@@ -15,22 +15,22 @@ export const MenuUtilidades = () => {
     {  
       text: 'Asignaciones', 
       icon: <AssignmentIndRounded color={ iconColorUti } />, 
-      path: '/asignaciones',
+      path: '/',
     }, 
     {  
       text: 'Hoja de servicio', 
       icon: <DescriptionOutlined color={ iconColorUti } />, 
-      path: '/hoja-servicio',
+      path: 'hoja-servicio',
     },
     {  
       text: 'Historial de entradas', 
       icon: <Assignment color={ iconColorUti } />, 
-      path: '/historial-entradas',
+      path: 'historial-entradas',
     }, 
     {  
       text: 'Configuracion de reportes', 
       icon: <ArtTrack color={ iconColorUti } />, 
-      path: '/config-reportes',
+      path: 'config-reportes',
     }, 
   ];
 

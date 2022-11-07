@@ -1,6 +1,5 @@
-import { AddCircleOutlineOutlined } from '@mui/icons-material';
-import { Button, Stack } from '@mui/material';
 import Modal from 'react-modal';
+import { useZonasStore } from '../../hooks/hooksCatalogo/useZonasStore';
 import { useModalHook } from '../../hooks/useModalHook';
 
 const customStyles = {
@@ -16,14 +15,18 @@ const customStyles = {
 };
 Modal.setAppElement('#root');
 
-export const ModalRadio = ({ children, isOpen, onCloseModal }) => {
-  const {isModalOpen, CloseModal}= useModalHook();
-
+export const ModalRadio = ({ children }) => {
+  const {isModalOpen, CloseModal,mostrarGuardar}= useModalHook();
+  const cambiar3=()=>{
+  CloseModal();
+  mostrarGuardar();
+ 
+}
   return (
     <>
       <Modal
         isOpen={isModalOpen}
-        onRequestClose={CloseModal}
+        onRequestClose={cambiar3}
         style={customStyles}
         className="modal"
         overlayClassName="modal-fondo"

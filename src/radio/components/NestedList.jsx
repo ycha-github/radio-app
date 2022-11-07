@@ -3,10 +3,12 @@ import { IconButton, List, ListItemButton, ListItemIcon, ListItemText } from '@m
 import {  LockReset, LogoutTwoTone } from '@mui/icons-material';
 import { MenuAdmin, MenuCatalogos, MenuUtilidades } from './';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../hooks';
 
 export const NestedList = () => {
 
   const navigate = useNavigate();
+  const {startLogout}= useAuthStore();
 
   return (
     <List
@@ -21,7 +23,7 @@ export const NestedList = () => {
 
       <MenuUtilidades />
 
-      <ListItemButton onClick={() => navigate('/pass-update')} >
+      <ListItemButton onClick={() => navigate('pass-update')} >
         <ListItemIcon>
           <IconButton color='success'>
             <LockReset />
@@ -30,7 +32,7 @@ export const NestedList = () => {
         <ListItemText primary="Cambiar contraseña" />
       </ListItemButton>
 
-      <ListItemButton>
+      <ListItemButton onClick={startLogout}>
         <ListItemIcon>
           <IconButton color='error'>
             <LogoutTwoTone />

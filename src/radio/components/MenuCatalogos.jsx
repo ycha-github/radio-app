@@ -15,62 +15,62 @@ export const MenuCatalogos = () => {
         { 
           text: 'Accesorios', 
           icon: <Battery6Bar color={ iconColorCat } />, 
-          path: '/accesorios' ,
+          path: 'accesorios' ,
         },
         { 
           text: 'Corporaciones', 
           icon: <LocalPolice color={ iconColorCat } />, 
-          path: '/corporaciones', 
+          path: 'corporaciones', 
         },
         { 
           text: 'Marcas', 
           icon: <BookmarkBorder color={ iconColorCat } />, 
-          path: '/marcas', 
+          path: 'marcas', 
         },
         { 
           text: 'Puestos', 
           icon: <BusinessCenterTwoTone color={ iconColorCat } />, 
-          path: '/puestos', 
+          path: 'puestos', 
         },
         { 
           text: 'Radios', 
           icon: <SmartphoneTwoTone color={ iconColorCat } />, 
-          path: '/radios', 
+          path: 'radios', 
         },
         { 
           text: 'Recursos', 
           icon: <WorkRounded color={ iconColorCat } />, 
-          path: '/recursos', 
+          path: 'recursos', 
         },
         { 
           text: 'Servicios', 
           icon: <LibraryBooksRounded color={ iconColorCat } />, 
-          path: '/servicios', 
+          path: 'servicios', 
         },
         { 
           text: 'Estatus', 
           icon: <AutorenewRounded color={ iconColorCat } />, 
-          path: '/estatus', 
+          path: 'estatus', 
         },
         { 
           text: 'Tipos', 
           icon: <TextFieldsRounded color={ iconColorCat } />, 
-          path: '/tipos', 
+          path: 'tipos', 
         },
         { 
           text: 'Usuarios', 
           icon: <Person color={ iconColorCat } />, 
-          path: '/usuarios-radios', 
+          path: 'usuarios-radios', 
         },
         { 
           text: 'Vehiculos', 
           icon: <DirectionsCarFilledOutlined color={ iconColorCat } />, 
-          path: '/vehiculos', 
+          path: 'vehiculos', 
         },
         { 
           text: 'Zonas-Regiones', 
           icon: <SouthAmericaTwoTone color={ iconColorCat } />, 
-          path: '/zonas-regiones', 
+          path: 'zonas-regiones', 
         },
       ];
       

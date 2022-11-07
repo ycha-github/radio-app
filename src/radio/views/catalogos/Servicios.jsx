@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import { Box, IconButton, Select } from '@mui/material';
-
-import { ModalRadio } from '../../components/ModalRadio';
-import { FormUser } from '../../components/formAdmin/FormUser';
+import { Box, IconButton } from '@mui/material';
 import { Block, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
-import {FormUpdateUser} from '../../../radio/components/formAdmin/FormUpdateUser'
 import { FormServicio } from '../../components/formCat/FormServicio';
-
 
 const columns = [
 
@@ -36,9 +31,7 @@ function RowMenuCell(props) {
 
   const { OpenModal}=useModalHook();
   
-  const mensaje = () => {
-    console.log("mensaje");
-  };
+  
   return (
     <div>
       <IconButton
@@ -61,7 +54,6 @@ function RowMenuCell(props) {
   );
 }
 
-
 export const Servicios = () => {
 
   const [elementos, setElementos] = useState([]);
@@ -76,7 +68,6 @@ export const Servicios = () => {
       consultar();
      }, []);
 
-    
   return (
     <>
       <h2 className='colorCat'>SERVICIOS</h2>
