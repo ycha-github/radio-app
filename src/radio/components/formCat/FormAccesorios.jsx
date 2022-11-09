@@ -1,23 +1,29 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
-import { useZonasStore } from '../../../hooks/hooksCatalogo/useZonasStore';
 import { useModalHook } from '../../../hooks/useModalHook';
+import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosStore';
 
 export const FormZonasReg = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     const [formValues, setFormValues] = useState({
-        nombreZonasRegiones: "",
-        descripcionZonasRegiones: "",
-        estatus: "",
-        createdAt: "",
-        updatedAt: "",
+        num_serie: '',
+        marcas_idMarcas: '',
+        inventario_interno: '',
+        inventario_segpub: '',
+        contrato_compra: '',
+        observaciones: '',
+        fecha_recepcion: '',
+        fk_sue: '',
+        estatus: '',
+        createdAt: '',
+        updatedAt: '',
     });
 
     const {CloseModal, isActualizar}=useModalHook();
-    const { activeEvent, startSavingEvent }=useZonasStore();
+    const { activeEvent, startSavingEvent }=useAccesoriosStore();
 
     useEffect(() => {
         if ( activeEvent !== null ) {
@@ -37,7 +43,7 @@ export const FormZonasReg = () => {
         event.preventDefault();
         setFormSubmitted(true);
 
-        if (formValues.nombreZonasRegiones.length <= 0 )return;
+        if (formValues.num_serie.length <= 0 )return;
         console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
@@ -48,7 +54,7 @@ export const FormZonasReg = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nueva Zonas-Regiones </Typography>
+                <Typography variant='h5'> Nueva Accesorios </Typography>
                 <form onSubmit={onSubmit}>
                         <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>

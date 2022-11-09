@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent,onUpdateEvent, onDeleteEvent,onLoadEvent } from "../../store/catalogo/zonasSlice";
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/catalogo/accesoriosSlice";
 
-export const useZonasStore = () => {
+export const useAccesoriosStore= () => {
   const dispatch = useDispatch();
-  const { events, activeEvent } = useSelector( state => state.zonas );
+  const { events, activeEvent } = useSelector( state => state.accesorios );
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
@@ -13,28 +13,28 @@ export const useZonasStore = () => {
   }
   const startSavingEvent =async(zonasEvent)=>{
     //TODO: Update event
-    if(zonasEvent.idzonasregiones){
+    if(zonasEvent.idaccesorios){
       //Actualizando
-        const {data}= await  radioApi.put(`/zonasregiones/${zonasEvent.idzonasregiones}`,zonasEvent);
+        const {data}= await  radioApi.put(`/accesorios/${zonasEvent.idaccesorios}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
     }else{
       //creando
-      const {data}= await radioApi.post('/zonasregiones', zonasEvent);
-      dispatch(onAddNewEvent({...zonasEvent, idzonasregiones:data.idzonasregiones, user}));
+      const {data}= await radioApi.post('/accesorios', zonasEvent);
+      dispatch(onAddNewEvent({...zonasEvent, idaccesorios:data.idaccesorios, user}));
       window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data}= await  radioApi.delete(`/zonasregiones/${zonasEvent.idzonasregiones}`);
-    dispatch(onUpdateEvent(zonasEvent,user));
-    window.location.reload(true);
+    const {data} = await  radioApi.delete(`/accesorios/${zonasEvent.idaccesorios}`);
+  dispatch(onUpdateEvent(zonasEvent,user));
+  window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{
       try {
-        const {data} = await radioApi.get('/zonasregiones')
+        const { data } = await radioApi.get('/accesorios')
         dispatch(onLoadEvent(data))
-        // console.log('asdasd',{data});
+      
       } catch (error) {
         console.log('Error cargando Eventos');
         console.log(error);

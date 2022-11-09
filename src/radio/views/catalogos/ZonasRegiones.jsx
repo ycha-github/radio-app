@@ -1,11 +1,10 @@
-
 import { DataGrid,  esES  } from '@mui/x-data-grid';
-import { Box, Button, createTheme, IconButton, Stack, ThemeProvider } from '@mui/material';
+import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { FormZonasReg } from '../../components/formCat/FormZonasReg';
 import { useZonasStore } from '../../../hooks/hooksCatalogo/useZonasStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const columns = [
 
@@ -20,7 +19,7 @@ const columns = [
     headerName: 'Actions',
     renderCell: RowMenuCell,
     sortable: false,
-    width: 100,
+    width: 140,
     headerClassName: "super",
     headerAlign: 'center',
     filterable: false,
@@ -33,6 +32,15 @@ const columns = [
 function RowMenuCell( event) {
   const { deleteEvent}= useZonasStore();
   const {OpenModal, mostrarActualizar}=useModalHook();
+
+  const [state, setState] =useState(
+    event.row
+  );
+  
+  const handleChange =async (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    await deleteEvent(state);
+  };
 
   const cambiar = ( ) =>  {
     OpenModal();
@@ -54,12 +62,19 @@ function RowMenuCell( event) {
         aria-label="delete">
         <Block fontSize="small"/>
       </IconButton>
+      <IconButton
+        color="inherit"
+        size="small"
+        aria-label="delete">
+       <Switch color='warning' name="estatus" checked={state.estatus}  onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
+      </IconButton>
     </div>
   );
 }
 
 export const ZonasRegiones= () => {
   const { events, setActiveEvent, startLoadingEvents } = useZonasStore();
+  
   const { OpenModal } = useModalHook();
   const newRow =()=>{
     setActiveEvent({
@@ -90,7 +105,7 @@ useEffect(() => {
 
   return (
     <>
-     <h2 className='colorAdmin'>ZONAS-REGIONES</h2>
+     <h2 className='colorCat'>ZONAS-REGIONES</h2>
      <div style={{ height: 400, width: '100%' }}>
     <div style={{ height: 'flex', width: '100%' }}>
     <div style={{ flexGrow: 1 }}>
@@ -99,13 +114,13 @@ useEffect(() => {
         height:750,
         width: "100%",
         "& .super":{
-          backgroundColor: "rgba(15, 163, 248, 0.8)",
+          backgroundColor: "rgba(228, 125, 35, 1)",
         }
       }}>
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
         <FormZonasReg/>
         <Stack direction="row" spacing={1} marginBottom={2}>
-                <Button onClick={newRow} color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
+                <Button onClick={newRow} color={'warning'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
                     Nuevo
                 </Button>
             </Stack>
@@ -121,9 +136,9 @@ useEffect(() => {
         sx={{
           boxShadow:5,
           border:4,
-          borderColor:'rgba(15, 163, 248, 0.8)',
+          borderColor:'rgba(228, 125, 35, 1)',
           '& .MuiDataGrid-cell:hover':{
-          color:'rgba(15, 163, 248, 0.8)',
+          color:'rgba(228, 125, 35, 1)',
         },
       }}
       />

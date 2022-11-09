@@ -9,8 +9,8 @@ import { createSlice } from '@reduxjs/toolkit';
 //      updatedAt:'28-09-22',
 //    };
 
-export const zonasSlice = createSlice({
-  name: 'zonas',
+export const accesoriosSlice = createSlice({
+  name: 'accesorios',
   initialState:{
     isLoadingEvents: true,
     events:
@@ -31,7 +31,7 @@ export const zonasSlice = createSlice({
   },
     onUpdateEvent:(state, {payload})=>{
       state.events= state.events.map(event=>{
-        if (event.idzonasregiones === payload.idzonasregiones){
+        if (event.idaccesorios === payload.idaccesorios){
           return payload;
         }
         return event;
@@ -44,7 +44,7 @@ export const zonasSlice = createSlice({
     //},
     onDeleteEvent:(state)=>{
       state.events= state.events.map(event=>{
-        if (event.idzonasregiones === payload.idzonasregiones){
+        if (event.idaccesorios === payload.idaccesorios){
           return payload;
         }
         return event;
@@ -52,10 +52,11 @@ export const zonasSlice = createSlice({
 
     },
     onLoadEvent:(state,{payload=[]})=>{
+        console.log(payload)
       state.isLoadingEvents= false;
       //state.events=  payload;
       payload.forEach(event=>{
-        const exists = state.events.some(dbEvent=> dbEvent.idzonasregiones === event.idzonasregiones);
+        const exists = state.events.some(dbEvent=> dbEvent.idaccesorios === event.idaccesorios);
         if( !exists){
           state.events.push(event)
         }
@@ -66,4 +67,4 @@ export const zonasSlice = createSlice({
   }
 });
 // Action creators are generated for each case reducer function
-export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent,onLoadEvent } = zonasSlice.actions;
+export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent,onLoadEvent } = accesoriosSlice.actions;
