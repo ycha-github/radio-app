@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent,onUpdateEvent, onDeleteEvent,onLoadEvent } from "../../store/catalogo/zonasSlice";
+import { onAddNewEvent, onSetActiveEvent,onUpdateEvent, onDeleteEvent,onLoadEvent } from "../../store/catalogo/corporacionesSlice";
 
-export const useZonasStore = () => {
+export const useCorporacionesStore = () => {
   const dispatch = useDispatch();
-  const { events, activeEvent } = useSelector( state => state.zonas );
+  const { events, activeEvent } = useSelector( state => state.corporaciones );
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
@@ -13,26 +13,26 @@ export const useZonasStore = () => {
   }
   const startSavingEvent =async(zonasEvent)=>{
     //TODO: Update event
-    if(zonasEvent.idzonasregiones){
+    if(zonasEvent.idcorporaciones){
       //Actualizando
-        const {data}= await  radioApi.put(`/zonasregiones/${zonasEvent.idzonasregiones}`,zonasEvent);
+        const {data}= await  radioApi.put(`/corporaciones/${zonasEvent.idcorporaciones}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
     }else{
       //creando
-      const {data}= await radioApi.post('/zonasregiones', zonasEvent);
-      dispatch(onAddNewEvent({...zonasEvent, idzonasregiones:data.idzonasregiones, user}));
+      const {data}= await radioApi.post('/corporaciones', zonasEvent);
+      dispatch(onAddNewEvent({...zonasEvent, idcorporaciones:data.idcorporaciones, user}));
       window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data}= await  radioApi.delete(`/zonasregiones/${zonasEvent.idzonasregiones}`);
-    dispatch(onUpdateEvent({zonasEvent,user}));
+    const {data}= await  radioApi.delete(`/corporaciones/${zonasEvent.idcorporaciones}`);
+    dispatch(onUpdateEvent(zonasEvent,user));
     //window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{
       try {
-        const {data} = await radioApi.get('/zonasregiones')
+        const {data} = await radioApi.get('/corporaciones')
         dispatch(onLoadEvent(data))
         // console.log('asdasd',{data});
       } catch (error) {

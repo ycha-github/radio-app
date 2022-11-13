@@ -1,10 +1,11 @@
 import { DataGrid, esES } from '@mui/x-data-grid';
 import  {useState , useEffect} from "react";
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
-import { FormUser } from '../../components/formAdmin/FormUser';
+//import { FormAccesorios } from '../../components/formCat/FormAccesorios';
 import { AddCircleOutlineOutlined, Block, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosStore';
+import { FormAccesorios } from '../../components/formCat/FormAccesorios';
 
 
 const columns = [
@@ -45,6 +46,7 @@ function RowMenuCell( event) {
   
   const handleChange =async (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
+    console.log(state);
     await deleteEvent(state);
   };
 
@@ -116,7 +118,7 @@ useEffect(() => {
 }, [])
   return (
     <>
-     <h2 className='colorCat'>USUARIOS</h2>
+     <h2 className='colorCat'>ACCESORIOS</h2>
     <div style={{ height: '100%', width: '100%' }}>
     <div style={{ height: 'flex', width: '100%' }}>
     <div style={{ flexGrow: 1 }}>
@@ -130,7 +132,7 @@ useEffect(() => {
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-        <FormUser/>
+        <FormAccesorios/>
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'warning'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
                     Nuevo
@@ -138,6 +140,7 @@ useEffect(() => {
             </Stack>
             <ThemeProvider theme={theme}>
       <DataGrid
+      onCellClick={onSelect}
       getRowId={(row) => row.idaccesorios}
       autoHeight={true}
         rows={events}

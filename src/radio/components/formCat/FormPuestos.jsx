@@ -1,23 +1,24 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
-import { useZonasStore } from '../../../hooks/hooksCatalogo/useZonasStore';
+import { usePuestosStore } from '../../../hooks/hooksCatalogo/usePuestosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 
-export const FormZonasReg = () => {
+export const FormPuestos = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     const [formValues, setFormValues] = useState({
-        nombreZonasRegiones: "",
-        descripcionZonasRegiones: "",
-        estatus: "",
-        createdAt: "",
-        updatedAt: "",
+        nombre:'',
+        nombreCorporacion:'',
+        fk_corporacion:'',
+        estatus:'',
+        createdAt:'',
+        updatedAt:'',
     });
  
     const {CloseModal, isActualizar}=useModalHook();
-    const { activeEvent, startSavingEvent }=useZonasStore();
+    const { activeEvent, startSavingEvent }=usePuestosStore();
 
     useEffect(() => {
         if ( activeEvent !== null ) {
@@ -37,7 +38,7 @@ export const FormZonasReg = () => {
         event.preventDefault();
         setFormSubmitted(true);
 
-        if (formValues.nombreZonasRegiones.length <= 0 )return;
+        if (formValues.nombre.length <= 0 )return;
         console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
@@ -48,32 +49,37 @@ export const FormZonasReg = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nueva Zonas-Regiones </Typography>
+                <Typography variant='h5'> Nueva Puestos </Typography>
                 <form onSubmit={onSubmit}>
                         <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
                             <TextField
-                                id="zona-input"
+                                id="nombre-input"
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="nombreZonasRegiones"
+                                name="nombre"
                                 color='info'
-                                label="Zona"
+                                label="Nombre"
                                 variant="outlined"
-                                value={formValues.nombreZonasRegiones}
+                                value={formValues.nombre}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
-                            <TextField
-                                id="descripcion-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
-                                type="text"
-                                name="descripcionZonasRegiones"
-                                color='info'
-                                label="Descripcion"
-                                variant="outlined"
-                                value={formValues.descripcionZonasRegiones}
-                                onChange={handleInputChange} />
+                            <FormControl fullWidth>
+                                <InputLabel id="fk_corporacion-input" color='info'>Corporaciones</InputLabel>
+                                <Select
+                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    labelId="demo-simple-select-label"
+                                    id="fk_corporacion-input"
+                                    name="fk_corporacion"
+                                    color='info'
+                                    value={formValues.fk_corporacion}
+                                    label="Nombre Corporacion"
+                                    onChange={handleInputChange}>
+                                    <MenuItem value={1}>C4</MenuItem>
+                                    <MenuItem value={2}>SSyPC</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>

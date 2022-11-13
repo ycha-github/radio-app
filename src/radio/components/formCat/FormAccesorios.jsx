@@ -4,8 +4,9 @@ import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosStore';
 
-export const FormZonasReg = () => {
 
+export const FormAccesorios = () => {
+ 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     const [formValues, setFormValues] = useState({
@@ -62,24 +63,106 @@ export const FormZonasReg = () => {
                                 id="zona-input"
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="nombreZonasRegiones"
+                                name="num_serie"
                                 color='info'
-                                label="Zona"
+                                label="Numero de serie"
                                 variant="outlined"
-                                value={formValues.nombreZonasRegiones}
+                                value={formValues.num_serie}
+                                onChange={handleInputChange} />
+                        </Grid>
+                        <Grid item>
+                            <FormControl fullWidth>
+                                <InputLabel id="marcas_idMarcas-input" color='info'>Marca</InputLabel>
+                                <Select
+                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    labelId="demo-simple-select-label"
+                                    id="marcas_idMarcas-input"
+                                    name="marcas_idMarcas"
+                                    color='info'
+                                    value={formValues.marcas_idMarcas}
+                                    label="Marca"
+                                    onChange={handleInputChange}>
+                                    <MenuItem value={1}>Nissan</MenuItem>
+                                    <MenuItem value={2}>Ford</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                id="inventario_interno-input"
+                                sx={{ border: 'none', mb: 1,  width: 300 }}
+                                type="text"
+                                name="inventario_interno"
+                                color='info'
+                                label="Inventario"
+                                variant="outlined"
+                                value={formValues.inventario_interno}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="descripcion-input"
+                                id="inventario_segpub-input"
+                                sx={{ border: 'none', mb: 1,  width: 300 }}
+                                type="text"
+                                name="inventario_segpub"
+                                color='info'
+                                label="inventario_segpub"
+                                variant="outlined"
+                                value={formValues.inventario_segpub}
+                                onChange={handleInputChange} />
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                id="contrato_compra-input"
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
-                                name="descripcionZonasRegiones"
+                                name="contrato_compra"
+                                color='info'
+                                label="contrato_compra"
+                                variant="outlined"
+                                value={formValues.contrato_compra}
+                                onChange={handleInputChange} />
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                id="observaciones-input"
+                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                type="text"
+                                name="observaciones"
                                 color='info'
                                 label="Descripcion"
                                 variant="outlined"
-                                value={formValues.descripcionZonasRegiones}
+                                value={formValues.observaciones}
                                 onChange={handleInputChange} />
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                id="fecha_recepcion-input"
+                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                type="text"
+                                name="fecha_recepcion"
+                                color='info'
+                                label="Fecha de recepcion "
+                                variant="outlined"
+                                value={formValues.fecha_recepcion}
+                                onChange={handleInputChange} />
+                        </Grid>
+                        <Grid item>
+                            <FormControl fullWidth>
+                                <InputLabel id="fk_sue-input" color='info'>SUE</InputLabel>
+                                <Select
+                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    labelId="demo-simple-select-label"
+                                    id="fk_sue-input"
+                                    name="fk_sue"
+                                    color='info'
+                                    value={formValues.fk_sue}
+                                    label="SUE"
+                                    onChange={handleInputChange}>
+                                    <MenuItem value={1}>Inicio</MenuItem>
+                                    <MenuItem value={2}>Cancelado</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
@@ -97,30 +180,6 @@ export const FormZonasReg = () => {
                                     <MenuItem value={false}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                id="fechaCrea-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
-                                type="text"
-                                name="createdAt"
-                                color='info'
-                                label="Fecha de creacion"
-                                variant="outlined"
-                                value={formValues.createdAt}
-                                onChange={handleInputChange} />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                id="fechaAct-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
-                                type="text"
-                                name="updatedAt"
-                                color='info'
-                                label="Fecha de Actualizacion"
-                                variant="outlined"
-                                value={formValues.updatedAt}
-                                onChange={handleInputChange} />
                         </Grid>
                         <Button variant="contained" color="info" type="submit" >
                         {isActualizar? 'Actualizar' : 'Guardar'}

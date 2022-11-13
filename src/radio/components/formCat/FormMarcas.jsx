@@ -1,23 +1,23 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
-import { useZonasStore } from '../../../hooks/hooksCatalogo/useZonasStore';
+import { useMarcasStore } from '../../../hooks/hooksCatalogo/useMarcasStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 
-export const FormZonasReg = () => {
+export const FormMarcas = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     const [formValues, setFormValues] = useState({
-        nombreZonasRegiones: "",
-        descripcionZonasRegiones: "",
-        estatus: "",
-        createdAt: "",
-        updatedAt: "",
+        nombreMarcas:'',
+        nombreModelos:'',
+        estatus:'',
+        createdAt:'',
+        updatedAt:'',
     });
  
     const {CloseModal, isActualizar}=useModalHook();
-    const { activeEvent, startSavingEvent }=useZonasStore();
+    const { activeEvent, startSavingEvent }=useMarcasStore();
 
     useEffect(() => {
         if ( activeEvent !== null ) {
@@ -37,7 +37,7 @@ export const FormZonasReg = () => {
         event.preventDefault();
         setFormSubmitted(true);
 
-        if (formValues.nombreZonasRegiones.length <= 0 )return;
+        if (formValues.nombreMarcas.length <= 0 )return;
         console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
@@ -53,26 +53,26 @@ export const FormZonasReg = () => {
                         <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
                             <TextField
-                                id="zona-input"
+                                id="nombreMarcas-input"
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="nombreZonasRegiones"
+                                name="nombreMarcas"
                                 color='info'
-                                label="Zona"
+                                label="Marca"
                                 variant="outlined"
-                                value={formValues.nombreZonasRegiones}
+                                value={formValues.nombreMarcas}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="descripcion-input"
+                                id="nombreModelos-input"
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
-                                name="descripcionZonasRegiones"
+                                name="nombreModelos"
                                 color='info'
-                                label="Descripcion"
+                                label="Modelo"
                                 variant="outlined"
-                                value={formValues.descripcionZonasRegiones}
+                                value={formValues.nombreModelos}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>

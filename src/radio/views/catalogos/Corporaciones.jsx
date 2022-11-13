@@ -1,73 +1,151 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
-import { AddCircleOutlineOutlined } from '@mui/icons-material';
-import  {useState , useEffect} from "react";
-import axios from "axios";
-
+import { DataGrid,  esES  } from '@mui/x-data-grid';
+import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
+import { AddCircleOutlineOutlined, Block, Edit } from '@mui/icons-material';
+import { useModalHook } from '../../../hooks/useModalHook';
+import { useEffect, useState } from 'react';
+import { useCorporacionesStore } from '../../../hooks/hooksCatalogo/useCorporacionesStore';
+import { FormCorporaciones } from '../../components/formCat/FormCorporaciones';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'username', headerName: 'First name', width: 130 },
-  { field: 'rol', headerName: 'Last name', width: 130 },
+
+  { field: 'idcorporaciones', headerClassName: "super", headerName: 'ID', Width: 90 },
+  { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Corporacion', flex: 1, minWidth: 90 },
+  { field: 'siglasCorporacion',headerClassName: "super", headerName: 'Siglas', flex: 1, minWidth: 90 },
+  { field: 'estatus',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
+  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
+  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
   {
-    field: 'passwd',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
+    field: 'actions',
+    headerName: 'Actions',
+    renderCell: RowMenuCell,
     sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    width: 140,
+    headerClassName: "super",
+    headerAlign: 'center',
+    filterable: false,
+    align: 'center',
+    disableColumnMenu: true,
+    disableReorder: true,
   },
 ];
 
+function RowMenuCell( event) {
+  const { deleteEvent}= useCorporacionesStore();
+  const {OpenModal, mostrarActualizar}=useModalHook();
 
-
-export const Corporaciones=()=> {
+  const [state, setState] =useState(
+    event.row
+  );
   
-  const [tableData, setTableData] = useState([])
+  const handleChange =async (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    await deleteEvent(state);
+  };
 
- useEffect(() => {
-   fetch("http://localhost:3001/usuario")
-     .then((data) => data.json())
-     .then((data) => setTableData(data))
- }, [])
-  console.log(tableData)
-  ;
+  const cambiar = ( ) =>  {
+    OpenModal();
+    mostrarActualizar();
+  }
+  return (
+    <div>
+      <IconButton
+        onClick={ cambiar }
+        color="inherit"
+        size="small"
+        aria-label="edit">
+        <Edit fontSize="small"/>
+      </IconButton>
+      <IconButton
+      onClick={deleteEvent}
+        color="inherit"
+        size="small"
+        aria-label="delete">
+        <Block fontSize="small"/>
+      </IconButton>
+      <IconButton
+        color="inherit"
+        size="small"
+        aria-label="delete">
+       <Switch color='warning' name="estatus" checked={state.estatus}  onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
+      </IconButton>
+    </div>
+  );
+}
+
+export const Corporaciones= () => {
+  const { events, setActiveEvent, startLoadingEvents } = useCorporacionesStore();
   
-//useEffect(() => {
-//   axios.get("http://localhost:3001/usuario")
-// .then((response) => {
-//     setTableData = response.data.json();
-//     console.log(setTableData);
-//  });
-//);
+  const { OpenModal } = useModalHook();
+  const newRow =()=>{
+    setActiveEvent({
+      nombreCorporacion: '',
+      siglasCorporacion: '',
+      estatus: '',
+      createdAt: '',
+      updatedAt: '',
+    })
+    OpenModal();
+  }
+  const onSelect = ( event ) =>  {
+    console.log(event.row)
+    setActiveEvent( event.row );
+  }
+ const theme = createTheme(
+  {
+    palette: {
+    primary: { main: '#1976d2' },
+    },
+  },
+  esES,
+);
+
+useEffect(() => {
+  startLoadingEvents()
+}, [])
 
   return (
     <>
-    <Stack direction="row" spacing={1} marginBottom={2}>
-      <Button variant="outlined" startIcon={<AddCircleOutlineOutlined color="secondary" />}>
-        Nuevo
-      </Button>
-      
-    </Stack>
-    <div style={{ height: 750, width: '100%' }}>
+     <h2 className='colorCat'>CORPORACIONES</h2>
+     <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 'flex', width: '100%' }}>
+    <div style={{ flexGrow: 1 }}>
+      <Box
+       sx={{
+        height:750,
+        width: "100%",
+        "& .super":{
+          backgroundColor: "rgba(228, 125, 35, 1)",
+        }
+      }}>
+      {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
+        <FormCorporaciones/>
+        <Stack direction="row" spacing={1} marginBottom={2}>
+                <Button onClick={newRow} color={'warning'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
+                    Nuevo
+                </Button>
+            </Stack>
+            <ThemeProvider theme={theme}>
       <DataGrid
-        rows={tableData}
+      onCellClick={onSelect}
+      getRowId={(row) => row.idcorporaciones}
+      autoHeight={true}
+        rows={events}
         columns={columns}
         pageSize={12}
         rowsPerPageOptions={[12]}
-        checkboxSelection
+        sx={{
+          boxShadow:5,
+          border:4,
+          borderColor:'rgba(228, 125, 35, 1)',
+          '& .MuiDataGrid-cell:hover':{
+          color:'rgba(228, 125, 35, 1)',
+        },
+      }}
       />
+      </ThemeProvider>
+      </Box>
+      </div>
+        </div>
     </div>
     </>
   );

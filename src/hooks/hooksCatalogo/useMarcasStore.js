@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent,onUpdateEvent, onDeleteEvent,onLoadEvent } from "../../store/catalogo/zonasSlice";
+import { onAddNewEvent, onSetActiveEvent,onUpdateEvent, onDeleteEvent,onLoadEvent } from "../../store/catalogo/marcasSlice";
 
-export const useZonasStore = () => {
+export const useMarcasStore = () => {
   const dispatch = useDispatch();
-  const { events, activeEvent } = useSelector( state => state.zonas );
+  const { events, activeEvent } = useSelector( state => state.marcas );
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
@@ -13,26 +13,26 @@ export const useZonasStore = () => {
   }
   const startSavingEvent =async(zonasEvent)=>{
     //TODO: Update event
-    if(zonasEvent.idzonasregiones){
+    if(zonasEvent.idmarcas){
       //Actualizando
-        const {data}= await  radioApi.put(`/zonasregiones/${zonasEvent.idzonasregiones}`,zonasEvent);
+        const {data}= await  radioApi.put(`/marcas/${zonasEvent.idmarcas}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
     }else{
       //creando
-      const {data}= await radioApi.post('/zonasregiones', zonasEvent);
-      dispatch(onAddNewEvent({...zonasEvent, idzonasregiones:data.idzonasregiones, user}));
+      const {data}= await radioApi.post('/marcas', zonasEvent);
+      dispatch(onAddNewEvent({...zonasEvent, idmarcas:data.idmarcas, user}));
       window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data}= await  radioApi.delete(`/zonasregiones/${zonasEvent.idzonasregiones}`);
+    const {data}= await  radioApi.delete(`/marcas/${zonasEvent.idmarcas}`);
     dispatch(onUpdateEvent({zonasEvent,user}));
-    //window.location.reload(true);
+    window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{
       try {
-        const {data} = await radioApi.get('/zonasregiones')
+        const {data} = await radioApi.get('/marcas')
         dispatch(onLoadEvent(data))
         // console.log('asdasd',{data});
       } catch (error) {

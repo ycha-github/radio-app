@@ -48,8 +48,7 @@ export const zonasSlice = createSlice({
           return payload;
         }
         return event;
-      });
-
+      }); 
     },
     onLoadEvent:(state,{payload=[]})=>{
       state.isLoadingEvents= false;
