@@ -15,29 +15,29 @@ export const FormZonasReg = () => {
         createdAt: "",
         updatedAt: "",
     });
- 
-    const {CloseModal, isActualizar}=useModalHook();
-    const { activeEvent, startSavingEvent }=useZonasStore();
+
+    const { CloseModal, isActualizar } = useModalHook();
+    const { activeEvent, startSavingEvent } = useZonasStore();
 
     useEffect(() => {
-        if ( activeEvent !== null ) {
+        if (activeEvent !== null) {
             setFormValues({ ...activeEvent });
         }
-      }, [ activeEvent ])
+    }, [activeEvent])
 
-    const handleInputChange = ({target}) => {
+    const handleInputChange = ({ target }) => {
         setFormValues({
             ...formValues,
             [target.name]: target.value,
         });
     };
 
-    const onSubmit = async(event) => {
+    const onSubmit = async (event) => {
         //console.log(event)
         event.preventDefault();
         setFormSubmitted(true);
 
-        if (formValues.nombreZonasRegiones.length <= 0 )return;
+        if (formValues.nombreZonasRegiones.length <= 0) return;
         console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
@@ -50,7 +50,7 @@ export const FormZonasReg = () => {
             <ModalRadio >
                 <Typography variant='h5'> Nueva Zonas-Regiones </Typography>
                 <form onSubmit={onSubmit}>
-                        <Grid container alignItems="center" justify="center" direction="column">
+                    <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
                             <TextField
                                 id="zona-input"
@@ -93,7 +93,7 @@ export const FormZonasReg = () => {
                             </FormControl>
                         </Grid>
                         <Button variant="contained" color="info" type="submit" >
-                        {isActualizar? 'Actualizar' : 'Guardar'}
+                            {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>
                 </form>

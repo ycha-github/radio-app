@@ -1,16 +1,16 @@
 import Modal from 'react-modal';
-import { useZonasStore } from '../../hooks/hooksCatalogo/useZonasStore';
 import { useModalHook } from '../../hooks/useModalHook';
 
 const customStyles = {
   content: {
     position: 'absolute',
-    top: '40%',
+    top: '45%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-25%, -50%)',
+
   },
 };
 Modal.setAppElement('#root');
@@ -20,7 +20,6 @@ export const ModalRadio = ({ children }) => {
   const cambiar3=()=>{
   CloseModal();
   mostrarGuardar();
- 
 }
   return (
     <>

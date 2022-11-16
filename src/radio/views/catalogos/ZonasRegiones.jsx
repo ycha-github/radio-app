@@ -30,9 +30,8 @@ const columns = [
 ];
 
 function RowMenuCell( event) {
-  const { deleteEvent}= useZonasStore();
+  const {deleteEvent}= useZonasStore();
   const {OpenModal, mostrarActualizar}=useModalHook();
-
   const [state, setState] =useState(
     event.row
   );

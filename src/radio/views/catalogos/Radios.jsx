@@ -2,29 +2,29 @@ import { DataGrid,  esES  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
-import { FormZonasReg } from '../../components/formCat/FormZonasReg';
 import { useRadiosStore } from '../../../hooks/hooksCatalogo/useRadiosStore';
 import { useEffect, useState } from 'react';
+import { FormRadios } from '../../components/formCat/FormRadios';
 
 const columns = [
 
-  { field: 'idradios', headerClassName: "super", headerName: 'ID', Width: 90 },
-  { field: 'fk_tipoequipo',headerClassName: "super", headerName: 'Zona', flex: 1, minWidth: 90 },
-  { field: 'serie',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'logico',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'inventario_interno',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'inventario_segpub',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'fk_propietario',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'fk_recurso_compra',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'contrato_compra',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'rfsi',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'fk_tiporadio',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'fk_marca',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'fecha_actualizacion',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'fecha_asignacion',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'observaciones',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'fecha_recepcion',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'fk_sue',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
+  { field: 'idradios', headerClassName: "super", headerName: 'ID', width: 90 },
+  { field: 'fk_tipoequipo',headerClassName: "super", headerName: 'Tipo Equipo', flex: 1, minWidth: 90 },
+  { field: 'serie',headerClassName: "super", headerName: 'Serie', flex: 1, minWidth: 90 },
+  { field: 'logico',headerClassName: "super", headerName: 'Logico', flex: 1, minWidth: 90 },
+  { field: 'inventario_interno',headerClassName: "super", headerName: 'Invent. Interno', flex: 1, minWidth: 90 },
+  { field: 'inventario_segpub',headerClassName: "super", headerName: 'Invent. Seg.Pub.', flex: 1, minWidth: 90 },
+  { field: 'fk_propietario',headerClassName: "super", headerName: 'Propietario', flex: 1, minWidth: 90 },
+  { field: 'fk_recurso_compra',headerClassName: "super", headerName: 'Recurso Compra', flex: 1, minWidth: 90 },
+  { field: 'contrato_compra',headerClassName: "super", headerName: 'Contrato', flex: 1, minWidth: 90 },
+  { field: 'rfsi',headerClassName: "super", headerName: 'RFSI', flex: 1, minWidth: 90 },
+  { field: 'fk_tiporadio',headerClassName: "super", headerName: 'Tipo Radio', flex: 1, minWidth: 90 },
+  { field: 'fk_marca',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
+  { field: 'fecha_actualizacion',headerClassName: "super", headerName: 'Fecha Actua.', flex: 1, minWidth: 90 },
+  { field: 'fecha_asignacion',headerClassName: "super", headerName: 'Fecha Asign.', flex: 1, minWidth: 90 },
+  { field: 'observaciones',headerClassName: "super", headerName: 'Observaciones', flex: 1, minWidth: 90 },
+  { field: 'fecha_recepcion',headerClassName: "super", headerName: 'Fecha Recepcion', flex: 1, minWidth: 90 },
+  { field: 'fk_sue',headerClassName: "super", headerName: 'SUE', flex: 1, minWidth: 90 },
   { field: 'estatus',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
@@ -34,7 +34,7 @@ const columns = [
     renderCell: RowMenuCell,
     sortable: false,
     width: 140,
-    headerClassName: "super",
+    headerClassName: 'super',
     headerAlign: 'center',
     filterable: false,
     align: 'center',
@@ -146,7 +146,7 @@ export const Radios= () => {
         }
       }}>
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-        <FormZonasReg/>
+        <FormRadios/>
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'warning'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
                     Nuevo

@@ -105,7 +105,7 @@ useEffect(() => {
 
   return (
     <>
-     <h2 className='colorCat'>ZONAS-REGIONES</h2>
+     <h2 className='colorCat'>MARCAS</h2>
      <div style={{ height: 400, width: '100%' }}>
     <div style={{ height: 'flex', width: '100%' }}>
     <div style={{ flexGrow: 1 }}>

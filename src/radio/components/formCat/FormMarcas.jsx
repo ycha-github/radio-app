@@ -48,7 +48,7 @@ export const FormMarcas = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nueva Zonas-Regiones </Typography>
+                <Typography variant='h5'> Nuevas Marcas </Typography>
                 <form onSubmit={onSubmit}>
                         <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>

@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosStore';
-
+import axios from 'axios';
 
 export const FormAccesorios = () => {
  
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [tableData, setTableData] = useState([])
+    const [tableSue, setTableSue] = useState([])
 
     const [formValues, setFormValues] = useState({
         num_serie: '',
@@ -22,6 +24,20 @@ export const FormAccesorios = () => {
         createdAt: '',
         updatedAt: '',
     });
+
+    useEffect(() => {
+         axios.get('http://localhost:8000/api/v0/marcas').
+       then((response)=>{
+         setTableData(response.data);
+       });
+
+       axios.get('http://localhost:8000/api/v0/sue').
+       then((response)=>{
+         setTableSue(response.data);
+       });
+
+      }, []);
+    
 
     const {CloseModal, isActualizar}=useModalHook();
     const { activeEvent, startSavingEvent }=useAccesoriosStore();
@@ -55,7 +71,7 @@ export const FormAccesorios = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nueva Accesorios </Typography>
+                <Typography variant='h5'> {isActualizar? 'Actualizando Accesorio' : 'Nuevo Accesorio'} </Typography>
                 <form onSubmit={onSubmit}>
                         <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
@@ -82,8 +98,10 @@ export const FormAccesorios = () => {
                                     value={formValues.marcas_idMarcas}
                                     label="Marca"
                                     onChange={handleInputChange}>
-                                    <MenuItem value={1}>Nissan</MenuItem>
-                                    <MenuItem value={2}>Ford</MenuItem>
+                                        {
+                                        tableData.map(elemento=>{
+                                          return <MenuItem key={elemento.idmarcas} value={elemento.idmarcas} >{elemento.nombreMarcas}</MenuItem> 
+                                        })}
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -159,8 +177,10 @@ export const FormAccesorios = () => {
                                     value={formValues.fk_sue}
                                     label="SUE"
                                     onChange={handleInputChange}>
-                                    <MenuItem value={1}>Inicio</MenuItem>
-                                    <MenuItem value={2}>Cancelado</MenuItem>
+                                    {
+                                        tableSue.map(elementos=>{
+                                          return <MenuItem key={elementos.id_sue} value={elementos.id_sue} >{elementos.nombreStatus}</MenuItem> 
+                                        })}
                                 </Select>
                             </FormControl>
                         </Grid>
