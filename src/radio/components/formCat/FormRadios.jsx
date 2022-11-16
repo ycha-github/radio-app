@@ -1,15 +1,14 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
-
 import { useRadiosStore } from '../../../hooks/hooksCatalogo/useRadiosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
+import axios from 'axios';
 
 
 export const FormRadios = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-
     const [formValues, setFormValues] = useState({
         fk_tipoequipo: '',
         serie: '',
@@ -32,8 +31,43 @@ export const FormRadios = () => {
         updatedAt: '',
     });
 
+    const [selectTequipo, setSelectTequipo] = useState([]);
+    const [selectPropie, setSelectPropie] = useState([]);
+    const [selectRecurso, setSelectRecurso] = useState([]);
+    const [selectTradio, setSelectTradio] = useState([]);
+    const [selectMarca, setSelectMarca] = useState([]);
+    const [selectSue, setSelectSue] = useState([]);
+
     const { CloseModal, isActualizar } = useModalHook();
     const { activeEvent, startSavingEvent } = useRadiosStore();
+
+useEffect(() => {
+    axios.get('http://localhost:8000/api/v0/tipos').
+    then((response)=>{
+      setSelectTequipo(response.data);
+    });
+    axios.get('http://localhost:8000/api/v0/corporaciones').
+    then((response)=>{
+      setSelectPropie(response.data);
+    });
+    axios.get('http://localhost:8000/api/v0/recursoscompras').
+    then((response)=>{
+      setSelectRecurso(response.data);
+    });
+    axios.get('http://localhost:8000/api/v0/tipos').
+    then((response)=>{
+      setSelectTradio(response.data);
+    });
+    axios.get('http://localhost:8000/api/v0/marcas').
+    then((response)=>{
+      setSelectMarca(response.data);
+    });
+    axios.get('http://localhost:8000/api/v0/sue').
+    then((response)=>{
+      setSelectSue(response.data);
+    });
+
+}, [])
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -70,19 +104,22 @@ export const FormRadios = () => {
                     <Grid container alignItems="center" justify="center" direction="column" >
                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel id="fk_tipoequipo-input" color='info'>Tipo Equipo</InputLabel>
+                            <FormControl fullWidth >
+                                <InputLabel id="fk_tipoequipo-input" color='warning'>Tipo Equipo</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="fk_tipoequipo-input"
                                     name="fk_tipoequipo"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.fk_tipoequipo}
                                     label="Tipo Equipo"
                                     onChange={handleInputChange}>
-                                    <MenuItem value={1}>Activo</MenuItem>
-                                    <MenuItem value={2}>Inactivo</MenuItem>
+                                     {
+                                        selectTequipo.map(elemento=>{
+                                          return <MenuItem key={elemento.idtipos} value={elemento.idtipos} >{elemento.nombreTipo}</MenuItem> 
+                                        })}
+                                    
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -92,7 +129,7 @@ export const FormRadios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300}}
                                 type="text"
                                 name="serie"
-                                color='info'
+                                color='warning'
                                 label="serie"
                                 variant="outlined"
                                 value={formValues.serie}
@@ -104,7 +141,7 @@ export const FormRadios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="logico"
-                                color='info'
+                                color='warning'
                                 label="logico"
                                 variant="outlined"
                                 value={formValues.logico}
@@ -116,7 +153,7 @@ export const FormRadios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="inventario_interno"
-                                color='info'
+                                color='warning'
                                 label="inventario_interno"
                                 variant="outlined"
                                 value={formValues.inventario_interno}
@@ -128,7 +165,7 @@ export const FormRadios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="inventario_segpub"
-                                color='info'
+                                color='warning'
                                 label="inventario_segpub"
                                 variant="outlined"
                                 value={formValues.inventario_segpub}
@@ -136,34 +173,39 @@ export const FormRadios = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <FormControl fullWidth>
-                                <InputLabel id="fk_propietario-input" color='info'>Propietario</InputLabel>
+                                <InputLabel id="fk_propietario-input" color='warning'>Propietario</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="fk_propietario-input"
                                     name="fk_propietario"
-                                    color='info'
+                                    color='warning'
+                                    label="Propietario"
                                     value={formValues.fk_propietario}
                                     onChange={handleInputChange}>
-                                    <MenuItem value={1}>Activo</MenuItem>
-                                    <MenuItem value={2}>Inactivo</MenuItem>
+                                    {
+                                        selectPropie.map(elemento=>{
+                                          return <MenuItem key={elemento.idcorporaciones} value={elemento.idcorporaciones} >{elemento.nombreCorporacion}</MenuItem> 
+                                        })}
                                 </Select>
                             </FormControl>
                         </Grid>
                         <Grid item xs={6}>
                             <FormControl fullWidth>
-                                <InputLabel id="fk_recurso_compra-input" color='info'>Recurso Compra</InputLabel>
+                                <InputLabel id="fk_recurso_compra-input" color='warning'>Recurso Compra</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="fk_recurso_compra-input"
                                     name="fk_recurso_compra"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.fk_recurso_compra}
-                                    label="Tipo Equipo"
+                                    label="Recurso Compra"
                                     onChange={handleInputChange}>
-                                    <MenuItem value={1}>Activo</MenuItem>
-                                    <MenuItem value={2}>Inactivo</MenuItem>
+                                    {
+                                        selectRecurso.map(elemento=>{
+                                          return <MenuItem key={elemento.idrecursoCompras} value={elemento.idrecursoCompras} >{elemento.nombreRecursoCompra}</MenuItem> 
+                                        })}
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -173,7 +215,7 @@ export const FormRadios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="contrato_compra"
-                                color='info'
+                                color='warning'
                                 label="contrato_compra"
                                 variant="outlined"
                                 value={formValues.contrato_compra}
@@ -184,7 +226,7 @@ export const FormRadios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="rfsi"
-                                color='info'
+                                color='warning'
                                 label="rfsi"
                                 variant="outlined"
                                 value={formValues.rfsi}
@@ -192,33 +234,37 @@ export const FormRadios = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <FormControl fullWidth>
-                                <InputLabel id="fk_tiporadio-input" color='info'>Tipo Radio</InputLabel>
+                                <InputLabel id="fk_tiporadio-input" color='warning'>Tipo Radio</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="fk_tiporadio-input"
                                     name="fk_tiporadio"
-                                    color='info'
+                                    color='warning'
+                                    label='Tipo Radio'
                                     value={formValues.fk_tiporadio}
                                     onChange={handleInputChange}>
-                                    <MenuItem value={1}>Activo</MenuItem>
+                                   <MenuItem value={1}>Activo</MenuItem>
                                     <MenuItem value={2}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
                         <Grid item xs={6}>
                             <FormControl fullWidth>
-                                <InputLabel id="fk_marca-input" color='info'>Marca</InputLabel>
+                                <InputLabel id="fk_marca-input" color='warning'>Marca</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="fk_marca-input"
                                     name="fk_marca"
-                                    color='info'
+                                    color='warning'
+                                    label='Marca'
                                     value={formValues.fk_marca}
                                     onChange={handleInputChange}>
-                                    <MenuItem value={1}>Activo</MenuItem>
-                                    <MenuItem value={2}>Inactivo</MenuItem>
+                                  {
+                                        selectMarca.map(elemento=>{
+                                          return <MenuItem key={elemento.idmarcas} value={elemento.idmarcas} >{elemento.nombreMarcas}</MenuItem> 
+                                        })}
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -227,7 +273,7 @@ export const FormRadios = () => {
                                 id="fecha_actualizacion-input"
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 name='fecha_actualizacion'
-                                color='info'
+                                color='warning'
                                 label="Fecha Actualizacion"
                                 type="date"
                                 InputLabelProps={{
@@ -243,7 +289,7 @@ export const FormRadios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="date"
                                 name="fecha_asignacion"
-                                color='info'
+                                color='warning'
                                 label="fecha_asignacion"
                                 variant="outlined"
                                 InputLabelProps={{
@@ -258,7 +304,7 @@ export const FormRadios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="observaciones"
-                                color='info'
+                                color='warning'
                                 label="observaciones"
                                 variant="outlined"
                                 value={formValues.observaciones}
@@ -269,7 +315,7 @@ export const FormRadios = () => {
                                 id="fecha_recepcion-input"
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 name="fecha_recepcion"
-                                color='info'
+                                color='warning'
                                 label="fecha_recepcion"
                                 variant="outlined"
                                 type="date"
@@ -281,29 +327,32 @@ export const FormRadios = () => {
                         </Grid>
                         <Grid item xs={6}>
                             <FormControl fullWidth>
-                                <InputLabel id="fk_sue-input" color='info'>SUE</InputLabel>
+                                <InputLabel id="fk_sue-input" color='warning'>SUE</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="fk_sue-input"
                                     name="fk_sue"
-                                    color='info'
+                                    color='warning'
+                                    label="SUE"
                                     value={formValues.fk_sue}
                                     onChange={handleInputChange}>
-                                    <MenuItem value={1}>Activo</MenuItem>
-                                    <MenuItem value={2}>Inactivo</MenuItem>
+                                   {
+                                        selectSue.map(elementos=>{
+                                          return <MenuItem key={elementos.id_sue} value={elementos.id_sue} >{elementos.nombreStatus}</MenuItem> 
+                                        })}
                                 </Select>
                             </FormControl>
                         </Grid>
                         <Grid item xs={6}>
                             <FormControl fullWidth>
-                                <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
+                                <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.estatus}
                                     label="Estatus"
                                     onChange={handleInputChange}>
@@ -313,7 +362,7 @@ export const FormRadios = () => {
                             </FormControl>
                         </Grid>
                         </Grid>
-                        <Button variant="contained"   color="info" type="submit" >
+                        <Button variant="contained"   color="warning" type="submit" >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

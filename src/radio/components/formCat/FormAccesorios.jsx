@@ -177,7 +177,7 @@ export const FormAccesorios = () => {
                                     value={formValues.fk_sue}
                                     label="SUE"
                                     onChange={handleInputChange}>
-                                    {
+                                        {
                                         tableSue.map(elementos=>{
                                           return <MenuItem key={elementos.id_sue} value={elementos.id_sue} >{elementos.nombreStatus}</MenuItem> 
                                         })}

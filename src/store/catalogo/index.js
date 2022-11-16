@@ -4,3 +4,8 @@ export * from './corporacionesSlice';
 export * from './marcasSlice';
 export * from './puestosSlice';
 export * from './radiosSlice';
+export * from './recursosSlice';
+export * from './estatusSlice';
+export * from './tiposSlice';
+export * from './usuariosSlice';
+export * from './vehiculosSlice';
