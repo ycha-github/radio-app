@@ -9,3 +9,4 @@ export * from './estatusSlice';
 export * from './tiposSlice';
 export * from './usuariosSlice';
 export * from './vehiculosSlice';
+export * from './serviciosSlice';

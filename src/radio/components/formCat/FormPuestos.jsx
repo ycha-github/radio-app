@@ -58,7 +58,7 @@ export const FormPuestos = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombre"
-                                color='info'
+                                color='warning'
                                 label="Nombre"
                                 variant="outlined"
                                 value={formValues.nombre}
@@ -66,13 +66,13 @@ export const FormPuestos = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="fk_corporacion-input" color='info'>Corporaciones</InputLabel>
+                                <InputLabel id="fk_corporacion-input" color='warning'>Corporaciones</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="fk_corporacion-input"
                                     name="fk_corporacion"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.fk_corporacion}
                                     label="Nombre Corporacion"
                                     onChange={handleInputChange}>
@@ -83,13 +83,13 @@ export const FormPuestos = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
+                                <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.estatus}
                                     label="Estatus"
                                     onChange={handleInputChange}>
@@ -98,7 +98,7 @@ export const FormPuestos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

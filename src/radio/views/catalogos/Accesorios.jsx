@@ -7,11 +7,11 @@ import { useModalHook } from '../../../hooks/useModalHook';
 import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosStore';
 import { FormAccesorios } from '../../components/formCat/FormAccesorios';
 
-
 const columns = [
 
   { field: 'idaccesorios', headerClassName: "super", headerName: 'ID',width: 90,  },
-  { field: 'num_serie',headerClassName: "super", headerName: 'Numero de serie', flex: 1, minWidth: 90 },
+  { field: 'nombreAccesorio', headerClassName: "super", headerName: 'Accesorio',minwidth: 90,  },
+  { field: 'num_serie',headerClassName: "super", headerName: 'Numero de serie',flex: 1 , minWidth: 90 },
   { field: 'marcas_idMarcas',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
   { field: 'inventario_interno',headerClassName: "super", headerName: 'Inventario Interno', flex: 1, minWidth: 90 },
   { field: 'inventario_segpub',headerClassName: "super",headerName: 'Inv. Seg. Pub.',flex: 1, minWidth: 90 },
@@ -20,7 +20,7 @@ const columns = [
   { field: 'fecha_recepcion',headerClassName: "super",headerName: 'Fecha de Recepcion',flex: 1, minWidth: 90 },
   { field: 'fk_sue',headerClassName: "super",headerName: 'SUE',flex: 1, minWidth: 90 },
   { field: 'estatus',headerClassName: "super",headerName: 'Estatus',flex: 1, minWidth: 90 },
-  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
+  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 1, minWidth: 90 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
   {
     field: 'actions',
@@ -86,17 +86,17 @@ export const Accesorios=()=> {
   const { OpenModal } = useModalHook();
   const newRow =()=>{
     setActiveEvent({
-num_serie:'',
-marcas_idMarcas:'',
-inventario_interno:'',
-inventario_segpub:'',
-contrato_compra:'',
-observaciones:'',
-fecha_recepcion:'',
-fk_sue:'',
-estatus:'',
-createdAt:'',
-updatedAt:'',
+      num_serie:'',
+      marcas_idMarcas:'',
+      inventario_interno:'',
+      inventario_segpub:'',
+      contrato_compra:'',
+      observaciones:'',
+      fecha_recepcion:'',
+      fk_sue:'',
+      estatus:'',
+      createdAt:'',
+      updatedAt:'',
     })
     OpenModal();
   }

@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
-export const userSlice = createSlice({
-  name: 'users',
+export const rolSlice = createSlice({
+  name: 'rol',
   initialState:{
     isLoadingEvents: true,
     events:
@@ -21,32 +20,28 @@ export const userSlice = createSlice({
   },
     onUpdateEvent:(state, {payload})=>{
       state.events= state.events.map(event=>{
-        if (event.idusers === payload.idusers){
-          console.log(event.idusers);
+        if (event.idrol === payload.idrol){
           return payload;
         }
         return event;
       });
-
     },
-
+ 
    onDeleteEvent:(state,{payload})=>{
-     console.log(payload.idusers)
+     console.log(payload.idrol)
     state.events= state.events.map(event=>{
-      if (event.idusers === payload.idusers){
-        console.log(event.idusers);
+      if (event.idrol === payload.idrol){
         return payload;
       }
       return event;
     });
     
-
    },
     onLoadEvent:(state,{payload=[]})=>{
       state.isLoadingEvents= false;
       // state.events =  payload;
       payload.forEach(event=>{
-        const exists = state.events.some(dbEvent=> dbEvent.idusers === event.idusers);
+        const exists = state.events.some(dbEvent=> dbEvent.idrol === event.idrol);
         if( !exists){
           state.events.push(event)
         }
@@ -57,4 +52,4 @@ export const userSlice = createSlice({
   }
 });
 // Action creators are generated for each case reducer function
-export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent,onLoadEvent } = userSlice.actions;
+export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent,onLoadEvent } = rolSlice.actions;

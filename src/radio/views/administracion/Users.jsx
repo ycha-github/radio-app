@@ -6,7 +6,7 @@ import { FormUser } from '../../components/formAdmin/FormUser';
 import { AddCircleOutlineOutlined, Block, Edit} from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useUsersStore } from '../../../hooks/hooksAdministracion/useUsersStore';
-
+ 
 const columns = [
 
   { field: 'idusers', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },

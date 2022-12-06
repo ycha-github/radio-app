@@ -56,7 +56,7 @@ export const FormRecursos = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreRecursoCompra"
-                                color='info'
+                                color='warning'
                                 label="Recurso de Compra"
                                 variant="outlined"
                                 value={formValues.nombreRecursoCompra}
@@ -65,13 +65,13 @@ export const FormRecursos = () => {
                        
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
+                                <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.estatus}
                                     label="Estatus"
                                     onChange={handleInputChange}>
@@ -80,7 +80,7 @@ export const FormRecursos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

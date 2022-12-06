@@ -63,7 +63,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombre"
-                                color='info'
+                                color='warning'
                                 label="Nombre"
                                 variant="outlined"
                                 value={formValues.nombre}
@@ -75,7 +75,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="apellido_pat"
-                                color='info'
+                                color='warning'
                                 label="Apellido Paterno"
                                 variant="outlined"
                                 value={formValues.apellido_pat}
@@ -87,7 +87,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="apellido_mat"
-                                color='info'
+                                color='warning'
                                 label="Apellido Materno"
                                 variant="outlined"
                                 value={formValues.apellido_mat}
@@ -99,7 +99,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="cuip"
-                                color='info'
+                                color='warning'
                                 label="Cuip"
                                 variant="outlined"
                                 value={formValues.cuip}
@@ -111,7 +111,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="clave_elector"
-                                color='info'
+                                color='warning'
                                 label="Clave Elector"
                                 variant="outlined"
                                 value={formValues.clave_elector}
@@ -123,7 +123,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="imagen_ine"
-                                color='info'
+                                color='warning'
                                 label="Imagen Ine"
                                 variant="outlined"
                                 value={formValues.imagen_ine}
@@ -135,7 +135,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="imagen_cuip"
-                                color='info'
+                                color='warning'
                                 label="Imagen Cuip"
                                 variant="outlined"
                                 value={formValues.imagen_cuip}
@@ -147,7 +147,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="titulo"
-                                color='info'
+                                color='warning'
                                 label="Titulo"
                                 variant="outlined"
                                 value={formValues.titulo}
@@ -155,13 +155,13 @@ export const FormUsuarios = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
+                                <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.estatus}
                                     label="Estatus"
                                     onChange={handleInputChange}>
@@ -170,7 +170,7 @@ export const FormUsuarios = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

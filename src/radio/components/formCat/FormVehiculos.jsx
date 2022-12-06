@@ -68,7 +68,7 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreVehiculo"
-                                color='info'
+                                color='warning'
                                 label="Vehiculo"
                                 variant="outlined"
                                 value={formValues.nombreVehiculo}
@@ -80,7 +80,7 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="placa"
-                                color='info'
+                                color='warning'
                                 label="Placa"
                                 variant="outlined"
                                 value={formValues.placa}
@@ -92,7 +92,7 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="color"
-                                color='info'
+                                color='warning'
                                 label="Color"
                                 variant="outlined"
                                 value={formValues.color}
@@ -104,7 +104,7 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="anio"
-                                color='info'
+                                color='warning'
                                 label="Año"
                                 variant="outlined"
                                 value={formValues.anio}
@@ -112,13 +112,13 @@ export const FormVehiculos = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="marcas_idmarcas-input" color='info'>Marca</InputLabel>
+                                <InputLabel id="marcas_idmarcas-input" color='warning'>Marca</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="marcas_idMarcas-input"
                                     name="marcas_idmarcas"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.marcas_idmarcas}
                                     label="Marca"
                                     onChange={handleInputChange}>
@@ -131,13 +131,13 @@ export const FormVehiculos = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
+                                <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.estatus}
                                     label="Estatus"
                                     onChange={handleInputChange}>
@@ -146,7 +146,7 @@ export const FormVehiculos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

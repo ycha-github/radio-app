@@ -33,7 +33,6 @@ export const FormCorporaciones = () => {
     };
 
     const onSubmit = async(event) => {
-        //console.log(event)
         event.preventDefault();
         setFormSubmitted(true);
 
@@ -57,7 +56,7 @@ export const FormCorporaciones = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreCorporacion"
-                                color='info'
+                                color='warning'
                                 label="Corporacion"
                                 variant="outlined"
                                 value={formValues.nombreCorporacion}
@@ -69,7 +68,7 @@ export const FormCorporaciones = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="siglasCorporacion"
-                                color='info'
+                                color='warning'
                                 label="Siglas"
                                 variant="outlined"
                                 value={formValues.siglasCorporacion}
@@ -77,13 +76,13 @@ export const FormCorporaciones = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
+                                <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.estatus}
                                     label="Estatus"
                                     onChange={handleInputChange}>
@@ -92,7 +91,7 @@ export const FormCorporaciones = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

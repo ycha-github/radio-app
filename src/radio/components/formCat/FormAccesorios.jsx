@@ -35,10 +35,8 @@ export const FormAccesorios = () => {
        then((response)=>{
          setTableSue(response.data);
        });
-
       }, []);
     
-
     const {CloseModal, isActualizar}=useModalHook();
     const { activeEvent, startSavingEvent }=useAccesoriosStore();
 
@@ -77,10 +75,10 @@ export const FormAccesorios = () => {
                         <Grid item>
                             <TextField
                                 id="zona-input"
-                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 400 }}
                                 type="text"
                                 name="num_serie"
-                                color='info'
+                                color='warning'
                                 label="Numero de serie"
                                 variant="outlined"
                                 value={formValues.num_serie}
@@ -88,13 +86,13 @@ export const FormAccesorios = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="marcas_idMarcas-input" color='info'>Marca</InputLabel>
+                                <InputLabel id="marcas_idMarcas-input" color='warning'>Marca</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    sx={{ border: 'none', mb: 1, width: 400 }}
                                     labelId="demo-simple-select-label"
                                     id="marcas_idMarcas-input"
                                     name="marcas_idMarcas"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.marcas_idMarcas}
                                     label="Marca"
                                     onChange={handleInputChange}>
@@ -108,10 +106,10 @@ export const FormAccesorios = () => {
                         <Grid item>
                             <TextField
                                 id="inventario_interno-input"
-                                sx={{ border: 'none', mb: 1,  width: 300 }}
+                                sx={{ border: 'none', mb: 1,  width: 400 }}
                                 type="text"
                                 name="inventario_interno"
-                                color='info'
+                                color='warning'
                                 label="Inventario"
                                 variant="outlined"
                                 value={formValues.inventario_interno}
@@ -120,10 +118,10 @@ export const FormAccesorios = () => {
                         <Grid item>
                             <TextField
                                 id="inventario_segpub-input"
-                                sx={{ border: 'none', mb: 1,  width: 300 }}
+                                sx={{ border: 'none', mb: 1,  width: 400 }}
                                 type="text"
                                 name="inventario_segpub"
-                                color='info'
+                                color='warning'
                                 label="inventario_segpub"
                                 variant="outlined"
                                 value={formValues.inventario_segpub}
@@ -132,10 +130,10 @@ export const FormAccesorios = () => {
                         <Grid item>
                             <TextField
                                 id="contrato_compra-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="contrato_compra"
-                                color='info'
+                                color='warning'
                                 label="contrato_compra"
                                 variant="outlined"
                                 value={formValues.contrato_compra}
@@ -144,10 +142,10 @@ export const FormAccesorios = () => {
                         <Grid item>
                             <TextField
                                 id="observaciones-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="observaciones"
-                                color='info'
+                                color='warning'
                                 label="Descripcion"
                                 variant="outlined"
                                 value={formValues.observaciones}
@@ -156,10 +154,10 @@ export const FormAccesorios = () => {
                         <Grid item>
                             <TextField
                                 id="fecha_recepcion-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="fecha_recepcion"
-                                color='info'
+                                color='warning'
                                 label="Fecha de recepcion "
                                 variant="outlined"
                                 value={formValues.fecha_recepcion}
@@ -167,13 +165,13 @@ export const FormAccesorios = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="fk_sue-input" color='info'>SUE</InputLabel>
+                                <InputLabel id="fk_sue-input" color='warning'>SUE</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    sx={{ border: 'none', mb: 1, width: 400 }}
                                     labelId="demo-simple-select-label"
                                     id="fk_sue-input"
                                     name="fk_sue"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.fk_sue}
                                     label="SUE"
                                     onChange={handleInputChange}>
@@ -186,13 +184,13 @@ export const FormAccesorios = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
+                                <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    sx={{ border: 'none', mb: 1, width: 400 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.estatus}
                                     label="Estatus"
                                     onChange={handleInputChange}>
@@ -201,7 +199,7 @@ export const FormAccesorios = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" >
+                        <Button variant="contained" color="info" type="submit" sx={{  width: 400 }} >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

@@ -2,32 +2,21 @@ import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typ
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
-import { useUsersStore } from '../../../hooks/hooksAdministracion/useUsersStore';
-import axios from 'axios';
+import { useRolStore } from '../../../hooks/hooksAdministracion/useRolStore';
 
-export const FormUser = () => {
+export const FormRoles = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [tableData, setTableData] = useState([])
 
     const [formValues, setFormValues] = useState({
-        username: "",
-        password: "",
-        roles_idrol: "",
-        estatus: "",
-        createdAt: "",
-        updatedAt: "",
+        rol:'',
+        estatus:'',
+        createdAt:'',
+        updatedAt:'',
     });
 
     const { CloseModal, isActualizar } = useModalHook();
-    const { activeEvent, startSavingEvent } = useUsersStore();
-
-    useEffect(() => {
-        axios.get('http://localhost:8000/api/v0/roles').
-      then((response)=>{
-        setTableData(response.data);
-      });
-     }, []);
+    const { activeEvent, startSavingEvent } = useRolStore();
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -47,7 +36,7 @@ export const FormUser = () => {
         event.preventDefault();
         setFormSubmitted(true);
 
-        if (formValues.username.length <= 0) return;
+        if (formValues.rol.length <= 0) return;
         console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
@@ -58,61 +47,26 @@ export const FormUser = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h4'> Nuevo Usuario </Typography>
+                <Typography variant='h4'> Nuevo Rol </Typography>
                 <form onSubmit={onSubmit}>
                     <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
                             <TextField
-                                id="name-input"
+                                id="rol-input"
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 400 }}
                                 type="text"
-                                name="username"
+                                name="rol"
                                 color='info'
-                                label="Nombre de Usuario"
+                                label="Rol"
                                 variant="outlined"
-                                value={formValues.username}
+                                value={formValues.rol}
                                 onChange={handleInputChange} />
-                        </Grid>
-                        <Grid item >
-                            <TextField
-                                disabled={isActualizar}
-                                id="password-input"
-                                label="Contraseña"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                type="password"
-                                placeholder='Contraseña'
-                                fullWidth
-                                name='password'
-                                color='info'
-                                value={formValues.password}
-                                onChange={handleInputChange}
-                            />
-                        </Grid>
- 
-                        <Grid item>
-                            <FormControl fullWidth>
-                                <InputLabel id="rol-input" color='info'>Rol</InputLabel>
-                                <Select
-                                    sx={{ border: 'none', mb: 1, width: 400 }}
-                                    labelId="demo-simple-select-label"
-                                    id="rol-input"
-                                    name="roles_idrol"
-                                    color='info'
-                                    value={formValues.roles_idrol}
-                                    label="Rol"
-                                    onChange={handleInputChange}>
-                                     {
-                                        tableData.map(elemento=>{
-                                          return <MenuItem key={elemento.idrol} value={elemento.idrol} >{elemento.rol}</MenuItem> 
-                                        })}
-                                </Select>
-                            </FormControl>
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 400 }}
+                                    sx={{ border: 'none', mb: 2, width: 400 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"

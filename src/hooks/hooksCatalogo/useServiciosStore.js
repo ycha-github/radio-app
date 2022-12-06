@@ -1,40 +1,40 @@
 import { useDispatch, useSelector } from "react-redux";
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/administracion/userSlice";
- 
-export const useUsersStore= () => {
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onLoadEvent } from "../../store/catalogo/serviciosSlice";
+
+export const useServiciosStore= () => {
   const dispatch = useDispatch();
-  const { events, activeEvent } = useSelector( state => state.users );
+  const { events, activeEvent } = useSelector( state => state.servicios );
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
-
     dispatch( onSetActiveEvent(zonasEvent ));
   }
   const startSavingEvent =async(zonasEvent)=>{
     //TODO: Update event
-    if(zonasEvent.idusers){
+    if(zonasEvent.idservicios){
       //Actualizando
-        const {data}= await  radioApi.put(`/users/${zonasEvent.idusers}`,zonasEvent);
+        const {data}= await  radioApi.put(`/servicios/${zonasEvent.idservicios}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
     }else{
       //creando
-      const {data}= await radioApi.post('/users', zonasEvent);
-      dispatch(onAddNewEvent({...zonasEvent, idusers:data.idusers, user}));
-      //window.location.reload(true);
+      const {data}= await radioApi.post('/servicios', zonasEvent);
+      dispatch(onAddNewEvent({...zonasEvent, idservicios:data.idservicios, user}));
+      window.location.reload(true);
     }
   }
+
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data} = await  radioApi.delete(`/users/${zonasEvent.idusers}`);
+    console.log(zonasEvent.idservicios);
+    const {data} = await  radioApi.delete(`/servicios/${zonasEvent.idservicios}`);
   dispatch(onUpdateEvent(zonasEvent,user));
-  window.location.reload(true);
+  //window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{
       try {
-        const { data } = await radioApi.get('/users')
+        const { data } = await radioApi.get('/servicios')
         dispatch(onLoadEvent(data))
-      
       } catch (error) {
         console.log('Error cargando Eventos');
         console.log(error);

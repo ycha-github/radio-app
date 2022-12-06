@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useEstatusStore } from '../../../hooks/hooksCatalogo/useEstatusStore';
@@ -34,7 +34,6 @@ export const FormEstatus = () => {
         //console.log(event)
         event.preventDefault();
         setFormSubmitted(true);
-
         if (formValues.nombreStatus.length <= 0) return;
         console.log(formValues);
         //TODO:
@@ -55,13 +54,13 @@ export const FormEstatus = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreStatus"
-                                color='info'
+                                color='warning'
                                 label="Estatus"
                                 variant="outlined"
                                 value={formValues.nombreStatus}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

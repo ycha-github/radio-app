@@ -57,7 +57,7 @@ export const FormMarcas = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreMarcas"
-                                color='info'
+                                color='warning'
                                 label="Marca"
                                 variant="outlined"
                                 value={formValues.nombreMarcas}
@@ -69,7 +69,7 @@ export const FormMarcas = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="nombreModelos"
-                                color='info'
+                                color='warning'
                                 label="Modelo"
                                 variant="outlined"
                                 value={formValues.nombreModelos}
@@ -77,13 +77,13 @@ export const FormMarcas = () => {
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>
-                                <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
+                                <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
-                                    color='info'
+                                    color='warning'
                                     value={formValues.estatus}
                                     label="Estatus"
                                     onChange={handleInputChange}>
@@ -92,7 +92,7 @@ export const FormMarcas = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/administracion/userSlice";
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/administracion/rolSlice";
  
-export const useUsersStore= () => {
+export const useRolStore= () => {
   const dispatch = useDispatch();
-  const { events, activeEvent } = useSelector( state => state.users );
+  const { events, activeEvent } = useSelector( state => state.rol );
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
@@ -13,26 +13,26 @@ export const useUsersStore= () => {
   }
   const startSavingEvent =async(zonasEvent)=>{
     //TODO: Update event
-    if(zonasEvent.idusers){
+    if(zonasEvent.idrol){
       //Actualizando
-        const {data}= await  radioApi.put(`/users/${zonasEvent.idusers}`,zonasEvent);
+        const {data}= await  radioApi.put(`/roles/${zonasEvent.idrol}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
     }else{
       //creando
-      const {data}= await radioApi.post('/users', zonasEvent);
-      dispatch(onAddNewEvent({...zonasEvent, idusers:data.idusers, user}));
-      //window.location.reload(true);
+      const {data}= await radioApi.post('/roles', zonasEvent);
+      dispatch(onAddNewEvent({...zonasEvent, idrol:data.idrol, user}));
+      window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data} = await  radioApi.delete(`/users/${zonasEvent.idusers}`);
+    const {data} = await  radioApi.delete(`/roles/${zonasEvent.idrol}`);
   dispatch(onUpdateEvent(zonasEvent,user));
   window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{
       try {
-        const { data } = await radioApi.get('/users')
+        const { data } = await radioApi.get('/roles')
         dispatch(onLoadEvent(data))
       
       } catch (error) {
