@@ -6,7 +6,7 @@ import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosSt
 import axios from 'axios';
 
 export const FormAccesorios = () => {
- 
+
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [tableData, setTableData] = useState([])
     const [tableSue, setTableSue] = useState([])
@@ -26,7 +26,7 @@ export const FormAccesorios = () => {
     });
 
     useEffect(() => {
-         axios.get('http://localhost:8000/api/v0/marcas').
+       axios.get('http://localhost:8000/api/v0/marcas').
        then((response)=>{
          setTableData(response.data);
        });
@@ -36,7 +36,7 @@ export const FormAccesorios = () => {
          setTableSue(response.data);
        });
       }, []);
-    
+
     const {CloseModal, isActualizar}=useModalHook();
     const { activeEvent, startSavingEvent }=useAccesoriosStore();
 
@@ -70,7 +70,7 @@ export const FormAccesorios = () => {
         <>
             <ModalRadio >
                 <Typography variant='h5'> {isActualizar? 'Actualizando Accesorio' : 'Nuevo Accesorio'} </Typography>
-                <form onSubmit={onSubmit}>
+                    <form onSubmit={onSubmit}>
                         <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
                             <TextField

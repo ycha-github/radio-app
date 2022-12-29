@@ -36,7 +36,9 @@ function RowMenuCell( event) {
   const [state, setState] =useState(
     event.row
   );
-  
+
+  console.log(event);
+
   const handleChange =async (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
     await deleteEvent(state);
@@ -76,6 +78,11 @@ export const Marcas= () => {
   const { events, setActiveEvent, startLoadingEvents } = useMarcasStore();
   
   const { OpenModal } = useModalHook();
+
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
+
   const newRow =()=>{
     setActiveEvent({
       nombreMarcas:'',
@@ -99,9 +106,6 @@ export const Marcas= () => {
   esES,
 );
 
-useEffect(() => {
-  startLoadingEvents()
-}, [])
 
   return (
     <>
