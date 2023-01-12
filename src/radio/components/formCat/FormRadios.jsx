@@ -10,7 +10,6 @@ export const FormRadios = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [formValues, setFormValues] = useState({
-        fk_tipoequipo: '',
         serie: '',
         logico: '',
         inventario_interno: '',
@@ -19,8 +18,8 @@ export const FormRadios = () => {
         fk_recurso_compra: '',
         contrato_compra: '',
         rfsi: '',
-        fk_tiporadio: '',
         fk_marca: '',
+        nombreMarcas: '',
         fecha_actualizacion: '',
         fecha_asignacion: '',
         observaciones: '',
@@ -29,6 +28,7 @@ export const FormRadios = () => {
         estatus: '',
         createdAt: '',
         updatedAt: '',
+        tipo:'',
     });
 
     const [selectTequipo, setSelectTequipo] = useState([]);
@@ -45,6 +45,7 @@ useEffect(() => {
     axios.get('http://localhost:8000/api/v0/tipos').
     then((response)=>{
       setSelectTequipo(response.data);
+      console.log(response.data)
     });
     axios.get('http://localhost:8000/api/v0/corporaciones').
     then((response)=>{
@@ -104,24 +105,17 @@ useEffect(() => {
                     <Grid container alignItems="center" justify="center" direction="column" >
                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     <Grid item xs={6}>
-                            <FormControl fullWidth >
-                                <InputLabel id="fk_tipoequipo-input" color='warning'>Tipo Equipo</InputLabel>
-                                <Select
-                                    sx={{ border: 'none', mb: 1, width: 300 }}
-                                    labelId="demo-simple-select-label"
-                                    id="fk_tipoequipo-input"
-                                    name="fk_tipoequipo"
-                                    color='warning'
-                                    value={formValues.fk_tipoequipo}
-                                    label="Tipo Equipo"
-                                    onChange={handleInputChange}>
-                                     {
-                                        selectTequipo.map(elemento=>{
-                                          return <MenuItem key={elemento.idtipos} value={elemento.idtipos} >{elemento.nombreTipo}</MenuItem> 
-                                        })}
-                                    
-                                </Select>
-                            </FormControl>
+                            <TextField
+                                id="tipo-input"
+                                sx={{ border: 'none', mb: 1, width: 300}}
+                                type="text"
+                                name="tipo"
+                                color='warning'
+                                label="tipo"
+                                variant="outlined"
+                                value={formValues.tipo}
+                                onChange={handleInputChange} />
+                        
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
@@ -232,7 +226,7 @@ useEffect(() => {
                                 value={formValues.rfsi}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item xs={6}>
+                        {/* <Grid item xs={6}>
                             <FormControl fullWidth>
                                 <InputLabel id="fk_tiporadio-input" color='warning'>Tipo Radio</InputLabel>
                                 <Select
@@ -248,7 +242,7 @@ useEffect(() => {
                                     <MenuItem value={2}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={6}>
                             <FormControl fullWidth>
                                 <InputLabel id="fk_marca-input" color='warning'>Marca</InputLabel>

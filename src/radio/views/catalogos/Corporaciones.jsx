@@ -1,4 +1,4 @@
-import { DataGrid,  esES  } from '@mui/x-data-grid';
+import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -6,28 +6,7 @@ import { useEffect, useState } from 'react';
 import { useCorporacionesStore } from '../../../hooks/hooksCatalogo/useCorporacionesStore';
 import { FormCorporaciones } from '../../components/formCat/FormCorporaciones';
 
-const columns = [
 
-  { field: 'idcorporaciones', headerClassName: "super", headerName: 'ID', Width: 90 },
-  { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Corporacion', flex: 1, minWidth: 90 },
-  { field: 'siglasCorporacion',headerClassName: "super", headerName: 'Siglas', flex: 1, minWidth: 90 },
-  { field: 'estatus',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
-  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
-  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
-  {
-    field: 'actions',
-    headerName: 'Actions',
-    renderCell: RowMenuCell,
-    sortable: false,
-    width: 140,
-    headerClassName: "super",
-    headerAlign: 'center',
-    filterable: false,
-    align: 'center',
-    disableColumnMenu: true,
-    disableReorder: true,
-  },
-];
 
 function RowMenuCell( event) {
   const { deleteEvent}= useCorporacionesStore();
@@ -73,9 +52,14 @@ function RowMenuCell( event) {
 }
 
 export const Corporaciones= () => {
-  const { events, setActiveEvent, startLoadingEvents } = useCorporacionesStore();
-  
-  const { OpenModal } = useModalHook();
+  const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useCorporacionesStore();
+  const { OpenModal, mostrarActualizar } = useModalHook();
+  const [state, setState] =useState([]);
+
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
+
   const newRow =()=>{
     setActiveEvent({
       nombreCorporacion: '',
@@ -86,6 +70,18 @@ export const Corporaciones= () => {
     })
     OpenModal();
   }
+
+  const handleChange =async (event,r) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    //setState(event.target.checked);
+    await deleteEvent(r);
+  };
+
+  const cambiar = ( ) =>  {
+    OpenModal();
+    mostrarActualizar();
+  }
+  
   const onSelect = ( event ) =>  {
     console.log(event.row)
     setActiveEvent( event.row );
@@ -99,9 +95,37 @@ export const Corporaciones= () => {
   esES,
 );
 
-useEffect(() => {
-  startLoadingEvents()
-}, [])
+const columns = [
+
+  { field: 'idcorporaciones', headerClassName: "super", headerName: 'ID', Width: 90 },
+  { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Corporacion', flex: 1, minWidth: 90 },
+  { field: 'siglasCorporacion',headerClassName: "super", headerName: 'Siglas', flex: 1, minWidth: 90 },
+  { field: 'estatus',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
+  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
+  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+  {
+    field: 'actions',
+    type: 'actions',
+    headerClassName: "super",
+    flex: 1,
+    minWidth: 120,
+    getActions: (evento) => [
+      <GridActionsCellItem
+        icon={<Edit />}
+        label="Delete"
+        onClick={cambiar}
+      />,
+      <IconButton
+      color="inherit"
+      size="small"
+      aria-label="delete"
+      >
+        <Switch color='warning' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idcorporaciones)} />
+     </IconButton> 
+     
+  ], 
+  }, 
+];
 
   return (
     <>

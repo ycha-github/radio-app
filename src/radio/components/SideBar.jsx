@@ -23,7 +23,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
         >
             <Toolbar>
                 <Typography variant='h6' noWrap component='div'>  
-                   <Person/> {user.username}
+                   <Person /> {user.username}
                 </Typography>
             </Toolbar>
             <Divider />

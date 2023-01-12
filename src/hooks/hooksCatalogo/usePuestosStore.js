@@ -5,7 +5,7 @@ import { onAddNewEvent, onSetActiveEvent,onUpdateEvent, onDeleteEvent,onLoadEven
 export const usePuestosStore = () => {
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector( state => state.puestos );
-  const { user } = useSelector( state => state.auth );
+  const { user } = useSelector( state => state.auth ); 
 
   const setActiveEvent = ( zonasEvent ) => {
 
@@ -25,9 +25,9 @@ export const usePuestosStore = () => {
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data}= await  radioApi.delete(`/puestos/${zonasEvent.idpuesto}`);
+    const {data}= await  radioApi.delete(`/puestos/${zonasEvent}`);
     dispatch(onUpdateEvent({zonasEvent,user}));
-    //window.location.reload(true);
+    window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{

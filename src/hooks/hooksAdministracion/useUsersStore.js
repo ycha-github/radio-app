@@ -25,7 +25,7 @@ export const useUsersStore= () => {
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data} = await  radioApi.delete(`/users/${zonasEvent.idusers}`);
+    const {data} = await  radioApi.delete(`/users/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
   window.location.reload(true);
     }

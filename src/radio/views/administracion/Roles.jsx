@@ -1,4 +1,4 @@
-import { DataGrid, esES } from '@mui/x-data-grid';
+import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid';
 import { useEffect, useState } from "react";
 import { Box, Button, IconButton,Stack, Switch } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -7,69 +7,16 @@ import { useModalHook } from '../../../hooks/useModalHook';
 import { useRolStore } from '../../../hooks/hooksAdministracion/useRolStore';
 import { FormRoles } from '../../components/formAdmin/FormRoles';
  
-const columns = [
-
-  { field: 'idrol', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
-  { field: 'rol', headerClassName: "super", headerName: 'Rol', flex: 1, minWidth: 90 },
-  { field: 'estatus', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
-  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
-  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
-  {
-    field: 'actions',
-    headerName: 'Actions',
-    renderCell: RowMenuCell,
-    sortable: false,
-    width: 100,
-    headerClassName: "super",
-    headerAlign: 'center',
-    filterable: false,
-    align: 'center',
-    disableColumnMenu: true,
-    disableReorder: true,
-  },
-];
-function RowMenuCell(event) {  
- 
-  const { deleteEvent}= useRolStore();
-  const {OpenModal,mostrarActualizar}= useModalHook();
-  
-  const [state, setState] =useState(
-    event.row
-  );
-
-  
-  const handleChange =async (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    await deleteEvent(state);
-  };
-  const cambiar =()=>{
-    OpenModal();
-    mostrarActualizar();
-
-  }
-  return (
-    <div>
-      <IconButton
-        onClick={cambiar}
-        color="inherit"
-        size="small"
-        aria-label="edit">
-        <Edit color='info'fontSize="small"/>
-      </IconButton>
-      <IconButton
-        color="inherit"
-        size="small"
-        aria-label="delete">
-       <Switch color='info' name="estatus" checked={state.estatus}  onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
-      </IconButton>
-    </div>
-  );
-}
 
 export const Roles = () => {
-  const { events, setActiveEvent, startLoadingEvents } = useRolStore();
+  const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useRolStore();
+  const { OpenModal, mostrarActualizar } = useModalHook();
+  const [state, setState] =useState([]);
 
-  const { OpenModal } = useModalHook();
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
+
   const newRow =()=>{
     setActiveEvent({
       rol:'',
@@ -79,6 +26,18 @@ export const Roles = () => {
     })
     OpenModal();
   }
+
+  const handleChange =async (event,r) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    //setState(event.target.checked);
+    await deleteEvent(r);
+  };
+
+  const cambiar = ( ) =>  {
+    OpenModal();
+    mostrarActualizar();
+  }
+
   const onSelect = ( event ) =>  {
     console.log(event.row)
     setActiveEvent( event.row );
@@ -92,9 +51,36 @@ export const Roles = () => {
     esES,
   );
 
-  useEffect(() => {
-    startLoadingEvents()
-  }, [])
+  const columns = [
+
+    { field: 'idrol', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
+    { field: 'rol', headerClassName: "super", headerName: 'Rol', flex: 1, minWidth: 90 },
+    { field: 'estatus', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
+    { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
+    { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerClassName: "super",
+      flex: 1,
+      minWidth: 120,
+      getActions: (evento) => [
+        <GridActionsCellItem
+          icon={<Edit />}
+          label="Delete"
+          onClick={cambiar}
+        />,
+        <IconButton
+        color="inherit"
+        size="small"
+        aria-label="delete"
+        >
+          <Switch color='info' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idrol)} />
+       </IconButton> 
+       
+    ], 
+    }, 
+  ];
 
   return (
     <>

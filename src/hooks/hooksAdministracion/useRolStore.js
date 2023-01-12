@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import radioApi from "../../api/radioApi";
 import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/administracion/rolSlice";
  
-export const useRolStore= () => {
+export const useRolStore= () => { 
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector( state => state.rol );
   const { user } = useSelector( state => state.auth );
@@ -25,7 +25,7 @@ export const useRolStore= () => {
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data} = await  radioApi.delete(`/roles/${zonasEvent.idrol}`);
+    const {data} = await  radioApi.delete(`/roles/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
   window.location.reload(true);
     }

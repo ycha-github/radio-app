@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material';
-import { red } from '@mui/material/colors';
+import { green, red } from '@mui/material/colors';
 
 export const purpleTheme = createTheme({
     palette: {
@@ -14,6 +14,9 @@ export const purpleTheme = createTheme({
         },
         info: {
             main: '#53bced'
+        },
+        success: {
+            main: green.A700
         }
     }
 })

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Collapse, IconButton, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { ExpandLess, ExpandMore, ManageAccounts, MiscellaneousServices, PeopleAlt, PeopleOutline, Person, SwitchAccount } from '@mui/icons-material';
+import { ArtTrack, ExpandLess, ExpandMore, ManageAccounts, MiscellaneousServices, PeopleAlt, PeopleOutline, Person, SwitchAccount } from '@mui/icons-material';
 
 export const MenuAdmin = () => {
 
@@ -17,25 +17,20 @@ export const MenuAdmin = () => {
           icon: <Person color={ iconColorAdmin } />, 
           path: 'users',
         },
-        { 
+        {
           text: 'Roles', 
           icon: <PeopleOutline color={ iconColorAdmin } />, 
           path: 'roles',
         },
-        { 
-          text: 'Permisos', 
-          icon: <ManageAccounts color={ iconColorAdmin } />, 
-          path: 'permisos',
-        },
-        { 
-          text: 'Grupos de permisos', 
-          icon: <PeopleAlt color={ iconColorAdmin } />, 
-          path: 'grupos-permisos', 
-        },
-        { 
-          text: 'Registro de visita', 
-          icon: <SwitchAccount color={ iconColorAdmin } />, 
-          path: 'visitas', 
+        //{ 
+        //  text: 'Registro de visita', 
+        //  icon: <SwitchAccount color={ iconColorAdmin } />, 
+        //  path: 'visitas', 
+        //},
+        {
+          text: 'Configuracion de reportes', 
+          icon: <ArtTrack color={ iconColorAdmin } />, 
+          path: 'config-reportes',
         },
       ];
 

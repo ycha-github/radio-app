@@ -19,13 +19,13 @@ export const useRadiosStore = () => {
         dispatch(onUpdateEvent({...zonasEvent, user}));
     }else{
       //creando
-      const {data}= await radioApi.post('/radios', zonasEvent);
+      const {data}= await radioApi.post('/radios', zonasEvent); 
       dispatch(onAddNewEvent({...zonasEvent, idradios:data.idradios, user}));
       window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data}= await  radioApi.delete(`/radios/${zonasEvent.idradios}`);
+    const {data}= await  radioApi.delete(`/radios/${zonasEvent}`);
     dispatch(onUpdateEvent({zonasEvent,user}));
     //window.location.reload(true);
     }

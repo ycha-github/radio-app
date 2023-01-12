@@ -1,4 +1,4 @@
-import { DataGrid,  esES  } from '@mui/x-data-grid';
+import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -6,28 +6,7 @@ import { useMarcasStore } from '../../../hooks/hooksCatalogo/useMarcasStore';
 import { useEffect, useState } from 'react';
 import { FormMarcas } from '../../components/formCat/FormMarcas';
 
-const columns = [
 
-  { field: 'idmarcas', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
-  { field: 'nombreMarcas',headerClassName: "super", headerName: 'Zona', flex: 1, minWidth: 90 },
-  { field: 'nombreModelos',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'estatus',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
-  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
-  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
-  {
-    field: 'actions',
-    headerName: 'Actions',
-    renderCell: RowMenuCell,
-    sortable: false,
-    width: 140,
-    headerClassName: "super",
-    headerAlign: 'center',
-    filterable: false,
-    align: 'center',
-    disableColumnMenu: true,
-    disableReorder: true,
-  },
-];
 
 function RowMenuCell( event) {
   const { deleteEvent}= useMarcasStore();
@@ -37,7 +16,7 @@ function RowMenuCell( event) {
     event.row
   );
 
-  console.log(event);
+  //console.log(event.row);
 
   const handleChange =async (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
@@ -53,7 +32,7 @@ function RowMenuCell( event) {
       <IconButton
         onClick={ cambiar }
         color="inherit"
-        size="small"
+        size="small" 
         aria-label="edit">
         <Edit fontSize="small"/>
       </IconButton>
@@ -75,9 +54,9 @@ function RowMenuCell( event) {
 }
 
 export const Marcas= () => {
-  const { events, setActiveEvent, startLoadingEvents } = useMarcasStore();
-  
-  const { OpenModal } = useModalHook();
+  const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useMarcasStore();
+  const { OpenModal, mostrarActualizar } = useModalHook();
+  const [state, setState] =useState([]);
 
   useEffect(() => {
     startLoadingEvents()
@@ -93,6 +72,18 @@ export const Marcas= () => {
     })
     OpenModal();
   }
+
+  const handleChange =async (event,r) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    //setState(event.target.checked);
+    await deleteEvent(r);
+  };
+
+  const cambiar = ( ) =>  {
+    OpenModal();
+    mostrarActualizar();
+  }
+
   const onSelect = ( event ) =>  {
     console.log(event.row)
     setActiveEvent( event.row );
@@ -106,6 +97,36 @@ export const Marcas= () => {
   esES,
 );
 
+const columns = [
+
+  { field: 'idmarcas', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
+  { field: 'nombreMarcas',headerClassName: "super", headerName: 'Zona', flex: 1, minWidth: 90 },
+  { field: 'nombreModelos',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
+  { field: 'estatus',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
+  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
+  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+  {
+    field: 'actions',
+    type: 'actions',
+    headerClassName: "super",
+    flex: 1,
+    minWidth: 120,
+    getActions: (evento) => [
+      <GridActionsCellItem
+        icon={<Edit />}
+        label="Delete"
+        onClick={cambiar}
+      />,
+      <IconButton
+      color="inherit"
+      size="small"
+      aria-label="delete"
+      >
+        <Switch color='warning' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idmarcas)} />
+     </IconButton> 
+  ], 
+  }, 
+];
 
   return (
     <>

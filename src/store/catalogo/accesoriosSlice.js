@@ -53,7 +53,7 @@ export const accesoriosSlice = createSlice({
 
     },
     onLoadEvent:(state,{payload=[]})=>{
-        console.log(payload)
+        //console.log(payload)
       state.isLoadingEvents= false;
       //state.events=  payload;
       payload.forEach(event=>{
@@ -61,9 +61,7 @@ export const accesoriosSlice = createSlice({
         if( !exists){
           state.events.push(event)
         }
-
       })
-
     }
   }
 });

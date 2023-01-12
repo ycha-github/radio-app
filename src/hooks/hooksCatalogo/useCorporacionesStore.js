@@ -25,9 +25,9 @@ export const useCorporacionesStore = () => {
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data}= await  radioApi.delete(`/corporaciones/${zonasEvent.idcorporaciones}`);
+    const {data}= await  radioApi.delete(`/corporaciones/${zonasEvent}`);
     dispatch(onUpdateEvent(zonasEvent,user));
-    //window.location.reload(true);
+    window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{

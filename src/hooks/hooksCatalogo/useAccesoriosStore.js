@@ -25,10 +25,9 @@ export const useAccesoriosStore= () => {
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    console.log(zonasEvent.idaccesorios);
-    const {data} = await  radioApi.delete(`/accesorios/${zonasEvent.idaccesorios}`);
+    const {data} = await  radioApi.delete(`/accesorios/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
-  //window.location.reload(true);
+  window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{

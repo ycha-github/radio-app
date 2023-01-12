@@ -1,108 +1,21 @@
 import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid';
 import  {useState , useEffect} from "react";
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
-//import { FormAccesorios } from '../../components/formCat/FormAccesorios';
+import { FormAccesorios } from '../../components/formCat/FormAccesorios';
 import { AddCircleOutlineOutlined, Block, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosStore';
-import { FormAccesorios } from '../../components/formCat/FormAccesorios';
-import { useMemo } from 'react';
 
-// const columns = [
 
-//   { field: 'idaccesorios', headerClassName: "super", headerName: 'ID',width: 90,  },
-//   { field: 'nombreAccesorio', headerClassName: "super", headerName: 'Accesorio',minwidth: 90,  },
-//   { field: 'num_serie',headerClassName: "super", headerName: 'Numero de serie',flex: 1 , minWidth: 90 },
-//   { field: 'marcas_idMarcas',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
-//   { field: 'inventario_interno',headerClassName: "super", headerName: 'Inventario Interno', flex: 1, minWidth: 90 },
-//   { field: 'inventario_segpub',headerClassName: "super",headerName: 'Inv. Seg. Pub.',flex: 1, minWidth: 90 },
-//   { field: 'contrato_compra',headerClassName: "super",headerName: 'Contrato',flex: 1, minWidth: 90 },
-//   { field: 'observaciones',headerClassName: "super",headerName: 'Observaciones',flex: 1, minWidth: 90 },
-//   { field: 'fecha_recepcion',headerClassName: "super",headerName: 'Fecha de Recepcion',flex: 1, minWidth: 90 },
-//   { field: 'fk_sue',headerClassName: "super",headerName: 'SUE',flex: 1, minWidth: 90 },
-//   { field: 'estatus',headerClassName: "super",headerName: 'Estatus',flex: 1, minWidth: 90 },
-//   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 1, minWidth: 90 },
-//   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
-//   {
-//     field: 'actions',
-//     headerName: 'Actions',
-//     renderCell: RowMenuCell,
-//     sortable: false,
-//     width: 140,
-//     headerClassName: "super",
-//     headerAlign: 'center',
-//     filterable: false,
-//     align: 'center',
-//     disableColumnMenu: true,
-//     disableReorder: true,
-//   },
-// ];
-
-// function RowMenuCell( event) {
-//   const { deleteEvent}= useAccesoriosStore();
-//   const {OpenModal, mostrarActualizar}=useModalHook();
-
-//   const [state, setState] =useState(
-//     event.row
-//   );
-
-//   const handleChange =async (event) => {
-//     setState({ ...state, [event.target.name]: event.target.checked });
-//     console.log(state);
-//     await deleteEvent(state);
-//   };
-
-//   const cambiar = ( ) =>  {
-//     OpenModal();
-//     mostrarActualizar();
-//   }
-//   return (
-//     <div>
-//       <IconButton
-//         onClick={ cambiar }
-//         color="inherit"
-//         size="small"
-//         aria-label="edit">
-//         <Edit fontSize="small"/>
-//       </IconButton>
-//       <IconButton
-//       onClick={deleteEvent}
-//         color="inherit"
-//         size="small"
-//         aria-label="delete">
-//         <Block fontSize="small"/>
-//       </IconButton>
-//       <IconButton
-//         color="inherit"
-//         size="small"
-//         aria-label="delete">
-//        <Switch color='warning' name="estatus" checked={state.estatus}  onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
-//       </IconButton>
-//     </div>
-//   );
-// }
-  export const Accesorios=(evt)=> {
+  export const Accesorios=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useAccesoriosStore();
   const {OpenModal, mostrarActualizar}=useModalHook();
-
- const [state, setState] =useState(
-     events.map(element =>{ 
-  
-  
-  return element;
-  })
- ); 
- console.log(state.index);
-
-// const DataGrid = document.querySelector("DataGrid");
-// DataGrid.addEventListener("click", function() {
-//  alert("Hello!");
-//});
+  const [state, setState] =useState([]);
 
   useEffect(() => {
     startLoadingEvents()
   }, [])
-  //const { OpenModal } = useModalHook();
+
   const newRow =()=>{
     setActiveEvent({
       num_serie:'',
@@ -120,11 +33,10 @@ import { useMemo } from 'react';
     OpenModal();
   }
 
-  const handleChange =async (event) => {
-    // setState({ ...state, [event.target.name]: event.target.checked });
-    setState(event.target.checked);
-    console.log(state);
-    //await deleteEvent(state);
+  const handleChange =async (event,r) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    //setState(event.target.checked);
+    await deleteEvent(r);
   };
 
   const cambiar = ( ) =>  {
@@ -133,12 +45,8 @@ import { useMemo } from 'react';
   }
 
   const onSelect = ( event ) =>  {
-    const r= event.row
-    console.log(event)
+    console.log(event.row)
     setActiveEvent( event.row );
-
-    return r;
-    
   }
 
   const theme = createTheme(
@@ -150,7 +58,8 @@ import { useMemo } from 'react';
    esES,
   );
 
-const columns = useMemo(()=> [
+const columns =  [
+  
   { field: 'idaccesorios', headerClassName: "super", headerName: 'ID',width: 90,  },
   { field: 'nombreAccesorio', headerClassName: "super", headerName: 'Accesorio',minwidth: 90,  },
   { field: 'num_serie',headerClassName: "super", headerName: 'Numero de serie',flex: 1 , minWidth: 90 },
@@ -170,24 +79,22 @@ const columns = useMemo(()=> [
     headerClassName: "super",
     flex: 1,
     minWidth: 120,
-    getActions: (params) => [
+    getActions: (evento) => [
       <GridActionsCellItem
         icon={<Edit />}
         label="Delete"
         onClick={cambiar}
       />,
-     
       <IconButton
       color="inherit"
       size="small"
       aria-label="delete"
       >
-      <Switch color='warning' name="estatus" checked={state} onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
-      </IconButton>
-     
-  ],
-  },
-],);
+        <Switch color='warning' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idaccesorios)} />
+     </IconButton> 
+  ], 
+  }, 
+]
 
   return (
     <>
@@ -207,15 +114,15 @@ const columns = useMemo(()=> [
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
         <FormAccesorios/>
         <Stack direction="row" spacing={1} marginBottom={2}>
-                <Button onClick={newRow} color={'warning'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
+                <Button onClick={newRow} color={'warning'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo
                 </Button>
             </Stack>
             <ThemeProvider theme={theme}>
       <DataGrid
-      onCellClick={onSelect}
-      getRowId={(row) => row.idaccesorios}
-      autoHeight={true}
+        onCellClick={onSelect}
+        getRowId={(row) => row.idaccesorios}
+        autoHeight={true}
         rows={events}
         columns={columns}
         pageSize={12}
