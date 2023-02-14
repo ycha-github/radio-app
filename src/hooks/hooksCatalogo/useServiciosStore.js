@@ -26,9 +26,9 @@ export const useServiciosStore= () => {
 
    const deleteEvent=async(zonasEvent, state)=>{
     console.log(zonasEvent.idservicios);
-    const {data} = await  radioApi.delete(`/servicios/${zonasEvent.idservicios}`);
+    const {data} = await  radioApi.delete(`/servicios/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
-  //window.location.reload(true);
+  window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{

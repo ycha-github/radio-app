@@ -1,34 +1,34 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
-import { useVehiculosStore } from '../../../hooks/hooksCatalogo/useVehiculosStore';
+import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
 import { useModalHook } from '../../../hooks/useModalHook';
-import axios from 'axios';
 
-export const FormVehiculos = () => {
+export const FormConfigReportes = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [tableData, setTableData] = useState([])
 
     const [formValues, setFormValues] = useState({
-        nombreVehiculo:'',
-      placa:'',
-      color:'',
-      anio:'',
-      marcas_idmarcas:'',
-      estatus:'',
-      createdAt:'',
-      updatedAt:'',
+        encabezado_carta:'',
+        encabezado2:'',
+        encabezado_hservicio:'',
+        logo1:'',
+        logo2:'',
+        articulo1:'',
+        articulo2:'',
+        articulo3:'',
+        revisor:'',
+        responsable_entrega:'',
+        pie_carta:'',
+        pie_hservicio:'',
+        fecha_inicial:'',
+        fecha_final:'',
+        fecha_creacion:'',
+        estatus:'',
     });
 
-    useEffect(() => {
-        axios.get('http://localhost:8000/api/v0/marcas').
-      then((response)=>{
-        setTableData(response.data);
-      });
-     }, []);
     const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
-    const { activeEvent, startSavingEvent } = useVehiculosStore();
+    const { activeEvent, startSavingEvent } = useConfigReportesStore();
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -48,7 +48,7 @@ export const FormVehiculos = () => {
         event.preventDefault();
         setFormSubmitted(true);
 
-        if (formValues.nombreVehiculo.length <= 0) return;
+        if (formValues.encabezado_carta.length <= 0) return;
         console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
@@ -59,82 +59,106 @@ export const FormVehiculos = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nuevo Vehiculo </Typography>
+                <Typography variant='h5'> Nueva configuración Hoja de Servicios y Cartas de Asignación </Typography>
                 <form onSubmit={onSubmit}>
                     <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
                             <TextField
-                                id="nombreVehiculo-input"
+                                id="encabezado_carta-input"
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="nombreVehiculo"
+                                name="encabezado_carta"
                                 color='warning'
-                                label="Vehiculo"
+                                label="Encabezado de carta 1ra parte"
                                 variant="outlined"
-                                value={formValues.nombreVehiculo}
+                                value={formValues.encabezado_carta}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="placa-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                id="encabezado2-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="placa"
+                                name="encabezado2"
                                 color='warning'
-                                label="Placa"
+                                label="Encabezado de carta 2da parte"
                                 variant="outlined"
-                                value={formValues.placa}
+                                value={formValues.encabezado2}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="color-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                id="encabezado_hservicio-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="color"
+                                name="encabezado_hservicio"
                                 color='warning'
-                                label="Color"
+                                label="Encabezado de hoja de servicio"
                                 variant="outlined"
-                                value={formValues.color}
+                                value={formValues.encabezado_hservicio}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="anio-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                id="logo1-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="anio"
+                                name="logo1"
                                 color='warning'
-                                label="Año"
+                                label="Logo 1"
                                 variant="outlined"
-                                value={formValues.anio}
+                                value={formValues.logo1}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
+                            <TextField
+                                id="logo2-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
+                                type="text"
+                                name="logo2"
+                                color='warning'
+                                label="Logo 2"
+                                variant="outlined"
+                                value={formValues.logo2}
+                                onChange={handleInputChange} />
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                id="logo3-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
+                                type="text"
+                                name="logo3"
+                                color='warning'
+                                label="Logo 3"
+                                variant="outlined"
+                                value={formValues.logo3}
+                                onChange={handleInputChange} />
+                        </Grid>
+                        {/* <Grid item xs={6}>
                             <FormControl fullWidth>
-                                <InputLabel id="marcas_idmarcas-input" color='warning'>Marca</InputLabel>
+                                <InputLabel id="fk_encargado_revision-input" color='warning'>Recurso Compra</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
-                                    id="marcas_idMarcas-input"
-                                    name="marcas_idmarcas"
+                                    id="fk_encargado_revision-input"
+                                    name="fk_encargado_revision"
                                     color='warning'
-                                    value={formValues.marcas_idmarcas}
-                                    label="Marca"
+                                    value={formValues.fk_encargado_revision}
+                                    label="Encargado de revisión"
                                     onChange={handleInputChange}>
-                                        {
-                                        tableData.map(elemento=>{
-                                          return <MenuItem key={elemento.idmarcas} value={elemento.idmarcas} >{elemento.nombreMarcas}</MenuItem> 
+                                    {
+                                        selectRevisor.map(elemento=>{
+                                          return <MenuItem key={elemento.idrecursoCompras} value={elemento.idrecursoCompras} >{elemento.nombreRecursoCompra}</MenuItem> 
                                         })}
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 300 }}
-                                    labelId="demo-simple-select-label"
+                                    labelId="demo-simple-select-label2"
                                     id="estatus-input"
                                     name="estatus"
                                     color='warning'
@@ -146,7 +170,7 @@ export const FormVehiculos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" onClick={() => mostrarGuardar()} >
+                        <Button variant="contained" color="warning" type="submit" onClick={ () => mostrarGuardar() } >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

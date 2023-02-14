@@ -22,7 +22,7 @@ export const FormUsuarios = () => {
       updatedAt:'',
     });
 
-    const { CloseModal, isActualizar } = useModalHook();
+    const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useUsuariosStore();
 
     useEffect(() => {
@@ -170,7 +170,7 @@ export const FormUsuarios = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" onClick={() => mostrarGuardar()}>
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

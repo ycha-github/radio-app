@@ -15,7 +15,7 @@ export const FormRecursos = () => {
       updatedAt:'',
     });
 
-    const { CloseModal, isActualizar } = useModalHook();
+    const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useRecursosStore();
 
     useEffect(() => {
@@ -80,7 +80,7 @@ export const FormRecursos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" onClick={ () => mostrarGuardar() } >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

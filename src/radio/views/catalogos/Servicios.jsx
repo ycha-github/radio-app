@@ -1,80 +1,28 @@
-import { DataGrid, esES } from '@mui/x-data-grid';
+import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid';
 import  {useState , useEffect} from "react";
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
-import { AddCircleOutlineOutlined, Block, Edit } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useServiciosStore } from '../../../hooks/hooksCatalogo/useServiciosStore';
 import { FormServicio } from '../../components/formCat/FormServicio';
 
-const columns = [
-  { field: 'idservicios', headerClassName: "super", headerName: 'ID', Width: 90 },
-  { field: 'nombreServicios', headerClassName: "super", headerName: 'Nombre', flex:1, minWidth: 90 },
-  { field: 'descripcion', headerClassName: "super", headerName: 'Descripción', flex:1, minWidth: 90 },
-  { field: 'estatus', headerClassName: "super", headerName: 'Estado', flex:1, minWidth: 90 },
-  {
-    field: 'actions',
-    headerName: 'Actions',
-    renderCell: RowMenuCell,
-    sortable: false,
-    width: 140,
-    headerClassName: "super",
-    headerAlign: 'center',
-    filterable: false,
-    align: 'center',
-    disableColumnMenu: true,
-    disableReorder: true,
-  },
-];
-
-function RowMenuCell( event) {
-  const { deleteEvent}= useServiciosStore();
-  const {OpenModal, mostrarActualizar}=useModalHook();
-
-  const [state, setState] =useState(
-    event.row
-  );
-  
-  const handleChange =async (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    console.log(state);
-    await deleteEvent(state);
-  };
-
-  const cambiar = ( ) =>  {
-    OpenModal();
-    mostrarActualizar();
-  }
-  return (
-    <div>
-      <IconButton
-        onClick={ cambiar }
-        color="inherit"
-        size="small"
-        aria-label="edit">
-        <Edit fontSize="small"/>
-      </IconButton>
-      <IconButton
-      onClick={deleteEvent}
-        color="inherit"
-        size="small"
-        aria-label="delete">
-        <Block fontSize="small"/>
-      </IconButton>
-      <IconButton
-        color="inherit"
-        size="small"
-        aria-label="delete">
-       <Switch color='warning' name="estatus" checked={state.estatus}  onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
-      </IconButton>
-    </div>
-  );
+const colorClose=()=>{
+  return <Close color='error'/>
+}
+const colorDone=()=>{
+  return <Done color='success'/>
 }
 
 export const Servicios = () => {
 
-  const { events, setActiveEvent, startLoadingEvents } = useServiciosStore();
-  
-  const { OpenModal } = useModalHook();
+  const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useServiciosStore();
+  const { OpenModal, mostrarActualizar } = useModalHook();
+  const [state, setState] =useState([]);
+
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
+
   const newRow =()=>{
     setActiveEvent({
       
@@ -86,22 +34,57 @@ export const Servicios = () => {
     })
     OpenModal();
   }
+
+  const handleChange =async (event,r) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    //setState(event.target.checked);
+    await deleteEvent(r);
+  };
+
+  const cambiar = ( ) =>  {
+    OpenModal();
+    mostrarActualizar();
+  }
+
   const onSelect = ( event ) =>  {
     console.log(event.row)
     setActiveEvent( event.row );
   }
+
  const theme = createTheme(
-  {
-    palette: {
-    primary: { main: '#1976d2' },
-    },
-  },
   esES,
 );
 
-useEffect(() => {
-  startLoadingEvents()
-}, [])
+
+const columns = [
+  { field: 'idservicios', headerClassName: "super", headerName: 'ID', Width: 90 },
+  { field: 'nombreServicios', headerClassName: "super", headerName: 'Nombre', flex:1, minWidth: 90 },
+  { field: 'descripcion', headerClassName: "super", headerName: 'Descripción', flex:1, minWidth: 90 },
+  { field: 'estatus', type: 'boolean', headerClassName: "super", headerName: 'Estado', flex:1, minWidth: 90 },
+  {
+    field: 'actions',
+    type: 'actions',
+    headerClassName: "super",
+    flex: 1,
+    minWidth: 120,
+    getActions: (evento) => [
+      <GridActionsCellItem
+        icon={<Edit />}
+        label="Delete"
+        onClick={cambiar}
+      />,
+      
+      <IconButton
+      color="inherit"
+      size="small"
+      aria-label="delete"
+      >
+        <Switch color='warning' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idservicios)} />
+     </IconButton> 
+  ], 
+  },
+];
+
   return (
     <>
      <h2 className='colorCat'>SERVICIOS</h2>
@@ -133,6 +116,10 @@ useEffect(() => {
         columns={columns}
         pageSize={12}
         rowsPerPageOptions={[12]}
+        components={{
+          BooleanCellFalseIcon:colorClose,
+          BooleanCellTrueIcon:colorDone
+        }}
         sx={{
           boxShadow:5,
           border:4,

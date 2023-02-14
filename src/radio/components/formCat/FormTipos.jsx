@@ -18,7 +18,7 @@ export const FormTipos = () => {
       updatedAt:'',
     });
 
-    const { CloseModal, isActualizar } = useModalHook();
+    const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useTiposStore();
 
     useEffect(() => {
@@ -118,7 +118,7 @@ export const FormTipos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" onClick={()=>mostrarGuardar()} >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>
