@@ -27,7 +27,7 @@ export const FormVehiculos = () => {
         setTableData(response.data);
       });
      }, []);
-    const { CloseModal, isActualizar } = useModalHook();
+    const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useVehiculosStore();
 
     useEffect(() => {
@@ -146,7 +146,7 @@ export const FormVehiculos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" sx={{  width: 300 }} >
+                        <Button variant="contained" color="warning" type="submit" onClick={() => mostrarGuardar()} >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

@@ -1,29 +1,34 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
-import { useUsuariosStore } from '../../../hooks/hooksCatalogo/useUsuariosStore';
+import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 
-export const FormUsuarios = () => {
+export const FormConfigReportes = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-   
+
     const [formValues, setFormValues] = useState({
-        nombre:'',
-      apellido_pat:'',
-      apellido_mat:'',
-      cuip:'',
-      clave_elector:'',
-      imagen_ine:'',
-      imagen_cuip:'',
-      titulo:'',
-      estatus:'',
-      createdAt:'',
-      updatedAt:'',
+        encabezado_carta:'',
+        encabezado2:'',
+        encabezado_hservicio:'',
+        logo1:'',
+        logo2:'',
+        articulo1:'',
+        articulo2:'',
+        articulo3:'',
+        revisor:'',
+        responsable_entrega:'',
+        pie_carta:'',
+        pie_hservicio:'',
+        fecha_inicial:'',
+        fecha_final:'',
+        fecha_creacion:'',
+        estatus:'',
     });
 
     const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
-    const { activeEvent, startSavingEvent } = useUsuariosStore();
+    const { activeEvent, startSavingEvent } = useConfigReportesStore();
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -43,125 +48,117 @@ export const FormUsuarios = () => {
         event.preventDefault();
         setFormSubmitted(true);
 
-        if (formValues.nombre.length <= 0) return;
+        if (formValues.encabezado_carta.length <= 0) return;
         console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
         CloseModal();
         setFormSubmitted(false);
     };
-    const btn =()=>{
-        mostrarGuardar();
-    }
 
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> {isActualizar? 'Actualizando Usuario' : 'Nuevo Usuario'} </Typography>
+                <Typography variant='h5'> Nueva configuración Hoja de Servicios y Cartas de Asignación </Typography>
                 <form onSubmit={onSubmit}>
                     <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
                             <TextField
-                                id="nombre-input"
-                                sx={{ border: 'none', mb: 1, mt: 2, width: 400 }}
+                                id="encabezado_carta-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="nombre"
+                                name="encabezado_carta"
                                 color='warning'
-                                label="Nombre"
+                                label="Encabezado de carta 1ra parte"
                                 variant="outlined"
-                                value={formValues.nombre}
+                                value={formValues.encabezado_carta}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="apellido_pat-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
+                                id="encabezado2-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="apellido_pat"
+                                name="encabezado2"
                                 color='warning'
-                                label="Apellido Paterno"
+                                label="Encabezado de carta 2da parte"
                                 variant="outlined"
-                                value={formValues.apellido_pat}
+                                value={formValues.encabezado2}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="apellido_mat-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
+                                id="encabezado_hservicio-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="apellido_mat"
+                                name="encabezado_hservicio"
                                 color='warning'
-                                label="Apellido Materno"
+                                label="Encabezado de hoja de servicio"
                                 variant="outlined"
-                                value={formValues.apellido_mat}
+                                value={formValues.encabezado_hservicio}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="cuip-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
+                                id="logo1-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="cuip"
+                                name="logo1"
                                 color='warning'
-                                label="Cuip"
+                                label="Logo 1"
                                 variant="outlined"
-                                value={formValues.cuip}
+                                value={formValues.logo1}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="clave_elector-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
+                                id="logo2-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="clave_elector"
+                                name="logo2"
                                 color='warning'
-                                label="Clave Elector"
+                                label="Logo 2"
                                 variant="outlined"
-                                value={formValues.clave_elector}
+                                value={formValues.logo2}
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
                             <TextField
-                                id="imagen_ine-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
+                                id="logo3-input"
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
-                                name="imagen_ine"
+                                name="logo3"
                                 color='warning'
-                                label="Imagen Ine"
+                                label="Logo 3"
                                 variant="outlined"
-                                value={formValues.imagen_ine}
+                                value={formValues.logo3}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
-                            <TextField
-                                id="imagen_cuip-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                type="text"
-                                name="imagen_cuip"
-                                color='warning'
-                                label="Imagen Cuip"
-                                variant="outlined"
-                                value={formValues.imagen_cuip}
-                                onChange={handleInputChange} />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                id="titulo-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                type="text"
-                                name="titulo"
-                                color='warning'
-                                label="Titulo"
-                                variant="outlined"
-                                value={formValues.titulo}
-                                onChange={handleInputChange} />
-                        </Grid>
+                        {/* <Grid item xs={6}>
+                            <FormControl fullWidth>
+                                <InputLabel id="fk_encargado_revision-input" color='warning'>Recurso Compra</InputLabel>
+                                <Select
+                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    labelId="demo-simple-select-label"
+                                    id="fk_encargado_revision-input"
+                                    name="fk_encargado_revision"
+                                    color='warning'
+                                    value={formValues.fk_encargado_revision}
+                                    label="Encargado de revisión"
+                                    onChange={handleInputChange}>
+                                    {
+                                        selectRevisor.map(elemento=>{
+                                          return <MenuItem key={elemento.idrecursoCompras} value={elemento.idrecursoCompras} >{elemento.nombreRecursoCompra}</MenuItem> 
+                                        })}
+                                </Select>
+                            </FormControl>
+                        </Grid> */}
                         <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 400 }}
-                                    labelId="demo-simple-select-label"
+                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    labelId="demo-simple-select-label2"
                                     id="estatus-input"
                                     name="estatus"
                                     color='warning'
@@ -173,7 +170,7 @@ export const FormUsuarios = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" onClick={() => mostrarGuardar()}>
+                        <Button variant="contained" color="warning" type="submit" onClick={ () => mostrarGuardar() } >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

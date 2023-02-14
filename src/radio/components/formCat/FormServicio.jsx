@@ -16,7 +16,7 @@ export const FormServicio = () => {
         updatedAt:'',
     });
 
-    const {CloseModal, isActualizar}=useModalHook();
+    const {CloseModal, isActualizar, mostrarGuardar}=useModalHook();
     const { activeEvent, startSavingEvent }=useServiciosStore();
 
     useEffect(() => {
@@ -92,7 +92,7 @@ export const FormServicio = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" sx={{  width: 300 }} >
+                        <Button variant="contained" color="warning" type="submit" onClick={ () => mostrarGuardar() } >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>
