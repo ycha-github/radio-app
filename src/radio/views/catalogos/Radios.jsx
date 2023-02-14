@@ -1,6 +1,6 @@
 import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
-import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useRadiosStore } from '../../../hooks/hooksCatalogo/useRadiosStore';
 import { useEffect, useState } from 'react';
@@ -18,7 +18,6 @@ export const Radios= () => {
   const { OpenModal, mostrarActualizar } = useModalHook();
   const [state, setState] =useState([]);
   
-
   useEffect(() => {
     startLoadingEvents()
   }, [])
@@ -63,35 +62,30 @@ export const Radios= () => {
     setActiveEvent( event.row );
   }
  const theme = createTheme(
-  {
-    palette: {
-    primary: { main: '#1976d2' },
-    },
-  },
   esES,
 );
 
 const columns = [
 
   { field: 'idradios', headerClassName: "super", headerName: 'ID', width: 90 },
-   { field: 'tipo',type: 'string',headerClassName: "super", headerName: 'Tipo Equipo', flex: 1, minWidth: 90 },
-  { field: 'serie',headerClassName: "super", headerName: 'Serie', flex: 1, minWidth: 90 },
-  { field: 'logico',headerClassName: "super", headerName: 'Logico', flex: 1, minWidth: 90 },
-  { field: 'inventario_interno',headerClassName: "super", headerName: 'Invent. Interno', flex: 1, minWidth: 90 },
-  { field: 'inventario_segpub',headerClassName: "super", headerName: 'Invent. Seg.Pub.', flex: 1, minWidth: 90 },
-  { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Propietario', flex: 1, minWidth: 90 },
-  { field: 'nombreRecursoCompra',headerClassName: "super", headerName: 'Recurso Compra', flex: 1, minWidth: 90 },
-  { field: 'contrato_compra',headerClassName: "super", headerName: 'Contrato', flex: 1, minWidth: 90 },
+   { field: 'tipo',type: 'string',headerClassName: "super", headerName: 'Tipo Equipo', flex: 1, minWidth: 120 },
+  { field: 'serie',headerClassName: "super", headerName: 'Serie', flex: 1, minWidth: 140 },
+  { field: 'logico',headerClassName: "super", headerName: 'Logico', flex: 1, minWidth: 130 },
+  { field: 'inventario_interno',headerClassName: "super", headerName: 'Invent. Interno', flex: 1, minWidth: 140 },
+  { field: 'inventario_segpub',headerClassName: "super", headerName: 'Invent. Seg.Pub.', flex: 1, minWidth: 140 },
+  { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Propietario', flex: 1, minWidth: 140 },
+  { field: 'nombreRecursoCompra',headerClassName: "super", headerName: 'Recurso Compra', flex: 1, minWidth: 130 },
+  { field: 'contrato_compra',headerClassName: "super", headerName: 'Contrato', flex: 1, minWidth: 140 },
   { field: 'rfsi',headerClassName: "super", headerName: 'RFSI', flex: 1, minWidth: 90 },
   { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
-  { field: 'fecha_actualizacion',headerClassName: "super", headerName: 'Fecha Actua.', flex: 1, minWidth: 90 },
-  { field: 'fecha_asignacion',headerClassName: "super", headerName: 'Fecha Asign.', flex: 1, minWidth: 90 },
-  { field: 'observaciones',headerClassName: "super", headerName: 'Observaciones', flex: 1, minWidth: 90 },
-  { field: 'fecha_recepcion',headerClassName: "super", headerName: 'Fecha Recepcion', flex: 1, minWidth: 90 },
-  { field: 'nombreStatus',headerClassName: "super", headerName: 'SUE', flex: 1, minWidth: 90 },
+  { field: 'fecha_actualizacion',headerClassName: "super", headerName: 'Fecha Actua.', flex: 1, minWidth: 140 },
+  { field: 'fecha_asignacion',headerClassName: "super", headerName: 'Fecha Asign.', flex: 1, minWidth: 140 },
+  { field: 'observaciones',headerClassName: "super", headerName: 'Observaciones', flex: 1, minWidth: 140 },
+  { field: 'fecha_recepcion',headerClassName: "super", headerName: 'Fecha Recepcion', flex: 1, minWidth: 140 },
+  { field: 'nombreStatus',headerClassName: "super", headerName: 'SUE', flex: 1, minWidth: 100 },
   { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
-  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
-  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 140 },
+  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 140 },
   {
     field: 'actions',
     type: 'actions',
@@ -144,8 +138,8 @@ const columns = [
       autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={12}
-        rowsPerPageOptions={[12]}
+        pageSize={11}
+        rowsPerPageOptions={[11]}
         components={{
           BooleanCellFalseIcon:colorClose,
           BooleanCellTrueIcon:colorDone

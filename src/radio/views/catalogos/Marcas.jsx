@@ -1,56 +1,16 @@
 import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
-import { AddCircleOutlineOutlined, Block, Edit } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useMarcasStore } from '../../../hooks/hooksCatalogo/useMarcasStore';
 import { useEffect, useState } from 'react';
 import { FormMarcas } from '../../components/formCat/FormMarcas';
 
-
-
-function RowMenuCell( event) {
-  const { deleteEvent}= useMarcasStore();
-  const {OpenModal, mostrarActualizar}=useModalHook();
-
-  const [state, setState] =useState(
-    event.row
-  );
-
-  //console.log(event.row);
-
-  const handleChange =async (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    await deleteEvent(state);
-  };
-
-  const cambiar = ( ) =>  {
-    OpenModal();
-    mostrarActualizar();
-  }
-  return (
-    <div>
-      <IconButton
-        onClick={ cambiar }
-        color="inherit"
-        size="small" 
-        aria-label="edit">
-        <Edit fontSize="small"/>
-      </IconButton>
-      <IconButton
-      onClick={deleteEvent}
-        color="inherit"
-        size="small"
-        aria-label="delete">
-        <Block fontSize="small"/>
-      </IconButton>
-      <IconButton
-        color="inherit"
-        size="small"
-        aria-label="delete">
-       <Switch color='warning' name="estatus" checked={state.estatus}  onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
-      </IconButton>
-    </div>
-  );
+const colorClose=()=>{
+  return <Close color='error'/>
+}
+const colorDone=()=>{
+  return <Done color='success'/>
 }
 
 export const Marcas= () => {
@@ -102,7 +62,7 @@ const columns = [
   { field: 'idmarcas', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
   { field: 'nombreMarcas',headerClassName: "super", headerName: 'Zona', flex: 1, minWidth: 90 },
   { field: 'nombreModelos',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
-  { field: 'estatus',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
+  { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
   {
@@ -156,8 +116,12 @@ const columns = [
       autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={12}
-        rowsPerPageOptions={[12]}
+        pageSize={11}
+        rowsPerPageOptions={[11]}
+        components={{
+          BooleanCellFalseIcon:colorClose,
+          BooleanCellTrueIcon:colorDone
+        }}
         sx={{
           boxShadow:5,
           border:4,

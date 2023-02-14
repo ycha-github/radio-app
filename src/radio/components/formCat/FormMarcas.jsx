@@ -16,7 +16,7 @@ export const FormMarcas = () => {
         updatedAt:'',
     });
  
-    const {CloseModal, isActualizar}=useModalHook();
+    const {CloseModal, isActualizar, mostrarGuardar}=useModalHook();
     const { activeEvent, startSavingEvent }=useMarcasStore();
 
     useEffect(() => {
@@ -48,7 +48,7 @@ export const FormMarcas = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nuevas Marcas </Typography>
+                <Typography variant='h5'>  {isActualizar? 'Actualizando Marca' : 'Nueva Marca'} </Typography>
                 <form onSubmit={onSubmit}>
                         <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
@@ -92,7 +92,7 @@ export const FormMarcas = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar} sx={{  width: 300 }} >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

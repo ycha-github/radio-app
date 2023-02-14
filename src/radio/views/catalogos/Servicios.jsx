@@ -105,7 +105,7 @@ useEffect(() => {
   return (
     <>
      <h2 className='colorCat'>SERVICIOS</h2>
-    <div style={{ height: '100%', width: '100%' }}>
+    <div style={{ height: 400, width: '100%' }}>
     <div style={{ height: 'flex', width: '100%' }}>
     <div style={{ flexGrow: 1 }}>
       <Box
@@ -131,8 +131,8 @@ useEffect(() => {
       autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={12}
-        rowsPerPageOptions={[12]}
+        pageSize={11}
+        rowsPerPageOptions={[11]}
         sx={{
           boxShadow:5,
           border:4,

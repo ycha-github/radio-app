@@ -48,7 +48,7 @@ export const FormZonasReg = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nueva Zonas-Regiones </Typography>
+                <Typography variant='h5'> {isActualizar? 'Actualizando Zonas-Regiones' : 'Nuevo Zonas-Regiones'} </Typography>
                 <form onSubmit={onSubmit}>
                     <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
@@ -92,7 +92,7 @@ export const FormZonasReg = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" sx={{  width: 300 }} >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

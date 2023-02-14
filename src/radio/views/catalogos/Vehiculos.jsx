@@ -135,8 +135,8 @@ useEffect(() => {
       autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={12}
-        rowsPerPageOptions={[12]}
+        pageSize={11}
+        rowsPerPageOptions={[11]}
         sx={{
           boxShadow:5,
           border:4,

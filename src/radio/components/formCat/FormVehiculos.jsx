@@ -59,7 +59,7 @@ export const FormVehiculos = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nuevo Vehiculo </Typography>
+                <Typography variant='h5'> {isActualizar? 'Actualizando Vehiculo' : 'Nuevo Vehiculo'} </Typography>
                 <form onSubmit={onSubmit}>
                     <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
@@ -146,7 +146,7 @@ export const FormVehiculos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" sx={{  width: 300 }} >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

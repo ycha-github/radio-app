@@ -3,11 +3,16 @@ import { useEffect, useState } from "react";
 import { Box, Button, IconButton,Stack, Switch } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormUser } from '../../components/formAdmin/FormUser';
-import { AddCircleOutlineOutlined, Block, Edit} from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Block, Close, Done, Edit} from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useUsersStore } from '../../../hooks/hooksAdministracion/useUsersStore';
  
-
+const colorClose=()=>{
+  return <Close color='error'/>
+}
+const colorDone=()=>{
+  return <Done color='success'/>
+}
 export const Users = () => {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useUsersStore();
   const { OpenModal, mostrarActualizar } = useModalHook();
@@ -41,7 +46,6 @@ export const Users = () => {
   }
 
   const onSelect = ( event ) =>  {
-    console.log(event.row)
     setActiveEvent( event.row );
   }
   const theme = createTheme(
@@ -57,8 +61,8 @@ export const Users = () => {
 
     { field: 'idusers', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
     { field: 'username', headerClassName: "super", headerName: 'Usuario', flex: 1, minWidth: 90 },
-    { field: 'roles_idrol', headerClassName: "super", headerName: 'Rol', flex: 1, minWidth: 90 },
-    { field: 'estatus', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
+    { field: 'rol', headerClassName: "super", headerName: 'Rol', flex: 1, minWidth: 90 },
+    { field: 'estatus',type: 'boolean', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
     { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
     { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
     {
@@ -114,8 +118,12 @@ export const Users = () => {
                   autoHeight={true}
                   rows={events}
                   columns={columns}
-                  pageSize={12}
-                  rowsPerPageOptions={[12]}
+                  pageSize={11}
+                  rowsPerPageOptions={[11]}
+                  components={{
+                    BooleanCellFalseIcon:colorClose,
+                    BooleanCellTrueIcon:colorDone
+                  }}
                   sx={{
                     boxShadow: 5,
                     border: 4,

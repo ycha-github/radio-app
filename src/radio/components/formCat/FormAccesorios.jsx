@@ -37,7 +37,7 @@ export const FormAccesorios = () => {
        });
       }, []);
 
-    const {CloseModal, isActualizar}=useModalHook();
+    const {CloseModal, isActualizar, mostrarGuardar}=useModalHook();
     const { activeEvent, startSavingEvent }=useAccesoriosStore();
 
     useEffect(() => {
@@ -199,7 +199,7 @@ export const FormAccesorios = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" sx={{  width: 400 }} >
+                        <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar} sx={{  width: 400 }} >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

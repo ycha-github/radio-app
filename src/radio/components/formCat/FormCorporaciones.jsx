@@ -16,7 +16,7 @@ export const FormCorporaciones = () => {
         updatedAt: '',
     });
  
-    const {CloseModal, isActualizar}=useModalHook();
+    const {CloseModal, isActualizar, mostrarGuardar }=useModalHook();
     const { activeEvent, startSavingEvent }=useCorporacionesStore();
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export const FormCorporaciones = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nueva Corporaciones </Typography>
+                <Typography variant='h5'>  {isActualizar? 'Actualizando Corporación' : 'Nueva Corporación'} </Typography>
                 <form onSubmit={onSubmit}>
                         <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
@@ -91,7 +91,7 @@ export const FormCorporaciones = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar} sx={{  width: 300 }} >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

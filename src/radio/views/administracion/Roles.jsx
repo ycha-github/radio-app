@@ -2,12 +2,17 @@ import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid';
 import { useEffect, useState } from "react";
 import { Box, Button, IconButton,Stack, Switch } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { AddCircleOutlineOutlined, Block, Edit} from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Block, Close, Done, Edit} from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useRolStore } from '../../../hooks/hooksAdministracion/useRolStore';
 import { FormRoles } from '../../components/formAdmin/FormRoles';
  
-
+const colorClose=()=>{
+  return <Close color='error'/>
+}
+const colorDone=()=>{
+  return <Done color='success'/>
+}
 export const Roles = () => {
   const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useRolStore();
   const { OpenModal, mostrarActualizar } = useModalHook();
@@ -55,7 +60,7 @@ export const Roles = () => {
 
     { field: 'idrol', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
     { field: 'rol', headerClassName: "super", headerName: 'Rol', flex: 1, minWidth: 90 },
-    { field: 'estatus', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
+    { field: 'estatus',type: 'boolean', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
     { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
     { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
     {
@@ -110,8 +115,12 @@ export const Roles = () => {
                   autoHeight={true}
                   rows={events}
                   columns={columns}
-                  pageSize={12}
-                  rowsPerPageOptions={[12]}
+                  pageSize={11}
+                  rowsPerPageOptions={[11]}
+                  components={{
+                    BooleanCellFalseIcon:colorClose,
+                    BooleanCellTrueIcon:colorDone
+                  }}
                   sx={{
                     boxShadow: 5,
                     border: 4,

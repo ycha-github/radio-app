@@ -9,6 +9,7 @@ import axios from 'axios';
 export const FormRadios = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
+   
     const [formValues, setFormValues] = useState({
         serie: '',
         logico: '',
@@ -38,7 +39,7 @@ export const FormRadios = () => {
     const [selectMarca, setSelectMarca] = useState([]);
     const [selectSue, setSelectSue] = useState([]);
 
-    const { CloseModal, isActualizar } = useModalHook();
+    const { CloseModal, isActualizar,mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useRadiosStore();
 
 useEffect(() => {
@@ -96,10 +97,14 @@ useEffect(() => {
         setFormSubmitted(false);
     };
 
+    const btn =()=>{
+        mostrarGuardar()
+    }
+
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nueva Radio </Typography>
+                <Typography variant='h5'>  {isActualizar? 'Actualizando Radio' : 'Nuevo Radio'} </Typography>
                 <form onSubmit={onSubmit}>
                 <Stack  noValidate spacing={3}>
                     <Grid container alignItems="center" justify="center" direction="column" >
@@ -356,7 +361,7 @@ useEffect(() => {
                             </FormControl>
                         </Grid>
                         </Grid>
-                        <Button variant="contained"   color="warning" type="submit" >
+                        <Button variant="contained"   color="warning" type="submit"  onClick={btn} sx={{  width: 628 }} >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

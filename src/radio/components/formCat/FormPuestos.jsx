@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { usePuestosStore } from '../../../hooks/hooksCatalogo/usePuestosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
+import axios from 'axios';
 
 export const FormPuestos = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [tableData, setTableData] = useState([])
 
     const [formValues, setFormValues] = useState({
         nombre:'',
@@ -16,8 +18,15 @@ export const FormPuestos = () => {
         createdAt:'',
         updatedAt:'',
     });
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/v0/corporaciones').
+      then((response)=>{
+        setTableData(response.data);
+      });
+     }, []);
  
-    const {CloseModal, isActualizar}=useModalHook();
+    const {CloseModal, isActualizar, mostrarGuardar}=useModalHook();
     const { activeEvent, startSavingEvent }=usePuestosStore();
 
     useEffect(() => {
@@ -49,7 +58,7 @@ export const FormPuestos = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nueva Puestos </Typography>
+                <Typography variant='h5'>  {isActualizar? 'Actualizando Puesto' : 'Nuevo Puesto'} </Typography>
                 <form onSubmit={onSubmit}>
                         <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
@@ -76,8 +85,10 @@ export const FormPuestos = () => {
                                     value={formValues.fk_corporacion}
                                     label="Nombre Corporacion"
                                     onChange={handleInputChange}>
-                                    <MenuItem value={1}>C4</MenuItem>
-                                    <MenuItem value={2}>SSyPC</MenuItem>
+                                    {
+                                        tableData.map(elemento=>{
+                                          return <MenuItem key={elemento.idcorporaciones} value={elemento.idcorporaciones} >{elemento.nombreCorporacion}</MenuItem> 
+                                        })}
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -98,7 +109,7 @@ export const FormPuestos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar} sx={{  width: 300 }} >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

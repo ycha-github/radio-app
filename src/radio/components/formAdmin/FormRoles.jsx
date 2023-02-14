@@ -15,7 +15,7 @@ export const FormRoles = () => {
         updatedAt:'',
     });
 
-    const { CloseModal, isActualizar } = useModalHook();
+    const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useRolStore();
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export const FormRoles = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h4'> Nuevo Rol </Typography>
+                <Typography variant='h4'>  {isActualizar? 'Actualizando Rol' : 'Nuevo Rol'} </Typography>
                 <form onSubmit={onSubmit}>
                     <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
@@ -79,7 +79,7 @@ export const FormRoles = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="info" type="submit" sx={{  width: 400 }} >
+                        <Button variant="contained" color="info" type="submit" onClick={mostrarGuardar} sx={{  width: 400 }} >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

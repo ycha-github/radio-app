@@ -7,7 +7,7 @@ import { useModalHook } from '../../../hooks/useModalHook';
 export const FormUsuarios = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-
+    const {mostrarGuardar}= useModalHook();
     const [formValues, setFormValues] = useState({
         nombre:'',
       apellido_pat:'',
@@ -50,17 +50,20 @@ export const FormUsuarios = () => {
         CloseModal();
         setFormSubmitted(false);
     };
+    const btn =()=>{
+        mostrarGuardar();
+    }
 
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nuevo Usuario </Typography>
+                <Typography variant='h5'> {isActualizar? 'Actualizando Usuario' : 'Nuevo Usuario'} </Typography>
                 <form onSubmit={onSubmit}>
                     <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
                             <TextField
                                 id="nombre-input"
-                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 400 }}
                                 type="text"
                                 name="nombre"
                                 color='warning'
@@ -72,7 +75,7 @@ export const FormUsuarios = () => {
                         <Grid item>
                             <TextField
                                 id="apellido_pat-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="apellido_pat"
                                 color='warning'
@@ -84,7 +87,7 @@ export const FormUsuarios = () => {
                         <Grid item>
                             <TextField
                                 id="apellido_mat-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="apellido_mat"
                                 color='warning'
@@ -96,7 +99,7 @@ export const FormUsuarios = () => {
                         <Grid item>
                             <TextField
                                 id="cuip-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="cuip"
                                 color='warning'
@@ -108,7 +111,7 @@ export const FormUsuarios = () => {
                         <Grid item>
                             <TextField
                                 id="clave_elector-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="clave_elector"
                                 color='warning'
@@ -120,7 +123,7 @@ export const FormUsuarios = () => {
                         <Grid item>
                             <TextField
                                 id="imagen_ine-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="imagen_ine"
                                 color='warning'
@@ -132,7 +135,7 @@ export const FormUsuarios = () => {
                         <Grid item>
                             <TextField
                                 id="imagen_cuip-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="imagen_cuip"
                                 color='warning'
@@ -144,7 +147,7 @@ export const FormUsuarios = () => {
                         <Grid item>
                             <TextField
                                 id="titulo-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="titulo"
                                 color='warning'
@@ -157,7 +160,7 @@ export const FormUsuarios = () => {
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    sx={{ border: 'none', mb: 1, width: 400 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
@@ -170,7 +173,7 @@ export const FormUsuarios = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" >
+                        <Button variant="contained" color="warning" type="submit" onClick={btn} sx={{  width: 400 }} >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

@@ -45,7 +45,7 @@ export const FormEstatus = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nuevo Estatus </Typography>
+                <Typography variant='h5'>  {isActualizar? 'Actualizando Estatus' : 'Nuevo Estatus'} </Typography>
                 <form onSubmit={onSubmit}>
                     <Grid container alignItems="center" justify="center" direction="column">
                         <Grid item>
