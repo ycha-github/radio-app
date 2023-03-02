@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
-import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Block, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
-import { useEffect, useState } from 'react';
 import { FormConfigReportes } from '../../components/formAdmin/formConfigReportes';
 
 const colorClose=()=>{
@@ -15,7 +15,7 @@ const colorDone=()=>{
 
 export const ConfigReportes= () => {
   const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useConfigReportesStore();
-  const { OpenModal, mostrarActualizar } = useModalHook();
+  const { OpenModal, mostrarActualizar, disableForm } = useModalHook();
   const [state, setState] =useState([]);
 
   useEffect(() => {
@@ -36,17 +36,20 @@ export const ConfigReportes= () => {
         responsable_entrega:'',
         pie_carta:'',
         pie_hservicio:'',
-        fecha_inicial:'',
-        fecha_final:'',
         fecha_creacion:'',
         estatus:'',
+        fecha_inicial:'',
+        fecha_final:'',
+        createdAt: '',
+        updatedAt: '',
     })
     OpenModal();
   }
 
   const handleChange =async (event,r) => {
     setState({ ...state, [event.target.name]: event.target.checked });
-    //setState(event.target.checked);
+    // setState(event.target.checked);
+    
     await deleteEvent(r);
   };
 
@@ -54,6 +57,13 @@ export const ConfigReportes= () => {
     OpenModal();
     mostrarActualizar();
   }
+
+  const ver = () =>  {
+    disableForm();
+    OpenModal();
+    mostrarActualizar();
+  }
+
 
   const onSelect = ( event ) =>  {
     console.log(event.row)
@@ -89,20 +99,25 @@ const columns = [
     type: 'actions',
     headerClassName: "super",
     flex: 1,
-    minWidth: 120,
+    minWidth: 130,
     getActions: (evento) => [
       <GridActionsCellItem
+      color='info'
         icon={<Edit />}
         label="Delete"
         onClick={cambiar}
       />,
-      
+      <GridActionsCellItem 
+      color='info'
+        icon={<VisibilityOutlined />}
+        label="View"
+        onClick={ver}
+      />,
       <IconButton
-      color="inherit"
-      size="small"
-      aria-label="delete"
+        size="small"
+        aria-label="Estatus"
       >
-        <Switch color='info' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idconfigReportes)} />
+        <Switch color='info' checked={evento.row.estatus} name="estatus" onChange={(event) => handleChange(event, evento.row.idconfigReportes)} />
      </IconButton> 
   ], 
   },
@@ -112,7 +127,7 @@ const columns = [
 
   return (
     <>
-     <h2 className='colorAdmin'>CONFIGURACIÓN / H SERVICIOS</h2>
+     <h2 className='colorAdmin'>CONFIGURACIÓN HOJAS DE SERVICIOS Y CARTAS DE ASIGNACIÓN</h2>
      <div style={{ height: 400, width: '100%' }}>
     <div style={{ height: 'flex', width: '100%' }}>
     <div style={{ flexGrow: 1 }}>

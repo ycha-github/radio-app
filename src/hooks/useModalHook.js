@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onActualizar, onCloseModal, onGuardar, onOpenModal } from "../store";
+import { onActualizar, onCloseModal, onGuardar, onOpenModal, onVer } from "../store";
 
  export const useModalHook= (initialvalue=true) => {
   
   const dispatch= useDispatch();
-      const { isModalOpen, isActualizar }= useSelector(state=> state.ui );
+      const { isModalOpen, isActualizar, isVer  }= useSelector(state=> state.ui );
   
       const OpenModal = ()=>{
         dispatch (onOpenModal());
@@ -18,11 +18,14 @@ import { onActualizar, onCloseModal, onGuardar, onOpenModal } from "../store";
       const mostrarActualizar  = () => {
         dispatch (onActualizar());
       };
+      const disableForm  = () => {
+        dispatch (onVer());
+      };
 
     return{
       // Propiedades
-      isModalOpen,isActualizar,
+      isModalOpen,isActualizar, isVer,
       // metodos
-      CloseModal,OpenModal,mostrarGuardar,mostrarActualizar,
+      CloseModal,OpenModal,mostrarGuardar,mostrarActualizar,disableForm
     }
   }
