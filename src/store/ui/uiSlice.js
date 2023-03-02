@@ -5,6 +5,7 @@ export const uiSlice = createSlice({
   initialState:{
       isModalOpen: false,
       isActualizar: false,
+      isVer: false,
   },
   reducers: {
     onOpenModal: (state)=> {
@@ -12,6 +13,7 @@ export const uiSlice = createSlice({
     },
     onCloseModal: (state)=> {
         state.isModalOpen = false;
+        state.isVer = false;
     },
     onGuardar: (state)=> {
         state.isActualizar = false;
@@ -19,8 +21,11 @@ export const uiSlice = createSlice({
     onActualizar: (state)=> {
         state.isActualizar = true;
     },
+    onVer: (state)=> {
+        state.isVer = true;
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { onOpenModal, onCloseModal, onGuardar, onActualizar } = uiSlice.actions;
+export const { onOpenModal, onCloseModal, onGuardar, onActualizar, onVer } = uiSlice.actions;
