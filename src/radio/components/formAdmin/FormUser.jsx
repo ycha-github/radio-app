@@ -20,6 +20,12 @@ export const FormUser = () => {
         updatedAt: "",
     });
 
+ useEffect(() => {
+        if (activeEvent !== null) {
+            setFormValues({ ...activeEvent });
+        }
+    }, [activeEvent])
+
     useEffect(() => {
         axios.get('http://localhost:8000/api/v0/roles').
       then((response)=>{
@@ -27,18 +33,15 @@ export const FormUser = () => {
       });
      }, []);
 
-    useEffect(() => {
-        if (activeEvent !== null) {
-            setFormValues({ ...activeEvent });
-        }
-    }, [activeEvent])
-
+   
     const handleInputChange = ({ target }) => {
         setFormValues({
             ...formValues,
             [target.name]: target.value,
         });
     };
+
+console.log(formValues);
 
     const handleChangeAutocomplete = (event, value, name) => {
         console.log(value.idrol);
@@ -93,37 +96,39 @@ export const FormUser = () => {
                         </Grid>
                         <Grid item>
                         <FormControl fullWidth>
-                            <Autocomplete
-                                //disablePortal
-                                name="roles_idrol"
-                                options={tableData}
-                                getOptionLabel={(tableData)=> tableData.rol || ""}
-                                //onChange={handleInputChange}
-                                sx={{border: 'none', mb: 1, width: 400 }}
-                                isOptionEqualToValue={(option,value)=>
-                                option.rol===value.rol
-                                }
-                               
-                                onChange={(event, value) =>
-                                    handleChangeAutocomplete(event, value, "roles_idrol")
-                                  } 
-                            noOptionsText={'Escoge el rol'}
-                            renderOption={(props,tableData)=>(
-                                <Box component='li' {...props}  key={tableData.idrol}>
-                                    {tableData.rol}
-                                </Box>
-                            )}
-                            //renderInput={<TextField/>}
-                            
-                            renderInput={params=>
-                                <TextField
-                                
-                                sx={{ border: 'none', width: 400 }}
-                                color='info'
-                                label="Rol"
-                                {...params}
-                                variant="outlined"
-                                 />
+                                <Autocomplete
+                                    //disablePortal
+                                    name="roles_idrol"
+                                    value={formValues.roles_idrol}
+                                    //value={tableData[formValues.roles_idrol-1]}
+                                    options={tableData}
+                                    getOptionLabel={(tableData) => tableData.rol || ""}
+                                    //onChange={handleInputChange}
+                                    sx={{ border: 'none', mb: 1, width: 400 }}
+                                    //isOptionEqualToValue={(option, value) =>
+                                      //  option.rol === value.rol
+                                    //}
+
+                                    onChange={(event, value) =>
+                                        handleChangeAutocomplete(event, value, "roles_idrol")
+                                    }
+                                    noOptionsText={'Escoge el rol'}
+                                    renderOption={(props, tableData) => (
+                                        <Box component='li' {...props} key={tableData.idrol}>
+                                            {tableData.rol}
+                                        </Box>
+                                    )}
+                                    //renderInput={<TextField/>}
+
+                                    renderInput={params =>
+                                        <TextField
+
+                                            sx={{ border: 'none', width: 400 }}
+                                            color='info'
+                                            label="Rol"
+                                            {...params}
+                                            variant="outlined"
+                                        />
                             }
                            />
                     </FormControl> 

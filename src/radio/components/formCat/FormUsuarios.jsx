@@ -7,11 +7,12 @@ import { useModalHook } from '../../../hooks/useModalHook';
 export const FormUsuarios = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-   
+   const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
+    const { activeEvent, startSavingEvent } = useUsuariosStore();
     const [formValues, setFormValues] = useState({
         nombre:'',
       apellido_pat:'',
-      apellido_mat:'',
+      apellido_mat:'', 
       cuip:'',
       clave_elector:'',
       imagen_ine:'',
@@ -21,9 +22,6 @@ export const FormUsuarios = () => {
       createdAt:'',
       updatedAt:'',
     });
-
-    const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
-    const { activeEvent, startSavingEvent } = useUsuariosStore();
 
     useEffect(() => {
         if (activeEvent !== null) {

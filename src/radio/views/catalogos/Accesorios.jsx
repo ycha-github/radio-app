@@ -1,4 +1,4 @@
-import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid';
+import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
 import  {useState , useEffect} from "react";
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
 import { FormAccesorios } from '../../components/formCat/FormAccesorios';

@@ -46,6 +46,7 @@ export const Users = () => {
   }
 
   const onSelect = ( event ) =>  {
+    console.log(event.row)
     setActiveEvent( event.row );
   }
   const theme = createTheme(

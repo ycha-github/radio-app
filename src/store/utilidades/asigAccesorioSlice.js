@@ -9,8 +9,8 @@ import { createSlice } from '@reduxjs/toolkit';
 //      updatedAt:'28-09-22',
 //    };
 
-export const accesoriosSlice = createSlice({
-  name: 'accesorios',
+export const asigAccesorioSlice = createSlice({ 
+  name: 'asigAccesorio',
   initialState:{
     isLoadingEvents: true,
     events:
@@ -31,8 +31,8 @@ export const accesoriosSlice = createSlice({
   },
     onUpdateEvent:(state, {payload})=>{
       state.events= state.events.map(event=>{
-        if (event.idaccesorios === payload.idaccesorios){
-          console.log(payload.idaccesorios);
+        if (event.idasig_tipo === payload.idasig_tipo){
+          console.log(payload.idasig_tipo);
           return payload;
         }
         return event;
@@ -45,7 +45,7 @@ export const accesoriosSlice = createSlice({
     //},
     onDeleteEvent:(state)=>{
       state.events= state.events.map(event=>{
-        if (event.idaccesorios === payload.idaccesorios){
+        if (event.idasig_tipo === payload.idasig_tipo){
           return payload;
         }
         return event;
@@ -57,7 +57,7 @@ export const accesoriosSlice = createSlice({
       state.isLoadingEvents= false;
       //state.events=  payload;
       payload.forEach(event=>{
-        const exists = state.events.some(dbEvent=> dbEvent.idaccesorios === event.idaccesorios);
+        const exists = state.events.some(dbEvent=> dbEvent.idasig_tipo === event.idasig_tipo);
         if( !exists){
           state.events.push(event)
         }
@@ -66,4 +66,4 @@ export const accesoriosSlice = createSlice({
   }
 });
 // Action creators are generated for each case reducer function
-export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent,onLoadEvent } = accesoriosSlice.actions;
+export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent,onLoadEvent } = asigAccesorioSlice.actions;

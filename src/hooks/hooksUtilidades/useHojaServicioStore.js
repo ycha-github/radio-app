@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"; 
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/catalogo/accesoriosSlice";
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/utilidades/hojaServicioSlice";
 
-export const useAccesoriosStore= () => {
+export const useHojaServicioStore= () => {
   const dispatch = useDispatch();
-  const { events, activeEvent } = useSelector( state => state.accesorios );
+  const { events, activeEvent } = useSelector( state => state.hojaServicio);
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
@@ -13,26 +13,26 @@ export const useAccesoriosStore= () => {
   }
   const startSavingEvent =async(zonasEvent)=>{
     //TODO: Update event
-    if(zonasEvent.idaccesorios){
+    if(zonasEvent.idhojaservicios){
       //Actualizando
-        const {data}= await  radioApi.put(`/accesorios/${zonasEvent.idaccesorios}`,zonasEvent);
+        const {data}= await  radioApi.put(`/hojasservicios/${zonasEvent.idhojaservicios}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
     }else{
       //creando
-      const {data}= await radioApi.post('/accesorios', zonasEvent);
-      dispatch(onAddNewEvent({...zonasEvent, idaccesorios:data.idaccesorios, user}));
+      const {data}= await radioApi.post('/hojasservicios', zonasEvent);
+      dispatch(onAddNewEvent({...zonasEvent, idhojaservicios:data.idhojaservicios, user}));
       window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    const {data} = await  radioApi.delete(`/accesorios/${zonasEvent}`);
+    const {data} = await  radioApi.delete(`/hojasservicios/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
   window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{
       try {
-        const { data } = await radioApi.get('/accesorios')
+        const { data } = await radioApi.get('/hojasservicios')
         dispatch(onLoadEvent(data))
       
       } catch (error) {
