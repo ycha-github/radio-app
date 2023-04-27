@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux"; 
+import { useNavigate } from "react-router-dom";
 import radioApi from "../../api/radioApi";
 import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/utilidades/hojaServicioSlice";
 
 export const useHojaServicioStore= () => {
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector( state => state.hojaServicio);
   const { user } = useSelector( state => state.auth );
@@ -21,13 +24,15 @@ export const useHojaServicioStore= () => {
       //creando
       const {data}= await radioApi.post('/hojasservicios', zonasEvent);
       dispatch(onAddNewEvent({...zonasEvent, idhojaservicios:data.idhojaservicios, user}));
-      window.location.reload(true);
+      // window.location.reload(true);
+      navigate('../hoja-servicio')
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
     const {data} = await  radioApi.delete(`/hojasservicios/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
   window.location.reload(true);
+  
     }
 
     const startLoadingEvents= async ()=>{

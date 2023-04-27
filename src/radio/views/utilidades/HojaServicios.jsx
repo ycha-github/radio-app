@@ -1,10 +1,12 @@
-import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
 import  {useState , useEffect} from "react";
-import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
-
-import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
+import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, TextField } from '@mui/material';
+import { AddCircleOutlineOutlined, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
+import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServicio';
+import { render } from "react-dom";
 
 
 const colorClose=()=>{
@@ -15,8 +17,10 @@ const colorDone=()=>{
 }
   export const HojaServicios=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useHojaServicioStore();
-  const {OpenModal, mostrarActualizar}=useModalHook();
+  const { mostrarGuardar, mostrarActualizar, disableForm }=useModalHook();
   const [state, setState] =useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     startLoadingEvents()
@@ -24,22 +28,24 @@ const colorDone=()=>{
 
   const newRow =()=>{
     setActiveEvent({
-      fecha_servicio:'',
-      fk_usuario:'',
-      fk_idservicios:'',
-      fk_idradios:'',
-      fk_idaccesorios:'',
-      descripcion:'',
-      entrego_equipo:'',
-      fecha_entrega:'',
-      fk_supervisortec:'',
-      usuario_servicio:'',
-      usuario_entrega:'',
-      fk_tecnico_entrega:'',
-      estatus:'',
-      createdAt:'',
+        // fecha_servicio:'',
+        fk_usuario:'',
+        // fk_idservicios:'',
+        fk_idradios:'',
+        // fk_accesorios:'',
+        // descripcion:'',
+        // entrego_equipo:'',
+        // fecha_entrega:'',
+        // fk_supervisortec:'',
+        // usuario_servicio:'',
+        // usuario_entrega:'',
+        // fk_tecnico_entrega:'',
+        // estatus:'',
+        // createdAt: '',
+        // updatedAt: '',
     })
-    OpenModal();
+    mostrarGuardar();
+    navigate('../hoja-serviciof');
   }
 
   const handleChange =async (event,r) => {
@@ -49,8 +55,14 @@ const colorDone=()=>{
   };
 
   const cambiar = ( ) =>  {
-    OpenModal();
     mostrarActualizar();
+    navigate('../hoja-serviciof');
+  }
+
+  const ver = () =>  {
+    disableForm();
+    mostrarActualizar();
+    navigate('../hoja-serviciof');
   }
 
   const onSelect = ( event ) =>  {
@@ -69,43 +81,44 @@ const colorDone=()=>{
 
 const columns =  [
   
-  { field: 'idhojaservicios', headerClassName: "super", headerName: 'ID',width: 90,  },
-  { field: 'fecha_servicio',headerClassName: "super",headerName: 'Fecha de creacion', flex: 1, minWidth: 120 },
-  { field: 'fk_usuario', headerClassName: "super", headerName: 'Accesorio',minwidth: 90,  },
-  { field: 'fk_idservicios',headerClassName: "super", headerName: 'Numero de serie',flex: 1 , minWidth: 90 },
-  { field: 'fk_idradios',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
-  { field: 'fk_idaccesorios',headerClassName: "super", headerName: 'Inventario Interno', flex: 1, minWidth: 90 },
-  { field: 'descripcion',headerClassName: "super",headerName: 'Inv. Seg. Pub.',flex: 1, minWidth: 90 },
-  { field: 'entrego_equipo',type: 'boolean',headerClassName: "super",headerName: 'Contrato',flex: 1, minWidth: 90 },
-  { field: 'fecha_entrega',headerClassName: "super",headerName: 'Observaciones',flex: 1, minWidth: 90 },
-  { field: 'fk_supervisortec',headerClassName: "super",headerName: 'Fecha de Recepcion',flex: 1, minWidth: 90 },
-  { field: 'usuario_servicio',headerClassName: "super",headerName: 'SUE',flex: 1, minWidth: 90 },
-  { field: 'usuario_entrega',headerClassName: "super",headerName: 'SUE',flex: 1, minWidth: 90 },
-  { field: 'fk_tecnico_entrega',headerClassName: "super",headerName: 'SUE',flex: 1, minWidth: 90 },
-  { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 1, minWidth: 90 },
-  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 1, minWidth: 120 },
-  
-  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 120 },
+  { field: 'idhojaservicios', headerClassName: "super", headerName: 'ID',width: 40,  },
+  { field: 'fecha_servicio',headerClassName: "super",headerName: 'Fecha creación', flex: 1, minWidth: 60 },
+  { field: 'nombre_completo', headerClassName: "super", headerName: 'Usuario', flex: 1, minWidth: 230 },
+  { field: 'serie',headerClassName: "super", headerName: 'Radio', flex: 1, minWidth: 90 },
+  { field: 'fecha_entrega',headerClassName: "super",headerName: 'Fecha Entrega',flex: 1, minWidth: 110 },
+  { field: 'nombreSupervisorTec',headerClassName: "super",headerName: 'Supervisor Técnico', flex: 1, minWidth: 230 },
+  // { field: 'usuario_servicio',headerClassName: "super",headerName: 'Usuario Servicio',  width: 230 },
+  // { field: 'usuario_entrega',headerClassName: "super",headerName: 'Usuario Entrega', width: 230 },
+  { field: 'nombreTecEntrega',headerClassName: "super",headerName: 'Técnico Entrega', flex: 1, minWidth: 230 },
+  { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus', width: 75 },
+  // { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 1, minWidth: 120 },
+  // { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 120 },
   {
     field: 'actions',
     type: 'actions',
     headerClassName: "super",
     flex: 1,
-    minWidth: 120,
+    minWidth: 150,
     getActions: (evento) => [
       <GridActionsCellItem
+        color='secondary'
         icon={<Edit />}
         label="Delete"
-        onClick={cambiar}
+        onClick={ cambiar }
+      />,
+      <GridActionsCellItem 
+        color='secondary'
+        icon={<VisibilityOutlined />}
+        label="View"
+        onClick={ver}
       />,
       <IconButton
-      color="inherit"
-      size="small"
-      aria-label="delete"
+        size="small"
+        aria-label="Estatus"
       >
         <Switch color='secondary' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idaccesorios)} />
      </IconButton> 
-  ], 
+    ], 
   }, 
 ]
 
@@ -125,7 +138,7 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-       {/* <FormAccesorios/> */}
+       
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
 import { useModalHook } from '../../../hooks/useModalHook';
-import { borderRadius, width } from '@mui/system';
 
 
 export const FormConfigReportes = () => {
@@ -74,7 +73,7 @@ export const FormConfigReportes = () => {
     return (
         <>
             <ModalRadio >
-                <Typography variant='h5'> Nueva configuración Hoja de Servicios y Cartas de Asignación </Typography>
+                <Typography variant='h5'> { isActualizar ? 'Actualizar configuración Hoja de Servicios y Cartas de Asignación' : 'Nueva configuración Hoja de Servicios y Cartas de Asignación' } </Typography>
                 <form onSubmit={onSubmit} >
                     {/* <Stack  noValidate spacing={3}> */}
                         <Grid container  justify="center"  overflow={ 'scroll'} maxHeight={600} >
