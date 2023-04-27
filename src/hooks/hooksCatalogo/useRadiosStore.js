@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent,onUpdateEvent, onDeleteEvent,onLoadEvent } from "../../store/catalogo/RadiosSlice";
+import { onAddNewEvent, onSetActiveEvent,onUpdateEvent, onDeleteEvent,onLoadEvent } from "../../store/catalogo/radiosSlice";
 
 export const useRadiosStore = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const useRadiosStore = () => {
 
     dispatch( onSetActiveEvent(zonasEvent ));
   }
-  const startSavingEvent =async(zonasEvent)=>{
+  const startSavingEvent1 =async(zonasEvent)=>{
     //TODO: Update event
     if(zonasEvent.idradios){
       //Actualizando
@@ -48,7 +48,7 @@ export const useRadiosStore = () => {
     // Metodos
     deleteEvent,
     setActiveEvent,
-    startSavingEvent,
+    startSavingEvent1,
     startLoadingEvents,
   }
 }

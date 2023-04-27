@@ -46,7 +46,6 @@ export const Users = () => {
   }
 
   const onSelect = ( event ) =>  {
-    console.log(event.row)
     setActiveEvent( event.row );
   }
   const theme = createTheme(
@@ -74,6 +73,7 @@ export const Users = () => {
       minWidth: 120,
       getActions: (evento) => [
         <GridActionsCellItem
+        color="info"
           icon={<Edit />}
           label="Delete"
           onClick={cambiar}

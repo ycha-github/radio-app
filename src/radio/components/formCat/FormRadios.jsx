@@ -18,7 +18,6 @@ export const FormRadios = () => {
         fk_propietario: '',
         fk_recurso_compra: '',
         contrato_compra: '',
-        rfsi: '',
         fk_marca: '',
         nombreMarcas: '',
         fecha_actualizacion: '',
@@ -32,10 +31,8 @@ export const FormRadios = () => {
         tipo:'',
     });
 
-    const [selectTequipo, setSelectTequipo] = useState([]);
-    const [selectPropie, setSelectPropie] = useState([]);
+const [selectPropie, setSelectPropie] = useState([]);
     const [selectRecurso, setSelectRecurso] = useState([]);
-    const [selectTradio, setSelectTradio] = useState([]);
     const [selectMarca, setSelectMarca] = useState([]);
     const [selectSue, setSelectSue] = useState([]);
 
@@ -43,11 +40,6 @@ export const FormRadios = () => {
     const { activeEvent, startSavingEvent } = useRadiosStore();
 
 useEffect(() => {
-    axios.get('http://localhost:8000/api/v0/tipos').
-    then((response)=>{
-      setSelectTequipo(response.data);
-      console.log(response.data)
-    });
     axios.get('http://localhost:8000/api/v0/corporaciones').
     then((response)=>{
       setSelectPropie(response.data);
@@ -55,10 +47,6 @@ useEffect(() => {
     axios.get('http://localhost:8000/api/v0/recursoscompras').
     then((response)=>{
       setSelectRecurso(response.data);
-    });
-    axios.get('http://localhost:8000/api/v0/tipos').
-    then((response)=>{
-      setSelectTradio(response.data);
     });
     axios.get('http://localhost:8000/api/v0/marcas').
     then((response)=>{
@@ -71,12 +59,24 @@ useEffect(() => {
 
 }, [])
 
+
+
     useEffect(() => {
         if (activeEvent !== null) {
             setFormValues({ ...activeEvent });
         }
     }, [activeEvent])
 
+    let r='';
+
+    const recibir = (id,nombre) => {
+        r={id,nombre}
+    console.log(r);
+    }
+
+    selectPropie.map((usuario) => {
+        return recibir(usuario.idcorporaciones, usuario.nombreCorporacion);
+    })
     const handleInputChange = ({ target }) => {
         setFormValues({
             ...formValues,
@@ -100,7 +100,7 @@ useEffect(() => {
     const btn =()=>{
         mostrarGuardar()
     }
-
+    
     return (
         <>
             <ModalRadio >
@@ -170,7 +170,7 @@ useEffect(() => {
                                 value={formValues.inventario_segpub}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item xs={6}>
+                        {/* <Grid item xs={6}>
                             <FormControl fullWidth>
                                 <InputLabel id="fk_propietario-input" color='warning'>Propietario</InputLabel>
                                 <Select
@@ -188,7 +188,7 @@ useEffect(() => {
                                         })}
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={6}>
                             <FormControl fullWidth>
                                 <InputLabel id="fk_recurso_compra-input" color='warning'>Recurso Compra</InputLabel>
@@ -219,35 +219,7 @@ useEffect(() => {
                                 variant="outlined"
                                 value={formValues.contrato_compra}
                                 onChange={handleInputChange} />
-                        </Grid><Grid item xs={6}>
-                            <TextField
-                                id="rfsi-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
-                                type="text"
-                                name="rfsi"
-                                color='warning'
-                                label="rfsi"
-                                variant="outlined"
-                                value={formValues.rfsi}
-                                onChange={handleInputChange} />
                         </Grid>
-                        {/* <Grid item xs={6}>
-                            <FormControl fullWidth>
-                                <InputLabel id="fk_tiporadio-input" color='warning'>Tipo Radio</InputLabel>
-                                <Select
-                                    sx={{ border: 'none', mb: 1, width: 300 }}
-                                    labelId="demo-simple-select-label"
-                                    id="fk_tiporadio-input"
-                                    name="fk_tiporadio"
-                                    color='warning'
-                                    label='Tipo Radio'
-                                    value={formValues.fk_tiporadio}
-                                    onChange={handleInputChange}>
-                                   <MenuItem value={1}>Activo</MenuItem>
-                                    <MenuItem value={2}>Inactivo</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Grid> */}
                         <Grid item xs={6}>
                             <FormControl fullWidth>
                                 <InputLabel id="fk_marca-input" color='warning'>Marca</InputLabel>

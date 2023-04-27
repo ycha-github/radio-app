@@ -1,35 +1,21 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Autocomplete, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
 import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
 
-export const FormAsigAccesorio = () => {
+export const FormAsigAccesorio = ({usuario, radio}) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [tableData, setTableData] = useState([])
-    const [tableSue, setTableSue] = useState([])
 
     const [formValues, setFormValues] = useState({
-        usuarios_idusuarios: '',
-        radios_idradios: '',
-        estatus: '',
-        createdAt: '',
-        updatedAt: '',
+        usuarios_idusuarios:'',
+        radios_idradios:'1',
+        estatus:'',
+        createdAt:'',
+        updatedAt:'',
     });
-
-    useEffect(() => {
-        axios.get('http://localhost:8000/api/v0/usuarios').
-            then((response) => {
-                setTableData(response.data);
-            });
-
-        axios.get('http://localhost:8000/api/v0/radios').
-            then((response) => {
-                setTableSue(response.data);
-            });
-    }, []);
 
     const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useAsignacionesStore();
@@ -51,7 +37,6 @@ export const FormAsigAccesorio = () => {
         //console.log(event)
         event.preventDefault();
         setFormSubmitted(true);
-
         if (formValues.usuarios_idusuarios.length <= 0) return;
         console.log(formValues);
         //TODO:
@@ -65,7 +50,47 @@ export const FormAsigAccesorio = () => {
             <Typography justify="center" variant='h5' sx={{ mb: 1 }}> {isActualizar ? 'Actualizando Asignacion Accesorio' : 'Nueva Asignacion Accesorio'} </Typography>
             <form onSubmit={onSubmit}>
                 <Grid container alignItems="center" justify="center" direction="column">
-                    <Grid item>
+                {isActualizar?
+                    (<Grid item>
+                        <Autocomplete
+                                name="radios_idradios"
+                                value={radio[formValues.radios_idradios-1]}
+                                 //value={[radio[0]]}
+                                //defaultValue={radio}
+                                options={radio}
+                                getOptionLabel={(radio) => radio.rfsi || ""}
+                                //isOptionEqualToValue={(option, value) =>
+                                //    option.rfsi === value.rfsi
+                                //}
+                                sx={{ width: 400, mb:1 }}
+                                onChange={(event, newFormValues) => {
+                                    setFormValues({
+                                        ...formValues,
+                                        ['radios_idradios']: newFormValues.idradios,
+                                    });
+                                }}
+                                renderInput={(params) => <TextField {...params} variant="outlined" label="RFSI" />}
+                           />
+                        </Grid>):
+                        (<Grid item>
+                            <Autocomplete
+                                    name="radios_idradios"
+                                    //value={radio[formValues.radios_idradios]}
+                                    // defaultValue={radio}
+                                    options={radio}
+                                    getOptionLabel={(radio) => radio.rfsi || ""}
+                                    sx={{ width: 400, mb:1 }}
+                                    onChange={(event, newFormValues) => {
+                                        setFormValues({
+                                            ...formValues,
+                                            ['radios_idradios']: newFormValues.idradios,
+                                        });
+                                    }}
+                                    renderInput={(params) => <TextField  {...params} variant="outlined" label="RFSI" />}
+                               />
+                            </Grid>)
+                        }
+                    {/* <Grid item>
                         <FormControl fullWidth>
                             <InputLabel id="usuarios_idusuarios-input" color='secondary'>Usuario</InputLabel>
                             <Select
@@ -102,7 +127,7 @@ export const FormAsigAccesorio = () => {
                                     })}
                             </Select>
                         </FormControl>
-                    </Grid>
+                    </Grid> */}
                     <Grid item>
                         <FormControl fullWidth>
                             <InputLabel id="estatus-input" color='secondary'>Estatus</InputLabel>
