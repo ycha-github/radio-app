@@ -1,13 +1,13 @@
-
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { FormAsignaciones } from './FormAsignaciones';
 import { FormAsigAccesorio } from './FormAsigAccesorio';
+import axios from 'axios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,13 +44,27 @@ function a11yProps(index) {
 
 export  const FormAsignacionGeneral=()=> {
   const [value, setValue] = useState(0);
+  const [tableData, setTableData] = useState([])
+  const [tableSue, setTableSue] = useState([])
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/v0/usuarios').
+        then((response) => {
+           return setTableData(response.data);
+        });
+    }, []);
+
+    useEffect(() => {
+    axios.get('http://localhost:8000/api/v0/radios/filtrado').
+        then((response) => {
+            setTableSue(response.data);
+        });
+}, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   return (
-    
     <ModalRadio >
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -61,10 +75,11 @@ export  const FormAsignacionGeneral=()=> {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <FormAsignaciones/>
+        <FormAsignaciones usuario={tableData} radio={tableSue} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <FormAsigAccesorio/>
+      Asignar a Vehiculo
+        {/* <FormAsigAccesorio radio={tableSue} /> */}
       </TabPanel>
       <TabPanel value={value} index={2}>
         Asignar a Vehiculo

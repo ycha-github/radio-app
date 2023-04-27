@@ -13,14 +13,14 @@ export const useAsignacionesStore= () => {
   }
   const startSavingEvent =async(zonasEvent)=>{
     //TODO: Update event
-    if(zonasEvent.asignacion_usuario_radiocol){
+    if(zonasEvent.idasignacion){
       //Actualizando
-        const {data}= await  radioApi.put(`/asig_usuarios/${zonasEvent.asignacion_usuario_radiocol}`,zonasEvent);
+        const {data}= await  radioApi.put(`/asig_usuarios/${zonasEvent.idasignacion}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
     }else{
       //creando
       const {data}= await radioApi.post('/asig_usuarios', zonasEvent);
-      dispatch(onAddNewEvent({...zonasEvent, asignacion_usuario_radiocol:data.asignacion_usuario_radiocol, user}));
+      dispatch(onAddNewEvent({...zonasEvent, idasignacion:data.idasignacion, user}));
       window.location.reload(true);
     }
   }
@@ -31,6 +31,11 @@ export const useAsignacionesStore= () => {
   window.location.reload(true);
     }
 
+    const cambiarSue = async (zonasEvent, state)=>{
+      console.log(zonasEvent);
+      const {data} = await  radioApi.put(`/asig_usuarios/ActualizarSue/${zonasEvent}`);
+  //dispatch(onUpdateEvent(zonasEvent,user));
+    }
     const startLoadingEvents= async ()=>{
       try {
         const { data } = await radioApi.get('/asig_usuarios')
@@ -51,5 +56,6 @@ export const useAsignacionesStore= () => {
     setActiveEvent,
     startSavingEvent,
     startLoadingEvents,
+    cambiarSue,
   }
 }

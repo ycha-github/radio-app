@@ -31,8 +31,8 @@ export const asignacionesSlice = createSlice({
   },
     onUpdateEvent:(state, {payload})=>{
       state.events= state.events.map(event=>{
-        if (event.asignacion_usuario_radiocol === payload.asignacion_usuario_radiocol){
-          console.log(payload.asignacion_usuario_radiocol);
+        if (event.idasignacion === payload.idasignacion){
+          console.log(payload.idasignacion);
           return payload;
         }
         return event;
@@ -45,7 +45,7 @@ export const asignacionesSlice = createSlice({
     //},
     onDeleteEvent:(state)=>{
       state.events= state.events.map(event=>{
-        if (event.asignacion_usuario_radiocol === payload.asignacion_usuario_radiocol){
+        if (event.idasignacion === payload.idasignacion){
           return payload;
         }
         return event;
@@ -57,7 +57,7 @@ export const asignacionesSlice = createSlice({
       state.isLoadingEvents= false;
       //state.events=  payload;
       payload.forEach(event=>{
-        const exists = state.events.some(dbEvent=> dbEvent.asignacion_usuario_radiocol === event.asignacion_usuario_radiocol);
+        const exists = state.events.some(dbEvent=> dbEvent.idasignacion === event.idasignacion);
         if( !exists){
           state.events.push(event)
         }

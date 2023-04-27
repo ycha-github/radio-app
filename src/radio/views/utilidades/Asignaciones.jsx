@@ -8,7 +8,6 @@ import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignaci
 import { FormAsignaciones } from '../../components/formUtilidades/FormAsignaciones';
 import { FormAsignacionGeneral } from '../../components/formUtilidades/FormAsignacionGeneral';
 
-
 const colorClose=()=>{
   return <Close color='error'/>
 }
@@ -28,6 +27,7 @@ const colorDone=()=>{
     setActiveEvent({
       usuarios_idusuarios:'',
       radios_idradios:'',
+      rfsi:'',
       estatus:'',
       createdAt:'',
       updatedAt:'',
@@ -62,18 +62,19 @@ const colorDone=()=>{
 
 const columns =  [
 
-  { field: 'asignacion_usuario_radiocol', headerClassName: "super", headerName: 'ID',width: 90,  },
-  { field: 'nombre', headerClassName: "super", headerName: 'Asignado a',flex: 1 ,minwidth: 90,  },
-  { field: 'clave_elector', headerClassName: "super", headerName: 'Clave Elector',flex: 1 ,minwidth: 90,  },
-  { field: 'serie',headerClassName: "super", headerName: 'Radio Asignado',flex: 1 , minWidth: 90 },
-  { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 1, minWidth: 90 },
-  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 1, minWidth: 120 },
-  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 120 },
+  { field: 'idasignacion', headerClassName: "super", headerName: 'ID',width: 90,  },
+  { field: 'nombre_completo', headerClassName: "super", headerName: 'Asignado a' ,width: 250,  },
+  { field: 'clave_elector', headerClassName: "super", headerName: 'Clave Elector' ,width: 200,  },
+  { field: 'serie_radio',headerClassName: "super", headerName: 'Radio Asignado',flex: 2 , minWidth: 90 },
+  { field: 'rfsi',headerClassName: "super", headerName: 'RFSI',flex: 2 , minWidth: 90 },
+  { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 2, minWidth: 90 },
+  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 2, minWidth: 120 },
+  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 2, minWidth: 120 },
   {
     field: 'actions',
     type: 'actions',
     headerClassName: "super",
-    flex: 1,
+    flex: 2,
     minWidth: 120,
     getActions: (evento) => [
       <GridActionsCellItem
@@ -87,7 +88,7 @@ const columns =  [
       size="small"
       aria-label="delete"
       >
-        <Switch color='secondary' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.asignacion_usuario_radiocol)} />
+        <Switch color='secondary' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idasignacion)} />
      </IconButton> 
   ], 
   }, 
@@ -118,7 +119,7 @@ const columns =  [
             <ThemeProvider theme={theme}>
       <DataGrid
         onCellClick={onSelect}
-        getRowId={(row) => row.asignacion_usuario_radiocol}
+        getRowId={(row) => row.idasignacion}
         autoHeight={true}
         rows={events}
         columns={columns}

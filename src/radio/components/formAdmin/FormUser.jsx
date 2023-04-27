@@ -15,7 +15,6 @@ export const FormUser = () => {
         username: "",
         password: "",
         roles_idrol: "",
-        nombrerol: "",
         estatus: "",
         createdAt: "",
         updatedAt: "",
@@ -34,29 +33,25 @@ export const FormUser = () => {
       });
      }, []);
 
-   
-    const handleInputChange = ({ target }) => {
+    const handleInputChange = (event) => {
         setFormValues({
             ...formValues,
-            [target.name]: target.value,
+            [event.target.name]: event.target.value,
         });
     };
-
-console.log(formValues);
-
-    const handleChangeAutocomplete = (event, value, name) => {
-        console.log(value.idrol);
-        setFormValues((prevState) => ({
-          ...formValues,
-          [name]: value.idrol
-        }));
-      };
+    // const handleChangeAutocomplete = (event, newFormValues, name) => {
+    //     console.log(newFormValues.idrol);
+    //     setFormValues((formValues) => ({
+    //       ...formValues,
+    //       [name]: newFormValues.idrol
+    //     }));
+    //   };
 
     const onSubmit = async (event) => {
         event.preventDefault();
         setFormSubmitted(true);
         if (formValues.username.length <= 0) return;
-        console.log(formValues);
+        //console.log(formValues);
         await startSavingEvent(formValues);
         CloseModal();
         setFormSubmitted(false);
@@ -96,51 +91,23 @@ console.log(formValues);
                             />
                         </Grid>
                         <Grid item>
-                            <Autocomplete 
-                                name="roles_idrol"
-                                color='info'
-                                // value={formValues.roles_idrol}
-                                isOptionEqualToValue={(formValues, target ) => formValues.rol === target.rol}
-                                
-                                onChange={handleInputChange}
-                                options={tableData}
-                                // noOptionsText={'Escoge el rol'}
-                                // defaultValues
-                                renderOption={(props, tableData) => (
-                                    <Box component='li' {...props} key={tableData.idrol}>
-                                            {tableData.rol}
-                                        </Box>
-                                    )}
-                                getOptionLabel={(tableData) => tableData.rol || ""}
-                                renderInput={params =>
-                                    <TextField
-
-                                        sx={{ border: 'none', width: 400 }}
-                                        color='info'
-                                        label="Rol"
-                                        {...params}
-                                        variant="outlined" /> }
-                                    
-                            />
-                        {/* <FormControl fullWidth> */}
-                                {/* <Autocomplete
+                        <FormControl fullWidth>
+                                <Autocomplete
                                     //disablePortal
                                     name="roles_idrol"
                                     value={formValues.roles_idrol}
-                                    // value={formValues.roles_idrol}
                                     //value={tableData[formValues.roles_idrol-1]}
                                     options={tableData}
                                     getOptionLabel={(tableData) => tableData.rol || ""}
                                     //onChange={handleInputChange}
-                                    onChange={handleInputChange}
                                     sx={{ border: 'none', mb: 1, width: 400 }}
                                     //isOptionEqualToValue={(option, value) =>
                                       //  option.rol === value.rol
                                     //}
 
-                                    // onChange={(event, value) =>
-                                    //     handleChangeAutocomplete(event, value, "roles_idrol")
-                                    // }
+                                    onChange={(event, value) =>
+                                        handleChangeAutocomplete(event, value, "roles_idrol")
+                                    }
                                     noOptionsText={'Escoge el rol'}
                                     renderOption={(props, tableData) => (
                                         <Box component='li' {...props} key={tableData.idrol}>
@@ -159,8 +126,8 @@ console.log(formValues);
                                             variant="outlined"
                                         />
                             }
-                           /> */}
-                    {/* </FormControl>  */}
+                           />
+                    </FormControl> 
                         </Grid>
                         {/* <Grid item>
                             <FormControl fullWidth>
