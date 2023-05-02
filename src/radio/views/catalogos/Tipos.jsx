@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useTiposStore } from '../../../hooks/hooksCatalogo/useTiposStore';
-import { useEffect, useState } from 'react';
 import { FormTipos } from '../../components/formCat/FormTipos';
 
 const colorClose=()=>{
