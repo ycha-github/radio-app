@@ -14,12 +14,14 @@ export const FormUser = () => {
     const [formValues, setFormValues] = useState({
         username: "",
         password: "",
-        roles_idrol: "",
+        rol:"",
+        roles_idrol: "1",
         estatus: "",
         createdAt: "",
         updatedAt: "",
     });
 
+    
  useEffect(() => {
         if (activeEvent !== null) {
             setFormValues({ ...activeEvent });
@@ -90,45 +92,45 @@ export const FormUser = () => {
                                 onChange={handleInputChange}
                             />
                         </Grid>
-                        <Grid item>
-                        <FormControl fullWidth>
-                                <Autocomplete
-                                    //disablePortal
-                                    name="roles_idrol"
-                                    value={formValues.roles_idrol}
-                                    //value={tableData[formValues.roles_idrol-1]}
-                                    options={tableData}
-                                    getOptionLabel={(tableData) => tableData.rol || ""}
-                                    //onChange={handleInputChange}
-                                    sx={{ border: 'none', mb: 1, width: 400 }}
-                                    //isOptionEqualToValue={(option, value) =>
-                                      //  option.rol === value.rol
-                                    //}
-
-                                    onChange={(event, value) =>
-                                        handleChangeAutocomplete(event, value, "roles_idrol")
-                                    }
-                                    noOptionsText={'Escoge el rol'}
-                                    renderOption={(props, tableData) => (
-                                        <Box component='li' {...props} key={tableData.idrol}>
-                                            {tableData.rol}
-                                        </Box>
-                                    )}
-                                    //renderInput={<TextField/>}
-
-                                    renderInput={params =>
-                                        <TextField
-
-                                            sx={{ border: 'none', width: 400 }}
-                                            color='info'
-                                            label="Rol"
-                                            {...params}
-                                            variant="outlined"
-                                        />
-                            }
-                           />
-                    </FormControl> 
-                        </Grid>
+                        { isActualizar?     
+                        (<Grid item>
+                            <Autocomplete
+                                name="roles_idrol"
+                                value={tableData[formValues.roles_idrol-1]}
+                                 //defaultValue={tableData}
+                                options={tableData}
+                                getOptionLabel={(tableData) => tableData.rol || ""}
+                                isOptionEqualToValue={(option, value) =>
+                                    option.rol === value.rol
+                                }
+                                sx={{ width: 400, mb:1 }}
+                                onChange={(event, newFormValues) => {
+                                    setFormValues({
+                                        ...formValues,
+                                        ['roles_idrol']: newFormValues.idrol,
+                                    });
+                                }}                               
+                                renderInput={(params) => <TextField  {...params} variant="outlined" label="Rol" />}
+                            />
+                        </Grid>):
+                        (<Grid item>
+                            <Autocomplete
+                                name="roles_idrol"
+                                //value={tableData[formValues.roles_idrol-1]}
+                                 //defaultValue={tableData}
+                                options={tableData}
+                                getOptionLabel={(tableData) => tableData.rol || ""}
+                                sx={{ width: 400, mb:1 }}
+                                onChange={(event, newFormValues) => {
+                                    setFormValues({
+                                        ...formValues,
+                                        ['roles_idrol']: newFormValues.idrol,
+                                    });
+                                }}
+                                renderInput={(params) => <TextField  {...params} variant="outlined" label="Rol" />}
+                            />
+                        </Grid>)
+                        }
                         {/* <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="rol-input" color='info'>Rol</InputLabel>

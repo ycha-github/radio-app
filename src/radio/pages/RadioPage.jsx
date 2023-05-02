@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { FormHojaServicio } from '../components/formUtilidades/FormHojaServicio';
 import { RadioLayout } from '../layout/RadioLayout';
 import { Accesorios, Asignaciones, ConfigReportes, Corporaciones, Estatus,  HojaServicios, Marcas, PasswordUpdate,  Puestos, Radios, RecursoCompras, Roles, Servicios, Tipos, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
+import { FormAsignaciones } from '../components/formUtilidades/FormAsignaciones';
 
 export const RadioPage = () => {
   return (
@@ -29,6 +30,7 @@ export const RadioPage = () => {
           <Route path="zonas-regiones" element={ <ZonasRegiones /> }/>
 
           <Route path="/" element={ <Asignaciones /> }/>
+          <Route path="asignaciones" element={ <FormAsignaciones/> }/>
           <Route path="hoja-servicio" element={ <HojaServicios /> }/>
           <Route path="hoja-serviciof" element={ <FormHojaServicio /> }/>
           <Route path="config-reportes" element={ <ConfigReportes /> }/>
