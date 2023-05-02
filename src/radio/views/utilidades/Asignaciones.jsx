@@ -7,6 +7,8 @@ import { useModalHook } from '../../../hooks/useModalHook';
 import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
 import { FormAsignaciones } from '../../components/formUtilidades/FormAsignaciones';
 import { FormAsignacionGeneral } from '../../components/formUtilidades/FormAsignacionGeneral';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const colorClose=()=>{
   return <Close color='error'/>
@@ -18,6 +20,9 @@ const colorDone=()=>{
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useAsignacionesStore();
   const {OpenModal, mostrarActualizar}=useModalHook();
   const [state, setState] =useState([]);
+  const [tableData, setTableData] = useState([])
+  const [tableSue, setTableSue] = useState([])
+  const navigate = useNavigate();
  
   useEffect(() => {
     startLoadingEvents()
@@ -27,14 +32,27 @@ const colorDone=()=>{
     setActiveEvent({
       usuarios_idusuarios:'',
       radios_idradios:'',
-      rfsi:'',
+      serie:'',
       estatus:'',
       createdAt:'',
       updatedAt:'',
     })
     OpenModal();
+    //navigate('../asignaciones');
   }
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/v0/usuarios').
+        then((response) => {
+            setTableData(response.data);
+        });
+    }, []);
 
+    useEffect(() => {
+    axios.get('http://localhost:8000/api/v0/radios/filtrado').
+        then((response) => {
+            setTableSue(response.data);
+        });
+    }, []);
   const handleChange =async (event,r) => {
     setState({ ...state, [event.target.name]: event.target.checked });
     //setState(event.target.checked);
@@ -42,6 +60,7 @@ const colorDone=()=>{
   };
 
   const cambiar = ( ) =>  {
+    //navigate('../asignaciones');
     OpenModal();
     mostrarActualizar();
   }
@@ -82,6 +101,7 @@ const columns =  [
         color="secondary"
         label="Delete"
         onClick={cambiar}
+        
       />,
       <IconButton
       color="inherit"
@@ -110,7 +130,8 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-        <FormAsignacionGeneral/>
+      <FormAsignaciones usuario={tableData} radio={tableSue} />
+      {/* <FormAsignacionGeneral/> */}
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo

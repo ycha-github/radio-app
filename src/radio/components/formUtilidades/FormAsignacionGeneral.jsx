@@ -75,7 +75,7 @@ export  const FormAsignacionGeneral=()=> {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <FormAsignaciones usuario={tableData} radio={tableSue} />
+        {/* <FormAsignaciones usuario={tableData} radio={tableSue} /> */}
       </TabPanel>
       <TabPanel value={value} index={1}>
       Asignar a Vehiculo

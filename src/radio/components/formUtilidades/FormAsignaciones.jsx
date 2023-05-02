@@ -1,51 +1,51 @@
-import { Autocomplete, Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
-import axios from 'axios';
-import { useRadiosStore } from '../../../hooks/hooksCatalogo/useRadiosStore';
 
 export const FormAsignaciones = ({usuario, radio}) => {
 
     const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent, cambiarSue } = useAsignacionesStore();
     //const [formSubmitted, setFormSubmitted] = useState(false);
-
+    
     const [formValues, setFormValues] = useState({
-        nombre:'',
-        idusuarios: "1",
-        rfsi: "",
-        serie:"",
-        idradios: "1",
+        nombre: "",
+        usuarios_idusuarios: "1",
+        serie_radio: "",
+        radios_idradios: "1",
         estatus:  "",
         createdAt: "",
         updatedAt: "",
     }); 
 
-    const onResetForm = ()=>{
-        setFormValues({
-            nombre:'',
-            usuarios_idusuarios: "1",
-            rfsi: "",
-            radios_idradios: "1",
-            estatus:  "",
-            createdAt: "",
-            updatedAt: "",
-        });
-        }
-
     useEffect(() => {
         if (activeEvent !== null) {
             setFormValues({ ...activeEvent });
+            
         }
     }, [activeEvent])
+
+    console.log(formValues.serie_radio);
+    // const onResetForm = ()=>{
+    //     setFormValues({
+    //         nombre: "",
+    //         usuarios_idusuarios: "1",
+    //         rfsi: "",
+    //         radios_idradios: "1",
+    //         estatus:  "",
+    //         createdAt: "",
+    //         updatedAt: "",
+    //     });
+    //     }
 
    const handleInputChange = (event) => {
        setFormValues({
            ...formValues,
            [event.target.name]: event.target.value,
         });
+       
     };
 
    //const handleChangeAutocomplete = (event, value, name) => {
@@ -67,17 +67,18 @@ export const FormAsignaciones = ({usuario, radio}) => {
         event.preventDefault();
         //setFormSubmitted(true);
         if (formValues.estatus.length <= 0) return;
-        console.log(formValues.radios_idradios);
+        
         await startSavingEvent(formValues);
         await cambiarSue(formValues.radios_idradios);
-        onResetForm();
+        //onResetForm();
        // CloseModal();
        // setFormSubmitted(false);
     };
 
     return (
         <>
-            <Typography justify="center" variant='h5' sx={{ mb: 1 }}> {isActualizar ? 'Actualizando Asignacion a Usuario' : 'Nueva Asignacion a Usuario'} </Typography>
+        <ModalRadio >
+            <Typography justify="center" variant='h5' sx={{ mb: 1 }}> {isActualizar ? 'Actualizando Asignacion' : 'Nueva Asignacion'} </Typography>
             <form onSubmit={onSubmit}>
                 <Grid container alignItems="center" justify="center" direction="column">
                     {/* <Grid item>
@@ -103,14 +104,14 @@ export const FormAsignaciones = ({usuario, radio}) => {
                     (<Grid item>
                         <Autocomplete
                         name="usuarios_idusuarios"
-                        value={usuario[formValues.idusuarios-1]}
-                        //value={usuario[0]} 
+                        value={usuario[formValues.usuarios_idusuarios-1]}
+                        //value={} 
                         //defaultValue={usuario}
                         options={usuario}
                         getOptionLabel={(usuario) => usuario.nombre || ""}
-                        //isOptionEqualToValue={(option, value) =>
-                        //    option.nombre === value.nombre
-                        //}
+                       //isOptionEqualToValue={(option, value) =>
+                       //    option.nombre === value.nombre
+                       //}
                         sx={{ width: 400, mb:1 }}
                         onChange={(event, newFormValues) => {
                             setFormValues({
@@ -162,14 +163,15 @@ export const FormAsignaciones = ({usuario, radio}) => {
                     (<Grid item>
                         <Autocomplete
                                 name="radios_idradios"
-                                value={radio[formValues.idradios-1]}
-                                 //value={[radio[0]]}
+                                //value={radio[formValues.radios_idradios-1]}
+                                 value={formValues.serie_radio}
                                 //defaultValue={radio}
                                 options={radio}
                                 getOptionLabel={(radio) => radio.serie || ""}
-                                //isOptionEqualToValue={(option, value) =>
-                                //    option.rfsi === value.rfsi
-                                //}
+                                isOptionEqualToValue={(option, value) =>{
+                                    option.serie === value.serie
+                                    console.log(value.serie);
+                                }}
                                 sx={{ width: 400, mb:1 }}
                                 onChange={(event, newFormValues) => {
                                     setFormValues({
@@ -177,7 +179,6 @@ export const FormAsignaciones = ({usuario, radio}) => {
                                         ['radios_idradios']: newFormValues.idradios,
                                     });
                                 }}
-                                
                                 renderInput={(params) => <TextField  {...params} variant="outlined" label="Serie" />}       
                            />
                         </Grid>):
@@ -195,24 +196,10 @@ export const FormAsignaciones = ({usuario, radio}) => {
                                             ['radios_idradios']: newFormValues.idradios,
                                         });
                                     }}
-                                    
                                     renderInput={(params) => <TextField  {...params} variant="outlined" label="Serie" />}       
                                />
                             </Grid>)
-                        }
-                        <Grid item >
-                            <TextField
-                                id="rfsi-input"
-                                label="RFSI"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                fullWidth
-                                name='rfsi'
-                                color='secondary'
-                                value={formValues.rfsi}
-                                onChange={handleInputChange}
-                            />
-                        </Grid>
-
+                        } 
                     <Grid item>
                         <FormControl fullWidth>
                             <InputLabel id="estatus-input" color='secondary'>Estatus</InputLabel>
@@ -235,6 +222,7 @@ export const FormAsignaciones = ({usuario, radio}) => {
                     </Button>
                 </Grid>
             </form>
+            </ModalRadio>
         </>
     )
 }
