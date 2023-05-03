@@ -23,6 +23,7 @@ const colorDone=()=>{
 
   const newRow =()=>{
     setActiveEvent({
+      accesorio:'',
       num_serie:'',
       marcas_idMarcas:'',
       inventario_interno:'',
@@ -66,7 +67,7 @@ const colorDone=()=>{
 const columns =  [
   
   { field: 'idaccesorios', headerClassName: "super", headerName: 'ID',width: 90,  },
-  { field: 'nombreAccesorio', headerClassName: "super", headerName: 'Accesorio',minwidth: 90,  },
+  { field: 'accesorio', headerClassName: "super", headerName: 'Tipo Accesorio',width: 120,  },
   { field: 'num_serie',headerClassName: "super", headerName: 'Numero de serie',flex: 1 , minWidth: 90 },
   { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
   { field: 'inventario_interno',headerClassName: "super", headerName: 'Inventario Interno', flex: 1, minWidth: 90 },

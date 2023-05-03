@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -12,6 +12,7 @@ export const FormAccesorios = () => {
     const [tableSue, setTableSue] = useState([])
 
     const [formValues, setFormValues] = useState({
+        accesorio:'',
         num_serie: '',
         marcas_idMarcas: '',
         inventario_interno: '',
@@ -71,11 +72,27 @@ export const FormAccesorios = () => {
             <ModalRadio >
                 <Typography variant='h5'> {isActualizar? 'Actualizando Accesorio' : 'Nuevo Accesorio'} </Typography>
                     <form onSubmit={onSubmit}>
+                    <Stack  noValidate spacing={3}>
+                    
                         <Grid container alignItems="center" justify="center" direction="column">
-                        <Grid item>
+                        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                        {/* <Grid container justify="center" maxHeight={600}> */}
+                        <Grid item xs={6}>
                             <TextField
                                 id="zona-input"
-                                sx={{ border: 'none', mb: 1, mt: 2, width: 400 }}
+                                sx={{ border: 'none', mt:2,  width: 300 }}
+                                type="text"
+                                name="accesorio"
+                                color='warning'
+                                label="Tipo Accesorio"
+                                variant="outlined"
+                                value={formValues.accesorio}
+                                onChange={handleInputChange} />
+                        </Grid >
+                        <Grid item xs={6}>
+                            <TextField
+                                id="zona-input"
+                                sx={{ border: 'none', mb: 1, mt:2, width: 300 }}
                                 type="text"
                                 name="num_serie"
                                 color='warning'
@@ -84,11 +101,11 @@ export const FormAccesorios = () => {
                                 value={formValues.num_serie}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
-                            <FormControl fullWidth>
-                                <InputLabel id="marcas_idMarcas-input" color='warning'>Marca</InputLabel>
+                        <Grid item xs={6}>
+                            <FormControl fullWidth >
+                                <InputLabel  id="marcas_idMarcas-input" color='warning'>Marca</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 400 }}
+                                sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="marcas_idMarcas-input"
                                     name="marcas_idMarcas"
@@ -103,10 +120,10 @@ export const FormAccesorios = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={6}>
                             <TextField
                                 id="inventario_interno-input"
-                                sx={{ border: 'none', mb: 1,  width: 400 }}
+                                sx={{ border: 'none', mb: 1,  width: 300 }}
                                 type="text"
                                 name="inventario_interno"
                                 color='warning'
@@ -115,10 +132,10 @@ export const FormAccesorios = () => {
                                 value={formValues.inventario_interno}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={6}>
                             <TextField
                                 id="inventario_segpub-input"
-                                sx={{ border: 'none', mb: 1,  width: 400 }}
+                                sx={{ border: 'none', mb: 1,  width: 300 }}
                                 type="text"
                                 name="inventario_segpub"
                                 color='warning'
@@ -127,10 +144,10 @@ export const FormAccesorios = () => {
                                 value={formValues.inventario_segpub}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={6}>
                             <TextField
                                 id="contrato_compra-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
+                                sx={{ border: 'none', mb: 1,  width: 300 }}
                                 type="text"
                                 name="contrato_compra"
                                 color='warning'
@@ -139,35 +156,11 @@ export const FormAccesorios = () => {
                                 value={formValues.contrato_compra}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
-                            <TextField
-                                id="observaciones-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                type="text"
-                                name="observaciones"
-                                color='warning'
-                                label="Descripcion"
-                                variant="outlined"
-                                value={formValues.observaciones}
-                                onChange={handleInputChange} />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                id="fecha_recepcion-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                type="text"
-                                name="fecha_recepcion"
-                                color='warning'
-                                label="Fecha de recepcion "
-                                variant="outlined"
-                                value={formValues.fecha_recepcion}
-                                onChange={handleInputChange} />
-                        </Grid>
-                        <Grid item>
-                            <FormControl fullWidth>
-                                <InputLabel id="fk_sue-input" color='warning'>SUE</InputLabel>
+                        <Grid item xs={6}>
+                            <FormControl fullWidth >
+                                <InputLabel  id="fk_sue-input" color='warning'>SUE</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 400 }}
+                                sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="fk_sue-input"
                                     name="fk_sue"
@@ -176,17 +169,43 @@ export const FormAccesorios = () => {
                                     label="SUE"
                                     onChange={handleInputChange}>
                                         {
-                                        tableSue.map(elementos=>{
-                                          return <MenuItem key={elementos.id_sue} value={elementos.id_sue} >{elementos.nombreStatus}</MenuItem> 
+                                        tableSue.map(elemento=>{
+                                          return <MenuItem key={elemento.id_sue} value={elemento.id_sue} >{elemento.nombreStatus}</MenuItem> 
                                         })}
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item>
-                            <FormControl fullWidth>
+                        <Grid item xs={6}>
+                            <TextField
+                                id="observaciones-input"
+                                sx={{ border: 'none', mb: 1,  width: 300 }}
+                                type="text"
+                                name="observaciones"
+                                color='warning'
+                                label="Descripcion"
+                                variant="outlined"
+                                value={formValues.observaciones}
+                                onChange={handleInputChange} />
+                        </Grid>
+                        
+                        <Grid item xs={6}>
+                            <TextField
+                                id="fecha_recepcion-input"
+                                sx={{ border: 'none',  width: 300 }}
+                                type="text"
+                                name="fecha_recepcion"
+                                color='warning'
+                                label="Fecha de recepcion "
+                                variant="outlined"
+                                value={formValues.fecha_recepcion}
+                                onChange={handleInputChange} />
+                        </Grid>
+                        
+                        <Grid item xs={6}>
+                            <FormControl fullWidth  >
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 400 }}
+                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
@@ -199,10 +218,13 @@ export const FormAccesorios = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar} sx={{  width: 400 }} >
+                        </Grid>
+                        <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar} sx={{  width: 528 }} >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>
+                    
+                    </Stack>
                 </form>
             </ModalRadio>
         </>
