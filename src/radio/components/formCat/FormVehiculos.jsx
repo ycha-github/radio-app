@@ -11,14 +11,17 @@ export const FormVehiculos = () => {
     const [tableData, setTableData] = useState([])
 
     const [formValues, setFormValues] = useState({
-        nombreVehiculo:'',
-      placa:'',
-      color:'',
-      anio:'',
-      marcas_idmarcas:'',
-      estatus:'',
-      createdAt:'',
-      updatedAt:'',
+        marcas_idmarcas:'',
+        // linea:'',
+        anio:'',
+        tipo:'',
+        color:'',
+        placa:'',
+        unidad:'',
+        fk_zonaregion:'',
+        estatus:'',
+        createdAt:'',
+        updatedAt:'',
     });
 
     useEffect(() => {
@@ -60,45 +63,28 @@ export const FormVehiculos = () => {
         <>
             <ModalRadio >
                 <Typography variant='h5'> {isActualizar? 'Actualizando Vehiculo' : 'Nuevo Vehiculo'} </Typography>
-                <form onSubmit={onSubmit}>
-                    <Grid container alignItems="center" justify="center" direction="column">
-                        <Grid item>
-                            <TextField
-                                id="nombreVehiculo-input"
-                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
-                                type="text"
-                                name="nombreVehiculo"
-                                color='warning'
-                                label="Vehiculo"
-                                variant="outlined"
-                                value={formValues.nombreVehiculo}
-                                onChange={handleInputChange} />
+                <form onSubmit={onSubmit} >
+                    <Grid container alignItems="center" justify="center" direction="column" >
+                    {/* <Grid container justify="center"  /*overflow={ 'scroll'} maxHeight={600}> */}
+                        <Grid item >
+                            <FormControl fullWidth sx={{ border: 'none', mt: 1, mb: 1, width: 300 }}>
+                                <InputLabel id="marcas_idmarcas-input" color='warning'>Marca / Modelo</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="marcas_idMarcas-input"
+                                    name="marcas_idmarcas"
+                                    color='warning'
+                                    value={formValues.marcas_idmarcas}
+                                    label="Marca / Modelo"
+                                    onChange={handleInputChange}>
+                                        {
+                                        tableData.map(elemento=>{
+                                          return <MenuItem key={elemento.idmarcas} value={elemento.idmarcas} >{elemento.nombreMarcas + " / " + elemento.nombreModelos}</MenuItem> 
+                                        })}
+                                </Select>
+                            </FormControl>
                         </Grid>
-                        <Grid item>
-                            <TextField
-                                id="placa-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
-                                type="text"
-                                name="placa"
-                                color='warning'
-                                label="Placa"
-                                variant="outlined"
-                                value={formValues.placa}
-                                onChange={handleInputChange} />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-                                id="color-input"
-                                sx={{ border: 'none', mb: 1, width: 300 }}
-                                type="text"
-                                name="color"
-                                color='warning'
-                                label="Color"
-                                variant="outlined"
-                                value={formValues.color}
-                                onChange={handleInputChange} />
-                        </Grid>
-                        <Grid item>
+                        <Grid item >
                             <TextField
                                 id="anio-input"
                                 sx={{ border: 'none', mb: 1, width: 300 }}
@@ -110,30 +96,34 @@ export const FormVehiculos = () => {
                                 value={formValues.anio}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
-                            <FormControl fullWidth>
-                                <InputLabel id="marcas_idmarcas-input" color='warning'>Marca</InputLabel>
-                                <Select
-                                    sx={{ border: 'none', mb: 1, width: 300 }}
-                                    labelId="demo-simple-select-label"
-                                    id="marcas_idMarcas-input"
-                                    name="marcas_idmarcas"
-                                    color='warning'
-                                    value={formValues.marcas_idmarcas}
-                                    label="Marca"
-                                    onChange={handleInputChange}>
-                                        {
-                                        tableData.map(elemento=>{
-                                          return <MenuItem key={elemento.idmarcas} value={elemento.idmarcas} >{elemento.nombreMarcas}</MenuItem> 
-                                        })}
-                                </Select>
-                            </FormControl>
+                        <Grid item >
+                            <TextField
+                                id="placa-input"
+                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                type="text"
+                                name="placa"
+                                color='warning'
+                                label="Placa"
+                                variant="outlined"
+                                value={formValues.placa}
+                                onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
-                            <FormControl fullWidth>
+                        <Grid item >
+                            <TextField
+                                id="color-input"
+                                sx={{ border: 'none', mb: 1, width: 300 }}
+                                type="text"
+                                name="color"
+                                color='warning'
+                                label="Color"
+                                variant="outlined"
+                                value={formValues.color}
+                                onChange={handleInputChange} />
+                        </Grid>
+                        <Grid item >
+                            <FormControl fullWidth sx={{ border: 'none', mb: 1, width: 300 }}>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 300 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"
@@ -146,9 +136,9 @@ export const FormVehiculos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" onClick={() => mostrarGuardar()} >
-                            {isActualizar ? 'Actualizar' : 'Guardar'}
-                        </Button>
+                            <Button fullWidth variant="contained" color="warning" type="submit" onClick={() => mostrarGuardar()} >
+                                {isActualizar ? 'Actualizar' : 'Guardar'}
+                            </Button>
                     </Grid>
                 </form>
             </ModalRadio>

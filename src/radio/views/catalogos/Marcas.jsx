@@ -26,6 +26,7 @@ export const Marcas= () => {
     setActiveEvent({
       nombreMarcas:'',
       nombreModelos:'',
+      tipo:'',
       estatus:'',
       createdAt:'',
       updatedAt:'',
@@ -60,8 +61,9 @@ export const Marcas= () => {
 const columns = [
 
   { field: 'idmarcas', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
-  { field: 'nombreMarcas',headerClassName: "super", headerName: 'Zona', flex: 1, minWidth: 90 },
-  { field: 'nombreModelos',headerClassName: "super", headerName: 'Descripcion', flex: 1, minWidth: 90 },
+  { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marcas', flex: 1, minWidth: 90 },
+  { field: 'nombreModelos',headerClassName: "super", headerName: 'Línea', flex: 1, minWidth: 90 },
+  { field: 'tipo',headerClassName: "super", headerName: 'Tipo', flex: 1, minWidth: 90 },
   { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },

@@ -33,7 +33,7 @@ export const FormUser = () => {
       then((response)=>{
         setTableData(response.data);
       });
-     }, []);
+     }, [tableData]);
 
     const handleInputChange = (event) => {
         setFormValues({
