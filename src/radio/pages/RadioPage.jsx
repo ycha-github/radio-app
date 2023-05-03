@@ -32,7 +32,7 @@ export const RadioPage = () => {
           <Route path="/" element={ <Asignaciones /> }/>
           <Route path="asignaciones" element={ <FormAsignaciones/> }/>
           <Route path="hoja-servicio" element={ <HojaServicios /> }/>
-          <Route path="hoja-serviciof" element={ <FormHojaServicio /> }/>
+          {/* <Route path="hoja-serviciof" element={ <FormHojaServicio /> }/> */}
           <Route path="config-reportes" element={ <ConfigReportes /> }/>
 
           <Route path="pass-update" element={ <PasswordUpdate /> }/>

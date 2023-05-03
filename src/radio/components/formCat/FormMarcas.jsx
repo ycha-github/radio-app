@@ -11,6 +11,7 @@ export const FormMarcas = () => {
     const [formValues, setFormValues] = useState({
         nombreMarcas:'',
         nombreModelos:'',
+        tipo:'',
         estatus:'',
         createdAt:'',
         updatedAt:'',

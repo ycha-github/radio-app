@@ -25,11 +25,13 @@ export const Vehiculos=()=> {
 
   const newRow =()=>{
     setActiveEvent({
-      nombreVehiculo:'',
-      placa:'',
-      color:'',
-      anio:'',
       marcas_idmarcas:'',
+      anio:'',
+      tipo:'',
+      color:'',
+      placa:'',
+      unidad:'',
+      fk_zonaregion:'',
       estatus:'',
       createdAt:'',
       updatedAt:'',
@@ -58,11 +60,14 @@ export const Vehiculos=()=> {
   const columns = [
 
     { field: 'idvehiculo', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
-    { field: 'nombreVehiculo', headerClassName: "super", headerName: 'Modelo', flex: 1, minWidth: 90 },
-    { field: 'placa', headerClassName: "super", headerName: 'Placa', flex: 1, minWidth: 90 },
-    { field: 'color', headerClassName: "super", headerName: 'Color', flex: 1, minWidth: 90 },
+    { field: 'nombreMarcas', headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
+    { field: 'nombreModelos', headerClassName: "super", headerName: 'Línea', flex: 1, minWidth: 90 },
     { field: 'anio', headerClassName: "super", headerName: 'Año', flex: 1, minWidth: 90 },
-    { field: 'marcas_idmarcas', headerClassName: "super", headerName: 'IdMarca', flex: 1, minWidth: 90 },
+    { field: 'tipo', headerClassName: "super", headerName: 'Tipo', flex: 1, minWidth: 90 },
+    { field: 'color', headerClassName: "super", headerName: 'Color', flex: 1, minWidth: 90 },
+    { field: 'placa', headerClassName: "super", headerName: 'Placa', flex: 1, minWidth: 90 },
+    { field: 'unidad', headerClassName: "super", headerName: 'Unidad', flex: 1, minWidth: 90 },
+    { field: 'nombreZonasRegiones', headerClassName: "super", headerName: 'Zona/Región', flex: 1, minWidth: 90 },
     { field: 'estatus', type: 'boolean', headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
     { field: 'createdAt', headerClassName: "super", headerName: 'Fechadecreacion', flex: 1, minWidth: 90 },
     { field: 'updatedAt', headerClassName: "super", headerName: 'Fechadeactualizacion', flex: 1, minWidth: 90 },

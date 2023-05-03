@@ -1,12 +1,12 @@
 import  {useState , useEffect} from "react";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, TextField } from '@mui/material';
 import { AddCircleOutlineOutlined, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
 import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServicio';
-import { render } from "react-dom";
+// import { render } from "react-dom";
 
 
 const colorClose=()=>{
@@ -17,10 +17,10 @@ const colorDone=()=>{
 }
   export const HojaServicios=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useHojaServicioStore();
-  const { mostrarGuardar, mostrarActualizar, disableForm }=useModalHook();
+  const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, /*disableForm*/ }=useModalHook();
   const [state, setState] =useState([]);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     startLoadingEvents()
@@ -44,8 +44,9 @@ const colorDone=()=>{
         // createdAt: '',
         // updatedAt: '',
     })
-    mostrarGuardar();
-    navigate('../hoja-serviciof');
+    OpenModal();
+    // mostrarGuardar();
+    // navigate('../hoja-serviciof');
   }
 
   const handleChange =async (event,r) => {
@@ -55,14 +56,16 @@ const colorDone=()=>{
   };
 
   const cambiar = ( ) =>  {
+    OpenModal();
     mostrarActualizar();
-    navigate('../hoja-serviciof');
+    // navigate('../hoja-serviciof');
   }
 
   const ver = () =>  {
-    disableForm();
+    // disableForm();
+    OpenModal();
     mostrarActualizar();
-    navigate('../hoja-serviciof');
+    // navigate('../hoja-serviciof');
   }
 
   const onSelect = ( event ) =>  {
@@ -138,7 +141,7 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-       
+        <FormHojaServicio/>
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo

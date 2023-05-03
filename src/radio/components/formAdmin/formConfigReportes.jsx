@@ -5,7 +5,7 @@ import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useCo
 import { useModalHook } from '../../../hooks/useModalHook';
 
 
-export const FormConfigReportes = () => {
+export const FormConfigReportes = (width) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -72,11 +72,11 @@ export const FormConfigReportes = () => {
 
     return (
         <>
-            <ModalRadio >
+            <ModalRadio width={width} >
                 <Typography variant='h5'> { isActualizar ? 'Actualizar configuración Hoja de Servicios y Cartas de Asignación' : 'Nueva configuración Hoja de Servicios y Cartas de Asignación' } </Typography>
                 <form onSubmit={onSubmit} >
                     {/* <Stack  noValidate spacing={3}> */}
-                        <Grid container  justify="center"  overflow={ 'scroll'} maxHeight={600} >
+                        <Grid container  justify="center"  overflow={ 'scroll'} maxHeight={600}  >
                             <Grid item xs={6}>
                                 <TextField
                                     disabled={isVer}
