@@ -1,9 +1,9 @@
-import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
+import { useEffect, useState } from 'react';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Close, Done, Edit } from '@mui/icons-material';
+import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useVehiculosStore } from '../../../hooks/hooksCatalogo/useVehiculosStore';
-import { useEffect, useState } from 'react';
 import { FormVehiculos } from '../../components/formCat/FormVehiculos';
 
 const colorClose=()=>{
@@ -57,9 +57,10 @@ export const Vehiculos=()=> {
   esES,
 );
 
+
   const columns = [
 
-    { field: 'idvehiculo', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
+    { field: 'idvehiculo' ,headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
     { field: 'nombreMarcas', headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
     { field: 'nombreModelos', headerClassName: "super", headerName: 'Línea', flex: 1, minWidth: 90 },
     { field: 'anio', headerClassName: "super", headerName: 'Año', flex: 1, minWidth: 90 },
@@ -80,7 +81,7 @@ export const Vehiculos=()=> {
       getActions: (evento) => [
         <GridActionsCellItem
         icon={<Edit />}
-        label="Delete"
+        label="Editar"
         onClick={cambiar}
       />,
       
