@@ -29,7 +29,6 @@ export const useAccesoriosStore= () => {
   dispatch(onUpdateEvent(zonasEvent,user));
   window.location.reload(true);
     }
-
     const startLoadingEvents= async ()=>{
       try {
         const { data } = await radioApi.get('/accesorios')

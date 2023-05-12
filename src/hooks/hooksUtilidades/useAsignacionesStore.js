@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"; 
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/utilidades/asignacionesSlice";
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent, onFiltrar } from "../../store/utilidades/asignacionesSlice";
 
 export const useAsignacionesStore= () => {
   const dispatch = useDispatch();
-  const { events, activeEvent } = useSelector( state => state.asignaciones );
+  const { events, activeEvent, accesoriosFiltrado } = useSelector( state => state.asignaciones );
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
@@ -36,6 +36,11 @@ export const useAsignacionesStore= () => {
       const {data} = await  radioApi.put(`/asig_usuarios/ActualizarSue/${zonasEvent}`);
   //dispatch(onUpdateEvent(zonasEvent,user));
     }
+
+    const filtrarAccesorio=async(zonasEvent)=>{
+      const {data} = await  radioApi.get(`/accesorios/filtrado/${zonasEvent}`);
+      dispatch(onFiltrar(data));
+    }
     const startLoadingEvents= async ()=>{
       try {
         const { data } = await radioApi.get('/asig_usuarios')
@@ -50,6 +55,7 @@ export const useAsignacionesStore= () => {
     // Propiedades
     activeEvent,
     events,
+    accesoriosFiltrado,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,
@@ -57,5 +63,6 @@ export const useAsignacionesStore= () => {
     startSavingEvent,
     startLoadingEvents,
     cambiarSue,
+    filtrarAccesorio,
   }
 }

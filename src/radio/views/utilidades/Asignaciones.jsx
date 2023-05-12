@@ -20,8 +20,9 @@ const colorDone=()=>{
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useAsignacionesStore();
   const {OpenModal, mostrarActualizar}=useModalHook();
   const [state, setState] =useState([]);
-  const [tableData, setTableData] = useState([])
-  const [tableSue, setTableSue] = useState([])
+ 
+ 
+  const [tableAccesorio, setTableAccesorio] = useState([])
   const navigate = useNavigate();
  
   useEffect(() => {
@@ -32,7 +33,8 @@ const colorDone=()=>{
     setActiveEvent({
       usuarios_idusuarios:'',
       radios_idradios:'',
-      serie:'',
+      fk_accesorio_bateria:'',
+      //serie:'',
       estatus:'',
       createdAt:'',
       updatedAt:'',
@@ -40,19 +42,28 @@ const colorDone=()=>{
     OpenModal();
     //navigate('../asignaciones');
   }
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/v0/usuarios').
-        then((response) => {
-            setTableData(response.data);
-        });
-    }, []);
+  
+   
+    //useEffect(() => {
+    //  axios.get(`http://localhost:8000/api/v0/accesorios/filtrado/`).
+    //      then((response) => {
+    //          setTableAccesorio(response.data);
+    //      });
+    //  }, []);
 
-    useEffect(() => {
-    axios.get('http://localhost:8000/api/v0/radios/filtrado').
-        then((response) => {
-            setTableSue(response.data);
-        });
-    }, []);
+    //  console.log(tableAccesorio);
+    //  let r='';
+
+    //  const recibir = (id,tipoaccesorio) => {
+    //      r={id,tipoaccesorio}
+
+    //  console.log(r);
+    //  }
+  
+    //  tableAccesorio.map((accesorio) => {
+    //      return recibir(accesorio.idaccesorios, accesorio.accesorio);
+    //  })
+
   const handleChange =async (event,r) => {
     setState({ ...state, [event.target.name]: event.target.checked });
     //setState(event.target.checked);
@@ -130,7 +141,7 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-      <FormAsignaciones usuario={tableData} radio={tableSue} />
+      <FormAsignaciones   />
       {/* <FormAsignacionGeneral/> */}
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
