@@ -17,6 +17,7 @@ export const asignacionesSlice = createSlice({
       [
        //tempEvent
       ],
+      accesoriosFiltrado:[],
     activeEvent: null
   },
   reducers: {
@@ -62,8 +63,20 @@ export const asignacionesSlice = createSlice({
           state.events.push(event)
         }
       })
-    }
+    },
+    onFiltrar:(state,{payload})=>{
+      state.isLoadingEvents= false;
+      //state.accesoriosFiltrado=  payload;
+      payload.forEach(event=>{
+        const exists = state.accesoriosFiltrado.some(dbEvent=> dbEvent.idaccesorios === event.idaccesorios);
+        if( !exists){
+          state.accesoriosFiltrado.push(event)
+        }
+      })
+    },
   }
 });
+
+   
 // Action creators are generated for each case reducer function
-export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent,onLoadEvent } = asignacionesSlice.actions;
+export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent,onLoadEvent,onFiltrar } = asignacionesSlice.actions;

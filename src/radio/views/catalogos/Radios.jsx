@@ -67,7 +67,7 @@ export const Radios= () => {
 const columns = [
 
   { field: 'idradios', headerClassName: "super", headerName: 'ID', width: 90 },
-   { field: 'tipo',type: 'string',headerClassName: "super", headerName: 'Tipo Equipo', flex: 1, minWidth: 120 },
+   { field: 'tipo',type: 'string',headerClassName: "super", headerName: 'Tipo Radio', flex: 1, minWidth: 120 },
   { field: 'serie',headerClassName: "super", headerName: 'Serie', flex: 1, minWidth: 140 },
   { field: 'logico',headerClassName: "super", headerName: 'Logico', flex: 1, minWidth: 130 },
   { field: 'inventario_interno',headerClassName: "super", headerName: 'Invent. Interno', flex: 1, minWidth: 140 },
