@@ -71,10 +71,28 @@ export const FormMarcas = () => {
                                 type="text"
                                 name="nombreModelos"
                                 color='warning'
-                                label="Modelo"
+                                label="Línea"
                                 variant="outlined"
                                 value={formValues.nombreModelos}
                                 onChange={handleInputChange} />
+                        </Grid>
+                        <Grid item>
+                            <FormControl fullWidth>
+                                <InputLabel id="tipo-input" color='warning'>Tipo</InputLabel>
+                                <Select
+                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    labelId="demo-simple-select-label"
+                                    id="tipo-input"
+                                    name="tipo"
+                                    color='warning'
+                                    value={formValues.tipo}
+                                    label="Tipo"
+                                    onChange={handleInputChange}>
+                                    <MenuItem value={1}>Vehículo</MenuItem>
+                                    <MenuItem value={2}>Radio</MenuItem>
+                                    <MenuItem value={3}>Accesorio</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item>
                             <FormControl fullWidth>

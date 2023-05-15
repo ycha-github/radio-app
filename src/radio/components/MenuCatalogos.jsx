@@ -48,16 +48,6 @@ export const MenuCatalogos = () => {
           path: 'servicios', 
         },
         { 
-          text: 'Estatus', 
-          icon: <AutorenewRounded color={ iconColorCat } />, 
-          path: 'estatus', 
-        },
-        { 
-          text: 'Tipos', 
-          icon: <TextFieldsRounded color={ iconColorCat } />, 
-          path: 'tipos', 
-        },
-        { 
           text: 'Usuarios', 
           icon: <Person color={ iconColorCat } />, 
           path: 'usuarios-radios', 

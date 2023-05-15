@@ -21,14 +21,12 @@ export const marcasSlice = createSlice({
   },
   reducers: {
     onSetActiveEvent: ( state, action) => {
-
-         state.activeEvent = action.payload;
+      state.activeEvent = action.payload;
     },
     onAddNewEvent: ( state, { payload }) => {
-
       state.events.push(payload);
       state.activeEvent = null;
-  },
+    },
     onUpdateEvent:(state, {payload})=>{
       state.events= state.events.map(event=>{
         if (event.idmarcas === payload.idmarcas){

@@ -24,7 +24,8 @@ export const FormRadios = () => {
         fecha_asignacion: '',
         observaciones: '',
         fecha_recepcion: '',
-        fk_sue: '',
+        situacion: '',
+        ubicacion: '',
         estatus: '',
         createdAt: '',
         updatedAt: '',
@@ -48,13 +49,9 @@ useEffect(() => {
     then((response)=>{
       setSelectRecurso(response.data);
     });
-    axios.get('http://localhost:8000/api/v0/marcas').
+    axios.get(`http://localhost:8000/api/v0/marcas/tipo/${2}`).
     then((response)=>{
       setSelectMarca(response.data);
-    });
-    axios.get('http://localhost:8000/api/v0/sue').
-    then((response)=>{
-      setSelectSue(response.data);
     });
 
 }, [])
