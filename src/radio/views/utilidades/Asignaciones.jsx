@@ -31,13 +31,17 @@ const colorDone=()=>{
 
   const newRow =()=>{
     setActiveEvent({
-      usuarios_idusuarios:'',
-      radios_idradios:'',
-      fk_accesorio_bateria:'',
-      //serie:'',
-      estatus:'',
-      createdAt:'',
-      updatedAt:'',
+      usuarios_idusuarios:"",
+       radios_idradios:"",
+       fk_accesorio_bateria:"",
+       fk_accesorio_cargador:"",
+       fk_accesorio_gps:"",
+       funda:false,
+       antena: false,
+       fk_vehiculo:"",
+       estatus:  "",
+       createdAt: "",
+       updatedAt: "",
     })
     OpenModal();
     //navigate('../asignaciones');

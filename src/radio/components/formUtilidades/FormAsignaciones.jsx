@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, FormControl, Grid, InputLabel, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -8,30 +8,40 @@ import axios from 'axios';
 export const FormAsignaciones = ({usuario, radio}) => {
 
     const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
-    const { activeEvent, startSavingEvent, cambiarSue, filtrarAccesorio, accesoriosFiltrado } = useAsignacionesStore();
+    const { activeEvent, startSavingEvent, cambiarSue, filtrarAccesorio, accesoriosFiltrado,filtrarAccesorioBateria,accesoriosFiltradoBateria,filtrarAccesorioGps,accesoriosFiltradoGps } = useAsignacionesStore();
 
-   
    const [formValues, setFormValues] = useState({
        usuarios_idusuarios:"",
        radios_idradios:"",
+       rfsi:"",
        fk_accesorio_bateria:"",
        fk_accesorio_cargador:"",
        fk_accesorio_gps:"",
+       funda:true,
+       antena: false,
+       fk_vehiculo:"",
        estatus:  "",
        createdAt: "",
        updatedAt: "",
    }); 
    const [tableData, setTableData] = useState([]);
    const [tableSue, setTableSue] = useState([]);
+   const [tableVehi, setTableVehi] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [inputValue1, setInputValue1] = useState('');
     const [inputValue2, setInputValue2] = useState('');
     const [inputValue3, setInputValue3] = useState('');
+    const [inputValue4, setInputValue4] = useState('');
+    const [inputValue5, setInputValue5] = useState('');
+
     useEffect(() => {
         if (activeEvent !== null) {
             setFormValues({ ...activeEvent });
         }
     }, [activeEvent])
+    useEffect(() => {
+        accesoriosFiltrado
+    }, [accesoriosFiltrado])
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/v0/usuarios').
@@ -47,6 +57,13 @@ export const FormAsignaciones = ({usuario, radio}) => {
                 });
             }, []);
 
+        useEffect(() => {
+            axios.get('http://localhost:8000/api/v0/vehiculos/estatus').
+                then((response) => {
+                    setTableVehi(response.data);
+                });
+            }, []);
+
    const handleInputChange = (event) => {
        setFormValues({
            ...formValues,
@@ -54,6 +71,12 @@ export const FormAsignaciones = ({usuario, radio}) => {
         });
        
     };
+    const handleChange = (event) => {
+        setFormValues({
+          ...formValues,
+          [event.target.name]: event.target.checked
+        });
+      };
 
     const onSubmit = async (event) => {
         event.preventDefault();
@@ -66,8 +89,7 @@ export const FormAsignaciones = ({usuario, radio}) => {
        CloseModal();
        // setFormSubmitted(false);
     };
-    
-    console.log(formValues);
+console.log(formValues)
     return (
         <>
         <ModalRadio >
@@ -79,7 +101,6 @@ export const FormAsignaciones = ({usuario, radio}) => {
                         <Autocomplete
                         name="usuarios_idusuarios"
                         value={formValues}
-                       
                         sx={{ width: 400, mb:1 }}
                         onChange={(event, newFormValues2) => {
                             setFormValues({
@@ -105,8 +126,6 @@ export const FormAsignaciones = ({usuario, radio}) => {
                         (<Grid item>
                             <Autocomplete
                             name="usuarios_idusuarios"
-                           //value={usuario[formValues.usuarios_idusuarios-1]}
-                           // defaultValue={usuario}
                             options={tableData}
                             getOptionLabel={(tableData) => tableData.nombre +" "+ tableData.apellido_pat +" "+ tableData.apellido_mat || ""}
                             sx={{ width: 400, mb:1 }}
@@ -144,14 +163,12 @@ export const FormAsignaciones = ({usuario, radio}) => {
                                 //    //console.log(option.serie);
                                 //    //console.log(value.serie_radio);
                                 //}}
-                                renderInput={(params) => <TextField  {...params} variant="outlined" label="Serie" />}       
+                                renderInput={(params) => <TextField  {...params} variant="outlined" label="Serie Radio" />}       
                            />
                         </Grid>):
                         (<Grid item>
                             <Autocomplete
                                     name="radios_idradios"
-                                    //value={radio[formValues.radios_idradios]}
-                                    // defaultValue={radio}
                                     options={tableSue}
                                     getOptionLabel={(tableSue) => tableSue.serie || ""}
                                     sx={{ width: 400, mb:1 }}
@@ -161,35 +178,45 @@ export const FormAsignaciones = ({usuario, radio}) => {
                                             ['radios_idradios']: newFormValues.idradios,
                                         });
                                     }}
-                                    renderInput={(params) => <TextField  {...params} variant="outlined" label="Serie" />}       
+                                    renderInput={(params) => <TextField  {...params} variant="outlined" label="Serie Radio" />}       
                                />
                             </Grid>)
                         } 
+                        <Grid item xs={6}>
+                            <TextField
+                                id="rfsi"
+                                sx={{ border: 'none', mb:1,  width: 400 }}
+                                type="text"
+                                name="rfsi"
+                                color='secondary'
+                                label="RFSI"
+                                variant="outlined"
+                                value={formValues.rfsi}
+                                onChange={handleInputChange} />
+                        </Grid >
                         {isActualizar?
                     (<Grid item>
                         <Autocomplete
                                name="fk_accesorio_bateria"
                                 value={formValues}
-                                onClick={filtrarAccesorio('Bateria')}
-                               
+                                onClick={filtrarAccesorioBateria('Bateria')}
                                 sx={{ width: 400, mb:1 }}
                                onChange={(event, newFormValues) => {
-                                   //console.log(newFormValues.idaccesorios);
+                                   console.log(newFormValues);
                                    setFormValues({
                                       ...formValues,
                                       ['fk_accesorio_bateria']: newFormValues.idaccesorios,
-                                      ['num_serie']:newFormValues.num_serie,
+                                      ['serie_bateria']:newFormValues.serie_bateria,
                                    });
                                    }}
                                 inputValue={inputValue}
                                 onInputChange={(event, newInputValue) => {
-                                    //console.log(newInputValue);
                                     setInputValue(newInputValue);
                                   }}
-                                options={accesoriosFiltrado}
-                                getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.num_serie || ""}
+                                options={accesoriosFiltradoBateria}
+                                getOptionLabel={(accesoriosFiltradoBateria) => accesoriosFiltradoBateria.serie_bateria || ""}
                                 //isOptionEqualToValue={(option, value) =>{
-                                //    option.num_serie === value.num_serie
+                                //    option.num_serie === value.serie_bateria
                                 //    //console.log(option.num_serie);
                                 //    //console.log(value);
                                 //}}
@@ -199,11 +226,9 @@ export const FormAsignaciones = ({usuario, radio}) => {
                         (<Grid item>
                             <Autocomplete
                                     name="fk_accesorio_bateria"
-                                    //value={radio[formValues.radios_idradios]}
-                                    // defaultValue={radio}
-                                    options={accesoriosFiltrado}
-                                    onClick={filtrarAccesorio('Bateria')}
-                                    getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.num_serie || ""}
+                                    onClick={filtrarAccesorioBateria('Bateria')}
+                                    options={accesoriosFiltradoBateria}
+                                    getOptionLabel={(accesoriosFiltradoBateria) => accesoriosFiltradoBateria.serie_bateria || ""}
                                     sx={{ width: 400, mb:1 }}
                                     onChange={(event, newFormValues) => {
                                         setFormValues({
@@ -215,45 +240,43 @@ export const FormAsignaciones = ({usuario, radio}) => {
                                />
                             </Grid>)
                         }
+                        
                         {isActualizar?
                     (<Grid item>
                         <Autocomplete
                                name="fk_accesorio_cargador"
                                 value={formValues}
                                 onClick={filtrarAccesorio('Cargador')}
-                               
                                 sx={{ width: 400, mb:1 }}
                                onChange={(event, newFormValues3) => {
-                                   console.log(newFormValues);
+                                   console.log(newFormValues3.serie_cargador);
                                    setFormValues({
                                       ...formValues,
                                       ['fk_accesorio_cargador']: newFormValues3.idaccesorios,
-                                      ['serie_cargador']:newFormValues3.num_serie,
+                                      ['serie_cargador']:newFormValues3.serie_cargador
                                    });
                                    }}
                                 inputValue={inputValue3}
                                 onInputChange={(event, newInputValue3) => {
-                                    //console.log(newInputValue);
+                                    console.log(newInputValue3);
                                     setInputValue3(newInputValue3);
                                   }}
                                 options={accesoriosFiltrado}
-                                getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.num_serie || ""}
+                                getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.serie_cargador || ""}
                                 //isOptionEqualToValue={(option, value) =>{
-                                //    option.num_serie === value.num_serie
+                                //    option.serie_cargador === value.serie_cargador
                                 //    //console.log(option.num_serie);
-                                //    //console.log(value);
+                                //    console.log(value);
                                 //}}
                                 renderInput={(params) => <TextField  {...params} variant="outlined" label="Cargador" />}       
                            />
                         </Grid>):
                         (<Grid item>
                             <Autocomplete
-                                    name="fk_accesorio_cargador"
-                                    //value={radio[formValues.radios_idradios]}
-                                    // defaultValue={radio}
+                                    name='fk_accesorio_cargador'
                                     options={accesoriosFiltrado}
                                     onClick={filtrarAccesorio('Cargador')}
-                                    getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.num_serie || ""}
+                                    getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.serie_cargador || ""}
                                     sx={{ width: 400, mb:1 }}
                                     onChange={(event, newFormValues) => {
                                         setFormValues({
@@ -265,55 +288,125 @@ export const FormAsignaciones = ({usuario, radio}) => {
                                />
                             </Grid>)
                         }
-                        {/* {isActualizar?
+                        {isActualizar?
                     (<Grid item>
                         <Autocomplete
-                               name="fk_accesorio_cargador"
+                               name="fk_accesorio_gps"
                                 value={formValues}
-                                onClick={filtrarAccesorio('Cargador')}
+                                onClick={filtrarAccesorioGps('Gps')}
                                 sx={{ width: 400, mb:1 }}
-                               onChange={(event, newFormValues3) => {
-                                   //console.log(newFormValues.idaccesorios);
+                               onChange={(event, newFormValues4) => {
                                    setFormValues({
                                       ...formValues,
-                                      ['fk_accesorio_bateria']: newFormValues3.idaccesorios,
-                                      ['num_serie']:newFormValues3.num_serie,
+                                      ['fk_accesorio_gps']: newFormValues4.idaccesorios,
+                                      ['serie_gps']:newFormValues4.serie_gps,
                                    });
                                    }}
-                                inputValue={inputValue3}
-                                onInputChange={(event, newInputValue3) => {
-                                    //console.log(newInputValue);
-                                    setInputValue3(newInputValue3);
+                                inputValue={inputValue4}
+                                onInputChange={(event, newInputValue4) => {
+                                    setInputValue4(newInputValue4);
                                   }}
-                                options={accesoriosFiltrado}
-                                getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.num_serie || ""}
+                                options={accesoriosFiltradoGps}
+                                getOptionLabel={(accesoriosFiltradoGps) => accesoriosFiltradoGps.serie_gps || ""}
                                 //isOptionEqualToValue={(option, value) =>{
                                 //    option.num_serie === value.num_serie
                                 //    //console.log(option.num_serie);
                                 //    //console.log(value);
                                 //}}
-                                renderInput={(params) => <TextField  {...params} variant="outlined" label="Bateria" />}       
+                                renderInput={(params) => <TextField  {...params} variant="outlined" label="Gps" />}       
                            />
                         </Grid>):
                         (<Grid item>
                             <Autocomplete
-                                    name="fk_accesorio_bateria"
-                                    //value={radio[formValues.radios_idradios]}
-                                    // defaultValue={radio}
-                                    options={accesoriosFiltrado}
-                                    onClick={filtrarAccesorio('Bateria')}
-                                    getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.num_serie || ""}
+                                    name="fk_accesorio_gps"
+                                    onClick={filtrarAccesorioGps('Gps')}
+                                    options={accesoriosFiltradoGps}
+                                    getOptionLabel={(accesoriosFiltradoGps) => accesoriosFiltradoGps.serie_gps || ""}
                                     sx={{ width: 400, mb:1 }}
                                     onChange={(event, newFormValues) => {
                                         setFormValues({
                                             ...formValues,
-                                            ['fk_accesorio_bateria']: newFormValues.idaccesorios,
+                                            ['fk_accesorio_gps']: newFormValues.idaccesorios,
                                         });
                                     }}
-                                    renderInput={(params) => <TextField  {...params} variant="outlined" label="Bateria" />}       
+                                    renderInput={(params) => <TextField  {...params} variant="outlined" label="Gps" />}       
                                />
                             </Grid>)
-                        } */}
+                        }
+                        <FormGroup>
+                        <Grid item>
+                        
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name="funda"
+                                    value={formValues.funda}
+                                    checked={formValues.funda}
+                                    onChange={handleChange}
+                                />
+                            }
+                            label="Funda"
+                        />
+                        </Grid>
+                        <Grid item>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name="antena"
+                                    value={formValues.antena}
+                                    checked={formValues.antena}
+                                    onChange={handleChange}
+                                />
+                            }
+                            label="Antena"
+                        />
+                            </Grid>
+                            </FormGroup>
+                        {isActualizar?
+                    (<Grid item>
+                        <Autocomplete
+                               name="fk_vehiculo"
+                                value={formValues}
+                                //onClick={filtrarAccesorioGps('Gps')}
+                                sx={{ width: 400, mb:1 }}
+                               onChange={(event, newFormValues5) => {
+                                   setFormValues({
+                                      ...formValues,
+                                      ['fk_vehiculo']: newFormValues5.idvehiculo,
+                                      ['placa']:newFormValues5.placa,
+                                   });
+                                   }}
+                                inputValue={inputValue5}
+                                onInputChange={(event, newInputValue5) => {
+                                    setInputValue5(newInputValue5);
+                                  }}
+                                options={tableVehi}
+                                getOptionLabel={(tableVehi) => tableVehi.placa || ""}
+                                //isOptionEqualToValue={(option, value) =>{
+                                //    option.num_serie === value.num_serie
+                                //    //console.log(option.num_serie);
+                                //    //console.log(value);
+                                //}}
+                                renderInput={(params) => <TextField  {...params} variant="outlined" label="Placa Vehiculo" />}       
+                           />
+                        </Grid>):
+                        (<Grid item>
+                            <Autocomplete
+                                    name="fk_vehiculo"
+                                    //onClick={filtrarAccesorioGps('Gps')}
+                                    options={tableVehi}
+                                    getOptionLabel={(tableVehi) => tableVehi.placa || ""}
+                                    sx={{ width: 400, mb:1 }}
+                                    onChange={(event, newFormValues) => {
+                                        setFormValues({
+                                            ...formValues,
+                                            ['fk_vehiculo']: newFormValues.idvehiculo,
+                                        });
+                                    }}
+                                    renderInput={(params) => <TextField  {...params} variant="outlined" label="Placa Vehiculo" />}       
+                               />
+                            </Grid>)
+                        }
                     <Grid item>
                         <FormControl fullWidth>
                             <InputLabel id="estatus-input" color='secondary'>Estatus</InputLabel>
