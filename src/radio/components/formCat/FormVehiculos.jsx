@@ -26,7 +26,6 @@ export const FormVehiculos = () => {
         
     }
     
-
     useEffect(() => {
         selectMarcasTipos();
     }, [])
@@ -107,7 +106,7 @@ export const FormVehiculos = () => {
                                         value={formValues}
                                         onChange={(event, newFormValues) => {
                                             setFormValues(
-                                            { 
+                                                { 
                                                     ...formValues,
                                                     ['marcas_idmarcas']: newFormValues.idmarcas,
                                                     ['nombreMarcas']: newFormValues.nombreMarcas,
@@ -118,7 +117,7 @@ export const FormVehiculos = () => {
                                         }}
                                         options={marcasTipo}
                                     
-                                        inputValue={isActualizar ? inputValue : ""}
+                                        inputValue={inputValue}
                                         onInputChange={(event, newInputValue) => {
                                             setInputValue(
                                                 newInputValue

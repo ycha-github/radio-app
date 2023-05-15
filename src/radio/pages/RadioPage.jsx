@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { FormHojaServicio } from '../components/formUtilidades/FormHojaServicio';
 import { RadioLayout } from '../layout/RadioLayout';
-import { Accesorios, Asignaciones, ConfigReportes, Corporaciones, Estatus,  HojaServicios, Marcas, PasswordUpdate,  Puestos, Radios, RecursoCompras, Roles, Servicios, Tipos, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
+import { Accesorios, Asignaciones, ConfigReportes, Corporaciones, HojaServicios, Marcas, PasswordUpdate,  Puestos, Radios, RecursoCompras, Roles, Servicios, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
 import { FormAsignaciones } from '../components/formUtilidades/FormAsignaciones';
 
 export const RadioPage = () => {
@@ -23,8 +23,6 @@ export const RadioPage = () => {
           <Route path="radios" element={ <Radios /> }/>
           <Route path="recursos" element={ <RecursoCompras /> }/>
           <Route path="servicios" element={ <Servicios /> }/>
-          <Route path="estatus" element={ <Estatus /> }/>
-          <Route path="tipos" element={ <Tipos /> }/>
           <Route path="usuarios-radios" element={ <UsuariosRadios /> }/>
           <Route path="vehiculos" element={ <Vehiculos /> }/>
           <Route path="zonas-regiones" element={ <ZonasRegiones /> }/>

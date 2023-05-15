@@ -1,6 +1,6 @@
 import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
 import  {useState , useEffect} from "react";
-import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
+import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, Hidden } from '@mui/material';
 import { FormAccesorios } from '../../components/formCat/FormAccesorios';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -24,14 +24,13 @@ const colorDone=()=>{
   const newRow =()=>{
     setActiveEvent({
       accesorio:'',
-      num_serie:'',
+      num_serie: '',
       marcas_idMarcas:'',
       inventario_interno:'',
       inventario_segpub:'',
       contrato_compra:'',
       observaciones:'',
       fecha_recepcion:'',
-      fk_sue:'',
       estatus:'',
       createdAt:'',
       updatedAt:'',
@@ -64,18 +63,22 @@ const colorDone=()=>{
    esES,
   );
 
+
+
+
 const columns =  [
   
-  { field: 'idaccesorios', headerClassName: "super", headerName: 'ID',width: 90,  },
+  { field: 'idaccesorios', headerClassName: "super", headerName: 'ID',width: 50,  },
   { field: 'accesorio', headerClassName: "super", headerName: 'Tipo Accesorio',width: 120,  },
-  { field: 'num_serie',headerClassName: "super", headerName: 'Numero de serie',flex: 1 , minWidth: 90 },
+  { field: 'serie_bateria', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie Batería',flex: 1 , minWidth: 90 },
+  { field: 'serie_cargador', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie Cargador',flex: 1 , minWidth: 90 },
+  { field: 'serie_gps', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie GPS',flex: 1 , minWidth: 90 },
   { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
   { field: 'inventario_interno',headerClassName: "super", headerName: 'Inventario Interno', flex: 1, minWidth: 90 },
   { field: 'inventario_segpub',headerClassName: "super",headerName: 'Inv. Seg. Pub.',flex: 1, minWidth: 90 },
   { field: 'contrato_compra',headerClassName: "super",headerName: 'Contrato',flex: 1, minWidth: 90 },
   { field: 'observaciones',headerClassName: "super",headerName: 'Observaciones',flex: 1, minWidth: 90 },
   { field: 'fecha_recepcion',headerClassName: "super",headerName: 'Fecha de Recepcion',flex: 1, minWidth: 90 },
-  { field: 'nombreStatus',headerClassName: "super",headerName: 'SUE',flex: 1, minWidth: 90 },
   { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 1, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 1, minWidth: 120 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 120 },

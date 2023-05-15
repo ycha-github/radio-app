@@ -37,7 +37,8 @@ export const Radios= () => {
       fecha_asignacion :'',
       observaciones :'',
       fecha_recepcion :'',
-      fk_sue :'',
+      situacion: '',
+      ubicacion: '',
       estatus :'',
       createdAt :'',
       updatedAt :'',
@@ -67,7 +68,7 @@ export const Radios= () => {
 const columns = [
 
   { field: 'idradios', headerClassName: "super", headerName: 'ID', width: 90 },
-   { field: 'tipo',type: 'string',headerClassName: "super", headerName: 'Tipo Radio', flex: 1, minWidth: 120 },
+  { field: 'tipo',type: 'string',headerClassName: "super", headerName: 'Tipo Radio', flex: 1, minWidth: 120 },
   { field: 'serie',headerClassName: "super", headerName: 'Serie', flex: 1, minWidth: 140 },
   { field: 'logico',headerClassName: "super", headerName: 'Logico', flex: 1, minWidth: 130 },
   { field: 'inventario_interno',headerClassName: "super", headerName: 'Invent. Interno', flex: 1, minWidth: 140 },
@@ -80,7 +81,8 @@ const columns = [
   { field: 'fecha_asignacion',headerClassName: "super", headerName: 'Fecha Asign.', flex: 1, minWidth: 140 },
   { field: 'observaciones',headerClassName: "super", headerName: 'Observaciones', flex: 1, minWidth: 140 },
   { field: 'fecha_recepcion',headerClassName: "super", headerName: 'Fecha Recepcion', flex: 1, minWidth: 140 },
-  { field: 'nombreStatus',headerClassName: "super", headerName: 'SUE', flex: 1, minWidth: 100 },
+  { field: 'situacion',headerClassName: "super", headerName: 'Situación', flex: 1, minWidth: 100 },
+  { field: 'ubicacion',headerClassName: "super", headerName: 'Ubicación', flex: 1, minWidth: 100 },
   { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 140 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 140 },
