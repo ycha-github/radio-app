@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"; 
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent, onFiltrar } from "../../store/utilidades/asignacionesSlice";
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent, onFiltrar,onFiltrarBateria, onFiltrarGps} from "../../store/utilidades/asignacionesSlice";
 
 export const useAsignacionesStore= () => {
   const dispatch = useDispatch();
-  const { events, activeEvent, accesoriosFiltrado } = useSelector( state => state.asignaciones );
+  const { events, activeEvent, accesoriosFiltrado,accesoriosFiltradoBateria,accesoriosFiltradoGps } = useSelector( state => state.asignaciones );
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
@@ -21,7 +21,7 @@ export const useAsignacionesStore= () => {
       //creando
       const {data}= await radioApi.post('/asig_usuarios', zonasEvent);
       dispatch(onAddNewEvent({...zonasEvent, idasignacion:data.idasignacion, user}));
-      window.location.reload(true);
+      //window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
@@ -32,15 +32,38 @@ export const useAsignacionesStore= () => {
     }
 
     const cambiarSue = async (zonasEvent, state)=>{
-      console.log(zonasEvent);
+      //console.log(zonasEvent);
       const {data} = await  radioApi.put(`/asig_usuarios/ActualizarSue/${zonasEvent}`);
   //dispatch(onUpdateEvent(zonasEvent,user));
     }
 
     const filtrarAccesorio=async(zonasEvent)=>{
+      try {
       const {data} = await  radioApi.get(`/accesorios/filtrado/${zonasEvent}`);
       dispatch(onFiltrar(data));
+    } catch (error) {
+      console.log('Error cargando cargadores');
+      console.log(error);
     }
+  }
+    const filtrarAccesorioBateria=async(zonasEvent)=>{
+      try {
+      const {data} = await  radioApi.get(`/accesorios/filtrado/${zonasEvent}`);
+      dispatch(onFiltrarBateria(data));
+    } catch (error) {
+      console.log('Error cargando Baterias');
+      console.log(error);
+    }
+  }
+    const filtrarAccesorioGps=async(zonasEvent)=>{
+      try {
+      const {data} = await  radioApi.get(`/accesorios/filtrado/${zonasEvent}`);
+      dispatch(onFiltrarGps(data));
+    } catch (error) {
+      console.log('Error cargando Gps');
+      console.log(error);
+    }
+  }
     const startLoadingEvents= async ()=>{
       try {
         const { data } = await radioApi.get('/asig_usuarios')
@@ -56,6 +79,8 @@ export const useAsignacionesStore= () => {
     activeEvent,
     events,
     accesoriosFiltrado,
+    accesoriosFiltradoBateria,
+    accesoriosFiltradoGps,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,
@@ -64,5 +89,7 @@ export const useAsignacionesStore= () => {
     startLoadingEvents,
     cambiarSue,
     filtrarAccesorio,
+    filtrarAccesorioBateria,
+    filtrarAccesorioGps,
   }
 }

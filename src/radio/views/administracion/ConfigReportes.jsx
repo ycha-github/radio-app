@@ -24,24 +24,24 @@ export const ConfigReportes= () => {
   
   const newRow =()=>{
     setActiveEvent({
-        encabezado_carta:'',
-        encabezado2:'',
-        encabezado_hservicio:'',
-        logo1:'',
-        logo2:'',
-        articulo1:'',
-        articulo2:'',
-        articulo3:'',
-        revisor:'',
-        responsable_entrega:'',
-        pie_carta:'',
-        pie_hservicio:'',
-        fecha_creacion:'',
-        estatus:'',
-        fecha_inicial:'',
-        fecha_final:'',
-        createdAt: '',
-        updatedAt: '',
+      encabezado_carta:'',
+      articulo1:'',
+      articulo2:'',
+      articulo3:'',
+      articulo4:'',
+      articulo5:'',
+      articulo6:'',
+      articulo7:'',
+      logoc4:'',
+      logo_ssypc:'',
+      fk_revisor:'',
+      fk_responsable_entrega:'',
+      ccp_carta:'',
+      fecha_inicial:'',
+      fecha_final:'',
+      estatus:'',
+      createdAt: '',
+      updatedAt: '',
     })
     OpenModal();
   }
@@ -79,18 +79,19 @@ export const ConfigReportes= () => {
 const columns = [
 
   { field: 'idconfigReportes', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 40 },
-  { field: 'encabezado_carta',headerClassName: "super", headerName: 'Encabezado carta1', flex: 1, minWidth: 90 },
-  { field: 'encabezado2',headerClassName: "super", headerName: 'Encabezado carta2', flex: 1, minWidth: 90 },
-  { field: 'encabezado_hservicio',headerClassName: "super", headerName: 'Encabezado HServicio', flex: 1, minWidth: 90 },
-  { field: 'logo1',headerClassName: "super", headerName: 'Logo1', flex: 1, minWidth: 90 },
-  { field: 'logo2',headerClassName: "super", headerName: 'Logo2', flex: 1, minWidth: 90 },
-  { field: 'articulo1',headerClassName: "super", headerName: 'Artículo1', flex: 1, minWidth: 90 },
-  { field: 'articulo2',headerClassName: "super", headerName: 'Artículo2', flex: 1, minWidth: 90 },
-  { field: 'articulo3',headerClassName: "super", headerName: 'Artículo3', flex: 1, minWidth: 90 },
-  { field: 'revisor',headerClassName: "super", headerName: 'Revisor', flex: 1, minWidth: 90 },
-  { field: 'responsable_entrega',headerClassName: "super", headerName: 'Entrega', flex: 1, minWidth: 90 },
-  { field: 'pie_carta',headerClassName: "super", headerName: 'Pie de carta', flex: 1, minWidth: 90 },
-  { field: 'pie_hservicio',headerClassName: "super", headerName: 'Pie de HServicio', flex: 1, minWidth: 90 },
+  { field: 'encabezado_carta',headerClassName: "super", headerName: 'Encabezado carta', flex: 1, minWidth: 90 },
+  { field: 'articulo1',headerClassName: "super", headerName: 'Articulo parte 1', flex: 1, minWidth: 90 },
+  { field: 'articulo2',headerClassName: "super", headerName: 'Articulo parte2', flex: 1, minWidth: 90 },
+  { field: 'articulo3',headerClassName: "super", headerName: 'Articulo parte 3', flex: 1, minWidth: 90 },
+  { field: 'articulo4',headerClassName: "super", headerName: 'Articulo parte 4', flex: 1, minWidth: 90 },
+  { field: 'articulo5',headerClassName: "super", headerName: 'Articulo parte5', flex: 1, minWidth: 90 },
+  { field: 'articulo6',headerClassName: "super", headerName: 'Articulo parte 6', flex: 1, minWidth: 90 },
+  { field: 'articulo7',headerClassName: "super", headerName: 'Articulo parte 7', flex: 1, minWidth: 90 },
+  { field: 'logoc4',headerClassName: "super", headerName: 'Logo C4', flex: 1, minWidth: 90 },
+  { field: 'logo_ssypc',headerClassName: "super", headerName: 'Logo SSYPC', flex: 1, minWidth: 90 },
+  { field: 'nombre_revisor',headerClassName: "super", headerName: 'Revisor', flex: 1, minWidth: 90 },
+  { field: 'nombre_responsable',headerClassName: "super", headerName: 'Entrega', flex: 1, minWidth: 90 },
+  { field: 'ccp_carta',headerClassName: "super", headerName: 'Ccp de carta', flex: 1, minWidth: 90 },
   { field: 'fecha_inicial',headerClassName: "super", headerName: 'Fecha Inicial', flex: 1, minWidth: 90 },
   { field: 'fecha_final',headerClassName: "super", headerName: 'Fecha Final', flex: 1, minWidth: 90 },
   { field: 'estatus', type: 'boolean', headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
@@ -127,7 +128,7 @@ const columns = [
 
   return (
     <>
-     <h2 className='colorAdmin'>CONFIGURACIÓN HOJAS DE SERVICIOS Y CARTAS DE ASIGNACIÓN</h2>
+     <h2 className='colorAdmin'>CONFIGURACIÓN CARTAS DE ASIGNACIÓN</h2>
      <div style={{ height: 400, width: '100%' }}>
     <div style={{ height: 'flex', width: '100%' }}>
     <div style={{ flexGrow: 1 }}>

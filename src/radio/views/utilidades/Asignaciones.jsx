@@ -2,13 +2,14 @@
 import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
 import {useState , useEffect} from "react";
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
-import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Block, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
 import { FormAsignaciones } from '../../components/formUtilidades/FormAsignaciones';
 import { FormAsignacionGeneral } from '../../components/formUtilidades/FormAsignacionGeneral';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { CrearPdf } from '../../components/formUtilidades/CrearPdf';
 
 const colorClose=()=>{
   return <Close color='error'/>
@@ -31,13 +32,26 @@ const colorDone=()=>{
 
   const newRow =()=>{
     setActiveEvent({
-      usuarios_idusuarios:'',
-      radios_idradios:'',
-      fk_accesorio_bateria:'',
-      //serie:'',
-      estatus:'',
-      createdAt:'',
-      updatedAt:'',
+      usuarios_idusuarios:"",
+       radios_idradios:"",
+       rfsi:"",
+       fk_accesorio_bateria:"",
+       fk_accesorio_cargador:"",
+       fk_accesorio_gps:"",
+       funda:false,
+       antena: false,
+       bocina: false,
+       c2h: false,
+       cable_principal: false,
+       caratula: false,
+       micro: false,
+       cofre: false,
+       porta_caratula: false,
+       cuello_cisne: false,
+       fk_vehiculo:"",
+       estatus:  "",
+       createdAt: "",
+       updatedAt: "",
     })
     OpenModal();
     //navigate('../asignaciones');
@@ -75,6 +89,13 @@ const colorDone=()=>{
     OpenModal();
     mostrarActualizar();
   }
+  const mostrarPdf = ( ) =>  {
+    navigate('../mostrar-pdf');
+    //return(<CrearPdf/>);
+    
+    //OpenModal();
+    //mostrarActualizar();
+  }
 
   const onSelect = ( event ) =>  {
     console.log(event.row)
@@ -105,13 +126,20 @@ const columns =  [
     type: 'actions',
     headerClassName: "super",
     flex: 2,
-    minWidth: 120,
+    minWidth: 160,
     getActions: (evento) => [
       <GridActionsCellItem
         icon={<Edit />}
         color="secondary"
         label="Delete"
         onClick={cambiar}
+        
+      />,
+      <GridActionsCellItem
+        icon={<VisibilityOutlined/>}
+        color="secondary"
+        label="Delete"
+        onClick={mostrarPdf}
         
       />,
       <IconButton
