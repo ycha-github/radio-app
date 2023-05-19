@@ -21,7 +21,7 @@ export const useAsignacionesStore= () => {
       //creando
       const {data}= await radioApi.post('/asig_usuarios', zonasEvent);
       dispatch(onAddNewEvent({...zonasEvent, idasignacion:data.idasignacion, user}));
-      window.location.reload(true);
+      //window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
@@ -32,7 +32,7 @@ export const useAsignacionesStore= () => {
     }
 
     const cambiarSue = async (zonasEvent, state)=>{
-      console.log(zonasEvent);
+      //console.log(zonasEvent);
       const {data} = await  radioApi.put(`/asig_usuarios/ActualizarSue/${zonasEvent}`);
   //dispatch(onUpdateEvent(zonasEvent,user));
     }

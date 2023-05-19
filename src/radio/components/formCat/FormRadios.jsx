@@ -35,7 +35,6 @@ export const FormRadios = () => {
 const [selectPropie, setSelectPropie] = useState([]);
     const [selectRecurso, setSelectRecurso] = useState([]);
     const [selectMarca, setSelectMarca] = useState([]);
-    const [selectSue, setSelectSue] = useState([]);
 
     const { CloseModal, isActualizar,mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useRadiosStore();
@@ -68,7 +67,7 @@ useEffect(() => {
 
     const recibir = (id,nombre) => {
         r={id,nombre}
-    console.log(r);
+    //console.log(r);
     }
 
     selectPropie.map((usuario) => {
@@ -293,7 +292,7 @@ useEffect(() => {
                                 value={formValues.fecha_recepcion}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item xs={6}>
+                        {/* <Grid item xs={6}>
                             <FormControl fullWidth>
                                 <InputLabel id="fk_sue-input" color='warning'>SUE</InputLabel>
                                 <Select
@@ -311,7 +310,45 @@ useEffect(() => {
                                         })}
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
+                         <Grid item xs={6}>
+                                    <FormControl fullWidth  >
+                                        <InputLabel id="situacion-input" color='warning'>Situacion</InputLabel>
+                                        <Select
+                                            sx={{ border: 'none', mb: 1, width: 300 }}
+                                            labelId="demo-simple-select-label"
+                                            id="situacion-input"
+                                            name="situacion"
+                                            color='warning'
+                                            value={formValues.situacion}
+                                            label="Situacion"
+                                            onChange={handleInputChange}
+                                        >
+                                            <MenuItem value={'Asignado'}  >Asignado</MenuItem>
+                                            <MenuItem value={'Disponible'} >Disponible</MenuItem>
+                                            <MenuItem value={'sdfsdf'} >sdfsdf</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid >
+                         <Grid item xs={6}>
+                                    <FormControl fullWidth  >
+                                        <InputLabel id="ubicacion-input" color='warning'>Ubicacion</InputLabel>
+                                        <Select
+                                            sx={{ border: 'none', mb: 1, width: 300 }}
+                                            labelId="demo-simple-select-label"
+                                            id="ubicacion-input"
+                                            name="ubicacion"
+                                            color='warning'
+                                            value={formValues.ubicacion}
+                                            label="Ubicacion"
+                                            onChange={handleInputChange}
+                                        >
+                                            <MenuItem value={'Operativo'}  >Operativo</MenuItem>
+                                            <MenuItem value={'Bodega'} >Bodega</MenuItem>
+                                            <MenuItem value={'sdfsdf'} >sdfsdf</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </Grid >
                         <Grid item xs={6}>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>

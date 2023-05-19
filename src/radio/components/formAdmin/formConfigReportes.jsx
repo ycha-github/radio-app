@@ -11,18 +11,18 @@ export const FormConfigReportes = (width) => {
 
     const [formValues, setFormValues] = useState({
         encabezado_carta:'',
-        encabezado2:'',
-        encabezado_hservicio:'',
-        logo1:'',
-        logo2:'',
         articulo1:'',
         articulo2:'',
         articulo3:'',
-        revisor:'',
-        responsable_entrega:'',
-        pie_carta:'',
-        pie_hservicio:'',
-        fecha_creacion:'',
+        articulo4:'',
+        articulo5:'',
+        articulo6:'',
+        articulo7:'',
+        logoc4:'',
+        logo_ssypc:'',
+        fk_revisor:'',
+        fk_responsable_entrega:'',
+        ccp_carta:'',
         fecha_inicial:'',
         fecha_final:'',
         estatus:'',
@@ -73,7 +73,7 @@ export const FormConfigReportes = (width) => {
     return (
         <>
             <ModalRadio width={width} >
-                <Typography variant='h5'> { isActualizar ? 'Actualizar configuración Hoja de Servicios y Cartas de Asignación' : 'Nueva configuración Hoja de Servicios y Cartas de Asignación' } </Typography>
+                <Typography variant='h5'> { isActualizar ? 'Actualizar configuración Cartas de Asignación' : 'Nueva configuración Cartas de Asignación' } </Typography>
                 <form onSubmit={onSubmit} >
                     {/* <Stack  noValidate spacing={3}> */}
                         <Grid container  justify="center"  overflow={ 'scroll'} maxHeight={600}  >
@@ -85,7 +85,7 @@ export const FormConfigReportes = (width) => {
                                     type="text"
                                     name="encabezado_carta"
                                     color={"info"}
-                                    label="Encabezado de carta 1ra parte"
+                                    label="Encabezado de carta"
                                     variant="outlined"
                                     value={formValues.encabezado_carta}
                                     onChange={handleInputChange} />
@@ -93,27 +93,92 @@ export const FormConfigReportes = (width) => {
                             <Grid item xs={6}>
                                 <TextField
                                     disabled={isVer}
-                                    id="encabezado2-input"
+                                    id="articulo1-input"
                                     sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                     type="text"
-                                    name="encabezado2"
+                                    name="articulo1"
                                     color={"info"}
-                                    label="Encabezado de carta 2da parte"
+                                    label="Artículo parte 1"
                                     variant="outlined"
-                                    value={formValues.encabezado2}
+                                    value={formValues.articulo1}
                                     onChange={handleInputChange} />
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField
                                     disabled={isVer}
-                                    id="encabezado_hservicio-input"
+                                    id="articulo2-input"
                                     sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                     type="text"
-                                    name="encabezado_hservicio"
+                                    name="articulo2"
                                     color={"info"}
-                                    label="Encabezado de hoja de servicio"
+                                    label="Artículo parte 2"
                                     variant="outlined"
-                                    value={formValues.encabezado_hservicio}
+                                    value={formValues.articulo2}
+                                    onChange={handleInputChange} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    disabled={isVer}
+                                    id="articulo3-input"
+                                    sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
+                                    type="text"
+                                    name="articulo3"
+                                    color={"info"}
+                                    label="Artículo parte 3"
+                                    variant="outlined"
+                                    value={formValues.articulo3}
+                                    onChange={handleInputChange} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    disabled={isVer}
+                                    id="articulo4-input"
+                                    sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
+                                    type="text"
+                                    name="articulo4"
+                                    color={"info"}
+                                    label="Artículo parte 4"
+                                    variant="outlined"
+                                    value={formValues.articulo4}
+                                    onChange={handleInputChange} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    disabled={isVer}
+                                    id="articulo5-input"
+                                    sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
+                                    type="text"
+                                    name="articulo5"
+                                    color={"info"}
+                                    label="Artículo parte 5"
+                                    variant="outlined"
+                                    value={formValues.articulo5}
+                                    onChange={handleInputChange} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    disabled={isVer}
+                                    id="articulo6-input"
+                                    sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
+                                    type="text"
+                                    name="articulo6"
+                                    color={"info"}
+                                    label="Artículo parte 6"
+                                    variant="outlined"
+                                    value={formValues.articulo6}
+                                    onChange={handleInputChange} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    disabled={isVer}
+                                    id="articulo7-input"
+                                    sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
+                                    type="text"
+                                    name="articulo7"
+                                    color={"info"}
+                                    label="Artículo parte 7"
+                                    variant="outlined"
+                                    value={formValues.articulo7}
                                     onChange={handleInputChange} />
                             </Grid>
                             <Grid item xs={6}>
@@ -121,27 +186,27 @@ export const FormConfigReportes = (width) => {
                                     ? (
                                         <TextField
                                             disabled
-                                            id="logo1-input"
+                                            id="logoc4-input"
                                             sx={{ border: 'none', ml: 1, mb: 1, mr: 1, mt: 2, width: 284}}
                                             type="text"
-                                            name="logo1"
+                                            name="logoc4"
                                             color={"info"}
-                                            label="Logo 1"
+                                            label="Logo C4"
                                             variant="outlined"
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
                                             onChange={handleInputChange} 
-                                            value={formValues.logo1}
+                                            value={formValues.logoc4}
                                         />
                                     ) : ( 
                                         <Box sx={{ border: '1px solid', width: 280, borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 1, mb: 1, mt: 2, pl:1 }}>
                                             <TextField
-                                                id="logo1-input"
+                                                id="logoc4-input"
                                                 type="file"
-                                                name="logo1"
+                                                name="logoc4"
                                                 color={"info"}
-                                                label="Logo 1"
+                                                label="Logo C4"
                                                 variant="standard"
                                                 InputLabelProps={{
                                                     shrink: true,
@@ -153,7 +218,7 @@ export const FormConfigReportes = (width) => {
                                             /> 
                                             <TextField 
                                                 disabled
-                                                id='logo1a-input'
+                                                id='logoc4a-input'
                                                 type="text"
                                                 variant='standard'
                                                 InputLabelProps={{
@@ -162,7 +227,7 @@ export const FormConfigReportes = (width) => {
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
-                                                value={formValues.logo1}
+                                                value={formValues.logoc4}
                                             />
                                         </Box>
                                     )
@@ -173,27 +238,27 @@ export const FormConfigReportes = (width) => {
                                     ? (
                                         <TextField
                                             disabled
-                                            id="logo2-input"
+                                            id="logo_ssypc-input"
                                             sx={{ border: 'none', ml: 1, mb: 1, mr: 1, mt: 2, width: 284}}
                                             type="text"
-                                            name="logo2"
+                                            name="logo_ssypc"
                                             color={"info"}
-                                            label="Logo 2"
+                                            label="Logo SSYPC"
                                             variant="outlined"
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
                                             onChange={handleInputChange} 
-                                            value={ formValues.logo2 }
+                                            value={ formValues.logo_ssypc }
                                         />
                                     ):(
                                         <Box sx={{ border: '1px solid', width: 280, borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 1, mb: 1, mt: 2, pl:1 }}>
                                             <TextField
-                                                id="logo2-input"
+                                                id="logo_ssypc-input"
                                                 type="file"
-                                                name="logo2"
+                                                name="logo_ssypc"
                                                 color={"info"}
-                                                label="Logo 2"
+                                                label="Logo SSYPC"
                                                 variant="standard"
                                                 InputLabelProps={{
                                                     shrink: true,
@@ -205,7 +270,7 @@ export const FormConfigReportes = (width) => {
                                             />
                                             <TextField 
                                                 disabled
-                                                id='logo2a-input'
+                                                id='logo_ssypca-input'
                                                 type="text"
                                                 variant='standard'
                                                 InputLabelProps={{
@@ -214,80 +279,16 @@ export const FormConfigReportes = (width) => {
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
-                                                value={formValues.logo2}
+                                                value={formValues.logo_ssypc}
                                             />
                                         </Box>
                                     )
                                 }
                             </Grid>
-                            <Grid item xs={6}>
-                                <TextField
-                                    disabled={isVer}
-                                    multiline
-                                    maxRows={5}
-                                    minRows={5}
-                                    id="articulo1-input"
-                                    sx={{ 
-                                        border: 'none', 
-                                        mb: 1, 
-                                        mt: 2, 
-                                        width: 300,
-                                        pl:1, pr:1
-                                    }}
-                                    type="text"
-                                    name="articulo1"
-                                    color={"info"}
-                                    label="Artículo 1"
-                                    variant="outlined"
-                                    value={formValues.articulo1}
-                                    onChange={handleInputChange} />
-                            </Grid>
+                            
                         {/* </Grid>
                         <Grid container alignItems="flex-end" justify="center" > */}
-                            <Grid item xs={6}>
-                                <TextField
-                                    disabled={isVer}
-                                    multiline
-                                    maxRows={5}
-                                    minRows={5}
-                                    id="articulo2-input"
-                                    sx={{ 
-                                        border: 'none', 
-                                        mb: 1, 
-                                        mt: 2, 
-                                        width: 300,
-                                        pl:1, pr:1
-                                    }}
-                                    type="text"
-                                    name="articulo2"
-                                    color={"info"}
-                                    label="Artículo 2"
-                                    variant="outlined"
-                                    value={formValues.articulo2}
-                                    onChange={handleInputChange} />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <TextField
-                                    disabled={isVer}
-                                    multiline
-                                    maxRows={5}
-                                    minRows={5}
-                                    id="articulo3-input"
-                                    sx={{ 
-                                        border: 'none', 
-                                        mb: 1, 
-                                        mt: 2, 
-                                        width: 300,
-                                        pl:1, pr:1
-                                    }}
-                                    type="text"
-                                    name="articulo3"
-                                    color={"info"}
-                                    label="Artículo 3"
-                                    variant="outlined"
-                                    value={formValues.articulo3}
-                                    onChange={handleInputChange} />
-                            </Grid>
+
                             <Grid item xs={6}>
                                 <TextField
                                     disabled={isVer}
@@ -320,44 +321,14 @@ export const FormConfigReportes = (width) => {
                                 <TextField
                                     disabled={isVer}
                                     size='normal'
-                                    id="pie_carta-input"
+                                    id="ccp_carta-input"
                                     sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                     type="text"
-                                    name="pie_carta"
+                                    name="ccp_carta"
                                     color={"info"}
-                                    label="Pie de Carta"
+                                    label="Ccp de Carta"
                                     variant="outlined"
-                                    value={formValues.pie_carta}
-                                    onChange={handleInputChange} />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <TextField
-                                    disabled={isVer}
-                                    size='normal'
-                                    id="pie_hservicio-input"
-                                    sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
-                                    type="text"
-                                    name="pie_hservicio"
-                                    color={"info"}
-                                    label="Pie Hoja de Servicio"
-                                    variant="outlined"
-                                    value={formValues.pie_hservicio}
-                                    onChange={handleInputChange} />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <TextField
-                                    disabled={isVer}
-                                    size='normal'
-                                    id="fecha_creacion-input"
-                                    sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
-                                    type="date"
-                                    name="fecha_creacion"
-                                    color={"info"}
-                                    label="Fecha de Creación"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    value={formValues.fecha_creacion}
+                                    value={formValues.ccp_carta}
                                     onChange={handleInputChange} />
                             </Grid>
                             <Grid item xs={6}>

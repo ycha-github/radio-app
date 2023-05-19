@@ -3,6 +3,9 @@ import { FormHojaServicio } from '../components/formUtilidades/FormHojaServicio'
 import { RadioLayout } from '../layout/RadioLayout';
 import { Accesorios, Asignaciones, ConfigReportes, Corporaciones, HojaServicios, Marcas, PasswordUpdate,  Puestos, Radios, RecursoCompras, Roles, Servicios, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
 import { FormAsignaciones } from '../components/formUtilidades/FormAsignaciones';
+import { CrearPdf } from '../components/formUtilidades/CrearPdf';
+import { PDFViewer } from '@react-pdf/renderer';
+
 
 export const RadioPage = () => {
   return (
@@ -30,6 +33,7 @@ export const RadioPage = () => {
           <Route path="/" element={ <Asignaciones /> }/>
           <Route path="asignaciones" element={ <FormAsignaciones/> }/>
           <Route path="hoja-servicio" element={ <HojaServicios /> }/>
+          <Route path="mostrar-pdf" element={ <PDFViewer style={{width:"100%", height:"87vh"}}><CrearPdf/></PDFViewer> }/>
           {/* <Route path="hoja-serviciof" element={ <FormHojaServicio /> }/> */}
           <Route path="config-reportes" element={ <ConfigReportes /> }/>
 
