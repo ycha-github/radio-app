@@ -24,7 +24,6 @@ export const FormAccesorios = () => {
         }).catch(error=>{
             console.log(error);
         });
-        
     }
     
     useEffect(() => {
