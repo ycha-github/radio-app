@@ -9,26 +9,35 @@ import axios from 'axios';
 export const FormConfigReportes = (width) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [usuariosCorporacion, setUsuariosCorporacion] = useState([]);
+    const [usuariosRevisores, setUsuariosRevisores] = useState([]);
+    const [usuariosResponsables, setUsuariosResponsables] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [inputValue2, setInputValue2] = useState('');
 
-    const selectUsuariosCorporacion = async() => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/corporaciones/${1}`).
+    const selectUsuariosRevisores = async() => {
+        await axios.get(`http://localhost:8000/api/v0/usuarios/revisores/${1}`).
         then((response)=>{
-            setUsuariosCorporacion(response.data);
+            setUsuariosRevisores(response.data);
+            // console.log(response.data);
+        }).catch(error=>{
+            console.log(error);
+        });
+    }
+
+    const selectUsuariosResposables = async() => {
+        await axios.get(`http://localhost:8000/api/v0/responsables/`).
+        then((response)=>{
+            setUsuariosResponsables(response.data);
             // console.log(response.data);
         }).catch(error=>{
             console.log(error);
         });
     }
     useEffect(() => {
-        selectUsuariosCorporacion();
+        selectUsuariosRevisores();
+        selectUsuariosResposables();
     }, [])
 
-    const [formValues2, setFormValues2] = useState({
-        fk_responsable_entrega:'',
-    });
     const [formValues, setFormValues] = useState({
         encabezado_carta:'',
         articulo1:'',
@@ -65,6 +74,8 @@ export const FormConfigReportes = (width) => {
             [target.name]: target.value,
         });
     };
+    console.log(formValues)
+    
 
     const onSubmit = async (event) => {
         //console.log(event)
@@ -323,17 +334,20 @@ export const FormConfigReportes = (width) => {
                                                 ['apellido_pat']: newFormValues.apellido_pat,
                                                 ['apellido_mat']: newFormValues.apellido_mat,
                                             });
+                                            console.log(newFormValues)
                                         }}
                                         inputValue={inputValue}
                                         onInputChange={(event, newInputValue) => {
                                             setInputValue(newInputValue);
                                         }}
-                                        options={usuariosCorporacion}
-                                        getOptionLabel={(options) => options.nombre +" "+ options.apellido_pat +" "+ options.apellido_mat || ""}
+                                        options={usuariosRevisores}
+
+                                        getOptionLabel={(options) => options.nombre_completo || ""}
                                         //isOptionEqualToValue={(option, value) =>
                                     //    option.nombre === value.nombre
                                     //}
-                                        renderInput={(params) => <TextField  {...params} variant="outlined" label="Revisor" />}
+                                        renderInput={(params) => <TextField  {...params} variant="outlined" label="Revisor" /> }
+                                        
                                     />
                                 </Grid> 
                             ) : (
@@ -348,13 +362,13 @@ export const FormConfigReportes = (width) => {
                                                 ['fk_revisor']: newFormValues.idusuarios,
                                             }); console.log(newFormValues)
                                         }}
-                                        options={usuariosCorporacion}
+                                        options={usuariosRevisores}
                                         getOptionLabel={(options) => options.nombre +" "+ options.apellido_pat +" "+ options.apellido_mat || ""}
                                         renderInput={(params) => <TextField  {...params} variant="outlined" label="Revisor" />}
                                     />
                                 </Grid>
                             ) }  
-                             {/* { isActualizar ? (
+                             { isActualizar ? (
                                 <Grid item xs={6}>
                                     <Autocomplete
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
@@ -362,21 +376,21 @@ export const FormConfigReportes = (width) => {
                                         name="fk_responsable_entrega"
                                         value={formValues}
                                         onChange={(event, newFormValues2) => {
-                                            console.log(formValues, newFormValues2)
+                                            console.log( newFormValues2)
                                             setFormValues({
                                                 ...formValues,
-                                                ['fk_responsable_entrega']: newFormValues2.idusuarios,
-                                                ['nombre']: newFormValues2.nombre,
-                                                ['apellido_pat']: newFormValues2.apellido_pat,
-                                                ['apellido_mat']: newFormValues2.apellido_mat,
-                                            });
+                                                ['fk_responsable_entrega']: newFormValues2.idResponsable,
+                                                ['nombreResponsable']: newFormValues2.nombreResponsable,
+                                                ['apellido_patResponsable']: newFormValues2.apellido_patResponsable,
+                                                ['apellido_matResponsable']: newFormValues2.apellido_matResponsable,
+                                            }); console.log(usuariosResponsables)
                                         }}
-                                        options={usuariosCorporacion}
+                                        options={usuariosResponsables}
                                         inputValue={inputValue2}
                                         onInputChange={(event, newInputValue2) => {
                                             setInputValue2(newInputValue2);
                                         }}
-                                        getOptionLabel={(options) => options.nombre +" "+ options.apellido_pat +" "+ options.apellido_mat || ""}
+                                        getOptionLabel={(options) => options.nombre_completoResponsable || ""}
                                         //isOptionEqualToValue={(option, value) =>
                                     //    option.nombre === value.nombre
                                     //}
@@ -392,15 +406,15 @@ export const FormConfigReportes = (width) => {
                                         onChange={(event, newFormValues2) => {
                                             setFormValues({
                                                 ...formValues,
-                                                ['fk_responsable_entrega']: newFormValues2.idusuarios,
+                                                ['fk_responsable_entrega']: newFormValues2.idResponsable,
                                             }); console.log(newFormValues2)
                                         }}
-                                        options={usuariosCorporacion}
-                                        getOptionLabel={(options) => options.nombre +" "+ options.apellido_pat +" "+ options.apellido_mat || "" }
+                                        options={usuariosResponsables}
+                                        getOptionLabel={(options) => options.nombreResponsable +" "+ options.apellido_patResponsable +" "+ options.apellido_matResponsable || ""}
                                         renderInput={(params) => <TextField  {...params} variant="outlined" label="Responsable de Entrega" />}
                                     />
                                 </Grid>
-                            ) }   */}
+                            ) }  
                             <Grid item xs={6}>
                                 <TextField
                                     disabled={isVer}
