@@ -89,9 +89,9 @@ const colorDone=()=>{
     OpenModal();
     mostrarActualizar();
   }
-  const mostrarPdf = ( ) =>  {
-    navigate('../mostrar-pdf');
-    //return(<CrearPdf/>);
+  const mostrarPdf = ( event) =>  {
+    //navigate('../mostrar-pdf');
+    return(<CrearPdf/>);
     
     //OpenModal();
     //mostrarActualizar();
