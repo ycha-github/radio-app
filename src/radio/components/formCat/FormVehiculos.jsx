@@ -4,7 +4,6 @@ import { ModalRadio } from '../ModalRadio';
 import { useVehiculosStore } from '../../../hooks/hooksCatalogo/useVehiculosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
-import { Box } from '@mui/system';
 
 export const FormVehiculos = () => {
 
@@ -83,12 +82,6 @@ export const FormVehiculos = () => {
         CloseModal();
         setFormSubmitted(false);
     };
-
-    const eliminarAtributo = () => {
-        const valor=document.getElementById('marcas_idmarcas-input');
-        valor.removeAttribute('value'); 
-    }
- 
 
     return (
         <>

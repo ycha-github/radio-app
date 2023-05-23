@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Close, Done, Edit } from '@mui/icons-material';
-import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useVehiculosStore } from '../../../hooks/hooksCatalogo/useVehiculosStore';
 import { FormVehiculos } from '../../components/formCat/FormVehiculos';
@@ -82,6 +82,7 @@ export const Vehiculos=()=> {
         <GridActionsCellItem
         icon={<Edit />}
         label="Editar"
+        color='warning'
         onClick={cambiar}
       />,
       

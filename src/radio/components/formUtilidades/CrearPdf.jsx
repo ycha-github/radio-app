@@ -19,13 +19,13 @@ const styles = StyleSheet.create({
 
 // Create Document Component
 export const CrearPdf = () => {
-  //const { activeEvent } = useAsignacionesStore();
+  const { activeEvent } = useAsignacionesStore();
 
  return (
   <Document>
-    <Page size="A4" style={styles.page}>
+    <Page size="letter" style={styles.page}>
       <View style={styles.section}>
-        <Text>Carta Responsiva</Text>
+        <Text >Carta Responsiva</Text>
       </View>
       <View style={styles.section}>
         <Text>Section #2</Text>

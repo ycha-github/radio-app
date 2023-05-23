@@ -1,13 +1,42 @@
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Autocomplete, Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { ModalRadio } from '../ModalRadio';
 import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
 import { useModalHook } from '../../../hooks/useModalHook';
+import axios from 'axios';
 
 
 export const FormConfigReportes = (width) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [usuariosRevisores, setUsuariosRevisores] = useState([]);
+    const [usuariosResponsables, setUsuariosResponsables] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+    const [inputValue2, setInputValue2] = useState('');
+
+    const selectUsuariosRevisores = async() => {
+        await axios.get(`http://localhost:8000/api/v0/usuarios/revisores/${1}`).
+        then((response)=>{
+            setUsuariosRevisores(response.data);
+            // console.log(response.data);
+        }).catch(error=>{
+            console.log(error);
+        });
+    }
+
+    const selectUsuariosResposables = async() => {
+        await axios.get(`http://localhost:8000/api/v0/responsables/`).
+        then((response)=>{
+            setUsuariosResponsables(response.data);
+            // console.log(response.data);
+        }).catch(error=>{
+            console.log(error);
+        });
+    }
+    useEffect(() => {
+        selectUsuariosRevisores();
+        selectUsuariosResposables();
+    }, [])
 
     const [formValues, setFormValues] = useState({
         encabezado_carta:'',
@@ -21,7 +50,7 @@ export const FormConfigReportes = (width) => {
         logoc4:'',
         logo_ssypc:'',
         fk_revisor:'',
-        fk_responsable_entrega:'',
+        fk_responsable_entrega: '',
         ccp_carta:'',
         fecha_inicial:'',
         fecha_final:'',
@@ -45,6 +74,9 @@ export const FormConfigReportes = (width) => {
             [target.name]: target.value,
         });
     };
+    console.log(formValues)
+    //console.log( usuariosRevisores)
+    console.log( usuariosResponsables)
 
     const onSubmit = async (event) => {
         //console.log(event)
@@ -288,35 +320,103 @@ export const FormConfigReportes = (width) => {
                             
                         {/* </Grid>
                         <Grid container alignItems="flex-end" justify="center" > */}
+                             { isActualizar ? (
+                                <Grid item xs={6}>
+                                    <Autocomplete
+                                        sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
+                                        id="fk_revisor-input"
+                                        name="fk_revisor"
+                                        value={formValues}
+                                        onChange={(event, newFormValues) => {
+                                            setFormValues({
+                                                ...formValues,
+                                                ['fk_revisor']: newFormValues.idusuarios,
+                                                ['nombre_revisor']: newFormValues.nombre_completo,
+                                                //['nombre']: newFormValues.nombre,
+                                                //['apellido_pat']: newFormValues.apellido_pat,
+                                                //['apellido_mat']: newFormValues.apellido_mat,
+                                            });
+                                            
+                                        }}
+                                        inputValue={inputValue}
+                                        onInputChange={(event, newInputValue) => {
+                                            setInputValue(newInputValue);
+                                        }}
+                                        options={usuariosRevisores}
 
-                            <Grid item xs={6}>
-                                <TextField
-                                    disabled={isVer}
-                                    size='normal'
-                                    id="revisor-input"
-                                    sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
-                                    type="text"
-                                    name="revisor"
-                                    color={"info"}
-                                    label="Revisor"
-                                    variant="outlined"
-                                    value={formValues.revisor}
-                                    onChange={handleInputChange} />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <TextField
-                                    disabled={isVer}
-                                    size='normal'
-                                    id="responsable_entrega-input"
-                                    sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
-                                    type="text"
-                                    name="responsable_entrega"
-                                    color={"info"}
-                                    label="Responsable Entrega"
-                                    variant="outlined"
-                                    value={formValues.responsable_entrega}
-                                    onChange={handleInputChange} />
-                            </Grid>
+                                        getOptionLabel={(options) => options.nombre_completo || ""}
+                                        //isOptionEqualToValue={(option, value) =>
+                                    //    option.nombre === value.nombre
+                                    //}
+                                        renderInput={(params) => <TextField  {...params} variant="outlined" label="Revisor" /> }
+                                        
+                                    />
+                                </Grid> 
+                            ) : (
+                                <Grid item xs={6}>
+                                    <Autocomplete
+                                        sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
+                                        id="fk_revisor-input"
+                                        name="fk_revisor"
+                                        onChange={(event, newFormValues) => {
+                                            setFormValues({
+                                                ...formValues,
+                                                ['fk_revisor']: newFormValues.idusuarios,
+                                            }); console.log(newFormValues)
+                                        }}
+                                        options={usuariosRevisores}
+                                        getOptionLabel={(options) => options.nombre +" "+ options.apellido_pat +" "+ options.apellido_mat || ""}
+                                        renderInput={(params) => <TextField  {...params} variant="outlined" label="Revisor" />}
+                                    />
+                                </Grid>
+                            ) }  
+                             { isActualizar ? (
+                                <Grid item xs={6}>
+                                    <Autocomplete
+                                        sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
+                                        name="fk_responsable_entrega"
+                                        value={formValues}
+                                        onChange={(event, newFormValues2) => {
+                                            
+                                            setFormValues({
+                                                ...formValues,
+                                                ['fk_responsable_entrega']: newFormValues2.idResponsable,
+                                                ['nombre_respons']: newFormValues2.nombreResponsable,
+                                               //['nombreResponsable']: newFormValues2.nombreResponsable,
+                                               //['apellido_patResponsable']: newFormValues2.apellido_patResponsable,
+                                               //['apellido_matResponsable']: newFormValues2.apellido_matResponsable,
+                                            }); 
+                                        }}
+                                        options={usuariosResponsables}
+                                        inputValue={inputValue2}
+                                        onInputChange={(event, newInputValue2) => {
+                                            setInputValue2(newInputValue2);
+                                        }}
+                                        getOptionLabel={(usuariosResponsables) => usuariosResponsables.nombreResponsable || ""}
+                                        //isOptionEqualToValue={(option, value) =>
+                                    //    option.nombre === value.nombre
+                                    //}
+                                        renderInput={(params) => <TextField {...params} variant="outlined" label="Responsable de Entrega" />}
+                                    />
+                                </Grid> 
+                            ) : (
+                                <Grid item xs={6}>
+                                    <Autocomplete
+                                        sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
+                                        id="fk_responsable_entrega-input"
+                                        name="fk_responsable_entrega"
+                                        onChange={(event, newFormValues2) => {
+                                            setFormValues({
+                                                ...formValues,
+                                                ['fk_responsable_entrega']: newFormValues2.idResponsable,
+                                            }); console.log(newFormValues2)
+                                        }}
+                                        options={usuariosResponsables}
+                                        getOptionLabel={(options) => options.nombreResponsable +" "+ options.apellido_patResponsable +" "+ options.apellido_matResponsable || ""}
+                                        renderInput={(params) => <TextField  {...params} variant="outlined" label="Responsable de Entrega" />}
+                                    />
+                                </Grid>
+                            ) }  
                             <Grid item xs={6}>
                                 <TextField
                                     disabled={isVer}
@@ -383,11 +483,6 @@ export const FormConfigReportes = (width) => {
                             </Grid>
                         </Grid>
                         <Grid container justifyContent={'center'} >
-                        {/* { !isVer ? (
-                            <Button variant="contained" color="info" type="submit" onClick={ btn } sx={{ width: 628, pl:1, pr:1}}>
-                                {isActualizar ? 'Actualizar' : 'Guardar'}
-                            </Button> ) : <Close onClick={ cerrar} />
-                        } */}
                         <Button variant="contained" color="info" type="submit" onClick={ btn } sx={{ width: 628, pl:1, pr:1}}>
                                 { !isVer ? (isActualizar ? 'Actualizar' : 'Guardar') : 'Cerrar' }
                             </Button> 

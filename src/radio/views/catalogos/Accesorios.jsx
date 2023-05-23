@@ -1,10 +1,10 @@
-import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
 import  {useState , useEffect} from "react";
+import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, Hidden } from '@mui/material';
-import { FormAccesorios } from '../../components/formCat/FormAccesorios';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosStore';
+import { FormAccesorios } from '../../components/formCat/FormAccesorios';
 
 const colorClose=()=>{
   return <Close color='error'/>
@@ -24,7 +24,9 @@ const colorDone=()=>{
   const newRow =()=>{
     setActiveEvent({
       accesorio:'',
-      num_serie: '',
+      serie_bateria: '',
+      serie_cargador: '',
+      serie_gps: '',
       marcas_idMarcas:'',
       inventario_interno:'',
       inventario_segpub:'',
@@ -74,6 +76,7 @@ const columns =  [
   { field: 'serie_cargador', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie Cargador',flex: 1 , minWidth: 90 },
   { field: 'serie_gps', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie GPS',flex: 1 , minWidth: 90 },
   { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
+  { field: 'nombreModelos',headerClassName: "super", headerName: 'Modelo', flex: 1, minWidth: 90 },
   { field: 'inventario_interno',headerClassName: "super", headerName: 'Inventario Interno', flex: 1, minWidth: 90 },
   { field: 'inventario_segpub',headerClassName: "super",headerName: 'Inv. Seg. Pub.',flex: 1, minWidth: 90 },
   { field: 'contrato_compra',headerClassName: "super",headerName: 'Contrato',flex: 1, minWidth: 90 },
@@ -91,8 +94,9 @@ const columns =  [
     getActions: (evento) => [
       <GridActionsCellItem
         icon={<Edit />}
-        label="Delete"
+        label="Editar"
         onClick={cambiar}
+        color="warning"
       />,
       <IconButton
       color="inherit"
