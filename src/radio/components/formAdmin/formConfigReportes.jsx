@@ -38,8 +38,6 @@ export const FormConfigReportes = (width) => {
         selectUsuariosResposables();
     }, [])
 
-    console.log(usuariosResponsables)
-
     const [formValues, setFormValues] = useState({
         encabezado_carta:'',
         articulo1:'',
@@ -76,7 +74,6 @@ export const FormConfigReportes = (width) => {
             [target.name]: target.value,
         });
     };
-    console.log(formValues)
     
 
     const onSubmit = async (event) => {
@@ -324,6 +321,7 @@ export const FormConfigReportes = (width) => {
                              { isActualizar ? (
                                 <Grid item xs={6}>
                                     <Autocomplete
+                                        disabled={isVer}
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         id="fk_revisor-input"
                                         name="fk_revisor"
@@ -374,6 +372,7 @@ export const FormConfigReportes = (width) => {
                              { isActualizar ? (
                                 <Grid item xs={6}>
                                     <Autocomplete
+                                        disabled={isVer}
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         id="fk_responsable_entrega-input"
                                         name="fk_responsable_entrega"
