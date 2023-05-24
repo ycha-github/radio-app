@@ -6,7 +6,7 @@ import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
 
 
-export const FormConfigReportes = (width) => {
+export const FormConfigReportes = (customStyles) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [usuariosRevisores, setUsuariosRevisores] = useState([]);
@@ -102,7 +102,8 @@ export const FormConfigReportes = (width) => {
 
     return (
         <>
-            <ModalRadio width={width} >
+            <ModalRadio >
+                <Box sx={{...customStyles, maxWidth: '670px' }}>
                 <Typography variant='h5'> { isActualizar ? 'Actualizar configuración Cartas de Asignación' : 'Nueva configuración Cartas de Asignación' } </Typography>
                 <form onSubmit={onSubmit} >
                     {/* <Stack  noValidate spacing={3}> */}
@@ -490,6 +491,7 @@ export const FormConfigReportes = (width) => {
                         </Grid>
                     {/* </Stack> */}
                 </form>
+                </Box>
             </ModalRadio>
         </>
     )

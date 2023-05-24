@@ -75,7 +75,7 @@ tbody tr td {
 .modal-fondo {
     background-color: rgba(0, 0, 0, 0.5);
     bottom: 0;
-    left: 0;
+    left: 10%;
     right: 0;
     top: 0;
     position: fixed;
@@ -95,9 +95,13 @@ tbody tr td {
     color: rgb(51, 51, 51);
     display: inline;
     max-height: 750px;
-    max-width: 670px; 
     outline: none;
     padding: 20px;
+    /* left: 10%; */
+}
+
+.modal1 {
+    width: 1200px;
 }
 
 

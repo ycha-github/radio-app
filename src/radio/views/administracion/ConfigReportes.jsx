@@ -141,7 +141,7 @@ const columns = [
         }
       }}>
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-        <FormConfigReportes/>
+        <FormConfigReportes />
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={"info"} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
                     Nuevo
