@@ -9,7 +9,10 @@ import { FormAsignaciones } from '../../components/formUtilidades/FormAsignacion
 import { FormAsignacionGeneral } from '../../components/formUtilidades/FormAsignacionGeneral';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { CrearPdf } from '../../components/formUtilidades/CrearPdf';
+import { CrearPdf } from './CrearPdf';
+import { PDFViewer } from '@react-pdf/renderer';
+import { Provider } from 'react-redux';
+import { store } from '../../../store';
 
 const colorClose=()=>{
   return <Close color='error'/>
@@ -21,7 +24,9 @@ const colorDone=()=>{
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useAsignacionesStore();
   const {OpenModal, mostrarActualizar}=useModalHook();
   const [state, setState] =useState([]);
- 
+ const [abrirPdf, setAbrirPdf]= useState(false);
+ const [imprimir, setImprimir]= useState({});
+
  
   const [tableAccesorio, setTableAccesorio] = useState([])
   const navigate = useNavigate();
@@ -54,8 +59,10 @@ const colorDone=()=>{
        updatedAt: "",
     })
     OpenModal();
+    setAbrirPdf(false);
     //navigate('../asignaciones');
   }
+  
   
    
     //useEffect(() => {
@@ -86,22 +93,44 @@ const colorDone=()=>{
 
   const cambiar = ( ) =>  {
     //navigate('../asignaciones');
+    setAbrirPdf(false)
     OpenModal();
     mostrarActualizar();
   }
-  const mostrarPdf = ( event) =>  {
-    //navigate('../mostrar-pdf');
-    return(<CrearPdf/>);
-    
-    //OpenModal();
-    //mostrarActualizar();
-  }
+  
+  //  
+  //  abrirPdf===true?
+  //  <CrearPdf/>:
+  //  "cargando"
+//
+  //  //OpenModal();
+  //  //mostrarActualizar();
+  //}
+//let imprimir={};
+  //let imprimir;
+  //if (abrirPdf===true){
+  //  imprimir= <CrearPdf/>;
+  //  //imprimir= "si funciona"
+  //  //console.log(imprimir)
+  //} else{
+  //  imprimir= "dfsdf"
+  //  console.log(imprimir)
+  //}
 
+  const mostrarPdf = ( event) =>  {
+    setAbrirPdf(true);
+    OpenModal();
+    //navigate('../mostrar-pdf');
+    //setAbrirPdf(true);
+    //return (imprimir)
+}
   const onSelect = ( event ) =>  {
     console.log(event.row)
     setActiveEvent( event.row );
+    setImprimir(event.row)
+    
   }
-
+console.log(imprimir);
   const theme = createTheme(
     {
       palette: {
@@ -133,14 +162,12 @@ const columns =  [
         color="secondary"
         label="Delete"
         onClick={cambiar}
-        
       />,
       <GridActionsCellItem
         icon={<VisibilityOutlined/>}
         color="secondary"
         label="Delete"
         onClick={mostrarPdf}
-        
       />,
       <IconButton
       color="inherit"
@@ -169,7 +196,8 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-      <FormAsignaciones   />
+      {abrirPdf ===true?<CrearPdf datos={imprimir}/>: ""}
+      {abrirPdf=== false?<FormAsignaciones   />:""}
       {/* <FormAsignacionGeneral/> */}
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>

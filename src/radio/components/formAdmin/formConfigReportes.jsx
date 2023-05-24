@@ -25,7 +25,7 @@ export const FormConfigReportes = (width) => {
     }
 
     const selectUsuariosResposables = async() => {
-        await axios.get(`http://localhost:8000/api/v0/responsables/`).
+        await axios.get(`http://localhost:8000/api/v0/usuarios/responsables/${1}`).
         then((response)=>{
             setUsuariosResponsables(response.data);
             // console.log(response.data);
@@ -37,6 +37,8 @@ export const FormConfigReportes = (width) => {
         selectUsuariosRevisores();
         selectUsuariosResposables();
     }, [])
+
+    console.log(usuariosResponsables)
 
     const [formValues, setFormValues] = useState({
         encabezado_carta:'',
@@ -100,7 +102,7 @@ export const FormConfigReportes = (width) => {
       }
 
 
-    
+   
 
     return (
         <>
@@ -331,10 +333,10 @@ export const FormConfigReportes = (width) => {
                                             setFormValues({
                                                 ...formValues,
                                                 ['fk_revisor']: newFormValues.idusuarios,
-                                                ['nombre_revisor']: newFormValues.nombre_completo,
-                                                //['nombre']: newFormValues.nombre,
-                                                //['apellido_pat']: newFormValues.apellido_pat,
-                                                //['apellido_mat']: newFormValues.apellido_mat,
+                                                // ['nombre_revisor']: newFormValues.nombre_revisor,
+                                                ['nombre']: newFormValues.nombre,
+                                                ['apellido_pat']: newFormValues.apellido_pat,
+                                                ['apellido_mat']: newFormValues.apellido_mat,
                                             });
                                             
                                         }}
@@ -344,7 +346,7 @@ export const FormConfigReportes = (width) => {
                                         }}
                                         options={usuariosRevisores}
 
-                                        getOptionLabel={(options) => options.nombre_completo || ""}
+                                        getOptionLabel={(options) => options.nombre + " " + options.apellido_pat + " " + options.apellido_mat || ""}
                                         //isOptionEqualToValue={(option, value) =>
                                     //    option.nombre === value.nombre
                                     //}
@@ -380,11 +382,10 @@ export const FormConfigReportes = (width) => {
                                             
                                             setFormValues({
                                                 ...formValues,
-                                                ['fk_responsable_entrega']: newFormValues2.idResponsable,
-                                                ['nombre_respons']: newFormValues2.nombreResponsable,
-                                               //['nombreResponsable']: newFormValues2.nombreResponsable,
-                                               //['apellido_patResponsable']: newFormValues2.apellido_patResponsable,
-                                               //['apellido_matResponsable']: newFormValues2.apellido_matResponsable,
+                                                ['fk_responsable_entrega']: newFormValues2.idRes,
+                                                ['nombreRes']: newFormValues2.nombreRes,
+                                                ['appatRes']: newFormValues2.appatRes,
+                                                ['apmatRes']: newFormValues2.apmatRes,
                                             }); 
                                         }}
                                         options={usuariosResponsables}
@@ -392,7 +393,7 @@ export const FormConfigReportes = (width) => {
                                         onInputChange={(event, newInputValue2) => {
                                             setInputValue2(newInputValue2);
                                         }}
-                                        getOptionLabel={(usuariosResponsables) => usuariosResponsables.nombreResponsable || ""}
+                                        getOptionLabel={(options) => options.nombreRes + " " + options.appatRes + " " +  options.apmatRes || ""}
                                         //isOptionEqualToValue={(option, value) =>
                                     //    option.nombre === value.nombre
                                     //}
@@ -408,11 +409,12 @@ export const FormConfigReportes = (width) => {
                                         onChange={(event, newFormValues2) => {
                                             setFormValues({
                                                 ...formValues,
-                                                ['fk_responsable_entrega']: newFormValues2.idResponsable,
+                                                ['fk_responsable_entrega']: newFormValues2.idRes,
                                             }); console.log(newFormValues2)
                                         }}
                                         options={usuariosResponsables}
-                                        getOptionLabel={(options) => options.nombreResponsable +" "+ options.apellido_patResponsable +" "+ options.apellido_matResponsable || ""}
+                                        getOptionLabel={(options) => options.nombreRes + " " +  options.appatRes + " " + options.apmatRes || ""}
+                                        // getOptionLabel={(options) => options.nombreResponsable +" "+ options.apellido_patResponsable +" "+ options.apellido_matResponsable || ""}
                                         renderInput={(params) => <TextField  {...params} variant="outlined" label="Responsable de Entrega" />}
                                     />
                                 </Grid>
