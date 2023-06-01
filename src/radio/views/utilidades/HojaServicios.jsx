@@ -28,7 +28,8 @@ const colorDone=()=>{
 
   const newRow =()=>{
     setActiveEvent({
-        // fecha_servicio:'',
+        fecha_servicio:'',
+        usuarios_idusuarios:"",
         fk_usuario:'',
         // fk_idservicios:'',
         fk_idradios:'',
@@ -128,7 +129,7 @@ const columns =  [
   return (
     <>
     <h2 className='colorUti'>HOJA DE SERVICIO</h2>
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400 , width: '100%' }}>
     <div style={{ height: 'flex', width: '100%' }}>
     <div style={{ flexGrow: 1 }}>
       <Box
