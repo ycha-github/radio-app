@@ -21,13 +21,22 @@ export const useConfigReportesStore = () => {
       //creando
       const {data}= await radioApi.post('/configreportes', zonasEvent);
       dispatch(onAddNewEvent({...zonasEvent, idconfigReportes:data.idconfigReportes, user}));
-      window.location.reload(true);
+      //window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
     const {data}= await  radioApi.delete(`/configreportes/${zonasEvent}`);
     dispatch(onUpdateEvent({zonasEvent,user}));
     window.location.reload(true);
+    }
+
+    const subirImagen = async(zonasEvent)=>{
+      console.log(zonasEvent);
+      const {data}= await  radioApi.post(`/documentos`, zonasEvent);
+    }
+    const subirImagen2 = async(zonasEvent)=>{
+      console.log(zonasEvent);
+      const {data}= await  radioApi.post(`/documentos`, zonasEvent);
     }
 
     const startLoadingEvents= async ()=>{
@@ -50,5 +59,7 @@ export const useConfigReportesStore = () => {
     setActiveEvent,
     startSavingEvent,
     startLoadingEvents,
+    subirImagen,
+    subirImagen2,
   }
 }

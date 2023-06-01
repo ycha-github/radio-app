@@ -1,5 +1,5 @@
 import { Autocomplete, Box,Stack, Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
@@ -46,7 +46,8 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
         if (activeEvent !== null) {
             setFormValues({ ...activeEvent });
         }
-    }, [activeEvent])
+    }, [activeEvent]);
+
     useEffect(() => {
         accesoriosFiltrado
     }, [accesoriosFiltrado])

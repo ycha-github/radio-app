@@ -12,6 +12,7 @@ const customStyles = {
     marginRight: '-50%',
     transform: 'translate(0%, 0%)',
     maxWidth: '670px',
+    maxHeight: '500px',
   },
 };
 Modal.setAppElement('#root');

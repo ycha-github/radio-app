@@ -3,16 +3,19 @@ import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useUsuariosStore } from '../../../hooks/hooksCatalogo/useUsuariosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
+import radioApi from '../../../api/radioApi';
 
 export const FormUsuarios = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [puestoUsuario, setPuestoUsuario] = useState([]);
    const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useUsuariosStore();
     const [formValues, setFormValues] = useState({
         nombre:'',
       apellido_pat:'',
-      apellido_mat:'', 
+      apellido_mat:'',
+      fk_puesto:'',
       cuip:'',
       clave_elector:'',
       imagen_ine:'',
@@ -36,6 +39,14 @@ export const FormUsuarios = () => {
         });
     };
 
+    useEffect(() => {
+        radioApi.get(`/puestos`).
+              then((response) => {
+                setPuestoUsuario(response.data);
+              });
+          }, []);
+          console.log(puestoUsuario)
+    
     const onSubmit = async (event) => {
         //console.log(event)
         event.preventDefault();
@@ -93,6 +104,24 @@ export const FormUsuarios = () => {
                                 variant="outlined"
                                 value={formValues.apellido_mat}
                                 onChange={handleInputChange} />
+                        </Grid>
+                        <Grid item >
+                            <FormControl fullWidth sx={{ border: 'none', mt: 1, mb: 1, width: 400 }}>
+                                <InputLabel id="fk_puesto-input" color='warning'>Puesto</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="fk_puesto-input"
+                                    name="fk_puesto"
+                                    color='warning'
+                                    value={formValues.fk_puesto}
+                                    label="Puesto"
+                                    onChange={handleInputChange}>
+                                        {
+                                        puestoUsuario.map(elemento=>{
+                                          return <MenuItem key={elemento.idpuesto} value={elemento.idpuesto} >{elemento.nombre}</MenuItem> 
+                                        })}
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item>
                             <TextField

@@ -3,12 +3,20 @@ import { FormHojaServicio } from '../components/formUtilidades/FormHojaServicio'
 import { RadioLayout } from '../layout/RadioLayout';
 import { Accesorios, Asignaciones, ConfigReportes, Corporaciones, HojaServicios, Marcas, PasswordUpdate,  Puestos, Radios, RecursoCompras, Roles, Servicios, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
 import { FormAsignaciones } from '../components/formUtilidades/FormAsignaciones';
-import { CrearPdf } from '../components/formUtilidades/CrearPdf';
+import { CrearPdf } from '../views/utilidades/CrearPdf';
 import { PDFViewer } from '@react-pdf/renderer';
-
+import { useAsignacionesStore } from '../../hooks/hooksUtilidades/useAsignacionesStore';
+import { useState } from 'react';
 
 export const RadioPage = () => {
+
+  const { activeEvent } = useAsignacionesStore();
+//  const [valor,setValor]= useState(JSON.parse(localStorage.getItem('datos')))
+//  localStorage.setItem("datos", JSON.stringify(activeEvent));
+//const dat = JSON.parse(localStorage.getItem('datos'))
+//console.log(valor);
   return (
+    
     <RadioLayout>
 
       <Routes>
@@ -33,7 +41,7 @@ export const RadioPage = () => {
           <Route path="/" element={ <Asignaciones /> }/>
           <Route path="asignaciones" element={ <FormAsignaciones/> }/>
           <Route path="hoja-servicio" element={ <HojaServicios /> }/>
-          <Route path="mostrar-pdf" element={ <PDFViewer style={{width:"100%", height:"87vh"}}><CrearPdf/></PDFViewer> }/>
+          <Route path="mostrar-pdf" element={<CrearPdf datos= {activeEvent}/> }/>
           {/* <Route path="hoja-serviciof" element={ <FormHojaServicio /> }/> */}
           <Route path="config-reportes" element={ <ConfigReportes /> }/>
 

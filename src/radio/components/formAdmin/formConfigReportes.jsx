@@ -4,7 +4,8 @@ import { ModalRadio } from '../ModalRadio';
 import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
-
+import radioApi from '../../../api/radioApi';
+//import radioApi from "../../api/radioApi";
 
 export const FormConfigReportes = (customStyles) => {
 
@@ -13,9 +14,17 @@ export const FormConfigReportes = (customStyles) => {
     const [usuariosResponsables, setUsuariosResponsables] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [inputValue2, setInputValue2] = useState('');
-
+    const [archivo1, setArchivo1] = useState(
+    {
+        archivo:"",
+    });
+    const [archivo2, setArchivo2] = useState(
+    {
+        archivo:"",
+    });
+//console.log(archivo2);
     const selectUsuariosRevisores = async() => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/revisores/${1}`).
+        await radioApi.get(`/usuarios/revisores/${1}`).
         then((response)=>{
             setUsuariosRevisores(response.data);
             // console.log(response.data);
@@ -25,7 +34,7 @@ export const FormConfigReportes = (customStyles) => {
     }
 
     const selectUsuariosResposables = async() => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/responsables/${1}`).
+        await radioApi.get(`/usuarios/responsables/${1}`).
         then((response)=>{
             setUsuariosResponsables(response.data);
             // console.log(response.data);
@@ -60,7 +69,7 @@ export const FormConfigReportes = (customStyles) => {
     });
 
     const { CloseModal, isActualizar, mostrarGuardar, isVer } = useModalHook();
-    const { activeEvent, startSavingEvent } = useConfigReportesStore();
+    const { activeEvent, startSavingEvent, subirImagen,subirImagen2 } = useConfigReportesStore();
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -87,6 +96,13 @@ export const FormConfigReportes = (customStyles) => {
         await startSavingEvent(formValues);
         CloseModal();
         setFormSubmitted(false);
+        const formData = new FormData()
+        formData.append('archivo', archivo1.archivo)
+        subirImagen(formData);
+        const formData2 = new FormData()
+        formData2.append('archivo', archivo2.archivo)
+        subirImagen2(formData2);
+        
     };
 
     const btn =()=>{
@@ -97,6 +113,11 @@ export const FormConfigReportes = (customStyles) => {
         CloseModal();
       }
 
+      const subir=()=>{
+        handleInputChange();
+        subirImagen();
+
+      }
 
    
 
@@ -245,7 +266,18 @@ export const FormConfigReportes = (customStyles) => {
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
-                                                onChange={handleInputChange} 
+                                                onChange={({target})=>{
+                                                    console.log(target.files);
+                                                    setFormValues({
+                                                        ...formValues,
+                                                        ['logoc4']: target.value,
+                                                        
+                                                    });
+                                                    //subirImagen(event.target.files)
+                                                    setArchivo1({
+                                                        ...archivo1,
+                                                       ['archivo']: target.files[0]});
+                                                }} 
                                             /> 
                                             <TextField 
                                                 disabled
@@ -297,7 +329,18 @@ export const FormConfigReportes = (customStyles) => {
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
-                                                onChange={handleInputChange} 
+                                                onChange={({target})=>{
+                                                    console.log(target.files);
+                                                    setFormValues({
+                                                        ...formValues,
+                                                        ['logo_ssypc']: target.value,
+                                                        
+                                                    });
+                                                    //subirImagen(event.target.files)
+                                                    setArchivo2({
+                                                        ...archivo2,
+                                                       ['archivo']: target.files[0]});
+                                                }}
                                             />
                                             <TextField 
                                                 disabled
@@ -336,7 +379,7 @@ export const FormConfigReportes = (customStyles) => {
                                                 ['apellido_pat']: newFormValues.apellido_pat,
                                                 ['apellido_mat']: newFormValues.apellido_mat,
                                             });
-                                            console.log(newFormValues)
+                                            
                                         }}
                                         inputValue={inputValue}
                                         onInputChange={(event, newInputValue) => {
@@ -375,11 +418,10 @@ export const FormConfigReportes = (customStyles) => {
                                     <Autocomplete
                                         disabled={isVer}
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
-                                        id="fk_responsable_entrega-input"
                                         name="fk_responsable_entrega"
                                         value={formValues}
                                         onChange={(event, newFormValues2) => {
-                                            console.log( newFormValues2)
+                                            
                                             setFormValues({
                                                 ...formValues,
                                                 ['fk_responsable_entrega']: newFormValues2.idRes,
@@ -397,7 +439,7 @@ export const FormConfigReportes = (customStyles) => {
                                         //isOptionEqualToValue={(option, value) =>
                                     //    option.nombre === value.nombre
                                     //}
-                                        renderInput={(params) => <TextField  {...params} variant="outlined" label="Responsable de Entrega" />}
+                                        renderInput={(params) => <TextField {...params} variant="outlined" label="Responsable de Entrega" />}
                                     />
                                 </Grid> 
                             ) : (
