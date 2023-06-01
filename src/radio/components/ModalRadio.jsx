@@ -1,16 +1,18 @@
+import { Box } from '@mui/material';
 import Modal from 'react-modal';
 import { useModalHook } from '../../hooks/useModalHook';
 
 const customStyles = {
   content: {
     position: 'absolute',
-    top: '45%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
+    top: '0%',
+    left: '0%',
+    right: '0%',
+    bottom: '0%',
     marginRight: '-50%',
-    transform: 'translate(-25%, -50%)',
-
+    transform: 'translate(0%, 0%)',
+    maxWidth: '670px',
+    maxHeight: '500px',
   },
 };
 Modal.setAppElement('#root');
@@ -26,12 +28,14 @@ export const ModalRadio = ({ children }) => {
       <Modal
         isOpen={isModalOpen}
         onRequestClose={cambiar3}
-        style={customStyles}
+        // style={customStyles}
         className="modal"
         overlayClassName="modal-fondo"
         closeTimeoutMS={200}
       >
+        <Box sx={{customStyles}}>
         {children}
+        </Box>
       </Modal>
     </>
   )

@@ -77,7 +77,7 @@ const columns = [
       size="small"
       aria-label="delete"
       >
-        <Switch color='warning' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idzonasregiones)} />
+      <Switch color='warning' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idzonasregiones)} />
      </IconButton> 
     ],
   },
@@ -112,8 +112,8 @@ const columns = [
         autoHeight={true}
           rows={events}
           columns={columns}
-          pageSize={12}
-          rowsPerPageOptions={[12]}
+          pageSize={11}
+          rowsPerPageOptions={[11]}
           components={{
             BooleanCellFalseIcon:colorClose,
             BooleanCellTrueIcon:colorDone

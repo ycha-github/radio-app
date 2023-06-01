@@ -4,18 +4,27 @@ import { ModalRadio } from '../ModalRadio';
 import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
+import radioApi from '../../../api/radioApi';
+//import radioApi from "../../api/radioApi";
 
-
-export const FormConfigReportes = (width) => {
+export const FormConfigReportes = (customStyles) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [usuariosRevisores, setUsuariosRevisores] = useState([]);
     const [usuariosResponsables, setUsuariosResponsables] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [inputValue2, setInputValue2] = useState('');
-
+    const [archivo1, setArchivo1] = useState(
+    {
+        archivo:"",
+    });
+    const [archivo2, setArchivo2] = useState(
+    {
+        archivo:"",
+    });
+//console.log(archivo2);
     const selectUsuariosRevisores = async() => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/revisores/${1}`).
+        await radioApi.get(`/usuarios/revisores/${1}`).
         then((response)=>{
             setUsuariosRevisores(response.data);
             // console.log(response.data);
@@ -25,7 +34,7 @@ export const FormConfigReportes = (width) => {
     }
 
     const selectUsuariosResposables = async() => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/responsables/${1}`).
+        await radioApi.get(`/usuarios/responsables/${1}`).
         then((response)=>{
             setUsuariosResponsables(response.data);
             // console.log(response.data);
@@ -37,8 +46,6 @@ export const FormConfigReportes = (width) => {
         selectUsuariosRevisores();
         selectUsuariosResposables();
     }, [])
-
-    console.log(usuariosResponsables)
 
     const [formValues, setFormValues] = useState({
         encabezado_carta:'',
@@ -62,7 +69,7 @@ export const FormConfigReportes = (width) => {
     });
 
     const { CloseModal, isActualizar, mostrarGuardar, isVer } = useModalHook();
-    const { activeEvent, startSavingEvent } = useConfigReportesStore();
+    const { activeEvent, startSavingEvent, subirImagen,subirImagen2 } = useConfigReportesStore();
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -76,9 +83,7 @@ export const FormConfigReportes = (width) => {
             [target.name]: target.value,
         });
     };
-    console.log(formValues)
-    //console.log( usuariosRevisores)
-    console.log( usuariosResponsables)
+    
 
     const onSubmit = async (event) => {
         //console.log(event)
@@ -91,6 +96,13 @@ export const FormConfigReportes = (width) => {
         await startSavingEvent(formValues);
         CloseModal();
         setFormSubmitted(false);
+        const formData = new FormData()
+        formData.append('archivo', archivo1.archivo)
+        subirImagen(formData);
+        const formData2 = new FormData()
+        formData2.append('archivo', archivo2.archivo)
+        subirImagen2(formData2);
+        
     };
 
     const btn =()=>{
@@ -101,12 +113,18 @@ export const FormConfigReportes = (width) => {
         CloseModal();
       }
 
+      const subir=()=>{
+        handleInputChange();
+        subirImagen();
+
+      }
 
    
 
     return (
         <>
-            <ModalRadio width={width} >
+            <ModalRadio >
+                <Box sx={{...customStyles, maxWidth: '670px' }}>
                 <Typography variant='h5'> { isActualizar ? 'Actualizar configuración Cartas de Asignación' : 'Nueva configuración Cartas de Asignación' } </Typography>
                 <form onSubmit={onSubmit} >
                     {/* <Stack  noValidate spacing={3}> */}
@@ -248,7 +266,18 @@ export const FormConfigReportes = (width) => {
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
-                                                onChange={handleInputChange} 
+                                                onChange={({target})=>{
+                                                    console.log(target.files);
+                                                    setFormValues({
+                                                        ...formValues,
+                                                        ['logoc4']: target.value,
+                                                        
+                                                    });
+                                                    //subirImagen(event.target.files)
+                                                    setArchivo1({
+                                                        ...archivo1,
+                                                       ['archivo']: target.files[0]});
+                                                }} 
                                             /> 
                                             <TextField 
                                                 disabled
@@ -300,7 +329,18 @@ export const FormConfigReportes = (width) => {
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
-                                                onChange={handleInputChange} 
+                                                onChange={({target})=>{
+                                                    console.log(target.files);
+                                                    setFormValues({
+                                                        ...formValues,
+                                                        ['logo_ssypc']: target.value,
+                                                        
+                                                    });
+                                                    //subirImagen(event.target.files)
+                                                    setArchivo2({
+                                                        ...archivo2,
+                                                       ['archivo']: target.files[0]});
+                                                }}
                                             />
                                             <TextField 
                                                 disabled
@@ -325,6 +365,7 @@ export const FormConfigReportes = (width) => {
                              { isActualizar ? (
                                 <Grid item xs={6}>
                                     <Autocomplete
+                                        disabled={isVer}
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         id="fk_revisor-input"
                                         name="fk_revisor"
@@ -375,6 +416,7 @@ export const FormConfigReportes = (width) => {
                              { isActualizar ? (
                                 <Grid item xs={6}>
                                     <Autocomplete
+                                        disabled={isVer}
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         name="fk_responsable_entrega"
                                         value={formValues}
@@ -491,6 +533,7 @@ export const FormConfigReportes = (width) => {
                         </Grid>
                     {/* </Stack> */}
                 </form>
+                </Box>
             </ModalRadio>
         </>
     )

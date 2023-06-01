@@ -1,18 +1,15 @@
-
-import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
 import {useState , useEffect} from "react";
-import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
-import { AddCircleOutlineOutlined, Block, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
+import { DataGrid, esES, GridActionsCellItem, GridPagination, GridRow, GridToolbarExport } from '@mui/x-data-grid'; 
+import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, Toolbar, paginationClasses } from '@mui/material';
+import { AddCircleOutlineOutlined, Block, Close, Done, Edit, Javascript, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
 import { FormAsignaciones } from '../../components/formUtilidades/FormAsignaciones';
-import { FormAsignacionGeneral } from '../../components/formUtilidades/FormAsignacionGeneral';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { CrearPdf } from './CrearPdf';
-import { PDFViewer } from '@react-pdf/renderer';
-import { Provider } from 'react-redux';
-import { store } from '../../../store';
+import radioApi from "../../../api/radioApi";
+import Swal from "sweetalert2";
 
 const colorClose=()=>{
   return <Close color='error'/>
@@ -20,6 +17,15 @@ const colorClose=()=>{
 const colorDone=()=>{ 
   return <Done color='success'/>
 }
+const NuevoFooter=()=>{ 
+  return <>
+    <Box sx={{pl: '35%', alignContent:'center', background:'rgb(214, 204, 230)'}}>
+      <GridToolbarExport color='secondary'  sx={{ textAlign: 'center', position: 'relative',width: 200, float: 'left', pt:2}} />
+      <GridPagination sx={{ textAlign: 'center', position: 'relative', width: 300,  }} />
+      </Box>
+  </>
+}
+ 
   export const Asignaciones=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useAsignacionesStore();
   const {OpenModal, mostrarActualizar}=useModalHook();
@@ -28,7 +34,7 @@ const colorDone=()=>{
  const [imprimir, setImprimir]= useState({});
 
  
-  const [tableAccesorio, setTableAccesorio] = useState([])
+  const [configReport, setConfigReport] = useState({})
   const navigate = useNavigate();
  
   useEffect(() => {
@@ -63,14 +69,25 @@ const colorDone=()=>{
     //navigate('../asignaciones');
   }
   
+  //let image = axios.get(`http://localhost:8000/api/v0/documentos/1:13`, {responseType: 'arraybuffer'});
   
-   
-    //useEffect(() => {
-    //  axios.get(`http://localhost:8000/api/v0/accesorios/filtrado/`).
-    //      then((response) => {
-    //          setTableAccesorio(response.data);
-    //      });
-    //  }, []);
+    useEffect(() => {
+    radioApi.get(`/configreportes/estatus`).
+          then((response) => {
+            setConfigReport(response.data);
+          });
+      }, []);
+
+      console.log(configReport.length);
+      useEffect(() => {
+        if (configReport.length > 1){
+          Swal.fire({
+            icon:'question',
+            text:'Favor de elegir el correcto ',
+            title: 'Hay mas de una configuracion de reportes con estatus activo',
+            confirmButtonText: '<a " href="http://localhost:5173/radio/config-reportes">Solucionar</a>',});
+        }
+      }, [configReport])
 
     //  console.log(tableAccesorio);
     //  let r='';
@@ -130,7 +147,7 @@ const colorDone=()=>{
     setImprimir(event.row)
     
   }
-console.log(imprimir);
+//console.log(imprimir);
   const theme = createTheme(
     {
       palette: {
@@ -164,7 +181,7 @@ const columns =  [
         onClick={cambiar}
       />,
       <GridActionsCellItem
-        icon={<VisibilityOutlined/>}
+        icon={<PrintOutlined/>}
         color="secondary"
         label="Delete"
         onClick={mostrarPdf}
@@ -179,13 +196,35 @@ const columns =  [
   ], 
   }, 
 ]
+// function imprimirElemento(elemento) {
+//   var ventana = window.open('', 'PRINT', 'height=400,width=600');
+//   ventana.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:15px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;}</style>');
+//   ventana.document.write('<html><head><title>' + document.title + '</title>');
+//   ventana.document.write('<link rel="stylesheet" href="style.css">');
+//   ventana.document.write('</head><body >');
+//   ventana.document.write(document.querySelector("#imprimible").innerHTML);
+//   ventana.document.write('</body></html>');
+//   ventana.document.close();
+//   ventana.focus();
+//   ventana.onload = function () {
+
+//     ventana.print();
+//     ventana.close();
+//   }
+//   return true;
+// }
+
+//document.querySelector("#btnImprimirDiv").addEventListener("click", function () {
+//  var div = document.querySelector("#imprimible");
+//  imprimirElemento(div);
+//});
 
   return (
     <>
     <h2 className='colorUti'>ASIGNACIONES</h2>
     <div style={{ height: 400, width: '100%' }}>
     <div style={{ height: 'flex', width: '100%' }}>
-    <div style={{ flexGrow: 1 }}>
+    <div  style={{ flexGrow: 1 }}>
       <Box
        sx={{
         height:750,
@@ -196,16 +235,22 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-      {abrirPdf ===true?<CrearPdf datos={imprimir}/>: ""}
+      {abrirPdf ===true?<CrearPdf datos={imprimir} formato={configReport} />: ""}
       {abrirPdf=== false?<FormAsignaciones   />:""}
       {/* <FormAsignacionGeneral/> */}
+      {/* {let printData = document.getElementById("datagrid1").innerHTML} */}
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo
                 </Button>
             </Stack>
+           
             <ThemeProvider theme={theme}>
+
+                    
       <DataGrid
+        class="tabla"
+        id="imprimible"
         onCellClick={onSelect}
         getRowId={(row) => row.idasignacion}
         autoHeight={true}
@@ -215,7 +260,8 @@ const columns =  [
         rowsPerPageOptions={[11]}
         components={{
           BooleanCellFalseIcon:colorClose,
-          BooleanCellTrueIcon:colorDone
+          BooleanCellTrueIcon:colorDone,
+          Footer: NuevoFooter
         }}
         sx={{
           boxShadow:5,
@@ -227,6 +273,8 @@ const columns =  [
       }}
       />
        </ThemeProvider>
+       
+   
       </Box>
       </div>
         </div>

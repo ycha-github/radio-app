@@ -141,7 +141,7 @@ const columns = [
         }
       }}>
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-        <FormConfigReportes/>
+        <FormConfigReportes />
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={"info"} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
                     Nuevo
@@ -154,8 +154,8 @@ const columns = [
       autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={12}
-        rowsPerPageOptions={[12]}
+        pageSize={11}
+        rowsPerPageOptions={[11]}
         components={{
           BooleanCellFalseIcon:colorClose,
           BooleanCellTrueIcon:colorDone
