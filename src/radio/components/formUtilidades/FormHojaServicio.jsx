@@ -1,9 +1,12 @@
-import { Autocomplete, Box, Button, Checkbox, FormControlLabel, Grid, Select, Stack, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
+import radioApi from '../../../api/radioApi';
+import { TextareaAutosize } from '@mui/base';
+import { styled } from '@mui/system';
 
 let hoy = new Date();
 let options = { day: 'numeric', month: 'long', year: 'numeric' }
@@ -21,6 +24,7 @@ export const FormHojaServicio = (customStyles) => {
     const [inputValue, setInputValue] = useState("");
     const [inputValue2, setInputValue2] = useState('');
     const [ rfsiBuscar, setRfsiBuscar ] = useState([]);
+    const [ selectServicio, setSelectServicio ] = useState([]);
     
     const [ usuarioBuscar, setUsuarioBuscar ] = useState("");
 
@@ -34,11 +38,11 @@ export const FormHojaServicio = (customStyles) => {
         rfsi: '',
         tipo: '',
         // fk_corporacion: '1',
-        // fk_idservicios:'1',
+         fk_idservicios:'',
         // fk_idradios:'1',
         // fk_accesorios:'1',
-        // descripcion:'',
-        // entrego_equipo:'',
+         descripcion:'',
+         entrego_equipo:'',
         // fecha_entrega:'',
         // fk_supervisortec:'1',
         // usuario_servicio:'',
@@ -49,10 +53,10 @@ export const FormHojaServicio = (customStyles) => {
         // updatedAt: '',
     });
     const [asignaciones, setAsignaciones] = useState({
-        unidad: "",
-        nombre: "",
-        nombreZonasRegiones: "",
         nombreCorporacion: "",
+        nombre: "",
+        unidad: "",
+        nombreZonasRegiones: "",
         //rfsi: "",
 
     });
@@ -69,6 +73,19 @@ export const FormHojaServicio = (customStyles) => {
         }
     }, [activeEvent])
 
+
+    useEffect(() => {
+      
+        radioApi.get(`/servicios/estatus/`).
+        then((response) => {
+            setSelectServicio(response.data);
+            //console.log(response.data);
+        }).catch(error => {
+            console.log(error);
+        });
+       
+    }, [])
+    
 
     const selectUsuarios = async () => {
         await axios.get(`http://localhost:8000/api/v0/usuarios/`).
@@ -91,20 +108,30 @@ export const FormHojaServicio = (customStyles) => {
             });
     }
     const selectAsignacionesPorRfsi = (rfsi, usuarioBuscar) => {
+        console.log(rfsi)
+        console.log(usuarioBuscar)
         axios.get(`http://localhost:8000/api/v0/asig_usuarios/radio/${rfsi}/${usuarioBuscar}`).
             then((response) => {
-                setRadioRfsi({...response.data[0]})
-                //console.log(response.data)
+                setFormValues({
+                    ...formValues,
+                    ['tipo']: response.data[0].tipo,
+                    ['serie']: response.data[0].serie,
+                    ['inventario_interno']: response.data[0].inventario_interno,
+                })
+                console.log(response.data[0].tipo)
             }).catch(error => {
                 console.log(error);
             });
     }
 
-    console.log(formValues);
-    console.log(radioRfsi);
+    //console.log(asignaciones);
+    //console.log(formValues);
+    //console.log(radioRfsi);
+    //console.log(inputValue);
 
     useEffect(() => {
         selectUsuarios();
+        selectAsignacionesPorRfsi(inputValue2,inputValue);
 
     }, [])
     // useEffect(() => {
@@ -128,12 +155,12 @@ export const FormHojaServicio = (customStyles) => {
 
 
 
-    // const handleInputChange = ({ target }) => {
-    //     setFormValues({
-    //         ...formValues,
-    //         [target.name]: target.value,
-    //     });
-    // };
+     const handleInputChange = ({ target }) => {
+         setFormValues({
+             ...formValues,
+             [target.name]: target.value,
+         });
+     };
 
     // const handleChangeAutocomplete = (event, value, name) => {
     //     console.log(value.idusuarios);
@@ -166,15 +193,64 @@ export const FormHojaServicio = (customStyles) => {
     // asignaciones.map((asig) => { 
     //     return recibir(asig.idusuario, asig.nombre_completo)
     // });
+    const morado = {
+        100: '#5B4080',
+        200: '#5B4080',
+        400: '#5B4080',
+        500: '#5B4080',
+        600: '#5B4080',
+        900: '#5B4080',
+      };
+    
+      const grey = {
+        50: '#f6f8fa',
+        100: '#eaeef2',
+        200: '#d0d7de',
+        300: '#afb8c1',
+        400: '#8c959f',
+        500: '#6e7781',
+        600: '#57606a',
+        700: '#424a53',
+        800: '#32383f',
+        900: '#24292f',
+      };
 
-
+    const StyledTextarea = styled(TextareaAutosize)(
+        ({ theme }) => `
+        width: 370px;
+        font-family: IBM Plex Sans, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1.5;
+        padding: 12px;
+        border-radius: 12px 12px 0 12px;
+        color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+        background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+        border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+        
+      
+        &:hover {
+          border-color: ${morado[400]};
+        }
+      
+        &:focus {
+          border-color: ${morado[400]};
+          box-shadow: 0 0 0 .5px ${theme.palette.mode === 'dark' ? morado[600] : morado[200]};
+        }
+      
+        // firefox
+        &:focus-visible {
+          outline: 0;
+        }
+      `,
+      );
 
     const onSubmit = async (event) => {
         //console.log(event)
         event.preventDefault();
         setFormSubmitted(true);
 
-        if (formValues.rfsi.length <= 0) return;
+       // if (formValues.rfsi.length <= 0) return;
         console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
@@ -230,15 +306,34 @@ export const FormHojaServicio = (customStyles) => {
                                                                     ['nombre']: newFormValues.nombre,
                                                                     ['apellido_pat']: newFormValues.apellido_pat,
                                                                     ['apellido_mat']: newFormValues.apellido_mat,
+                                                                    ['tipo']: "",
+                                                                    ['serie']: "",
+                                                                    ['inventario_interno']: "",
                                                                 });
+                                                                setAsignaciones({
+                                                                    ...asignaciones,
+                                                                    ["nombreCorporacion"]:newFormValues.nombreCorporacion,
+                                                                    ["nombre"]: newFormValues.nombrePuesto,
+                                                                    ["unidad"]: "",
+                                                                    ["nombreZonasRegiones"]: "",
+                                                                   
+                                                                });
+                                                                setRadioRfsi({
+                                                                    ["tipo"]:"",
+                                                                    ["serie"]:"",
+                                                                    ["inventario_interno"]:"",
+                                                                });
+                                                                
                                                             }}
                                                             onInputChange={(e, newInputValue) => {
+                                                                
                                                                 setInputValue(newInputValue)
                                                                 selectAsignacionesPorUsuario(newInputValue)
+                                                                setUsuarioBuscar(newInputValue)
                                                             }}
                                                             renderInput={(params) => <TextField  {...params} variant="outlined" label="Usuario" />}
                                                         />
-                                                        {console.log(inputValue)}
+                                                       
                                                     </Grid>
                                                 ) : (
                                                     <Grid item xs={6}>
@@ -252,13 +347,29 @@ export const FormHojaServicio = (customStyles) => {
                                                                 setFormValues({
                                                                     ...formValues,
                                                                     ['usuarios_idusuarios']: newFormValues.idusuarios,
+                                                                    ['tipo']: "",
+                                                                    ['serie']: "",
+                                                                    ['inventario_interno']: "",
                                                                 });
+                                                                setAsignaciones({
+                                                                    ...asignaciones,
+                                                                    ["nombreCorporacion"]:newFormValues.nombreCorporacion,
+                                                                    ["nombre"]: newFormValues.nombrePuesto,
+                                                                    ["unidad"]: "",
+                                                                    ["nombreZonasRegiones"]: "",
+                                                                   
+                                                                })
+                                                                setRadioRfsi({
+                                                                    ["tipo"]:"",
+                                                                    ["serie"]:"",
+                                                                    ["inventario_interno"]:"",
+                                                                });
+                                                                
 
                                                             }}
                                                             onInputChange={(e, newInputValue) => {
-                                                                setInputValue(
-                                                                    newInputValue
-                                                                )
+                                                               
+                                                                setInputValue(newInputValue)
                                                                 selectAsignacionesPorUsuario(newInputValue)
                                                                 setUsuarioBuscar(newInputValue)
                                                             }}
@@ -346,8 +457,6 @@ export const FormHojaServicio = (customStyles) => {
                                                     // onChange={handleInputChange} 
                                                     />
                                                 </Grid>
-
-
                                             </Grid>
                                         </Grid>
                                     </Stack>
@@ -371,15 +480,24 @@ export const FormHojaServicio = (customStyles) => {
                                                             value={formValues}
                                                             inputValue={inputValue2}
                                                             onChange={(event, newFormValues2) => {
+                                                                //console.log(newFormValues2)
                                                                 setFormValues({
                                                                     ...formValues,
                                                                     ['rfsi']: newFormValues2.rfsi,
-                                                                    
+                                                                    ['tipo']: newFormValues2.tipo,
+                                                                    ['serie']: newFormValues2.serie,
+                                                                    ['inventario_interno']: newFormValues2.inventario_interno,
                                                                 });
+                                                                //setRadioRfsi({
+                                                                //    ...radioRfsi,
+                                                                //   
+                                                                //})
                                                             }}
                                                             onInputChange={(e, newInputValue2) => {
+                                                                console.log(newInputValue2)
+                                                                console.log(usuarioBuscar)
                                                                 setInputValue2(newInputValue2)
-                                                                selectAsignacionesPorUsuario(newInputValue2)
+                                                                selectAsignacionesPorRfsi(newInputValue2,inputValue)
                                                             }}
                                                             renderInput={(params) => <TextField  {...params} variant="outlined" label="RFSI" />}
                                                         />
@@ -396,6 +514,7 @@ export const FormHojaServicio = (customStyles) => {
                                                                 setFormValues({
                                                                     ...formValues,
                                                                     ['rfsi']: newFormValues2.rfsi,
+                                                                    
                                                                 })
                                                                 //setFormValues({
                                                                 //    ...formValues,
@@ -408,7 +527,7 @@ export const FormHojaServicio = (customStyles) => {
                                                                 setInputValue2(
                                                                     newInputValue2
                                                                 )
-                                                                selectAsignacionesPorRfsi(newInputValue2,usuarioBuscar)
+                                                                selectAsignacionesPorRfsi(newInputValue2,inputValue)
 
                                                             }}
                                                             renderInput={(params) => <TextField  {...params} variant="outlined" label="RFSI" />}
@@ -426,7 +545,7 @@ export const FormHojaServicio = (customStyles) => {
                                                         label="Tipo"
                                                         variant="outlined"
                                                         value={
-                                                            radioRfsi.tipo
+                                                            formValues.tipo
                                                         }
                                                         InputLabelProps={{
                                                             shrink: true,
@@ -445,7 +564,7 @@ export const FormHojaServicio = (customStyles) => {
                                                         label="Serie"
                                                         variant="outlined"
                                                         value={
-                                                            radioRfsi.serie
+                                                            formValues.serie
                                                         }
                                                         InputLabelProps={{
                                                             shrink: true,
@@ -464,7 +583,7 @@ export const FormHojaServicio = (customStyles) => {
                                                         label="Inventario Interno"
                                                         variant="outlined"
                                                         value={
-                                                            radioRfsi.inventario_interno
+                                                            formValues.inventario_interno
                                                         }
                                                         InputLabelProps={{
                                                             shrink: true,
@@ -481,25 +600,63 @@ export const FormHojaServicio = (customStyles) => {
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                            <Grid item xs={3}>
+                                            <Grid item xs={6}>
+                                            <Grid item>
+                            <FormControl fullWidth>
+                                <InputLabel id="fk_idservicios-input" color='secondary'>Servicios</InputLabel>
+                                <Select
+                                    sx={{ border: 'none', mb: 1, width: 400 }}
+                                    labelId="demo-simple-select-label"
+                                    id="fk_idservicios-input"
+                                    name="fk_idservicios"
+                                    color='secondary'
+                                    value={formValues.fk_idservicios}
+                                    label="Servicios"
+                                    onChange={handleInputChange}
+                                    >
+                                    {
+                                        selectServicio.map(elemento=>{
+                                          return <MenuItem key={elemento.idservicios} value={elemento.idservicios} >{elemento.nombreServicios}</MenuItem> 
+                                        })}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                            </Grid>
+
+                            <Grid item xs={3}>
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        name="funda"
-                                        value={formValues.funda}
-                                        checked={formValues.funda}
+                                        name="entrego_equipo"
+                                        value={formValues.entrego_equipo}
+                                        checked={formValues.entrego_equipo}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
                                             console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
-                                                ['funda']: newFormValues,
+                                                ['entrego_equipo']: newFormValues,
                                             });
                                         }}
                                     />
                                 }
-                                label="Funda"
+                                label="Entrego Equipo"
                             />
+                                </Grid>
+
+                            <Grid item xs={6}>
+                                 
+                                <TextField
+                                name='descripcion'
+                                sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
+                                value={formValues.descripcion}
+                                onChange={handleInputChange}
+                                variant="outlined"
+                                multiline
+                                label="Descripcion"
+                                rows={3}
+                                inputProps={{ maxLength: 250 }}
+                                />
                             </Grid>
                                             </Grid>
                                         </Grid>
