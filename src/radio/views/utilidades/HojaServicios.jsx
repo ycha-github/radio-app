@@ -31,7 +31,7 @@ const colorDone=()=>{
         fecha_servicio:'',
         usuarios_idusuarios:"",
         fk_usuario:'',
-         fk_idservicios:'',
+        // fk_idservicios:'',
         fk_idradios:'',
         // fk_accesorios:'',
          descripcion:'',
