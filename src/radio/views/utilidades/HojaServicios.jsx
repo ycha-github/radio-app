@@ -22,6 +22,7 @@ const colorDone=()=>{
   const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, disableForm }=useModalHook();
   const [state, setState] =useState([]);
   const [abrirPdf, setAbrirPdf]= useState(false);
+  const [imprimir, setImprimir]= useState({});
 
   // const navigate = useNavigate();
 
