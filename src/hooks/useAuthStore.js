@@ -13,7 +13,7 @@ export const useAuthStore = () => {
             const {data} = await radioApi.post('/users/validar', {username,password});
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime())
-            dispatch(onLogin({username: data.existeUsuario.username, idusers: data.existeUsuario.idusers}));
+            dispatch(onLogin({username: data.existeUsuario.username, idusers: data.existeUsuario.idusers, rol:data.existeUsuario.roles_idrol}));
         } catch (error) {
             dispatch(onLogout('Credenciales incorrectas'));
             setTimeout(()=>{
@@ -29,7 +29,7 @@ export const useAuthStore = () => {
             const {data} = await radioApi.post('users/revalidar');
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
-            dispatch(onLogin({ username: data.username, idusers: data.idusers}));
+            dispatch(onLogin({ username: data.username, idusers: data.idusers, rol: data.rol}));
         }catch (error) { 
             localStorage.clear();
             dispatch(onLogout());

@@ -58,6 +58,7 @@ export const FormRoles = () => {
                                 name="rol"
                                 color='info'
                                 label="Rol"
+                                required
                                 variant="outlined"
                                 value={formValues.rol}
                                 onChange={handleInputChange} />

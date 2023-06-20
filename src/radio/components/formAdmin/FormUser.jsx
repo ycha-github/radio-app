@@ -4,13 +4,14 @@ import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useUsersStore } from '../../../hooks/hooksAdministracion/useUsersStore';
 import axios from 'axios';
+import { radioApi } from '../../../api';
 
 export const FormUser = () => {
 
     const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
     const { activeEvent, startSavingEvent } = useUsersStore();
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const [tableData, setTableData] = useState([])
+    const [tableData, setTableData] = useState([]);
     const [formValues, setFormValues] = useState({
         username: "",
         password: "",
@@ -26,14 +27,14 @@ export const FormUser = () => {
         if (activeEvent !== null) {
             setFormValues({ ...activeEvent });
         }
-    }, [activeEvent])
+    }, [activeEvent]);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/v0/roles').
+        radioApi.get('/roles/estatus').
       then((response)=>{
         setTableData(response.data);
       });
-     }, [tableData]);
+     }, []);
 
     const handleInputChange = (event) => {
         setFormValues({
@@ -41,19 +42,11 @@ export const FormUser = () => {
             [event.target.name]: event.target.value,
         });
     };
-    // const handleChangeAutocomplete = (event, newFormValues, name) => {
-    //     console.log(newFormValues.idrol);
-    //     setFormValues((formValues) => ({
-    //       ...formValues,
-    //       [name]: newFormValues.idrol
-    //     }));
-    //   };
 
     const onSubmit = async (event) => {
         event.preventDefault();
         setFormSubmitted(true);
         if (formValues.username.length <= 0) return;
-        //console.log(formValues);
         await startSavingEvent(formValues);
         CloseModal();
         setFormSubmitted(false);
@@ -74,6 +67,7 @@ export const FormUser = () => {
                                 color='info'
                                 label="Nombre de Usuario"
                                 variant="outlined"
+                                required
                                 value={formValues.username}
                                 onChange={handleInputChange} />
                         </Grid>
@@ -88,50 +82,12 @@ export const FormUser = () => {
                                 fullWidth
                                 name='password'
                                 color='info'
+                                required
                                 value={formValues.password}
                                 onChange={handleInputChange}
                             />
                         </Grid>
-                        { isActualizar?     
-                        (<Grid item>
-                            <Autocomplete
-                                name="roles_idrol"
-                                value={tableData[formValues.roles_idrol-1]}
-                                 //defaultValue={tableData}
-                                options={tableData}
-                                getOptionLabel={(tableData) => tableData.rol || ""}
-                                isOptionEqualToValue={(option, value) =>
-                                    option.rol === value.rol
-                                }
-                                sx={{ width: 400, mb:1 }}
-                                onChange={(event, newFormValues) => {
-                                    setFormValues({
-                                        ...formValues,
-                                        ['roles_idrol']: newFormValues.idrol,
-                                    });
-                                }}                               
-                                renderInput={(params) => <TextField  {...params} variant="outlined" label="Rol" />}
-                            />
-                        </Grid>):
-                        (<Grid item>
-                            <Autocomplete
-                                name="roles_idrol"
-                                //value={tableData[formValues.roles_idrol-1]}
-                                 //defaultValue={tableData}
-                                options={tableData}
-                                getOptionLabel={(tableData) => tableData.rol || ""}
-                                sx={{ width: 400, mb:1 }}
-                                onChange={(event, newFormValues) => {
-                                    setFormValues({
-                                        ...formValues,
-                                        ['roles_idrol']: newFormValues.idrol,
-                                    });
-                                }}
-                                renderInput={(params) => <TextField  {...params} variant="outlined" label="Rol" />}
-                            />
-                        </Grid>)
-                        }
-                        {/* <Grid item>
+                        <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="rol-input" color='info'>Rol</InputLabel>
                                 <Select
@@ -142,14 +98,15 @@ export const FormUser = () => {
                                     color='info'
                                     value={formValues.roles_idrol}
                                     label="Rol"
+                                    required
                                     onChange={handleInputChange}>
-                                     {/* {
+                                      {
                                         tableData.map(elemento=>{
                                           return <MenuItem key={elemento.idrol} value={elemento.idrol} >{elemento.rol}</MenuItem> 
-                                        })} */}
-                                {/* /</Select> */}
-                            {/* </FormControl> */}
-                        {/* </Grid> */} 
+                                        })} 
+                                /</Select> 
+                            </FormControl> 
+                        </Grid>
                         <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>

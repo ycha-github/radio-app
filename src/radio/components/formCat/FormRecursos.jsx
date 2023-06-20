@@ -56,6 +56,7 @@ export const FormRecursos = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreRecursoCompra"
+                                required
                                 color='warning'
                                 label="Recurso de Compra"
                                 variant="outlined"
@@ -80,7 +81,7 @@ export const FormRecursos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" onClick={ () => mostrarGuardar() } >
+                        <Button variant="contained" color="warning" type="submit" sx={{  width: 300 }} onClick={ () => mostrarGuardar() } >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

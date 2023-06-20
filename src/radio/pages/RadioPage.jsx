@@ -7,10 +7,12 @@ import { CrearPdf } from '../views/utilidades/CrearPdf';
 import { PDFViewer } from '@react-pdf/renderer';
 import { useAsignacionesStore } from '../../hooks/hooksUtilidades/useAsignacionesStore';
 import { useState } from 'react';
+import { useAuthStore } from '../../hooks';
 
 export const RadioPage = () => {
 
   const { activeEvent } = useAsignacionesStore();
+  const {user}= useAuthStore();
 //  const [valor,setValor]= useState(JSON.parse(localStorage.getItem('datos')))
 //  localStorage.setItem("datos", JSON.stringify(activeEvent));
 //const dat = JSON.parse(localStorage.getItem('datos'))
@@ -21,8 +23,8 @@ export const RadioPage = () => {
 
       <Routes>
 
-          <Route path="users" element={ <Users /> } />
-          <Route path="roles" element={ <Roles /> } />
+          <Route path="users" element={user.rol=== 1?  <Users />:<Asignaciones /> } />
+          <Route path="roles" element={user.rol=== 1?  <Roles />:<Asignaciones /> } />
           
           
           {/* <Route path="visitas" element={ <RegistroVisitas /> } /> */}
@@ -43,7 +45,7 @@ export const RadioPage = () => {
           <Route path="hoja-servicio" element={ <HojaServicios /> }/>
           <Route path="mostrar-pdf" element={<CrearPdf datos= {activeEvent}/> }/>
           {/* <Route path="hoja-serviciof" element={ <FormHojaServicio /> }/> */}
-          <Route path="config-reportes" element={ <ConfigReportes /> }/>
+          <Route path="config-reportes" element={user.rol=== 1? <ConfigReportes />:<Asignaciones /> }/>
 
           <Route path="pass-update" element={ <PasswordUpdate /> }/>
 

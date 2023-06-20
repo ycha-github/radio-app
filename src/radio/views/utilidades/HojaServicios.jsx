@@ -35,7 +35,7 @@ const colorDone=()=>{
         fk_idradios:'',
         // fk_accesorios:'',
          descripcion:'',
-         entrego_equipo:'',
+         entrego_equipo:false,
         // fecha_entrega:'',
         // fk_supervisortec:'',
         // usuario_servicio:'',

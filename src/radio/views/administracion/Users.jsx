@@ -62,9 +62,9 @@ export const Users = () => {
     { field: 'idusers', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
     { field: 'username', headerClassName: "super", headerName: 'Usuario', flex: 1, minWidth: 90 },
     { field: 'rol', headerClassName: "super", headerName: 'Rol', flex: 1, minWidth: 90 },
-    { field: 'estatus',type: 'boolean', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
     { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
     { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+    { field: 'estatus',type: 'boolean', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
     {
       field: 'actions',
       type: 'actions',

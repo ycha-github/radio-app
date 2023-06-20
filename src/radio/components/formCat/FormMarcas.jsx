@@ -58,6 +58,7 @@ export const FormMarcas = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreMarcas"
+                                required
                                 color='warning'
                                 label="Marca"
                                 variant="outlined"
@@ -70,6 +71,7 @@ export const FormMarcas = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="nombreModelos"
+                                required
                                 color='warning'
                                 label="Línea"
                                 variant="outlined"
@@ -84,6 +86,7 @@ export const FormMarcas = () => {
                                     labelId="demo-simple-select-label"
                                     id="tipo-input"
                                     name="tipo"
+                                    required
                                     color='warning'
                                     value={formValues.tipo}
                                     label="Tipo"

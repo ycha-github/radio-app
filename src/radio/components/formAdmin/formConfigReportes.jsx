@@ -139,6 +139,10 @@ export const FormConfigReportes = (customStyles) => {
                                     color={"info"}
                                     label="Encabezado de carta"
                                     variant="outlined"
+                                    required
+                                    multiline
+                                    rows={3}
+                                    //inputProps={{ maxLength: 250 }}
                                     value={formValues.encabezado_carta}
                                     onChange={handleInputChange} />
                             </Grid>
@@ -151,7 +155,11 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo1"
                                     color={"info"}
                                     label="Artículo parte 1"
+                                    required
                                     variant="outlined"
+                                    multiline
+                                    rows={3}
+                                    //inputProps={{ maxLength: 250 }}
                                     value={formValues.articulo1}
                                     onChange={handleInputChange} />
                             </Grid>
@@ -164,6 +172,10 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo2"
                                     color={"info"}
                                     label="Artículo parte 2"
+                                    required
+                                    multiline
+                                    rows={3}
+                                    //inputProps={{ maxLength: 250 }}
                                     variant="outlined"
                                     value={formValues.articulo2}
                                     onChange={handleInputChange} />
@@ -177,6 +189,10 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo3"
                                     color={"info"}
                                     label="Artículo parte 3"
+                                    required
+                                    multiline
+                                    rows={3}
+                                    //inputProps={{ maxLength: 250 }}
                                     variant="outlined"
                                     value={formValues.articulo3}
                                     onChange={handleInputChange} />
@@ -190,6 +206,10 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo4"
                                     color={"info"}
                                     label="Artículo parte 4"
+                                    required
+                                    multiline
+                                    rows={3}
+                                    //inputProps={{ maxLength: 250 }}
                                     variant="outlined"
                                     value={formValues.articulo4}
                                     onChange={handleInputChange} />
@@ -203,6 +223,10 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo5"
                                     color={"info"}
                                     label="Artículo parte 5"
+                                    required
+                                    multiline
+                                    rows={3}
+                                    //inputProps={{ maxLength: 250 }}
                                     variant="outlined"
                                     value={formValues.articulo5}
                                     onChange={handleInputChange} />
@@ -216,6 +240,10 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo6"
                                     color={"info"}
                                     label="Artículo parte 6"
+                                    required
+                                    multiline
+                                    rows={3}
+                                   // inputProps={{ maxLength: 250 }}
                                     variant="outlined"
                                     value={formValues.articulo6}
                                     onChange={handleInputChange} />
@@ -229,6 +257,10 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo7"
                                     color={"info"}
                                     label="Artículo parte 7"
+                                    required
+                                    multiline
+                                    rows={3}
+                                    //inputProps={{ maxLength: 250 }}
                                     variant="outlined"
                                     value={formValues.articulo7}
                                     onChange={handleInputChange} />
@@ -256,6 +288,7 @@ export const FormConfigReportes = (customStyles) => {
                                             <TextField
                                                 id="logoc4-input"
                                                 type="file"
+                                                required
                                                 name="logoc4"
                                                 color={"info"}
                                                 label="Logo C4"
@@ -319,6 +352,7 @@ export const FormConfigReportes = (customStyles) => {
                                             <TextField
                                                 id="logo_ssypc-input"
                                                 type="file"
+                                                required
                                                 name="logo_ssypc"
                                                 color={"info"}
                                                 label="Logo SSYPC"
@@ -342,9 +376,9 @@ export const FormConfigReportes = (customStyles) => {
                                                        ['archivo']: target.files[0]});
                                                 }}
                                             />
-                                            <TextField 
+                                           <TextField 
                                                 disabled
-                                                id='logo_ssypca-input'
+                                                 id='logo_ssypca-input'
                                                 type="text"
                                                 variant='standard'
                                                 InputLabelProps={{
@@ -353,7 +387,7 @@ export const FormConfigReportes = (customStyles) => {
                                                 InputProps={{
                                                     disableUnderline: true,
                                                 }}
-                                                value={formValues.logo_ssypc}
+                                               value={formValues.logo_ssypc}
                                             />
                                         </Box>
                                     )
@@ -368,6 +402,7 @@ export const FormConfigReportes = (customStyles) => {
                                         disabled={isVer}
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         id="fk_revisor-input"
+                                        required
                                         name="fk_revisor"
                                         value={formValues}
                                         onChange={(event, newFormValues) => {
@@ -401,6 +436,7 @@ export const FormConfigReportes = (customStyles) => {
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         id="fk_revisor-input"
                                         name="fk_revisor"
+                                        required
                                         onChange={(event, newFormValues) => {
                                             setFormValues({
                                                 ...formValues,
@@ -419,6 +455,7 @@ export const FormConfigReportes = (customStyles) => {
                                         disabled={isVer}
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         name="fk_responsable_entrega"
+                                        required
                                         value={formValues}
                                         onChange={(event, newFormValues2) => {
                                             
@@ -448,6 +485,7 @@ export const FormConfigReportes = (customStyles) => {
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         id="fk_responsable_entrega-input"
                                         name="fk_responsable_entrega"
+                                        required
                                         onChange={(event, newFormValues2) => {
                                             setFormValues({
                                                 ...formValues,
@@ -470,6 +508,7 @@ export const FormConfigReportes = (customStyles) => {
                                     type="text"
                                     name="ccp_carta"
                                     color={"info"}
+                                    required
                                     label="Ccp de Carta"
                                     variant="outlined"
                                     value={formValues.ccp_carta}

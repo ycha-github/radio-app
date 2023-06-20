@@ -66,9 +66,9 @@ const columns = [
   { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marcas', flex: 1, minWidth: 90 },
   { field: 'nombreModelos',headerClassName: "super", headerName: 'Línea', flex: 1, minWidth: 90 },
   { field: 'tipo', valueGetter: ({ value }) => value===1 ? "Vehiculo" : value===2 ? "Radio" : value===3 ? "Accesorio": "No existe" , headerClassName: "super", headerName: 'Tipo', flex: 1, minWidth: 90 },
-  { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
   { field: 'updatedAt',headerClassName: "super", headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+  { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   {
     field: 'actions',
     type: 'actions',
@@ -79,6 +79,7 @@ const columns = [
       <GridActionsCellItem
         icon={<Edit />}
         label="Delete"
+        color="warning"
         onClick={cambiar}
       />,
       <IconButton

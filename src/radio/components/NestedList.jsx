@@ -8,7 +8,7 @@ import { useAuthStore } from '../../hooks';
 export const NestedList = () => {
 
   const navigate = useNavigate();
-  const {startLogout}= useAuthStore();
+  const {startLogout, user}= useAuthStore();
 
   return (
     <List
@@ -16,8 +16,12 @@ export const NestedList = () => {
       component="nav"
       aria-labelledby="nested-list-subheader" 
     >
-
-      <MenuAdmin />
+{user.rol=== 1? 
+  <MenuAdmin />
+  :
+  ""
+} 
+      
 
       <MenuCatalogos /> 
 

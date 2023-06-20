@@ -5,6 +5,7 @@ import { useRadiosStore } from '../../../hooks/hooksCatalogo/useRadiosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
 import { Box } from '@mui/system';
+import { radioApi } from '../../../api';
 
 
 export const FormRadios = (customStyles) => {
@@ -38,25 +39,23 @@ const [selectPropie, setSelectPropie] = useState([]);
     const [selectMarca, setSelectMarca] = useState([]);
 
     const { CloseModal, isActualizar,mostrarGuardar } = useModalHook();
-    const { activeEvent, startSavingEvent } = useRadiosStore();
+    const { activeEvent, startSavingEvent1 } = useRadiosStore();
 
 useEffect(() => {
-    axios.get('http://localhost:8000/api/v0/corporaciones').
+    radioApi.get('/corporaciones/estatus').
     then((response)=>{
       setSelectPropie(response.data);
     });
-    axios.get('http://localhost:8000/api/v0/recursoscompras').
+    radioApi.get('/recursoscompras/estatus/').
     then((response)=>{
       setSelectRecurso(response.data);
     });
-    axios.get(`http://localhost:8000/api/v0/marcas/tipo/${2}`).
+    radioApi.get(`/marcas/tipo/${2}`).
     then((response)=>{
       setSelectMarca(response.data);
     });
 
 }, [])
-
-
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -64,16 +63,6 @@ useEffect(() => {
         }
     }, [activeEvent])
 
-    let r='';
-
-    const recibir = (id,nombre) => {
-        r={id,nombre}
-    //console.log(r);
-    }
-
-    selectPropie.map((usuario) => {
-        return recibir(usuario.idcorporaciones, usuario.nombreCorporacion);
-    })
     const handleInputChange = ({ target }) => {
         setFormValues({
             ...formValues,
@@ -86,10 +75,10 @@ useEffect(() => {
         event.preventDefault();
         setFormSubmitted(true);
 
-        if (formValues.serie.length <= 0) return;
+       // if (formValues.serie.length <= 0) return;
         console.log(formValues);
         //TODO:
-        await startSavingEvent(formValues);
+        await startSavingEvent1(formValues);
         CloseModal();
         setFormSubmitted(false);
     };
@@ -113,6 +102,7 @@ useEffect(() => {
                                     sx={{ border: 'none', mb: 1, width: 300}}
                                     type="text"
                                     name="tipo"
+                                    required
                                     color='warning'
                                     label="tipo"
                                     variant="outlined"
@@ -126,6 +116,7 @@ useEffect(() => {
                                     sx={{ border: 'none', mb: 1, width: 300}}
                                     type="text"
                                     name="serie"
+                                    required
                                     color='warning'
                                     label="serie"
                                     variant="outlined"
@@ -138,6 +129,7 @@ useEffect(() => {
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     type="text"
                                     name="logico"
+                                    required
                                     color='warning'
                                     label="logico"
                                     variant="outlined"
@@ -168,7 +160,7 @@ useEffect(() => {
                                     value={formValues.inventario_segpub}
                                     onChange={handleInputChange} />
                             </Grid>
-                            {/* <Grid item xs={6}>
+                            <Grid item xs={6}>
                                 <FormControl fullWidth>
                                     <InputLabel id="fk_propietario-input" color='warning'>Propietario</InputLabel>
                                     <Select
@@ -176,6 +168,7 @@ useEffect(() => {
                                         labelId="demo-simple-select-label"
                                         id="fk_propietario-input"
                                         name="fk_propietario"
+                                        required
                                         color='warning'
                                         label="Propietario"
                                         value={formValues.fk_propietario}
@@ -186,7 +179,7 @@ useEffect(() => {
                                             })}
                                     </Select>
                                 </FormControl>
-                            </Grid> */}
+                            </Grid>
                             <Grid item xs={6}>
                                 <FormControl fullWidth>
                                     <InputLabel id="fk_recurso_compra-input" color='warning'>Recurso Compra</InputLabel>
@@ -195,6 +188,7 @@ useEffect(() => {
                                         labelId="demo-simple-select-label"
                                         id="fk_recurso_compra-input"
                                         name="fk_recurso_compra"
+                                        required
                                         color='warning'
                                         value={formValues.fk_recurso_compra}
                                         label="Recurso Compra"
@@ -212,6 +206,7 @@ useEffect(() => {
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     type="text"
                                     name="contrato_compra"
+                                    required
                                     color='warning'
                                     label="contrato_compra"
                                     variant="outlined"
@@ -226,6 +221,7 @@ useEffect(() => {
                                         labelId="demo-simple-select-label"
                                         id="fk_marca-input"
                                         name="fk_marca"
+                                        required
                                         color='warning'
                                         label='Marca'
                                         value={formValues.fk_marca}
@@ -252,7 +248,7 @@ useEffect(() => {
                                     onChange={handleInputChange}
                                 />
                             </Grid>
-                            <Grid item xs={6}>
+                            {/* <Grid item xs={6}>
                                 <TextField
                                     id="fecha_asignacion-input"
                                     sx={{ border: 'none', mb: 1, width: 300 }}
@@ -266,13 +262,14 @@ useEffect(() => {
                                     }}
                                     value={formValues.fecha_asignacion}
                                     onChange={handleInputChange} />
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={6}>
                                 <TextField
                                     id="observaciones-input"
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     type="text"
                                     name="observaciones"
+                                    multiline
                                     color='warning'
                                     label="observaciones"
                                     variant="outlined"

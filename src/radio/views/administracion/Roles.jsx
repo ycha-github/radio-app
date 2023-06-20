@@ -60,9 +60,9 @@ export const Roles = () => {
 
     { field: 'idrol', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
     { field: 'rol', headerClassName: "super", headerName: 'Rol', flex: 1, minWidth: 90 },
-    { field: 'estatus',type: 'boolean', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
     { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
     { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+    { field: 'estatus',type: 'boolean', headerClassName: "super", headerName: 'Estado', flex: 1, minWidth: 90 },
     {
       field: 'actions',
       type: 'actions',
@@ -71,6 +71,7 @@ export const Roles = () => {
       minWidth: 120,
       getActions: (evento) => [
         <GridActionsCellItem
+        color="info"
           icon={<Edit />}
           label="Delete"
           onClick={cambiar}

@@ -72,6 +72,7 @@ const columns = [
         icon={<Edit />}
         label="Delete"
         onClick={cambiar}
+        color="warning"
       />,
       
       <IconButton

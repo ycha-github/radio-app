@@ -4,6 +4,7 @@ import { ModalRadio } from '../ModalRadio';
 import { usePuestosStore } from '../../../hooks/hooksCatalogo/usePuestosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
+import { radioApi } from '../../../api';
 
 export const FormPuestos = () => {
 
@@ -20,7 +21,7 @@ export const FormPuestos = () => {
     });
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/v0/corporaciones').
+        radioApi.get('/corporaciones/estatus/').
       then((response)=>{
         setTableData(response.data);
       });
@@ -67,6 +68,7 @@ export const FormPuestos = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombre"
+                                required
                                 color='warning'
                                 label="Nombre"
                                 variant="outlined"
@@ -81,6 +83,7 @@ export const FormPuestos = () => {
                                     labelId="demo-simple-select-label"
                                     id="fk_corporacion-input"
                                     name="fk_corporacion"
+                                    required
                                     color='warning'
                                     value={formValues.fk_corporacion}
                                     label="Nombre Corporacion"

@@ -4,6 +4,7 @@ import { ModalRadio } from '../ModalRadio';
 import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
+import { radioApi } from '../../../api';
 
 export const FormAccesorios = (customStyles) => {
 
@@ -14,7 +15,7 @@ export const FormAccesorios = (customStyles) => {
 
 
     const selectMarcasTipos = async() => {
-        await axios.get(`http://localhost:8000/api/v0/marcas/tipo/${3}`).
+        await radioApi.get(`/marcas/tipo/${3}`).
         then((response)=>{
             setMarcasTipo(response.data);
             // console.log(response.data);
@@ -89,6 +90,7 @@ export const FormAccesorios = (customStyles) => {
                                                 labelId="demo-simple-select-label"
                                                 id="accesorio-input"
                                                 name="accesorio"
+                                                required
                                                 color='warning'
                                                 value={formValues.accesorio}
                                                 label="Tipo Accesorio"
@@ -115,6 +117,7 @@ export const FormAccesorios = (customStyles) => {
                                                 sx={{ border: 'none', mt: 2, width: 300 }}
                                                 labelId="demo-simple-select-label"
                                                 id="accesorio-input"
+                                                required
                                                 name="accesorio"
                                                 color='warning'
                                                 value={formValues.accesorio}
@@ -136,6 +139,7 @@ export const FormAccesorios = (customStyles) => {
                                                 id="serie_vacio-input"
                                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                                 type="text"
+                                                required
                                                 name="serie_vacio"
                                                 color='warning'
                                                 disabled
@@ -148,6 +152,7 @@ export const FormAccesorios = (customStyles) => {
                                             type="text"
                                             name="serie_bateria"
                                             color='warning'
+                                            required
                                             label="Numero de serie bateria"
                                             variant="outlined"
                                             value={  formValues.serie_bateria }
@@ -169,6 +174,7 @@ export const FormAccesorios = (customStyles) => {
                                             id="serie_cargador-input"
                                             sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                             type="text"
+                                            required
                                             name="serie_cargador"
                                             color='warning'
                                             label="Numero de serie cargador"
@@ -192,6 +198,7 @@ export const FormAccesorios = (customStyles) => {
                                             sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                             type="text"
                                             name="serie_gps"
+                                            required
                                             color='warning'
                                             label="Numero de serie gps"
                                             variant="outlined"
@@ -216,6 +223,7 @@ export const FormAccesorios = (customStyles) => {
                                                     id="marcas_idmarcas-input"
                                                     name={'marcas_idMarcas'}
                                                     value={formValues}
+                                                    required
                                                     onChange={(event, newFormValues) => {
                                                         setFormValues(
                                                             { 
@@ -246,6 +254,7 @@ export const FormAccesorios = (customStyles) => {
                                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                                     id="marcas_idmarcas-input"
                                                     name={'marcas_idMarcas'}
+                                                    required
                                                     onChange={(event, newFormValues) => {
                                                         setFormValues(
                                                             { 
@@ -295,6 +304,7 @@ export const FormAccesorios = (customStyles) => {
                                             type="text"
                                             name="contrato_compra"
                                             color='warning'
+                                            required
                                             label="Contrato compra"
                                             variant="outlined"
                                             value={formValues.contrato_compra}
@@ -306,6 +316,7 @@ export const FormAccesorios = (customStyles) => {
                                             sx={{ border: 'none', mb: 1,  width: 300 }}
                                             type="text"
                                             name="observaciones"
+                                            multiline
                                             color='warning'
                                             label="Descripción"
                                             variant="outlined"
@@ -318,6 +329,7 @@ export const FormAccesorios = (customStyles) => {
                                             sx={{ border: 'none',  width: 300 }}
                                             type="date"
                                             name='fecha_recepcion'
+                                            required
                                             color='warning'
                                             label="Fecha de recepción"
                                             variant="outlined"

@@ -4,6 +4,7 @@ import { ModalRadio } from '../ModalRadio';
 import { useVehiculosStore } from '../../../hooks/hooksCatalogo/useVehiculosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
+import { radioApi } from '../../../api';
 
 export const FormVehiculos = () => {
 
@@ -15,7 +16,7 @@ export const FormVehiculos = () => {
 
     
     const selectMarcasTipos = async() => {
-        await axios.get(`http://localhost:8000/api/v0/marcas/tipo/${1}`).
+        await radioApi.get(`/marcas/tipo/${1}`).
         then((response)=>{
             setMarcasTipo(response.data);
             console.log(response.data);
@@ -45,7 +46,7 @@ export const FormVehiculos = () => {
     });
     
     useEffect(() => {
-        axios.get('http://localhost:8000/api/v0/zonasregiones/estatus').
+        radioApi.get('/zonasregiones/estatus').
         then((response)=>{
             setZonasRegiones(response.data);
         });
@@ -96,6 +97,7 @@ export const FormVehiculos = () => {
                                         sx={{ border: 'none', mb: 1, width: 300 }}
                                         id="marcas_idmarcas-input"
                                         name={'marcas_idmarcas'}
+                                        required
                                         value={formValues}
                                         onChange={(event, newFormValues) => {
                                             setFormValues(
@@ -135,6 +137,7 @@ export const FormVehiculos = () => {
                                         sx={{ border: 'none', mb: 1, width: 300 }}
                                         id="marcas_idmarcas-input"
                                         name={'marcas_idmarcas'}
+                                        required
                                         onChange={(event, newFormValues) => {
                                             setFormValues(
                                                 { 
@@ -159,6 +162,7 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="anio"
+                                required
                                 color='warning'
                                 label="Año"
                                 variant="outlined"
@@ -171,6 +175,7 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="tipo"
+                                required
                                 color='warning'
                                 label="Tipo"
                                 variant="outlined"
@@ -183,6 +188,7 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="color"
+                                required
                                 color='warning'
                                 label="Color"
                                 variant="outlined"
@@ -195,6 +201,7 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="placa"
+                                required
                                 color='warning'
                                 label="Placa"
                                 variant="outlined"
@@ -209,6 +216,7 @@ export const FormVehiculos = () => {
                                 name="unidad"
                                 color='warning'
                                 label="Unidad"
+                                required
                                 variant="outlined"
                                 value={formValues.unidad}
                                 onChange={handleInputChange} />
@@ -220,6 +228,7 @@ export const FormVehiculos = () => {
                                     labelId="demo-simple-select-label"
                                     id="fk_zonaRegion-input"
                                     name="fk_zonaregion"
+                                    required
                                     color='warning'
                                     value={formValues.fk_zonaregion}
                                     label="Zona / Región"

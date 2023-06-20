@@ -58,6 +58,7 @@ export const PasswordUpdate = () => {
                                 type="password"
                                 name="bpassword"
                                 color='success'
+                                required
                                 label="Contraseña Anterior"
                                 variant="outlined"
                                 value={bpassword}
@@ -70,6 +71,7 @@ export const PasswordUpdate = () => {
                                 type="password"
                                 name="password"
                                 color='success'
+                                required
                                 label="Nueva Contraseña"
                                 variant="outlined"
                                 value={password}
@@ -83,6 +85,7 @@ export const PasswordUpdate = () => {
                                 type="password"
                                 name="confirmNewPassword"
                                 color='success'
+                                required
                                 label="Confirmar Nueva Contraseña"
                                 variant="outlined"
                                 value={confirmNewPassword}

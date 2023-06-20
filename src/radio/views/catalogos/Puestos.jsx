@@ -59,12 +59,12 @@ export const Puestos= () => {
 
 const columns = [
 
-  { field: 'idpuesto', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
+  { field: 'idpuesto', headerClassName: "super", headerName: 'ID', minWidth: 90 },
   { field: 'nombre',headerClassName: "super", headerName: 'Puesto', flex: 1, minWidth: 90 },
   { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Corporacion', flex: 1, minWidth: 90 },
-  { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+  { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   {
     field: 'actions',
     type: 'actions',
@@ -76,6 +76,7 @@ const columns = [
         icon={<Edit />}
         label="Delete"
         onClick={cambiar}
+        color="warning"
       />,
       <IconButton
       color="inherit"

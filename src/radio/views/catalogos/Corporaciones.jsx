@@ -56,11 +56,11 @@ export const Corporaciones= () => {
 const columns = [
 
   { field: 'idcorporaciones', headerClassName: "super", headerName: 'ID', Width: 90 },
-  { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Corporacion', flex: 1, minWidth: 200 },
+  { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Corporacion', flex: 1, minWidth: 230 },
   { field: 'siglasCorporacion',headerClassName: "super", headerName: 'Siglas', flex: 1, minWidth: 90 },
-  { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+  { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
   {
     field: 'actions',
     type: 'actions',
@@ -71,6 +71,7 @@ const columns = [
       <GridActionsCellItem
         icon={<Edit />}
         label="Delete"
+        color="warning"
         onClick={cambiar}
       />,
       <IconButton

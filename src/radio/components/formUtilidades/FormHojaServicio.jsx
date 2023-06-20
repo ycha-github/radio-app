@@ -42,7 +42,7 @@ export const FormHojaServicio = (customStyles) => {
         // fk_idradios:'1',
         // fk_accesorios:'1',
          descripcion:'',
-         entrego_equipo:'',
+         entrego_equipo:false,
         // fecha_entrega:'',
         // fk_supervisortec:'1',
         // usuario_servicio:'',
@@ -131,7 +131,7 @@ export const FormHojaServicio = (customStyles) => {
 
     useEffect(() => {
         selectUsuarios();
-        selectAsignacionesPorRfsi(inputValue2,inputValue);
+        //selectAsignacionesPorRfsi(inputValue2,inputValue);
 
     }, [])
     // useEffect(() => {
@@ -653,9 +653,9 @@ export const FormHojaServicio = (customStyles) => {
                                 onChange={handleInputChange}
                                 variant="outlined"
                                 multiline
-                                label="Descripcion"
                                 rows={3}
                                 inputProps={{ maxLength: 250 }}
+                                label="Descripcion"
                                 />
                             </Grid>
                                             </Grid>

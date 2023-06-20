@@ -168,18 +168,22 @@ const styles = StyleSheet.create({
   });
 
 export const CartaFijo = ({datos, formato}) => {
-
-    let fecha = new Date(datos.fecha_asignacion);
+     //let x=  datos.fecha_asignacion.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
+     console.log(formato);
+     let info ;
+     datos.fecha_asignacion === null? info= "":
+     info = datos.fecha_asignacion.split('-').join('/');
+    let fecha = new Date(info);
     let options = { day: 'numeric', month: 'long', year: 'numeric' }
-    let fechaAsignacion = fecha.toLocaleString('es-MX', options);     
-
+    let fechaAsignacion = fecha.toLocaleString('es-MX', options); 
+    console.log(datos.fecha_asignacion)   
   return (
     <Document>
     <Page size="letter" style={styles.page}>
       <View >
         <Text style={styles.title} >Carta Responsiva</Text>
-        <Image style={styles.image} src={"http://localhost:8000/api/v0/documentos/users/27"} />
-        <Image style={styles.image2} src={"http://localhost:8000/api/v0/documentos/users/26"} />
+        <Image style={styles.image} src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_c4}`} />
+        <Image style={styles.image2} src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} />
       </View>
       <View style={styles.section}>
         <Text style={styles.text}> {formato[0].encabezado_carta}</Text>

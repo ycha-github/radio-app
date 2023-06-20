@@ -57,6 +57,7 @@ export const FormCorporaciones = () => {
                                 type="text"
                                 name="nombreCorporacion"
                                 color='warning'
+                                required
                                 label="Corporacion"
                                 variant="outlined"
                                 value={formValues.nombreCorporacion}
@@ -68,6 +69,7 @@ export const FormCorporaciones = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="siglasCorporacion"
+                                required
                                 color='warning'
                                 label="Siglas"
                                 variant="outlined"

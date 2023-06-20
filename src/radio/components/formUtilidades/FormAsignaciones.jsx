@@ -4,6 +4,7 @@ import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
 import axios from 'axios';
+import { radioApi } from '../../../api';
 
 export const FormAsignaciones = ({usuario, radio}, customStyles) => {
 
@@ -14,9 +15,9 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
        usuarios_idusuarios:"",
        radios_idradios:"",
        rfsi:"",
-       fk_accesorio_bateria:"",
-       fk_accesorio_cargador:"",
-       fk_accesorio_gps:"",
+       fk_accesorio_bateria:null,
+       fk_accesorio_cargador:null,
+       fk_accesorio_gps:null,
        funda: false,
        antena: false,
        bocina: false,
@@ -27,7 +28,8 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
        cofre: false,
        porta_caratula: false,
        cuello_cisne: false,
-       fk_vehiculo:"",
+       fk_vehiculo:null,
+       fecha_asignacion:"",
        estatus:  "",
        createdAt: "",
        updatedAt: "",
@@ -53,21 +55,21 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
     }, [accesoriosFiltrado])
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/v0/usuarios').
+        radioApi.get('/usuarios').
             then((response) => {
                 setTableData(response.data);
             });
         }, []);
 
         useEffect(() => {
-            axios.get('http://localhost:8000/api/v0/radios/filtrado').
+            radioApi.get('/radios/filtrado').
                 then((response) => {
                     setTableSue(response.data);
                 });
             }, []);
 
         useEffect(() => {
-            axios.get('http://localhost:8000/api/v0/vehiculos/estatus').
+            radioApi.get('/vehiculos/estatus').
                 then((response) => {
                     setTableVehi(response.data);
                 });
@@ -91,8 +93,8 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
     const onSubmit = async (event) => {
         event.preventDefault();
         //setFormSubmitted(true);
-        //console.log(formValues)
-        if (formValues.estatus.length <= 0) return;
+        console.log(formValues);
+        //if (formValues.estatus.length <= 0) return;
         console.log(formValues)
         await startSavingEvent(formValues);
         await cambiarSue(formValues.radios_idradios);
@@ -114,6 +116,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                         (<Grid item xs={6}>
                             <Autocomplete
                             name="usuarios_idusuarios"
+                            required
                             value={formValues}
                             sx={{ width: 300, mb:1 }}
                             onChange={(event, newFormValues2) => {
@@ -140,6 +143,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             (<Grid item xs={6}>
                                 <Autocomplete
                                 name="usuarios_idusuarios"
+                                required
                                 options={tableData}
                                 getOptionLabel={(tableData) => tableData.nombre +" "+ tableData.apellido_pat +" "+ tableData.apellido_mat || ""}
                                 sx={{ width: 300, mb:1 }}
@@ -157,6 +161,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                         (<Grid item xs={6}>
                             <Autocomplete
                                     name="radios_idradios"
+                                    required
                                     value={formValues}
                                     sx={{ width: 300, mb:1 }}
                                     onChange={(event, newFormValues1) => {
@@ -183,6 +188,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             (<Grid item xs={6}>
                                 <Autocomplete
                                         name="radios_idradios"
+                                        required
                                         options={tableSue}
                                         getOptionLabel={(tableSue) => tableSue.serie || ""}
                                         sx={{ width: 300, mb:1 }}
@@ -201,6 +207,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     id="rfsi"
                                     sx={{ border: 'none', mb:1,  width: 300 }}
                                     type="text"
+                                    required
                                     name="rfsi"
                                     color='secondary'
                                     label="RFSI"
@@ -338,15 +345,18 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         getOptionLabel={(accesoriosFiltradoGps) => accesoriosFiltradoGps.serie_gps || ""}
                                         sx={{ width: 300, mb:1 }}
                                         onChange={(event, newFormValues) => {
+                                            
                                             setFormValues({
                                                 ...formValues,
                                                 ['fk_accesorio_gps']: newFormValues.idaccesorios,
-                                            });
+                                            })
+
                                         }}
                                         renderInput={(params) => <TextField  {...params} variant="outlined" label="Gps" />}       
                                 />
                                 </Grid>)
                             }
+                            
                             
                         <Grid item xs={3}>
                             <FormControlLabel
@@ -551,12 +561,12 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             
                                 
                             {isActualizar?
-                        (<Grid item>
+                        (<Grid item xs={4}>
                             <Autocomplete
                                 name="fk_vehiculo"
                                     value={formValues}
                                     //onClick={filtrarAccesorioGps('Gps')}
-                                    sx={{ width: 300, mb:1 }}
+                                    sx={{ width: 200, mb:1 }}
                                 onChange={(event, newFormValues5) => {
                                     setFormValues({
                                         ...formValues,
@@ -578,13 +588,13 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     renderInput={(params) => <TextField  {...params} variant="outlined" label="Placa Vehiculo" />}       
                             />
                             </Grid>):
-                            (<Grid item xs={6}>
+                            (<Grid item xs={4}>
                                 <Autocomplete
                                         name="fk_vehiculo"
                                         //onClick={filtrarAccesorioGps('Gps')}
                                         options={tableVehi}
                                         getOptionLabel={(tableVehi) => tableVehi.placa || ""}
-                                        sx={{ width: 300, mb:1 }}
+                                        sx={{ width: 200, mb:1 }}
                                         onChange={(event, newFormValues) => {
                                             setFormValues({
                                                 ...formValues,
@@ -595,11 +605,25 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 />
                                 </Grid>)
                             }
-                        <Grid item xs={6}>
+                            <Grid item xs={4}>
+                                <TextField
+                                    id="fecha_asignacion-input"
+                                    sx={{ border: 'none', mb: 1, width: 200 }}
+                                    type="date"
+                                    name="fecha_asignacion"                                    
+                                    label="fecha_asignacion"
+                                    variant="outlined"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    value={formValues.fecha_asignacion}
+                                    onChange={handleInputChange} />
+                            </Grid>
+                        <Grid item xs={4}>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='secondary'>Estatus</InputLabel>
                                 <Select
-                                    sx={{ border: 'none', mb: 1, width: 300 }}
+                                    sx={{ border: 'none', mb: 1, width: 200 }}
                                     labelId="demo-simple-select-label"
                                     id="estatus-input"
                                     name="estatus"

@@ -57,6 +57,7 @@ export const FormServicio = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreServicios"
+                                required
                                 color='warning'
                                 label="Nombre de servicio"
                                 variant="outlined"
@@ -70,6 +71,7 @@ export const FormServicio = () => {
                                 type="text"
                                 name="descripcion"
                                 color='warning'
+                                multiline
                                 label="Descripcion"
                                 variant="outlined"
                                 value={formValues.descripcion}
@@ -92,7 +94,7 @@ export const FormServicio = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" onClick={ () => mostrarGuardar() } >
+                        <Button variant="contained" color="warning" type="submit" sx={{  width: 300 }} onClick={ () => mostrarGuardar() } >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

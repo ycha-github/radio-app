@@ -58,6 +58,7 @@ export const FormZonasReg = () => {
                                 type="text"
                                 name="nombreZonasRegiones"
                                 color='warning'
+                                required
                                 label="Zona"
                                 variant="outlined"
                                 value={formValues.nombreZonasRegiones}
@@ -68,6 +69,7 @@ export const FormZonasReg = () => {
                                 id="descripcion-input"
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
+                                multiline
                                 name="descripcionZonasRegiones"
                                 color='warning'
                                 label="Descripcion"
@@ -92,7 +94,7 @@ export const FormZonasReg = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" onClick={() => mostrarGuardar() } >
+                        <Button variant="contained" sx={{  width: 300 }} color="warning" type="submit" onClick={() => mostrarGuardar() } >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

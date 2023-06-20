@@ -1,16 +1,47 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useUsuariosStore } from '../../../hooks/hooksCatalogo/useUsuariosStore';
 import { useModalHook } from '../../../hooks/useModalHook';
 import radioApi from '../../../api/radioApi';
+import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
 
 export const FormUsuarios = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [puestoUsuario, setPuestoUsuario] = useState([]);
    const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
-    const { activeEvent, startSavingEvent } = useUsuariosStore();
+    const { activeEvent, startSavingEvent,subirImagen,subirImagen2 } = useUsuariosStore();
+    const [archivo1, setArchivo1] = useState(
+        {
+            archivo:"",
+        });
+        const [archivo2, setArchivo2] = useState(
+        {
+            archivo:"",
+        });
+
+        const [idIne, setIdIne]= useState({});
+        const [idCuip, setIdCuip]= useState({});
+
+        useEffect(() => {
+            radioApi.get(`/documentos/ine`).
+                  then((response) => {
+                    console.log(response.data);
+                    setIdIne(response.data.documentos[0].iddocumentos);
+                  });
+              }, []);
+        useEffect(() => {
+            radioApi.get(`/documentos/cuip`).
+                  then((response) => {
+                    console.log(response.data);
+                    setIdCuip(response.data.documentos[0].iddocumentos);
+                  });
+              }, []);
+              //console.log(idIne.documentos[0].iddocumentos);
+ //         console.log(puestoUsuario)
+    //let idIneFinal=idIne.documentos[0].iddocumentos; 
+//console.log(idIne)
     const [formValues, setFormValues] = useState({
         nombre:'',
       apellido_pat:'',
@@ -19,12 +50,15 @@ export const FormUsuarios = () => {
       cuip:'',
       clave_elector:'',
       imagen_ine:'',
+      fk_documento_ine:null,
       imagen_cuip:'',
+      fk_documento_cuip:null,
       titulo:'',
       estatus:'',
       createdAt:'',
       updatedAt:'',
     });
+    
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -40,24 +74,30 @@ export const FormUsuarios = () => {
     };
 
     useEffect(() => {
-        radioApi.get(`/puestos`).
+        radioApi.get(`/puestos/estatus/`).
               then((response) => {
                 setPuestoUsuario(response.data);
               });
           }, []);
-          console.log(puestoUsuario)
-    
+
+          
     const onSubmit = async (event) => {
         //console.log(event)
         event.preventDefault();
         setFormSubmitted(true);
-
         if (formValues.nombre.length <= 0) return;
         console.log(formValues);
         //TODO:
+        const formData = new FormData()
+        formData.append('archivo', archivo1.archivo)
+        subirImagen(formData, formValues);
+        const formData2 = new FormData()
+        formData2.append('archivo', archivo2.archivo)
+        subirImagen2(formData2);
         await startSavingEvent(formValues);
         CloseModal();
         setFormSubmitted(false);
+       
     };
     const btn =()=>{
         mostrarGuardar();
@@ -76,6 +116,7 @@ export const FormUsuarios = () => {
                                 type="text"
                                 name="nombre"
                                 color='warning'
+                                required
                                 label="Nombre"
                                 variant="outlined"
                                 value={formValues.nombre}
@@ -87,6 +128,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="apellido_pat"
+                                required
                                 color='warning'
                                 label="Apellido Paterno"
                                 variant="outlined"
@@ -99,6 +141,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="apellido_mat"
+                                required
                                 color='warning'
                                 label="Apellido Materno"
                                 variant="outlined"
@@ -106,12 +149,13 @@ export const FormUsuarios = () => {
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item >
-                            <FormControl fullWidth sx={{ border: 'none', mt: 1, mb: 1, width: 400 }}>
+                            <FormControl fullWidth sx={{ border: 'none',  mb: 1, width: 400 }}>
                                 <InputLabel id="fk_puesto-input" color='warning'>Puesto</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="fk_puesto-input"
                                     name="fk_puesto"
+                                    required
                                     color='warning'
                                     value={formValues.fk_puesto}
                                     label="Puesto"
@@ -129,6 +173,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="cuip"
+                                required
                                 color='warning'
                                 label="Cuip"
                                 variant="outlined"
@@ -141,6 +186,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="clave_elector"
+                                required
                                 color='warning'
                                 label="Clave Elector"
                                 variant="outlined"
@@ -148,28 +194,92 @@ export const FormUsuarios = () => {
                                 onChange={handleInputChange} />
                         </Grid>
                         <Grid item>
-                            <TextField
-                                id="imagen_ine-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                type="text"
-                                name="imagen_ine"
-                                color='warning'
-                                label="Imagen Ine"
-                                variant="outlined"
-                                value={formValues.imagen_ine}
-                                onChange={handleInputChange} />
+                        <Box sx={{ border: '1px solid', width: 400, borderRadius: 2, borderColor: 'rgb(192, 192, 192)',  mb: 1, pl:1 }}>
+                                            <TextField
+                                                id="imagen_ine-input"
+                                                type="file"
+                                                name="imagen_ine"
+                                                color={"warning"}
+                                                label="Imagen INE"
+                                                variant="standard"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                InputProps={{
+                                                    disableUnderline: true,
+                                                }}
+                                                onChange={({target})=>{
+                                                    console.log(target.files);
+                                                    setFormValues({
+                                                        ...formValues,
+                                                        ['imagen_ine']: target.value,
+                                                        //["fk_documento_ine"]:idIne,
+                                                        
+                                                    });
+                                                    //subirImagen(event.target.files)
+                                                    setArchivo1({
+                                                        ...archivo1,
+                                                       ['archivo']: target.files[0]});
+                                                }}
+                                            />
+                                           <TextField 
+                                                disabled
+                                                 id='logo_ssypca-input'
+                                                type="text"
+                                                variant='standard'
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                InputProps={{
+                                                    disableUnderline: true,
+                                                }}
+                                               value={formValues.imagen_ine}
+                                            />
+                                        </Box>
                         </Grid>
                         <Grid item>
-                            <TextField
-                                id="imagen_cuip-input"
-                                sx={{ border: 'none', mb: 1, width: 400 }}
-                                type="text"
-                                name="imagen_cuip"
-                                color='warning'
-                                label="Imagen Cuip"
-                                variant="outlined"
-                                value={formValues.imagen_cuip}
-                                onChange={handleInputChange} />
+                        <Box sx={{ border: '1px solid', width: 400, borderRadius: 2, borderColor: 'rgb(192, 192, 192)',  mb: 1, pl:1 }}>
+                                            <TextField
+                                                id="imagen_cuip-input"
+                                                type="file"
+                                                name="imagen_cuip"
+                                                color={"warning"}
+                                                label="Imagen INE"
+                                                variant="standard"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                InputProps={{
+                                                    disableUnderline: true,
+                                                }}
+                                                onChange={({target})=>{
+                                                    console.log(target.files);
+                                                    setFormValues({
+                                                        ...formValues,
+                                                        ['imagen_cuip']: target.value,
+                                                        //["fk_documento_cuip"]:idCuip,
+                                                        
+                                                    });
+                                                    //subirImagen(event.target.files)
+                                                    setArchivo2({
+                                                        ...archivo2,
+                                                       ['archivo']: target.files[0]});
+                                                }}
+                                            />
+                                           <TextField 
+                                                disabled
+                                                 id='logo_ssypca-input'
+                                                type="text"
+                                                variant='standard'
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                InputProps={{
+                                                    disableUnderline: true,
+                                                }}
+                                               value={formValues.imagen_cuip}
+                                            />
+                                        </Box>
                         </Grid>
                         <Grid item>
                             <TextField
@@ -177,6 +287,7 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="titulo"
+                                required
                                 color='warning'
                                 label="Titulo"
                                 variant="outlined"
@@ -200,7 +311,7 @@ export const FormUsuarios = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button variant="contained" color="warning" type="submit" onClick={() => mostrarGuardar()}>
+                        <Button variant="contained" sx={{  width: 400 }} color="warning" type="submit" onClick={() => mostrarGuardar()}>
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

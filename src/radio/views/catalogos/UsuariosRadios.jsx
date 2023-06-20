@@ -1,10 +1,13 @@
 import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
-import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Block, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useUsuariosStore } from '../../../hooks/hooksCatalogo/useUsuariosStore';
 import { useEffect, useState } from 'react';
 import { FormUsuarios } from '../../components/formCat/FormUsuarios';
+import { VerPdf } from '../utilidades/VerPdf';
+import radioApi from '../../../api/radioApi';
+
 
 const colorClose=()=>{
   return <Close color='error'/>
@@ -17,11 +20,17 @@ export const UsuariosRadios= () => {
   const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useUsuariosStore();
   const { OpenModal, mostrarActualizar } = useModalHook();
   const [state, setState] =useState([]);
+  const [abrirPdf, setAbrirPdf]= useState(false);
+  const [enviarIdImg, setEnviarIdImg]= useState({});
+  const [idEnviado, setIdEnviado]= useState({});
+  
 
   useEffect(() => {
     startLoadingEvents()
   }, [])
   
+  
+
   const newRow =()=>{
     setActiveEvent({
       nombre:'',
@@ -31,13 +40,16 @@ export const UsuariosRadios= () => {
       cuip:'',
       clave_elector:'',
       imagen_ine:'',
+      fk_documento_ine:null,
       imagen_cuip:'',
+      fk_documento_cuip:null,
       titulo:'',
       estatus:'',
       createdAt:'',
       updatedAt:'',
     })
     OpenModal();
+    setAbrirPdf(false);
   }
 
   const handleChange =async (event,r) => {
@@ -47,13 +59,26 @@ export const UsuariosRadios= () => {
   };
 
   const cambiar = ( ) =>  {
+    setAbrirPdf(false)
     OpenModal();
     mostrarActualizar();
   }
+  const verDocIne = (event ) =>  {
+    setAbrirPdf(true);
+    OpenModal();
+    setIdEnviado("fk_documento_ine")
+  }
+  const verDocCUIP = (event ) =>  {
+    setAbrirPdf(true);
+    OpenModal();
+    setIdEnviado("fk_documento_cuip")
+  }
 
   const onSelect = ( event ) =>  {
-    console.log(event.row)
+    //console.log(event.row+`${enviarIdImg}`)
+    //console.log(`event.row.enviarIdImg()`)
     setActiveEvent( event.row );
+    setEnviarIdImg(event.row);
   }
  const theme = createTheme(
   esES,
@@ -62,18 +87,50 @@ export const UsuariosRadios= () => {
 const columns = [
 
   { field: 'idusuarios', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
-  { field: 'nombre',headerClassName: "super", headerName: 'Nombre', flex: 1, minWidth: 90 },
-  { field: 'apellido_pat',headerClassName: "super", headerName: 'Apellido Paterno', flex: 1, minWidth: 90 },
-  { field: 'apellido_mat',headerClassName: "super", headerName: 'Apellido Materno', flex: 1, minWidth: 90 },
-  { field: 'nombrePuesto',headerClassName: "super", headerName: 'Puesto', flex: 1, minWidth: 90 },
-  { field: 'cuip',headerClassName: "super", headerName: 'Cuip', flex: 1, minWidth: 90 },
-  { field: 'clave_elector',headerClassName: "super", headerName: 'Clave Elector', flex: 1, minWidth: 90 },
-  { field: 'imagen_ine',headerClassName: "super", headerName: 'Imagen Ine', flex: 1, minWidth: 90 },
-  { field: 'imagen_cuip',headerClassName: "super", headerName: 'Imagen Cuip', flex: 1, minWidth: 90 },
-  { field: 'titulo',headerClassName: "super", headerName: 'Titulo', flex: 1, minWidth: 90 },
+  { field: 'nombre',headerClassName: "super", headerName: 'Nombre', flex: 1, minWidth: 130 },
+  { field: 'apellido_pat',headerClassName: "super", headerName: 'Apellido Paterno', flex: 1, minWidth: 130 },
+  { field: 'apellido_mat',headerClassName: "super", headerName: 'Apellido Materno', flex: 1, minWidth: 130 },
+  { field: 'nombrePuesto',headerClassName: "super", headerName: 'Puesto', flex: 1, minWidth: 150 },
+  { field: 'cuip',headerClassName: "super", headerName: 'Cuip', flex: 1, minWidth: 190 },
+  { field: 'clave_elector',headerClassName: "super", headerName: 'Clave Elector', flex: 1, minWidth: 190 },
+  //{ field: 'imagen_ine',headerClassName: "super", headerName: 'Imagen Ine', flex: 1, minWidth: 90 },
+  //{ field: 'imagen_cuip',headerClassName: "super", headerName: 'Imagen Cuip', flex: 1, minWidth: 100 },
+  { field: 'titulo',headerClassName: "super", headerName: 'Titulo', flex: 1, minWidth: 130 },
+  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 130 },
+  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 130 },
   { field: 'estatus',type: 'boolean', headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
-  { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
-  { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
+  {
+    field: 'CUIP',
+    headerName:'Ver CUIP',
+    type: 'actions',
+    headerClassName: "super",
+    flex: 1,
+    minWidth: 90,
+    getActions: (evento) => [
+      <GridActionsCellItem
+        icon={<VisibilityOutlined />}
+        label="Ver CUIP"
+        color='warning'
+        onClick={verDocCUIP}
+      />
+  ], 
+  },
+  {
+    field: 'INE',
+    headerName:'Ver INE',
+    type: 'actions',
+    headerClassName: "super",
+    flex: 1,
+    minWidth: 90,
+    getActions: (evento) => [
+      <GridActionsCellItem
+        icon={<VisibilityOutlined />}
+        label="Ver INE"
+        color='warning'
+        onClick={verDocIne}
+      />
+  ], 
+  },
   {
     field: 'actions',
     type: 'actions',
@@ -83,7 +140,8 @@ const columns = [
     getActions: (evento) => [
       <GridActionsCellItem
         icon={<Edit />}
-        label="Delete"
+        label="Edit"
+        color='warning'
         onClick={cambiar}
       />,
       
@@ -113,7 +171,9 @@ const columns = [
         }
       }}>
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-        <FormUsuarios/>
+      
+      {abrirPdf ===true?<VerPdf enviarIdImg={enviarIdImg} idEnviado={idEnviado}  />: ""}
+      {abrirPdf=== false? <FormUsuarios/>:""}
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'warning'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
                     Nuevo
@@ -126,8 +186,8 @@ const columns = [
       autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={12}
-        rowsPerPageOptions={[12]}
+        pageSize={11}
+        rowsPerPageOptions={[11]}
         components={{
           BooleanCellFalseIcon:colorClose,
           BooleanCellTrueIcon:colorDone
