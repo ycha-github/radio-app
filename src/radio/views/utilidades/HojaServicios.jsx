@@ -2,7 +2,7 @@ import  {useState , useEffect} from "react";
 // import { useNavigate } from 'react-router-dom';
 import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, TextField } from '@mui/material';
-import { AddCircleOutlineOutlined, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Close, Done, Edit, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
 import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServicio';
@@ -21,6 +21,7 @@ const colorDone=()=>{
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useHojaServicioStore();
   const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, disableForm }=useModalHook();
   const [state, setState] =useState([]);
+  const [abrirPdf, setAbrirPdf]= useState(false);
 
   // const navigate = useNavigate();
 
@@ -112,6 +113,12 @@ const columns =  [
         label="View"
         onClick={ver}
       />,
+      <GridActionsCellItem 
+        color='secondary'
+        icon={<PrintOutlined />}
+        label="Print"
+        onClick={ver}
+      />,
       <IconButton
         size="small"
         aria-label="Estatus"
@@ -138,6 +145,7 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
+      { abrirPdf ===true?<CrearPdf datos={imprimir} formato={hojaServicios} />: <FormHojaServicio /> }
         <FormHojaServicio/>
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
