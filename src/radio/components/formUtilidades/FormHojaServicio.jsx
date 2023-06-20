@@ -157,7 +157,9 @@ export const FormHojaServicio = (customStyles) => {
 
     useEffect(() => {
         selectUsuarios();
-        selectAsignacionesPorRfsi(inputValue2,inputValue);
+        selectSupervisores();
+        selectTecnicos();
+        // selectAsignacionesPorRfsi(inputValue2,inputValue);
 
     }, [])
     // useEffect(() => {
@@ -694,64 +696,83 @@ export const FormHojaServicio = (customStyles) => {
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                            <Grid item xs={6}>
-                                            <Grid item>
-                            <FormControl fullWidth>
-                                <InputLabel id="fk_idservicios-input" color='secondary'>Servicios</InputLabel>
-                                <Select
-                                    sx={{ border: 'none', mb: 1, width: 400 }}
-                                    labelId="demo-simple-select-label"
-                                    id="fk_idservicios-input"
-                                    name="fk_idservicios"
-                                    color='secondary'
-                                    value={formValues.fk_idservicios}
-                                    label="Servicios"
-                                    onChange={handleInputChange}
-                                    >
-                                    {
-                                        selectServicio.map(elemento=>{
-                                          return <MenuItem key={elemento.idservicios} value={elemento.idservicios} >{elemento.nombreServicios}</MenuItem> 
-                                        })}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                            </Grid>
-
-                            <Grid item xs={3}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        name="entrego_equipo"
-                                        value={formValues.entrego_equipo}
-                                        checked={formValues.entrego_equipo}
-                                        //onChange={handleChange}
-                                        onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
-                                            setFormValues({
-                                                ...formValues,
-                                                ['entrego_equipo']: newFormValues,
-                                            });
-                                        }}
-                                    />
-                                }
-                                label="Entrego Equipo"
-                            />
-                                </Grid>
-
-                            <Grid item xs={6}>
-                                 
-                                <TextField
-                                name='descripcion'
-                                sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
-                                value={formValues.descripcion}
-                                onChange={handleInputChange}
-                                variant="outlined"
-                                multiline
-                                label="Descripcion"
-                                rows={3}
-                                inputProps={{ maxLength: 250 }}
-                                />
-                            </Grid>
+                                                <Grid item xs={6}>
+                                                        <FormControl sx={{ border: 'none', mb: 1, width: 400 }}>
+                                                            <InputLabel id="demo-multiple-checkbox-label"  >Servicios</InputLabel>
+                                                            <Select
+                                                                disabled={isVer}
+                                                                labelId="demo-multiple-checkbox-label"
+                                                                id="demo-multiple-checkbox"
+                                                                multiple
+                                                                value={servicio}
+                                                                onChange={handleChange}
+                                                                input={<OutlinedInput label="Servicios" />}
+                                                                renderValue={(selected) => selected.join(', ')}
+                                                                MenuProps={MenuProps}
+                                                                color='secondary'
+                                                            >
+                                                                {
+                                                                selectServicio.map((service) => 
+                                                                    { return <MenuItem key={service.nombreServicios} value={service.nombreServicios} > 
+                                                                        <Checkbox  checked={ servicio.indexOf(service.nombreServicios) > - 1 } />
+                                                                        <ListItemText primary={service.nombreServicios} />
+                                                                    </MenuItem> }
+                                                                )}  
+                                                            </Select>
+                                                        </FormControl>
+                                                </Grid>
+                                                {/* <Grid item xs={3}>
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Checkbox
+                                                                name="entrego_equipo"
+                                                                value={formValues.entrego_equipo}
+                                                                checked={formValues.entrego_equipo}
+                                                                //onChange={handleChange}
+                                                                onChange={(event, newFormValues) => {
+                                                                    console.log(newFormValues)
+                                                                    setFormValues({
+                                                                        ...formValues,
+                                                                        ['entrego_equipo']: newFormValues,
+                                                                    });
+                                                                }}
+                                                            />
+                                                        }
+                                                        label="Entrego Equipo"
+                                                    />
+                                                </Grid> */}
+                                                <Grid item xs={12}>
+                                                    <TextField
+                                                        disabled={isVer}
+                                                        name='descripcion'
+                                                        sx={{ border: 'none', mb: 1, width: 780, pr: 1 }}
+                                                        value={formValues.descripcion}
+                                                        onChange={handleInputChange}
+                                                        variant="outlined"
+                                                        multiline
+                                                        label="Descripcion de las actividades"
+                                                        rows={3}
+                                                        inputProps={{ maxLength: 250 }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControl fullWidth>
+                                                        <InputLabel id="estatus-input" color='secondary'>Estatus</InputLabel>
+                                                        <Select
+                                                            disabled={isVer}
+                                                            sx={{ border: 'none', mb: 1, width: 300 }}
+                                                            labelId="demo-simple-select-label"
+                                                            id="estatus-input"
+                                                            name="estatus"
+                                                            color='secondary'
+                                                            value={formValues.estatus}
+                                                            label="Estatus"
+                                                            onChange={handleInputChange}>
+                                                            <MenuItem value={true}>Activo</MenuItem>
+                                                            <MenuItem value={false}>Inactivo</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
                                             </Grid>
                                         </Grid>
                                     </Stack>
