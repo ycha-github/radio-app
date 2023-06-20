@@ -8,6 +8,8 @@ import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServ
 import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServicio';
 // import { render } from "react-dom";
 
+let hoy = new Date();
+let fecha = hoy.getFullYear()+"-" + (hoy.getMonth() + 1) +"-" + hoy.getDate();
 
 const colorClose=()=>{
   return <Close color='error'/>
@@ -17,7 +19,7 @@ const colorDone=()=>{
 }
   export const HojaServicios=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useHojaServicioStore();
-  const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, /*disableForm*/ }=useModalHook();
+  const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, disableForm }=useModalHook();
   const [state, setState] =useState([]);
 
   // const navigate = useNavigate();
@@ -28,22 +30,17 @@ const colorDone=()=>{
 
   const newRow =()=>{
     setActiveEvent({
-        fecha_servicio:'',
-        usuarios_idusuarios:"",
-        fk_usuario:'',
-        // fk_idservicios:'',
-        fk_idradios:'',
-        // fk_accesorios:'',
-         descripcion:'',
-         entrego_equipo:'',
-        // fecha_entrega:'',
-        // fk_supervisortec:'',
-        // usuario_servicio:'',
-        // usuario_entrega:'',
-        // fk_tecnico_entrega:'',
-        // estatus:'',
-        // createdAt: '',
-        // updatedAt: '',
+      fecha_servicio: fecha,
+      fk_idasignacion_ur: '',
+      servicios: null,
+      descripcion: '',
+      entrego_equipo: false,
+      fecha_entrega: null,
+      fk_supervisortec: '',
+      usuario_servicio: '',
+      usuario_entrega: '',
+      fk_tecnico_entrega: '',
+      estatus: '',
     })
     OpenModal();
     // mostrarGuardar();
@@ -63,10 +60,9 @@ const colorDone=()=>{
   }
 
   const ver = () =>  {
-    // disableForm();
+    disableForm();
     OpenModal();
     mostrarActualizar();
-    // navigate('../hoja-serviciof');
   }
 
   const onSelect = ( event ) =>  {
