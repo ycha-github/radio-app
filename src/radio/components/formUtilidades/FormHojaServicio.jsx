@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, Stack, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
@@ -13,6 +13,17 @@ let options = { day: 'numeric', month: 'long', year: 'numeric' }
 let fechaActual = hoy.toLocaleString('es-MX', options);
 // let fechaActual = hoy.getDate() + ' de ' + (hoy.getMonth()+1) + ' de ' + hoy.getFullYear();
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 export const FormHojaServicio = (customStyles) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -20,37 +31,30 @@ export const FormHojaServicio = (customStyles) => {
     const { activeEvent, startSavingEvent } = useHojaServicioStore();
 
     const [usuarios, setUsuarios] = useState([0]);
-    const [idUsuario, setIdUsuario] = useState(0);
+    const [supervisores, setSupervisores] = useState([0]);
+    const [tecnicos, setTecnicos] = useState([0]);
     const [inputValue, setInputValue] = useState("");
     const [inputValue2, setInputValue2] = useState('');
+    const [inputValue3, setInputValue3] = useState('');
+    const [inputValue4, setInputValue4] = useState('');
     const [ rfsiBuscar, setRfsiBuscar ] = useState([]);
     const [ selectServicio, setSelectServicio ] = useState([]);
+    const [ servicio, setServicio ] = useState([]);
     
     const [ usuarioBuscar, setUsuarioBuscar ] = useState("");
 
-    // let fechaService = fecha_servicio.toLocaleString('es-MX', options);
     const [formValues, setFormValues] = useState({
-        // fechaService: `fecha_servicio.toLocaleString('es-MX', options)`,
         fecha_servicio: '',
         fk_idasignacion_ur: '',
-        usuarios_idusuarios: "",
-        nombre_completo: '',
-        rfsi: '',
-        tipo: '',
-        // fk_corporacion: '1',
-         fk_idservicios:'',
-        // fk_idradios:'1',
-        // fk_accesorios:'1',
-         descripcion:'',
-         entrego_equipo:false,
-        // fecha_entrega:'',
-        // fk_supervisortec:'1',
-        // usuario_servicio:'',
-        // usuario_entrega:'',
-        // fk_tecnico_entrega:'1',
-        // estatus:'',
-        // createdAt: '',
-        // updatedAt: '',
+        servicios: null,
+        descripcion: '',
+        entrego_equipo: false,
+        fecha_entrega: null,
+        fk_supervisortec: '',
+        usuario_servicio: '',
+        usuario_entrega: '',
+        fk_tecnico_entrega: '',
+        estatus: '',
     });
     const [asignaciones, setAsignaciones] = useState({
         nombreCorporacion: "",
@@ -58,13 +62,12 @@ export const FormHojaServicio = (customStyles) => {
         unidad: "",
         nombreZonasRegiones: "",
         //rfsi: "",
-
     });
 
     const [ radioRfsi, setRadioRfsi ] = useState({
         tipo:"",
         serie:"",
-        inventario_interno:"",
+        inventario_segpub:"",
     });
 
     useEffect(() => {
@@ -96,6 +99,27 @@ export const FormHojaServicio = (customStyles) => {
                 console.log(error);
             });
     }
+
+    const selectSupervisores = async () => {
+        await axios.get(`http://localhost:8000/api/v0/usuarios/supervisores/${1}`).
+            then((response) => {
+                setSupervisores(response.data);
+                //console.log(response.data);
+            }).catch(error => {
+                console.log(error);
+            });
+    }
+
+    const selectTecnicos = async () => {
+        await axios.get(`http://localhost:8000/api/v0/usuarios/responsables/${1}`).
+            then((response) => {
+                setTecnicos(response.data);
+                //console.log(response.data);
+            }).catch(error => {
+                console.log(error);
+            });
+    }
+
     //console.log(formValues)
     const selectAsignacionesPorUsuario = (nombre) => {
         axios.get(`http://localhost:8000/api/v0/asig_usuarios/usuarios/${nombre}`).
@@ -116,22 +140,24 @@ export const FormHojaServicio = (customStyles) => {
                     ...formValues,
                     ['tipo']: response.data[0].tipo,
                     ['serie']: response.data[0].serie,
-                    ['inventario_interno']: response.data[0].inventario_interno,
+                    ['inventario_segpub']: response.data[0].inventario_segpub,
+                    ['fk_idasignacion_ur']: response.data[0].idasignacion,
+                    ['serie_bateria']: response.data[0].serie_bateria,
+                    // ['inventario_segpub_bateria']: response.data[0].inventario_sp_bateria,
+                    ['serie_cargador']: response.data[0].serie_cargador,
+                    // ['inventario_segpub_cargador']: response.data[0].inventario_segpub_cargador,
+                    ['serie_gps']: response.data[0].serie_gps,
+                    // ['inventario_segpub_gps']: response.data[0].inventario_segpub_gps,
                 })
-                console.log(response.data[0].tipo)
+                // console.log(response.data[0].idasignacion)
             }).catch(error => {
                 console.log(error);
             });
     }
 
-    //console.log(asignaciones);
-    //console.log(formValues);
-    //console.log(radioRfsi);
-    //console.log(inputValue);
-
     useEffect(() => {
         selectUsuarios();
-        //selectAsignacionesPorRfsi(inputValue2,inputValue);
+        selectAsignacionesPorRfsi(inputValue2,inputValue);
 
     }, [])
     // useEffect(() => {
@@ -161,6 +187,23 @@ export const FormHojaServicio = (customStyles) => {
              [target.name]: target.value,
          });
      };
+
+     const handleChange = (event) => {
+        
+        const {
+            target: { value },
+        } = event;
+        setServicio(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(', ') : value,
+            );
+            setFormValues({
+                ...formValues,
+                ['servicios'] : `${value}`,
+            });
+            console.log('value:'+ value)
+            // console.log(servicio)
+      };
 
     // const handleChangeAutocomplete = (event, value, name) => {
     //     console.log(value.idusuarios);
@@ -257,16 +300,9 @@ export const FormHojaServicio = (customStyles) => {
         CloseModal();
         setFormSubmitted(false);
     };
-
-    const btn = () => {
-        mostrarGuardar()
-    }
-
-    const cerrar = () => {
-        CloseModal();
-    }
-
-
+    
+    console.log(supervisores)
+    console.log(tecnicos)
     return (
         <>
             <ModalRadio >
@@ -281,22 +317,22 @@ export const FormHojaServicio = (customStyles) => {
 
                             <Grid container justify="center" sx={{ pr: 4 }}>
                                 <Grid item xs={12} sx={{ textAlign: 'right' }} >
-                                    <TextField variant='filled' value={!isActualizar ? 'Villahermosa, Tab. A ' + fechaActual : formValues.fechaService} sx={{ width: 330 }} /><br /><br />
+                                    <TextField variant='filled' value={!isActualizar ? 'Villahermosa, Tab. A ' + fechaActual : formValues.fecha_servicio === null ? 'Sin fecha de Servicio' :'Villahermosa, Tab. A ' + new Date(formValues.fecha_servicio.split('-').join('/')).toLocaleString('es-MX', options) } sx={{ width: 335 }} /><br /><br />
                                 </Grid>
                                 <Box sx={{ width: 1850, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
                                     <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Datos del Usuario </Typography><br />
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                                {isActualizar ? (
+                                                {isActualizar ? ( 
                                                     <Grid item xs={6}>
                                                         <Autocomplete
+                                                            disabled={isVer}
                                                             sx={{ width: 400, mb: 1 }}
                                                             id="usuarios_idusuarios-input"
                                                             name="usuarios_idusuarios"
                                                             options={usuarios}
-                                                            getOptionLabel={(usuarios) => usuarios.nombre + " " + usuarios.apellido_pat + " " + usuarios.apellido_mat || ""}
-                                                            //getOptionLabel={(usuarios) => usuarios.nombre || ""}                
+                                                            getOptionLabel={(usuarios) => usuarios.nombre + " " + usuarios.apellido_pat + " " + usuarios.apellido_mat || ""}     
                                                             value={formValues}
                                                             inputValue={inputValue}
                                                             onChange={(event, newFormValues) => {
@@ -308,7 +344,7 @@ export const FormHojaServicio = (customStyles) => {
                                                                     ['apellido_mat']: newFormValues.apellido_mat,
                                                                     ['tipo']: "",
                                                                     ['serie']: "",
-                                                                    ['inventario_interno']: "",
+                                                                    ['inventario_segpub']: "",
                                                                 });
                                                                 setAsignaciones({
                                                                     ...asignaciones,
@@ -321,7 +357,7 @@ export const FormHojaServicio = (customStyles) => {
                                                                 setRadioRfsi({
                                                                     ["tipo"]:"",
                                                                     ["serie"]:"",
-                                                                    ["inventario_interno"]:"",
+                                                                    ["inventario_segpub"]:"",
                                                                 });
                                                                 
                                                             }}
@@ -349,7 +385,7 @@ export const FormHojaServicio = (customStyles) => {
                                                                     ['usuarios_idusuarios']: newFormValues.idusuarios,
                                                                     ['tipo']: "",
                                                                     ['serie']: "",
-                                                                    ['inventario_interno']: "",
+                                                                    ['inventario_segpub']: "",
                                                                 });
                                                                 setAsignaciones({
                                                                     ...asignaciones,
@@ -362,7 +398,7 @@ export const FormHojaServicio = (customStyles) => {
                                                                 setRadioRfsi({
                                                                     ["tipo"]:"",
                                                                     ["serie"]:"",
-                                                                    ["inventario_interno"]:"",
+                                                                    ["inventario_segpub"]:"",
                                                                 });
                                                                 
 
@@ -460,7 +496,6 @@ export const FormHojaServicio = (customStyles) => {
                                             </Grid>
                                         </Grid>
                                     </Stack>
-
                                 </Box>
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
                                     <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Datos del Equipo </Typography><br />
@@ -471,7 +506,8 @@ export const FormHojaServicio = (customStyles) => {
                                             {isActualizar ? (
                                                     <Grid item xs={6}>
                                                        <Autocomplete
-                                                            sx={{ width: 400, mb: 1 }}
+                                                            disabled={isVer}
+                                                            sx={{ width: 390, mb: 1 }}
                                                             id="rfsi-input"
                                                             name="rfsi"
                                                             options={rfsiBuscar}
@@ -486,7 +522,8 @@ export const FormHojaServicio = (customStyles) => {
                                                                     ['rfsi']: newFormValues2.rfsi,
                                                                     ['tipo']: newFormValues2.tipo,
                                                                     ['serie']: newFormValues2.serie,
-                                                                    ['inventario_interno']: newFormValues2.inventario_interno,
+                                                                    ['inventario_segpub']: newFormValues2.inventario_segpub,
+                                                                    ['fk_idasignacion_ur']: newFormValues2.fk_idasignacion_ur,
                                                                 });
                                                                 //setRadioRfsi({
                                                                 //    ...radioRfsi,
@@ -505,7 +542,7 @@ export const FormHojaServicio = (customStyles) => {
                                                 ) : (
                                                     <Grid item xs={6}>
                                                         <Autocomplete
-                                                            sx={{ width: 400, mb: 1 }}
+                                                            sx={{ width: 390, mb: 1 }}
                                                             id="rfsi-input"
                                                             name="rfsi"
                                                             options={rfsiBuscar}
@@ -514,7 +551,7 @@ export const FormHojaServicio = (customStyles) => {
                                                                 setFormValues({
                                                                     ...formValues,
                                                                     ['rfsi']: newFormValues2.rfsi,
-                                                                    
+                                                                    ['fk_idasignacion_ur']: newFormValues2.fk_idasignacion_ur,
                                                                 })
                                                                 //setFormValues({
                                                                 //    ...formValues,
@@ -553,11 +590,11 @@ export const FormHojaServicio = (customStyles) => {
                                                     // onChange={handleInputChange} 
                                                     />
                                                 </Grid>
-                                                 <Grid item xs={6}>
+                                                <Grid item xs={6}>
                                                     <TextField
                                                         disabled={true}
                                                         // size='normal'
-                                                        sx={{ border: 'none', mb: 1, width: 408, pr: 1 }}
+                                                        sx={{ border: 'none', mb: 1, width: 400, pr: 1 }}
                                                         type="text"
                                                         id="serie-input"
                                                         name="serie"
@@ -572,18 +609,75 @@ export const FormHojaServicio = (customStyles) => {
                                                     // onChange={handleInputChange} 
                                                     />
                                                 </Grid>
-                                                 <Grid item xs={6}>
+                                                <Grid item xs={6}>
                                                     <TextField
                                                         disabled={true}
                                                         // size='normal'
                                                         sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
                                                         type="text"
-                                                        id="inventario_interno-input"
-                                                        name="inventario_interno"
-                                                        label="Inventario Interno"
+                                                        id="inventario_segpub-input"
+                                                        name="inventario_segpub"
+                                                        label="Inventario SSyPC"
                                                         variant="outlined"
                                                         value={
-                                                            formValues.inventario_interno
+                                                            formValues.inventario_segpub
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    // onChange={handleInputChange} 
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={true}
+                                                        // size='normal'
+                                                        sx={{ border: 'none', mb: 1, width: 400, pr: 1 }}
+                                                        type="text"
+                                                        id="serie_bateria-input"
+                                                        name="serie_bateria"
+                                                        label="Serie bateria"
+                                                        variant="outlined"
+                                                        value={
+                                                            formValues.serie_bateria
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    // onChange={handleInputChange} 
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={true}
+                                                        // size='normal'
+                                                        sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
+                                                        type="text"
+                                                        id="serie_cargador-input"
+                                                        name="serie_cargador"
+                                                        label="Serie cargador"
+                                                        variant="outlined"
+                                                        value={
+                                                            formValues.serie_cargador
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    // onChange={handleInputChange} 
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={true}
+                                                        // size='normal'
+                                                        sx={{ border: 'none', mb: 1, width: 400, pr: 1 }}
+                                                        type="text"
+                                                        id="serie_gps-input"
+                                                        name="serie_gps"
+                                                        label="Serie Gps"
+                                                        variant="outlined"
+                                                        value={
+                                                            formValues.serie_gps
                                                         }
                                                         InputLabelProps={{
                                                             shrink: true,
@@ -596,7 +690,7 @@ export const FormHojaServicio = (customStyles) => {
                                     </Stack>
                                 </Box>
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
-                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Tipo de Intervencion </Typography><br />
+                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Servicios </Typography><br />
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -653,11 +747,163 @@ export const FormHojaServicio = (customStyles) => {
                                 onChange={handleInputChange}
                                 variant="outlined"
                                 multiline
+                                label="Descripcion"
                                 rows={3}
                                 inputProps={{ maxLength: 250 }}
-                                label="Descripcion"
                                 />
                             </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Stack>
+                                </Box>
+
+                                <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
+                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Recepción de Equipo </Typography><br />
+                                    <Stack noValidate spacing={3}>
+                                        <Grid container alignItems="center" justify="center" direction="column" >
+                                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                                {isActualizar ? (
+                                                    <Grid item xs={6}>
+                                                        <Autocomplete
+                                                            disabled={isVer}
+                                                            sx={{ width: 400, mb: 1 }}
+                                                            id="fk_supervisortec-input"
+                                                            name="fk_supervisortec"
+                                                            options={supervisores}
+                                                            getOptionLabel={(usuarios) => usuarios.nombreSup + " " + usuarios.appatSup + " " + usuarios.apmatSup || ""}     
+                                                            value={formValues}
+                                                            inputValue={inputValue3}
+                                                            onChange={(event, newFormValues2) => {
+                                                                setFormValues({
+                                                                    ...formValues,
+                                                                    ['fk_supervisortec']: newFormValues2.idSup,
+                                                                    ['nombreSup']: newFormValues2.nombreSup,
+                                                                    ['appatSup']: newFormValues2.appatSup,
+                                                                    ['apmatSup']: newFormValues2.apmatSup,
+                                                                }); 
+                                                            }}
+                                                            onInputChange={(e, newInputValue2) => {
+                                                                setInputValue3(newInputValue2)
+                                                            }}
+                                                            renderInput={(params) => <TextField  {...params} variant="outlined" label="Supervisor Técnico" />}
+                                                        />
+                                                    </Grid>
+                                                ) : (
+                                                    <Grid item xs={6}>
+                                                        <Autocomplete
+                                                            sx={{ width: 400, mb: 1 }}
+                                                            id="fk_supervisortec-input"
+                                                            name="fk_supervisortec"
+                                                            options={supervisores}
+                                                            getOptionLabel={(usuarios) => usuarios.nombreSup + " " + usuarios.appatSup + " " + usuarios.apmatSup || ""}
+                                                            onChange={(event, newFormValues2) => {
+                                                                setFormValues({
+                                                                    ...formValues,
+                                                                    ['fk_supervisortec']: newFormValues2.idSup,
+                                                                });
+                                                            }}
+                                                            onInputChange={(e, newInputValue2) => {
+                                                                setInputValue(newInputValue2)
+                                                            }}
+                                                            renderInput={(params) => <TextField  {...params} variant="outlined" label="Supervisor Técnico" />}
+                                                        />
+                                                    </Grid>
+                                                )}
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={isVer}
+                                                        sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
+                                                        type="text"
+                                                        id="usuario_servicio-input"
+                                                        name="usuario_servicio"
+                                                        label="Usuario"
+                                                        variant="outlined"
+                                                        onChange={handleInputChange}
+                                                        value={
+                                                            formValues.usuario_servicio
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Stack>
+                                </Box>
+
+                                <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
+                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Entrega de Equipo </Typography><br />
+                                    <Stack noValidate spacing={3}>
+                                        <Grid container alignItems="center" justify="center" direction="column" >
+                                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={isVer}
+                                                        sx={{ border: 'none', mb: 1, width: 380}}
+                                                        type="text"
+                                                        id="usuario_entrega-input"
+                                                        name="usuario_entrega"
+                                                        label="Usuario"
+                                                        variant="outlined"
+                                                        onChange={handleInputChange}
+                                                        value={
+                                                            formValues.usuario_entrega
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                {isActualizar ? (
+                                                    <Grid item xs={6}>
+                                                        <Autocomplete
+                                                            disabled={isVer}
+                                                            sx={{ width: 400, mb: 1 }}
+                                                            id="fk_tecnico_entrega-input"
+                                                            name="fk_tecnico_entrega"
+                                                            options={tecnicos}
+                                                            getOptionLabel={(usuarios) => usuarios.nombreRes + " " + usuarios.appatRes + " " + usuarios.apmatRes || ""}     
+                                                            value={formValues}
+                                                            inputValue={inputValue4}
+                                                            onChange={(event, newFormValues4) => {
+                                                                setFormValues({
+                                                                    ...formValues,
+                                                                    ['fk_tecnico_entrega']: newFormValues4.idRes,
+                                                                    ['nombreRes']: newFormValues4.nombreRes,
+                                                                    ['appatRes']: newFormValues4.appatRes,
+                                                                    ['apmatRes']: newFormValues4.apmatRes,
+                                                                });
+                                                                console.log(inputValue4)
+                                                            }}
+                                                            onInputChange={(e, newInputValue4) => {
+                                                                setInputValue4(newInputValue4)
+                                                            }}
+                                                            renderInput={(params) => <TextField  {...params} variant="outlined" label="Técnico" />}
+                                                        />
+                                                    </Grid>
+                                                ) : (
+                                                    <Grid item xs={6}>
+                                                        <Autocomplete
+                                                            sx={{ width: 400, mb: 1 }}
+                                                            id="fk_tecnico_entrega-input"
+                                                            name="fk_tecnico_entrega"
+                                                            options={tecnicos}
+                                                            getOptionLabel={(usuarios) => usuarios.nombreRes + " " + usuarios.appatRes + " " + usuarios.apmatRes || ""}
+                                                            onChange={(event, newFormValues4) => {
+                                                                setFormValues({
+                                                                    ...formValues,
+                                                                    ['fk_tecnico_entrega']: newFormValues4.idRes,
+                                                                });
+                                                                // console.log( newFormValues.idusuarios )
+                                                            }}
+                                                            onInputChange={(e, newInputValue4) => {
+                                                                setInputValue(newInputValue4)
+                                                            }}
+                                                            renderInput={(params) => <TextField  {...params} variant="outlined" label="Técnico" />}
+                                                        />
+                                                    </Grid>
+                                                )}
                                             </Grid>
                                         </Grid>
                                     </Stack>

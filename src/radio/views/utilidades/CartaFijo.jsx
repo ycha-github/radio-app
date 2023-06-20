@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
       alignContent: 'center',
       borderStyle: "none", 
       width: "800px", 
-      borderStyle: "none", 
       margin: '15 0 15 0'
     }, 
     tableRow2: { 
