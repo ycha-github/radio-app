@@ -7,6 +7,8 @@ import { useModalHook } from '../../../hooks/useModalHook';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
 import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServicio';
 import dayjs from "dayjs";
+import { CrearPdf } from './CrearPdf';
+import radioApi from "../../../api/radioApi";
 // import { render } from "react-dom";
 
 let hoy = new Date();
@@ -24,7 +26,9 @@ const colorDone=()=>{
   const [state, setState] =useState([]);
   const [abrirPdf, setAbrirPdf]= useState(false);
   const [imprimir, setImprimir]= useState({});
+  const [configReport, setConfigReport]= useState({});
 
+  const [hServicio, setHServicio] = useState({})
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,9 +50,28 @@ const colorDone=()=>{
       estatus: '',
     })
     OpenModal();
+    setAbrirPdf(false);
     // mostrarGuardar();
     // navigate('../hoja-serviciof');
   }
+
+  useEffect(() => {
+    radioApi.get(`/configreportes/estatus`).
+          then((response) => {
+            setConfigReport(response.data);
+          });
+      }, []);
+
+      console.log(configReport.length);
+      useEffect(() => {
+        if (configReport.length > 1){
+          Swal.fire({
+            icon:'question',
+            text:'Favor de elegir el correcto ',
+            title: 'Hay mas de una configuracion de reportes con estatus activo',
+            confirmButtonText: '<a " href="http://localhost:5173/radio/config-reportes">Solucionar</a>',});
+        }
+      }, [configReport])
 
   const handleChange =async (event,r) => {
     setState({ ...state, [event.target.name]: event.target.checked });
@@ -58,6 +81,7 @@ const colorDone=()=>{
 
   const cambiar = ( ) =>  {
     OpenModal();
+    setAbrirPdf(false)
     mostrarActualizar();
     // navigate('../hoja-serviciof');
   }
@@ -68,10 +92,18 @@ const colorDone=()=>{
     mostrarActualizar();
   }
 
+  const mostrarPdf = ( event) =>  {
+    setAbrirPdf(true);
+    OpenModal();
+}
+
   const onSelect = ( event ) =>  {
     console.log(event.row)
     setActiveEvent( event.row );
+    setImprimir(event.row);
+    setHServicio(event.row );
   }
+
 
   const theme = createTheme(
     {
@@ -119,7 +151,7 @@ const columns =  [
         color='secondary'
         icon={<PrintOutlined />}
         label="Print"
-        onClick={ver}
+        onClick={mostrarPdf}
       />,
       <IconButton
         size="small"
@@ -147,8 +179,9 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-      { abrirPdf ===true?<CrearPdf datos={imprimir} formato={hojaServicios} />: <FormHojaServicio /> }
-        <FormHojaServicio/>
+      { abrirPdf ===true?<CrearPdf datoHoja={hServicio} isCartaFijo={false} formato={configReport} />: "" }
+      { abrirPdf ===false? <FormHojaServicio />:"" }
+        {/* <FormHojaServicio/> */}
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo
