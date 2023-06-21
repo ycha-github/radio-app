@@ -39,12 +39,12 @@ let idimagenCuip;
         const {data}= radioApi.put(`/usuarios/${zonasEvent.idusuarios}`,{...zonasEvent, fk_documento_ine: idimagenIne, fk_documento_cuip:idimagenCuip});
         console.log(zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= radioApi.post('/usuarios', {...zonasEvent, fk_documento_ine: idimagenIne, fk_documento_cuip:idimagenCuip});
       dispatch(onAddNewEvent({...zonasEvent, idusuarios:data.idusuarios, user}));
-      console.log(data);
-      //window.location.reload(true);
+      window.location.reload(true);
     }
   })
 }

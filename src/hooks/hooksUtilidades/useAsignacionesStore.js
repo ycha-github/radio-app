@@ -17,11 +17,12 @@ export const useAsignacionesStore= () => {
       //Actualizando
         const {data}= await  radioApi.put(`/asig_usuarios/${zonasEvent.idasignacion}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/asig_usuarios', zonasEvent);
       dispatch(onAddNewEvent({...zonasEvent, idasignacion:data.idasignacion, user}));
-      //window.location.reload(true);
+      window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{

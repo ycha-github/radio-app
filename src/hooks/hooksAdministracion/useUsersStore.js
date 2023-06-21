@@ -17,18 +17,19 @@ export const useUsersStore= () => {
       //Actualizando
         const {data}= await  radioApi.put(`/users/${zonasEvent.idusers}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/users', zonasEvent);
       dispatch(onAddNewEvent({...zonasEvent, idusers:data.idusers, user}));
       console.log(data);
-      //window.location.reload(true);
+      window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
     const {data} = await  radioApi.delete(`/users/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
-  // window.location.reload(true);
+   window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{

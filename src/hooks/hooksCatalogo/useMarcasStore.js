@@ -17,6 +17,7 @@ export const useMarcasStore = () => {
       //Actualizando
         const {data}= await  radioApi.put(`/marcas/${zonasEvent.idmarcas}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/marcas', zonasEvent);

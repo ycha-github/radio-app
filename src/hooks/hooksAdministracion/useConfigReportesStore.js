@@ -36,11 +36,12 @@ export const useConfigReportesStore = () => {
       //Actualizando
         const {data}= radioApi.put(`/configreportes/${zonasEvent.idconfigReportes}`,{...zonasEvent, fk_logo_c4: idLogoC4, fk_logo_ssypc:idLogoSsypc});
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= radioApi.post('/configreportes', {...zonasEvent, fk_logo_c4: idLogoC4, fk_logo_ssypc:idLogoSsypc});
       dispatch(onAddNewEvent({...zonasEvent, idconfigReportes:data.idconfigReportes, user}));
-      //window.location.reload(true);
+      window.location.reload(true);
     }
   })
 }

@@ -17,11 +17,12 @@ export const usePuestosStore = () => {
       //Actualizando
         const {data}= await  radioApi.put(`/puestos/${zonasEvent.idpuesto}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/puestos', zonasEvent);
       dispatch(onAddNewEvent({...zonasEvent, idpuesto:data.idpuesto, user}));
-      //window.location.reload(true);
+      window.location.reload(true);
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{

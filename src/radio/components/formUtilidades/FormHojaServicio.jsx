@@ -7,6 +7,10 @@ import axios from 'axios';
 import radioApi from '../../../api/radioApi';
 import { TextareaAutosize } from '@mui/base';
 import { styled } from '@mui/system';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs from 'dayjs';
 
 let hoy = new Date();
 let options = { day: 'numeric', month: 'long', year: 'numeric' }
@@ -49,7 +53,7 @@ export const FormHojaServicio = (customStyles) => {
         servicios: null,
         descripcion: '',
         entrego_equipo: false,
-        fecha_entrega: null,
+        fecha_entrega: "",
         fk_supervisortec: '',
         usuario_servicio: '',
         usuario_entrega: '',
@@ -69,6 +73,7 @@ export const FormHojaServicio = (customStyles) => {
         serie:"",
         inventario_segpub:"",
     });
+    const [valueFecha, setValueFecha] = useState(dayjs("2023-01-01T15:30"));
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -91,17 +96,17 @@ export const FormHojaServicio = (customStyles) => {
     
 
     const selectUsuarios = async () => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/`).
+        await radioApi.get(`/usuarios/`).
             then((response) => {
                 setUsuarios(response.data);
                 //console.log(response.data);
             }).catch(error => {
-                console.log(error);
+                //console.log(error);
             });
     }
 
     const selectSupervisores = async () => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/supervisores/${1}`).
+        await radioApi.get(`/usuarios/supervisores/${1}`).
             then((response) => {
                 setSupervisores(response.data);
                 //console.log(response.data);
@@ -111,7 +116,7 @@ export const FormHojaServicio = (customStyles) => {
     }
 
     const selectTecnicos = async () => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/responsables/${1}`).
+        await radioApi.get(`/usuarios/responsables/${1}`).
             then((response) => {
                 setTecnicos(response.data);
                 //console.log(response.data);
@@ -122,7 +127,7 @@ export const FormHojaServicio = (customStyles) => {
 
     //console.log(formValues)
     const selectAsignacionesPorUsuario = (nombre) => {
-        axios.get(`http://localhost:8000/api/v0/asig_usuarios/usuarios/${nombre}`).
+        radioApi.get(`/asig_usuarios/usuarios/${nombre}`).
             then((response) => {
                 setAsignaciones({ ...response.data[0] });
                 setRfsiBuscar(response.data)
@@ -134,7 +139,7 @@ export const FormHojaServicio = (customStyles) => {
     const selectAsignacionesPorRfsi = (rfsi, usuarioBuscar) => {
         console.log(rfsi)
         console.log(usuarioBuscar)
-        axios.get(`http://localhost:8000/api/v0/asig_usuarios/radio/${rfsi}/${usuarioBuscar}`).
+        radioApi.get(`/asig_usuarios/radio/${rfsi}/${usuarioBuscar}`).
             then((response) => {
                 setFormValues({
                     ...formValues,
@@ -303,8 +308,8 @@ export const FormHojaServicio = (customStyles) => {
         setFormSubmitted(false);
     };
     
-    console.log(supervisores)
-    console.log(tecnicos)
+    //console.log(supervisores)
+    //console.log(tecnicos)
     return (
         <>
             <ModalRadio >
@@ -852,7 +857,7 @@ export const FormHojaServicio = (customStyles) => {
                                         </Grid>
                                     </Stack>
                                 </Box>
-
+                                {isActualizar == true?
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
                                     <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Entrega de Equipo </Typography><br />
                                     <Stack noValidate spacing={3}>
@@ -880,7 +885,7 @@ export const FormHojaServicio = (customStyles) => {
                                                     <Grid item xs={6}>
                                                         <Autocomplete
                                                             disabled={isVer}
-                                                            sx={{ width: 400, mb: 1 }}
+                                                            sx={{ width: 380, mb: 1 }}
                                                             id="fk_tecnico_entrega-input"
                                                             name="fk_tecnico_entrega"
                                                             options={tecnicos}
@@ -906,7 +911,7 @@ export const FormHojaServicio = (customStyles) => {
                                                 ) : (
                                                     <Grid item xs={6}>
                                                         <Autocomplete
-                                                            sx={{ width: 400, mb: 1 }}
+                                                            sx={{ width: 380, mb: 1 }}
                                                             id="fk_tecnico_entrega-input"
                                                             name="fk_tecnico_entrega"
                                                             options={tecnicos}
@@ -918,17 +923,48 @@ export const FormHojaServicio = (customStyles) => {
                                                                 });
                                                                 // console.log( newFormValues.idusuarios )
                                                             }}
-                                                            onInputChange={(e, newInputValue4) => {
+                                                                onInputChange={(e, newInputValue4) => {
                                                                 setInputValue(newInputValue4)
                                                             }}
                                                             renderInput={(params) => <TextField  {...params} variant="outlined" label="Técnico" />}
                                                         />
                                                     </Grid>
                                                 )}
+                                                <Grid item={6}>
+                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DateTimePicker
+                                                  label="Controlled picker"
+                                                  name = "fecha_entrega"
+                                                  //inputFormat="DD/MM/YYYY HH:mm"
+                                                  color="secondary"
+                                                  value={dayjs(formValues.fecha_entrega)}
+                                                  onChange={(newValue) => {
+                                                    console.log(newValue);
+                                                    console.log(formValues.fecha_entrega)
+                                                    let x= (newValue.$M+1)+"-"+newValue.$D+"-"+newValue.$y+" "+newValue.$H+":"+newValue.$m+":"+newValue.$s
+                                                    console.log(x);
+                                                    let y= new Date(x);
+                                                    let options = { day: '2-digit', month: '2-digit', year: 'numeric' }
+                                                    let optionsTime={h24: true, hour:'2-digit', minute:'2-digit', second:'2-digit'}
+                                                    let fechaAsignacion = y.toLocaleString('es-MX', options); 
+                                                    let horaAsignacion = y.toLocaleString('es-MX', optionsTime); 
+                                                    let info = fechaAsignacion.split('/').reverse().join('-');
+                                                    console.log(fechaAsignacion);
+                                                    //setValueFecha(newValue);
+                                                    setFormValues({
+                                                        ...formValues,
+                                                        ['fecha_entrega']: info+" "+horaAsignacion,
+                                                    })}}
+                                                />
+                                                </LocalizationProvider>
+                                                </Grid>
                                             </Grid>
                                         </Grid>
                                     </Stack>
                                 </Box>
+                                :
+                                ""
+                                };
                             </Grid>
                             <Grid container justifyContent={'center'} >
                                 <Button variant="contained" color="secondary" type="submit" sx={{ width: 628, pl: 1, pr: 1 }}>

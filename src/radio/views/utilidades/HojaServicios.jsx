@@ -6,6 +6,7 @@ import { AddCircleOutlineOutlined, Close, Done, Edit, PrintOutlined, VisibilityO
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
 import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServicio';
+import dayjs from "dayjs";
 // import { render } from "react-dom";
 
 let hoy = new Date();
@@ -37,7 +38,7 @@ const colorDone=()=>{
       servicios: null,
       descripcion: '',
       entrego_equipo: false,
-      fecha_entrega: null,
+      fecha_entrega: "",
       fk_supervisortec: '',
       usuario_servicio: '',
       usuario_entrega: '',
@@ -100,7 +101,7 @@ const columns =  [
     type: 'actions',
     headerClassName: "super",
     flex: 1,
-    minWidth: 150,
+    minWidth: 190,
     getActions: (evento) => [
       <GridActionsCellItem
         color='secondary'

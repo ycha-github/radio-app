@@ -17,6 +17,7 @@ export const useVehiculosStore = () => {
       //Actualizando
         const {data}= await  radioApi.put(`/vehiculos/${zonasEvent.idvehiculo}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/vehiculos', zonasEvent);

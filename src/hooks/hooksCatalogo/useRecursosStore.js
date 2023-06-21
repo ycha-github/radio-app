@@ -17,6 +17,7 @@ export const useRecursosStore = () => {
       //Actualizando
         const {data}= await  radioApi.put(`/recursoscompras/${zonasEvent.idrecursoCompras}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/recursoscompras', zonasEvent);

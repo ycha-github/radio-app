@@ -17,6 +17,7 @@ export const useAsignacionesStore= () => {
       //Actualizando
         const {data}= await  radioApi.put(`/asig_accesorios/${zonasEvent.idasig_tipo}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/asig_accesorios', zonasEvent);

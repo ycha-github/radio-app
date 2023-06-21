@@ -17,6 +17,7 @@ export const useRolStore= () => {
       //Actualizando
         const {data}= await  radioApi.put(`/roles/${zonasEvent.idrol}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/roles', zonasEvent);

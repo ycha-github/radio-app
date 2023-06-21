@@ -17,6 +17,7 @@ export const useRadiosStore = () => {
       //Actualizando
         const {data}= await  radioApi.put(`/radios/${zonasEvent.idradios}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/radios', zonasEvent); 

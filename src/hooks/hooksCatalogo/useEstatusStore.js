@@ -17,6 +17,7 @@ export const useEstatusStore = () => {
       //Actualizando
         const {data}= await  radioApi.put(`/sue/${zonasEvent.id_sue}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/sue', zonasEvent);
@@ -27,7 +28,7 @@ export const useEstatusStore = () => {
    const deleteEvent=async(zonasEvent, state)=>{
     const {data}= await  radioApi.delete(`/sue/${zonasEvent.id_sue}`);
     dispatch(onUpdateEvent({zonasEvent,user}));
-    //window.location.reload(true);
+    window.location.reload(true);
     }
 
     const startLoadingEvents= async ()=>{
