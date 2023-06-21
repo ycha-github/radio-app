@@ -33,6 +33,7 @@ const NuevoFooter=()=>{
  const [abrirPdf, setAbrirPdf]= useState(false);
  const [imprimir, setImprimir]= useState({});
 
+ 
   const [configReport, setConfigReport] = useState({})
   const navigate = useNavigate();
  
@@ -45,9 +46,9 @@ const NuevoFooter=()=>{
       usuarios_idusuarios:"",
        radios_idradios:"",
        rfsi:"",
-       fk_accesorio_bateria:null,
-       fk_accesorio_cargador:null,
-       fk_accesorio_gps:null,
+       fk_accesorio_bateria:"",
+       fk_accesorio_cargador:"",
+       fk_accesorio_gps:"",
        funda:false,
        antena: false,
        bocina: false,
@@ -58,8 +59,7 @@ const NuevoFooter=()=>{
        cofre: false,
        porta_caratula: false,
        cuello_cisne: false,
-       fk_vehiculo:null,
-       fecha_asignacion:"",
+       fk_vehiculo:"",
        estatus:  "",
        createdAt: "",
        updatedAt: "",
@@ -78,6 +78,7 @@ const NuevoFooter=()=>{
           });
       }, []);
 
+      console.log(configReport.length);
       useEffect(() => {
         if (configReport.length > 1){
           Swal.fire({
@@ -100,7 +101,7 @@ const NuevoFooter=()=>{
     //  tableAccesorio.map((accesorio) => {
     //      return recibir(accesorio.idaccesorios, accesorio.accesorio);
     //  })
-    
+
   const handleChange =async (event,r) => {
     setState({ ...state, [event.target.name]: event.target.checked });
     //setState(event.target.checked);
@@ -163,9 +164,9 @@ const columns =  [
   { field: 'clave_elector', headerClassName: "super", headerName: 'Clave Elector' ,width: 200,  },
   { field: 'serie_radio',headerClassName: "super", headerName: 'Radio Asignado',flex: 2 , minWidth: 90 },
   { field: 'rfsi',headerClassName: "super", headerName: 'RFSI',flex: 2 , minWidth: 90 },
+  { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 2, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 2, minWidth: 120 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 2, minWidth: 120 },
-  { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 2, minWidth: 90 },
   {
     field: 'actions',
     type: 'actions',
@@ -234,7 +235,7 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-      {abrirPdf ===true?<CrearPdf datos={imprimir} formato={configReport} />: ""}
+      {abrirPdf ===true?<CrearPdf datos={imprimir} isCartaFijo={true} formato={configReport} />: ""}
       {abrirPdf=== false?<FormAsignaciones   />:""}
       {/* <FormAsignacionGeneral/> */}
       {/* {let printData = document.getElementById("datagrid1").innerHTML} */}

@@ -91,7 +91,7 @@ export const FormHojaServicio = (customStyles) => {
     
 
     const selectUsuarios = async () => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/`).
+        await radioApi.get(`/usuarios/`).
             then((response) => {
                 setUsuarios(response.data);
                 //console.log(response.data);
@@ -101,7 +101,7 @@ export const FormHojaServicio = (customStyles) => {
     }
 
     const selectSupervisores = async () => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/supervisores/${1}`).
+        await radioApi.get(`/usuarios/supervisores/${1}`).
             then((response) => {
                 setSupervisores(response.data);
                 //console.log(response.data);
@@ -111,7 +111,7 @@ export const FormHojaServicio = (customStyles) => {
     }
 
     const selectTecnicos = async () => {
-        await axios.get(`http://localhost:8000/api/v0/usuarios/responsables/${1}`).
+        await radioApi.get(`/usuarios/responsables/${1}`).
             then((response) => {
                 setTecnicos(response.data);
                 //console.log(response.data);
@@ -122,7 +122,7 @@ export const FormHojaServicio = (customStyles) => {
 
     //console.log(formValues)
     const selectAsignacionesPorUsuario = (nombre) => {
-        axios.get(`http://localhost:8000/api/v0/asig_usuarios/usuarios/${nombre}`).
+        radioApi.get(`/asig_usuarios/usuarios/${nombre}`).
             then((response) => {
                 setAsignaciones({ ...response.data[0] });
                 setRfsiBuscar(response.data)
@@ -134,7 +134,7 @@ export const FormHojaServicio = (customStyles) => {
     const selectAsignacionesPorRfsi = (rfsi, usuarioBuscar) => {
         console.log(rfsi)
         console.log(usuarioBuscar)
-        axios.get(`http://localhost:8000/api/v0/asig_usuarios/radio/${rfsi}/${usuarioBuscar}`).
+        radioApi.get(`/asig_usuarios/radio/${rfsi}/${usuarioBuscar}`).
             then((response) => {
                 setFormValues({
                     ...formValues,

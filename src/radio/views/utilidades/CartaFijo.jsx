@@ -181,8 +181,8 @@ export const CartaFijo = ({datos, formato}) => {
     <Page size="letter" style={styles.page}>
       <View >
         <Text style={styles.title} >Carta Responsiva</Text>
-        <Image style={styles.image} src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_c4}`} />
-        <Image style={styles.image2} src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} />
+        <Image style={styles.image2} src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_c4}`} />
+        <Image style={styles.image} src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} />
       </View>
       <View style={styles.section}>
         <Text style={styles.text}> {formato[0].encabezado_carta}</Text>
