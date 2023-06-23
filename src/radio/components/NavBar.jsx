@@ -11,7 +11,7 @@ export const NavBar = ({ drawerWidth = 240 }) => {
             }
         }}
     >
-        <Toolbar>
+        <Toolbar className='navbar'>
             <IconButton
                 color='inherit'
                 edge="start"

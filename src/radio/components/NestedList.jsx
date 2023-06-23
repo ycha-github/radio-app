@@ -16,17 +16,18 @@ export const NestedList = () => {
       component="nav"
       aria-labelledby="nested-list-subheader" 
     >
-{user.rol=== 1? 
+{user.rol===1? 
   <MenuAdmin />
   :
   ""
 } 
-      
-
+{user.rol===4 ? "" :
       <MenuCatalogos /> 
-
+}
+{user.rol===4 ? "" :
       <MenuUtilidades />
-
+}
+{user.rol===4 ? "" :
       <ListItemButton onClick={() => navigate('pass-update')} >
         <ListItemIcon>
           <IconButton color='success'>
@@ -35,7 +36,7 @@ export const NestedList = () => {
         </ListItemIcon>
         <ListItemText primary="Cambiar contraseña" />
       </ListItemButton>
-
+}
       <ListItemButton onClick={startLogout}>
         <ListItemIcon>
           <IconButton color='error'>
@@ -46,5 +47,8 @@ export const NestedList = () => {
       </ListItemButton>
 
     </List>
+
+
+
   )
 }

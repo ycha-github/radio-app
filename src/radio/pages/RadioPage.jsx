@@ -8,6 +8,7 @@ import { PDFViewer } from '@react-pdf/renderer';
 import { useAsignacionesStore } from '../../hooks/hooksUtilidades/useAsignacionesStore';
 import { useState } from 'react';
 import { useAuthStore } from '../../hooks';
+import { ConsultaPo } from '../views/utilidades/ConsultaPo';
 
 export const RadioPage = () => {
 
@@ -23,31 +24,32 @@ export const RadioPage = () => {
 
       <Routes>
 
-          <Route path="users" element={user.rol=== 1?  <Users />:<Asignaciones /> } />
-          <Route path="roles" element={user.rol=== 1?  <Roles />:<Asignaciones /> } />
+          <Route path="users" element={ user.rol=== 1 ?  <Users /> : <Asignaciones /> } />
+          <Route path="roles" element={ user.rol=== 1 ?  <Roles /> : <Asignaciones /> } />
           
           
           {/* <Route path="visitas" element={ <RegistroVisitas /> } /> */}
 
-          <Route path="accesorios" element={ <Accesorios/> } />
-          <Route path="corporaciones" element={ <Corporaciones/> }/>
-          <Route path="marcas" element={ <Marcas/> }/>
-          <Route path="puestos" element={ <Puestos /> }/>
-          <Route path="radios" element={ <Radios /> }/>
-          <Route path="recursos" element={ <RecursoCompras /> }/>
-          <Route path="servicios" element={ <Servicios /> }/>
-          <Route path="usuarios-radios" element={ <UsuariosRadios /> }/>
-          <Route path="vehiculos" element={ <Vehiculos /> }/>
-          <Route path="zonas-regiones" element={ <ZonasRegiones /> }/>
+          <Route path="accesorios" element={ user.rol===4 ? <ConsultaPo /> : <Accesorios/> } />
+          <Route path="corporaciones" element={ user.rol===4 ? <ConsultaPo /> : <Corporaciones/> }/>
+          <Route path="marcas" element={ user.rol===4 ? <ConsultaPo /> : <Marcas/> }/>
+          <Route path="puestos" element={ user.rol===4 ? <ConsultaPo /> : <Puestos /> }/>
+          <Route path="radios" element={ user.rol===4 ? <ConsultaPo /> : <Radios /> }/>
+          <Route path="recursos" element={ user.rol===4 ? <ConsultaPo /> : <RecursoCompras /> }/>
+          <Route path="servicios" element={ user.rol===4 ? <ConsultaPo /> : <Servicios /> }/>
+          <Route path="usuarios-radios" element={ user.rol===4 ? <ConsultaPo /> : <UsuariosRadios /> }/>
+          <Route path="vehiculos" element={ user.rol===4 ? <ConsultaPo /> : <Vehiculos /> }/>
+          <Route path="zonas-regiones" element={ user.rol===4 ? <ConsultaPo /> : <ZonasRegiones /> }/>
 
-          <Route path="/" element={ <Asignaciones /> }/>
-          <Route path="asignaciones" element={ <FormAsignaciones/> }/>
-          <Route path="hoja-servicio" element={ <HojaServicios /> }/>
-          <Route path="mostrar-pdf" element={<CrearPdf datos= {activeEvent}/> }/>
+          <Route path="/" element={ user.rol===4 ? <ConsultaPo /> : <Asignaciones /> }/>
+          <Route path="asignaciones" element={ user.rol===4 ? <ConsultaPo /> : <FormAsignaciones/> }/>
+          <Route path="consulta-po" element={ user.rol===4 ? <ConsultaPo /> : < ConsultaPo /> }/>
+          <Route path="hoja-servicio" element={ user.rol===4 ? <ConsultaPo /> : <HojaServicios /> }/>
+          <Route path="mostrar-pdf" element={ user.rol===4 ? <ConsultaPo /> : <CrearPdf datos= {activeEvent}/> }/>
           {/* <Route path="hoja-serviciof" element={ <FormHojaServicio /> }/> */}
-          <Route path="config-reportes" element={user.rol=== 1? <ConfigReportes />:<Asignaciones /> }/>
+          <Route path="config-reportes" element={user.rol=== 1 ? <ConfigReportes /> : <Asignaciones /> }/>
 
-          <Route path="pass-update" element={ <PasswordUpdate /> }/>
+          <Route path="pass-update" element={ user.rol===4 ? <ConsultaPo /> : <PasswordUpdate /> }/>
 
      </Routes>
 
