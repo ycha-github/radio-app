@@ -76,7 +76,7 @@ export const FormCorporaciones = () => {
                                 value={formValues.siglasCorporacion}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
@@ -92,7 +92,7 @@ export const FormCorporaciones = () => {
                                     <MenuItem value={false}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar} sx={{  width: 300 }} >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>

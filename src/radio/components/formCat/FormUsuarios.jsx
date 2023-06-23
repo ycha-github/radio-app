@@ -224,7 +224,7 @@ export const FormUsuarios = () => {
                                             />
                                            <TextField 
                                                 disabled
-                                                 id='logo_ssypca-input'
+                                                 id='imagen_ine-input'
                                                 type="text"
                                                 variant='standard'
                                                 InputLabelProps={{
@@ -244,7 +244,7 @@ export const FormUsuarios = () => {
                                                 type="file"
                                                 name="imagen_cuip"
                                                 color={"warning"}
-                                                label="Imagen INE"
+                                                label="Imagen CUIP"
                                                 variant="standard"
                                                 InputLabelProps={{
                                                     shrink: true,
@@ -268,7 +268,7 @@ export const FormUsuarios = () => {
                                             />
                                            <TextField 
                                                 disabled
-                                                 id='logo_ssypca-input'
+                                                 id='imagen_cuip-input'
                                                 type="text"
                                                 variant='standard'
                                                 InputLabelProps={{
@@ -294,7 +294,7 @@ export const FormUsuarios = () => {
                                 value={formValues.titulo}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
@@ -310,7 +310,7 @@ export const FormUsuarios = () => {
                                     <MenuItem value={false}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         <Button variant="contained" sx={{  width: 400 }} color="warning" type="submit" onClick={() => mostrarGuardar()}>
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>

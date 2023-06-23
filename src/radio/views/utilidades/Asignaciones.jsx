@@ -1,5 +1,5 @@
 import {useState , useEffect} from "react";
-import { DataGrid, esES, GridActionsCellItem, GridPagination, GridRow, GridToolbarExport } from '@mui/x-data-grid'; 
+import { DataGrid, esES, GridActionsCellItem, GridPagination, GridRow, GridToolbar, GridToolbarExport, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, Toolbar, paginationClasses } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit, Javascript, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -28,7 +28,7 @@ const NuevoFooter=()=>{
  
   export const Asignaciones=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useAsignacionesStore();
-  const {OpenModal, mostrarActualizar}=useModalHook();
+  const {OpenModal, mostrarActualizar,disableForm}=useModalHook();
   const [state, setState] =useState([]);
  const [abrirPdf, setAbrirPdf]= useState(false);
  const [imprimir, setImprimir]= useState({});
@@ -60,7 +60,8 @@ const NuevoFooter=()=>{
        porta_caratula: false,
        cuello_cisne: false,
        fk_vehiculo:"",
-       estatus:  "",
+       fecha_asignacion:"",
+       estatus:  1,
        createdAt: "",
        updatedAt: "",
     })
@@ -133,6 +134,12 @@ const NuevoFooter=()=>{
   //  imprimir= "dfsdf"
   //  console.log(imprimir)
   //}
+  const ver = () =>  {
+    disableForm();
+    OpenModal();
+    mostrarActualizar();
+  }
+
 
   const mostrarPdf = ( event) =>  {
     setAbrirPdf(true);
@@ -146,6 +153,19 @@ const NuevoFooter=()=>{
     setActiveEvent( event.row );
     setImprimir(event.row)
     
+  }
+
+  function QuickSearchToolbar() {
+    return (
+      <Box
+        sx={{
+          p: 0.5,
+          pb: 0,
+        }}
+      >
+        <GridToolbarQuickFilter />
+      </Box>
+    );
   }
 //console.log(imprimir);
   const theme = createTheme(
@@ -172,7 +192,7 @@ const columns =  [
     type: 'actions',
     headerClassName: "super",
     flex: 2,
-    minWidth: 160,
+    minWidth: 180,
     getActions: (evento) => [
       <GridActionsCellItem
         icon={<Edit />}
@@ -180,6 +200,12 @@ const columns =  [
         label="Delete"
         onClick={cambiar}
       />,
+      <GridActionsCellItem 
+      color='secondary'
+      icon={<VisibilityOutlined />}
+      label="View"
+      onClick={ver}
+    />,
       <GridActionsCellItem
         icon={<PrintOutlined/>}
         color="secondary"
@@ -256,13 +282,15 @@ const columns =  [
         autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={11}
-        rowsPerPageOptions={[11]}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
         components={{
+          Toolbar: QuickSearchToolbar ,
           BooleanCellFalseIcon:colorClose,
           BooleanCellTrueIcon:colorDone,
           Footer: NuevoFooter
         }}
+        
         sx={{
           boxShadow:5,
           border:4,

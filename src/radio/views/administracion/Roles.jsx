@@ -1,4 +1,4 @@
-import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid';
+import { DataGrid, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { useEffect, useState } from "react";
 import { Box, Button, IconButton,Stack, Switch } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -25,7 +25,7 @@ export const Roles = () => {
   const newRow =()=>{
     setActiveEvent({
       rol:'',
-      estatus:'',
+      estatus:1,
       createdAt:'',
       updatedAt:'',
     })
@@ -37,6 +37,18 @@ export const Roles = () => {
     //setState(event.target.checked);
     await deleteEvent(r);
   };
+  function QuickSearchToolbar() {
+    return (
+      <Box
+        sx={{
+          p: 0.5,
+          pb: 0,
+        }}
+      >
+        <GridToolbarQuickFilter />
+      </Box>
+    );
+  }
 
   const cambiar = ( ) =>  {
     OpenModal();
@@ -116,9 +128,10 @@ export const Roles = () => {
                   autoHeight={true}
                   rows={events}
                   columns={columns}
-                  pageSize={11}
-                  rowsPerPageOptions={[11]}
+                  pageSize={10}
+                  rowsPerPageOptions={[10]}
                   components={{
+                    Toolbar: QuickSearchToolbar ,
                     BooleanCellFalseIcon:colorClose,
                     BooleanCellTrueIcon:colorDone
                   }}

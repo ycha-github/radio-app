@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
+import { DataGrid,  esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -32,11 +32,23 @@ export const Vehiculos=()=> {
       placa:'',
       unidad:'',
       fk_zonaregion:'',
-      estatus:'',
+      estatus:1,
       createdAt:'',
       updatedAt:'',
     })
     OpenModal();
+  }
+  function QuickSearchToolbar() {
+    return (
+      <Box
+        sx={{
+          p: 0.5,
+          pb: 0,
+        }}
+      >
+        <GridToolbarQuickFilter />
+      </Box>
+    );
   }
 
   const handleChange =async (event,r) => {
@@ -125,9 +137,10 @@ export const Vehiculos=()=> {
       autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={12}
-        rowsPerPageOptions={[12]}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
         components={{
+          Toolbar: QuickSearchToolbar ,
           BooleanCellFalseIcon:colorClose,
           BooleanCellTrueIcon:colorDone
         }}

@@ -63,7 +63,7 @@ export const FormRoles = () => {
                                 value={formValues.rol}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='info'>Estatus</InputLabel>
                                 <Select
@@ -79,7 +79,7 @@ export const FormRoles = () => {
                                     <MenuItem value={false}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         <Button variant="contained" color="info" type="submit" onClick={mostrarGuardar} sx={{  width: 400 }} >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>

@@ -304,7 +304,6 @@ export const FormAccesorios = (customStyles) => {
                                             type="text"
                                             name="contrato_compra"
                                             color='warning'
-                                            required
                                             label="Contrato compra"
                                             variant="outlined"
                                             value={formValues.contrato_compra}
@@ -340,7 +339,7 @@ export const FormAccesorios = (customStyles) => {
                                             onChange={handleInputChange}
                                         />
                                     </Grid> 
-                                    <Grid item xs={6}>
+                                    {/* <Grid item xs={6}>
                                         <FormControl fullWidth  >
                                             <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                             <Select
@@ -356,7 +355,7 @@ export const FormAccesorios = (customStyles) => {
                                                 <MenuItem value={false}>Inactivo</MenuItem>
                                             </Select>
                                         </FormControl>
-                                    </Grid>
+                                    </Grid> */}
                                 </Grid>
                                 <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar}  fullWidth >
                                 {isActualizar? 'Actualizar' : 'Guardar'}

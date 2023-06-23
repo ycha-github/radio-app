@@ -64,7 +64,7 @@ export const FormRecursos = () => {
                                 onChange={handleInputChange} />
                         </Grid>
                        
-                        <Grid item>
+                        {/* <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
@@ -80,7 +80,7 @@ export const FormRecursos = () => {
                                     <MenuItem value={false}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         <Button variant="contained" color="warning" type="submit" sx={{  width: 300 }} onClick={ () => mostrarGuardar() } >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>

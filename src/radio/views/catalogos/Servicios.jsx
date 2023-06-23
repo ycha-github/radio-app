@@ -1,4 +1,4 @@
-import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid';
+import { DataGrid, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import  {useState , useEffect} from "react";
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
@@ -28,11 +28,23 @@ export const Servicios = () => {
       
       nombreServicios:'',
       descripcion:'',
-      estatus:'',
+      estatus:1,
       createdAt:'',
       updatedAt:'',
     })
     OpenModal();
+  }
+  function QuickSearchToolbar() {
+    return (
+      <Box
+        sx={{
+          p: 0.5,
+          pb: 0,
+        }}
+      >
+        <GridToolbarQuickFilter />
+      </Box>
+    );
   }
 
   const handleChange =async (event,r) => {
@@ -115,9 +127,10 @@ const columns = [
       autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={12}
-        rowsPerPageOptions={[12]}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
         components={{
+          Toolbar: QuickSearchToolbar ,
           BooleanCellFalseIcon:colorClose,
           BooleanCellTrueIcon:colorDone
         }}

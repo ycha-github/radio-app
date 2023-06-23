@@ -206,7 +206,6 @@ useEffect(() => {
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     type="text"
                                     name="contrato_compra"
-                                    required
                                     color='warning'
                                     label="contrato_compra"
                                     variant="outlined"
@@ -330,7 +329,7 @@ useEffect(() => {
                                         </Select>
                                     </FormControl>
                                 </Grid >
-                                <Grid item xs={6}>
+                                {/* <Grid item xs={6}>
                                     <FormControl fullWidth>
                                         <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                         <Select
@@ -346,7 +345,7 @@ useEffect(() => {
                                             <MenuItem value={false}>Inactivo</MenuItem>
                                         </Select>
                                     </FormControl>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                             <Button variant="contained"   color="warning" type="submit"  onClick={btn} sx={{  width: 628 }} >
                                 {isActualizar ? 'Actualizar' : 'Guardar'}

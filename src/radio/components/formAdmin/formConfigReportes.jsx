@@ -546,7 +546,7 @@ export const FormConfigReportes = (customStyles) => {
                                     value={formValues.fecha_final}
                                     onChange={handleInputChange} />
                             </Grid>
-                            <Grid item xs={6}>
+                            {/* <Grid item xs={6}>
                                 <FormControl fullWidth>
                                     <InputLabel id="estatus-input" color={"info"}>Estatus</InputLabel>
                                     <Select
@@ -563,7 +563,7 @@ export const FormConfigReportes = (customStyles) => {
                                         <MenuItem value={false}>Inactivo</MenuItem>
                                     </Select>
                                 </FormControl>
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                         <Grid container justifyContent={'center'} >
                         <Button variant="contained" color="info" type="submit" onClick={ btn } sx={{ width: 628, pl:1, pr:1}}>

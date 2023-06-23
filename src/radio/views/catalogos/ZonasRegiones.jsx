@@ -1,10 +1,12 @@
-import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
+import { DataGrid,  esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { FormZonasReg } from '../../components/formCat/FormZonasReg';
 import { useZonasStore } from '../../../hooks/hooksCatalogo/useZonasStore';
 import { useEffect, useState } from 'react';
+import { esES as pickersesES } from '@mui/x-date-pickers';
+import { esES as coreesES } from '@mui/material/locale';
 
 const colorClose=()=>{
   return <Close color='error'/>
@@ -26,11 +28,23 @@ export const ZonasRegiones= () => {
     setActiveEvent({
       nombreZonasRegiones:'',
       descripcionZonasRegiones:'',
-      estatus:'',
+      estatus:1,
       createdAt:'',
       updatedAt:'',
     })
     OpenModal();
+  }
+  function QuickSearchToolbar() {
+    return (
+      <Box
+        sx={{
+          p: 0.5,
+          pb: 0,
+        }}
+      >
+        <GridToolbarQuickFilter />
+      </Box>
+    );
   }
 
   const handleChange =async (event,r) => {
@@ -49,6 +63,8 @@ export const ZonasRegiones= () => {
   }
  const theme = createTheme(
   esES,
+  pickersesES, 
+  coreesES,
 );
 
 
@@ -113,9 +129,10 @@ const columns = [
         autoHeight={true}
           rows={events}
           columns={columns}
-          pageSize={11}
-          rowsPerPageOptions={[11]}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
           components={{
+            Toolbar: QuickSearchToolbar ,
             BooleanCellFalseIcon:colorClose,
             BooleanCellTrueIcon:colorDone
           }}

@@ -59,6 +59,7 @@ export const hojaServicioSlice = createSlice({
       payload.forEach(event=>{
         const exists = state.events.some(dbEvent=> dbEvent.idhojaservicios === event.idhojaservicios);
         if( !exists){
+          //state.events.push({...event, fecha_entrega:new Date(event.fecha_entrega).toLocaleString()})
           state.events.push(event)
         }
       })

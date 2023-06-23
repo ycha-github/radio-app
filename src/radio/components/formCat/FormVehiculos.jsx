@@ -240,7 +240,7 @@ export const FormVehiculos = () => {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item >
+                        {/* <Grid item >
                             <FormControl fullWidth sx={{ border: 'none', mb: 1, width: 300 }}>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
@@ -255,7 +255,7 @@ export const FormVehiculos = () => {
                                     <MenuItem value={false}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                             <Button fullWidth variant="contained" color="warning" type="submit" onClick={() => mostrarGuardar()} >
                                 {isActualizar ? 'Actualizar' : 'Guardar'}
                             </Button>

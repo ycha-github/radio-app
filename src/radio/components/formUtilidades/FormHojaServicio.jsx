@@ -48,16 +48,16 @@ export const FormHojaServicio = (customStyles) => {
     const [ usuarioBuscar, setUsuarioBuscar ] = useState("");
 
     const [formValues, setFormValues] = useState({
-        fecha_servicio: '',
+        fecha_servicio: null,
         fk_idasignacion_ur: '',
         servicios: null,
         descripcion: '',
         entrego_equipo: false,
-        fecha_entrega: "",
+        fecha_entrega: null,
         fk_supervisortec: '',
         usuario_servicio: '',
         usuario_entrega: '',
-        fk_tecnico_entrega: '',
+        fk_tecnico_entrega: null,
         estatus: '',
     });
     const [asignaciones, setAsignaciones] = useState({
@@ -73,7 +73,7 @@ export const FormHojaServicio = (customStyles) => {
         serie:"",
         inventario_segpub:"",
     });
-    const [valueFecha, setValueFecha] = useState(dayjs("2023-01-01T15:30"));
+    
 
     useEffect(() => {
         if (activeEvent !== null) {
@@ -760,7 +760,7 @@ export const FormHojaServicio = (customStyles) => {
                                                         inputProps={{ maxLength: 250 }}
                                                     />
                                                 </Grid>
-                                                <Grid item xs={6}>
+                                                {/* <Grid item xs={6}>
                                                     <FormControl fullWidth>
                                                         <InputLabel id="estatus-input" color='secondary'>Estatus</InputLabel>
                                                         <Select
@@ -777,7 +777,7 @@ export const FormHojaServicio = (customStyles) => {
                                                             <MenuItem value={false}>Inactivo</MenuItem>
                                                         </Select>
                                                     </FormControl>
-                                                </Grid>
+                                                </Grid> */}
                                             </Grid>
                                         </Grid>
                                     </Stack>

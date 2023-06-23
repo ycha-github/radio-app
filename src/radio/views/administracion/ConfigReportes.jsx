@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DataGrid,  esES, GridActionsCellItem  } from '@mui/x-data-grid';
+import { DataGrid,  esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
 import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -39,7 +39,7 @@ export const ConfigReportes= () => {
       ccp_carta:'',
       fecha_inicial:'',
       fecha_final:'',
-      estatus:'',
+      estatus:1,
       createdAt: '',
       updatedAt: '',
     })
@@ -52,6 +52,19 @@ export const ConfigReportes= () => {
     
     await deleteEvent(r);
   };
+
+  function QuickSearchToolbar() {
+    return (
+      <Box
+        sx={{
+          p: 0.5,
+          pb: 0,
+        }}
+      >
+        <GridToolbarQuickFilter />
+      </Box>
+    );
+  }
 
   const cambiar = ( ) =>  {
     OpenModal();
@@ -154,9 +167,10 @@ const columns = [
       autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={11}
-        rowsPerPageOptions={[11]}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
         components={{
+          Toolbar: QuickSearchToolbar,
           BooleanCellFalseIcon:colorClose,
           BooleanCellTrueIcon:colorDone
         }}

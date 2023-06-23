@@ -77,7 +77,7 @@ export const FormZonasReg = () => {
                                 value={formValues.descripcionZonasRegiones}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
                                 <Select
@@ -93,7 +93,7 @@ export const FormZonasReg = () => {
                                     <MenuItem value={false}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         <Button variant="contained" sx={{  width: 300 }} color="warning" type="submit" onClick={() => mostrarGuardar() } >
                             {isActualizar ? 'Actualizar' : 'Guardar'}
                         </Button>

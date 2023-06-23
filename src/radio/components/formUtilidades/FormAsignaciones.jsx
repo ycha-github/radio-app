@@ -8,7 +8,7 @@ import { radioApi } from '../../../api';
 
 export const FormAsignaciones = ({usuario, radio}, customStyles) => {
 
-    const { CloseModal, isActualizar, mostrarGuardar } = useModalHook();
+    const { CloseModal, isActualizar, mostrarGuardar,isVer } = useModalHook();
     const { activeEvent, startSavingEvent, cambiarSue, filtrarAccesorio, accesoriosFiltrado,filtrarAccesorioBateria,accesoriosFiltradoBateria,filtrarAccesorioGps,accesoriosFiltradoGps } = useAsignacionesStore();
 
    const [formValues, setFormValues] = useState({
@@ -16,7 +16,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
        radios_idradios:"",
        rfsi:"",
        fk_accesorio_bateria:null,
-       fk_accesorio_cargador:null,
+       fk_accesorio_cargador:null, 
        fk_accesorio_gps:null,
        funda: false,
        antena: false,
@@ -117,6 +117,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             <Autocomplete
                             name="usuarios_idusuarios"
                             required
+                            disabled={isVer}
                             value={formValues}
                             sx={{ width: 300, mb:1 }}
                             onChange={(event, newFormValues2) => {
@@ -162,6 +163,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             <Autocomplete
                                     name="radios_idradios"
                                     required
+                                    disabled={isVer}
                                     value={formValues}
                                     sx={{ width: 300, mb:1 }}
                                     onChange={(event, newFormValues1) => {
@@ -209,6 +211,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     type="text"
                                     required
                                     name="rfsi"
+                                    disabled={isVer}
                                     color='secondary'
                                     label="RFSI"
                                     variant="outlined"
@@ -220,6 +223,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             <Autocomplete
                                 name="fk_accesorio_bateria"
                                     value={formValues}
+                                    disabled={isVer}
                                     onClick={filtrarAccesorioBateria('Bateria')}
                                     sx={{ width: 300, mb:1 }}
                                 onChange={(event, newFormValues) => {
@@ -267,6 +271,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             <Autocomplete
                                 name="fk_accesorio_cargador"
                                     value={formValues}
+                                    disabled={isVer}
                                     onClick={filtrarAccesorio('Cargador')}
                                     sx={{ width: 300, mb:1 }}
                                 onChange={(event, newFormValues3) => {
@@ -313,6 +318,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                         (<Grid item xs={6}>
                             <Autocomplete
                                 name="fk_accesorio_gps"
+                                disabled={isVer}
                                     value={formValues}
                                     onClick={filtrarAccesorioGps('Gps')}
                                     sx={{ width: 300, mb:1 }}
@@ -363,6 +369,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="funda"
+                                        disabled={isVer}
                                         value={formValues.funda}
                                         checked={formValues.funda}
                                         //onChange={handleChange}
@@ -383,6 +390,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="antena"
+                                        disabled={isVer}
                                         value={formValues.antena}
                                         checked={formValues.antena}
                                         //onChange={handleChange}
@@ -403,6 +411,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="bocina"
+                                        disabled={isVer}
                                         value={formValues.bocina}
                                         checked={formValues.bocina}
                                         //onChange={handleChange}
@@ -423,6 +432,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="c2h"
+                                        disabled={isVer}
                                         value={formValues.c2h}
                                         checked={formValues.c2h}
                                         //onChange={handleChange}
@@ -443,6 +453,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="cable_principal"
+                                        disabled={isVer}
                                         value={formValues.cable_principal}
                                         checked={formValues.cable_principal}
                                         //onChange={handleChange}
@@ -463,6 +474,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="caratula"
+                                        disabled={isVer}
                                         value={formValues.caratula}
                                         checked={formValues.caratula}
                                         //onChange={handleChange}
@@ -483,6 +495,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="micro"
+                                        disabled={isVer}
                                         value={formValues.micro}
                                         checked={formValues.micro}
                                         //onChange={handleChange}
@@ -503,6 +516,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="cofre"
+                                        disabled={isVer}
                                         value={formValues.cofre}
                                         checked={formValues.cofre}
                                         //onChange={handleChange}
@@ -523,6 +537,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="porta_caratula"
+                                        disabled={isVer}
                                         value={formValues.porta_caratula}
                                         checked={formValues.porta_caratula}
                                         //onChange={handleChange}
@@ -543,6 +558,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 control={
                                     <Checkbox
                                         name="cuello_cisne"
+                                        disabled={isVer}
                                         value={formValues.cuello_cisne}
                                         checked={formValues.cuello_cisne}
                                         //onChange={handleChange}
@@ -561,12 +577,13 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             
                                 
                             {isActualizar?
-                        (<Grid item xs={4}>
+                        (<Grid item xs={6}>
                             <Autocomplete
                                 name="fk_vehiculo"
+                                disabled={isVer}
                                     value={formValues}
                                     //onClick={filtrarAccesorioGps('Gps')}
-                                    sx={{ width: 200, mb:1 }}
+                                    sx={{ width: 300, mb:1 }}
                                 onChange={(event, newFormValues5) => {
                                     setFormValues({
                                         ...formValues,
@@ -588,13 +605,13 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     renderInput={(params) => <TextField  {...params} variant="outlined" label="Placa Vehiculo" />}       
                             />
                             </Grid>):
-                            (<Grid item xs={4}>
+                            (<Grid item xs={6}>
                                 <Autocomplete
                                         name="fk_vehiculo"
                                         //onClick={filtrarAccesorioGps('Gps')}
                                         options={tableVehi}
                                         getOptionLabel={(tableVehi) => tableVehi.placa || ""}
-                                        sx={{ width: 200, mb:1 }}
+                                        sx={{ width: 300, mb:1 }}
                                         onChange={(event, newFormValues) => {
                                             setFormValues({
                                                 ...formValues,
@@ -605,10 +622,11 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 />
                                 </Grid>)
                             }
-                            <Grid item xs={4}>
+                            <Grid item xs={6}>
                                 <TextField
                                     id="fecha_asignacion-input"
-                                    sx={{ border: 'none', mb: 1, width: 200 }}
+                                    disabled={isVer}
+                                    sx={{ border: 'none', mb: 1, width: 300 }}
                                     type="date"
                                     name="fecha_asignacion"                                    
                                     label="fecha_asignacion"
@@ -619,12 +637,13 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     value={formValues.fecha_asignacion}
                                     onChange={handleInputChange} />
                             </Grid>
-                        <Grid item xs={4}>
+                        {/* <Grid item xs={4}>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='secondary'>Estatus</InputLabel>
                                 <Select
                                     sx={{ border: 'none', mb: 1, width: 200 }}
                                     labelId="demo-simple-select-label"
+                                    disabled={isVer}
                                     id="estatus-input"
                                     name="estatus"
                                     color='secondary'
@@ -635,7 +654,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     <MenuItem value={false}>Inactivo</MenuItem>
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         
                     </Grid>
                     <Button variant="contained" color="secondary" type="submit" onClick={mostrarGuardar} sx={{ width: 628 }} >

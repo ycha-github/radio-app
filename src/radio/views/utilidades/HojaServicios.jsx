@@ -1,6 +1,6 @@
 import  {useState , useEffect} from "react";
 // import { useNavigate } from 'react-router-dom';
-import { DataGrid, esES, GridActionsCellItem } from '@mui/x-data-grid'; 
+import { DataGrid, esES, GridActionsCellItem, GridToolbar, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, TextField } from '@mui/material';
 import { AddCircleOutlineOutlined, Close, Done, Edit, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -30,6 +30,7 @@ const colorDone=()=>{
 
   const [hServicio, setHServicio] = useState({})
   // const navigate = useNavigate();
+  const ev= {...events, fecha_entrega: new Date(events.fecha_entrega).toLocaleString()}
 
   useEffect(() => {
     startLoadingEvents()
@@ -42,12 +43,12 @@ const colorDone=()=>{
       servicios: null,
       descripcion: '',
       entrego_equipo: false,
-      fecha_entrega: "",
+      fecha_entrega: null,
       fk_supervisortec: '',
       usuario_servicio: '',
       usuario_entrega: '',
-      fk_tecnico_entrega: '',
-      estatus: '',
+      fk_tecnico_entrega: null,
+      estatus: 1,
     })
     OpenModal();
     setAbrirPdf(false);
@@ -113,14 +114,26 @@ const colorDone=()=>{
     },
    esES,
   );
+  function QuickSearchToolbar() {
+    return (
+      <Box
+        sx={{
+          p: 0.5,
+          pb: 0,
+        }}
+      >
+        <GridToolbarQuickFilter />
+      </Box>
+    );
+  }
 
-const columns =  [
+const columns = [
   
   { field: 'idhojaservicios', headerClassName: "super", headerName: 'ID',width: 40,  },
   { field: 'fecha_servicio',headerClassName: "super",headerName: 'Fecha creación', flex: 1, minWidth: 60 },
   { field: 'nombre_completo', headerClassName: "super", headerName: 'Usuario', flex: 1, minWidth: 230 },
   { field: 'serie',headerClassName: "super", headerName: 'Radio', flex: 1, minWidth: 90 },
-  { field: 'fecha_entrega',headerClassName: "super",headerName: 'Fecha Entrega',flex: 1, minWidth: 110 },
+  { field: 'fecha_entrega', type: "dateTime",valueGetter:({value})=>value && new Date(value),headerClassName: "super",headerName: 'Fecha Entrega',flex: 1, minWidth: 110 },
   { field: 'nombreSupervisorTec',headerClassName: "super",headerName: 'Supervisor Técnico', flex: 1, minWidth: 230 },
   // { field: 'usuario_servicio',headerClassName: "super",headerName: 'Usuario Servicio',  width: 230 },
   // { field: 'usuario_entrega',headerClassName: "super",headerName: 'Usuario Entrega', width: 230 },
@@ -189,6 +202,9 @@ const columns =  [
             </Stack>
             <ThemeProvider theme={theme}>
       <DataGrid
+      disableColumnFilter
+      disableColumnSelector
+      disableDensitySelector
         onCellClick={onSelect}
         getRowId={(row) => row.idhojaservicios}
         autoHeight={true}
@@ -197,9 +213,11 @@ const columns =  [
         pageSize={11}
         rowsPerPageOptions={[11]}
         components={{
+           Toolbar: QuickSearchToolbar ,
           BooleanCellFalseIcon:colorClose,
           BooleanCellTrueIcon:colorDone
         }}
+        
         sx={{
           boxShadow:5,
           border:4,
