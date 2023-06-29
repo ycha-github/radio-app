@@ -32,7 +32,7 @@ export const hojaServicioSlice = createSlice({
     onUpdateEvent:(state, {payload})=>{
       state.events= state.events.map(event=>{
         if (event.idhojaservicios === payload.idhojaservicios){
-          console.log(payload.idhojaservicios);
+          //console.log(payload.idhojaservicios);
           return payload;
         }
         return event;

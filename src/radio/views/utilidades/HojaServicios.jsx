@@ -30,13 +30,42 @@ const colorDone=()=>{
 
   const [hServicio, setHServicio] = useState({})
   // const navigate = useNavigate();
-  const ev= {...events, fecha_entrega: new Date(events.fecha_entrega).toLocaleString()}
-
+  let users = [
+    {firstName : "Susan", lastName: "Steward"},
+    {firstName : "Susan", lastName: "Stew"},
+    {firstName : "Daniel", lastName: "Lon"},
+    {firstName : "Daniel", lastName: "Longbo"},
+    {firstName : "Daniel", lastName: "Longbottom"},
+    {firstName : "Jacob", lastName: "Black"}
+  ];
+  let buscar=["Susan","Daniel","Jacob"];
+  let u=[];
+  buscar.map(function(element, index, array){
+   
+    let x=element
+    
+   const filtrar= users.map(function(element,index,array){
+    //u=index
+    //let y = array
+    //console.log(array)
+      if (element.firstName == x){
+      return element;
+    }
+    })
+     u =filtrar.map(function(element,index,array){
+      //console.log(element)
+      return element
+    })
+    //console.log(definir); // 80
+  });
+    
+  let pequeños = u.filter(persona => persona[0].firstName == "Susan")
+console.log(pequeños)
   useEffect(() => {
     startLoadingEvents()
   }, [])
 
-  const newRow =()=>{
+  const newRow =()=>{ 
     setActiveEvent({
       fecha_servicio: fecha,
       fk_idasignacion_ur: '',
@@ -49,6 +78,7 @@ const colorDone=()=>{
       usuario_entrega: '',
       fk_tecnico_entrega: null,
       estatus: 1,
+      folio:'',
     })
     OpenModal();
     setAbrirPdf(false);
@@ -63,7 +93,7 @@ const colorDone=()=>{
           });
       }, []);
 
-      console.log(configReport.length);
+     // console.log(configReport.length);
       useEffect(() => {
         if (configReport.length > 1){
           Swal.fire({
