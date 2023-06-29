@@ -1,5 +1,5 @@
-import { DataGrid,  esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
-import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
+import { DataGrid, gridClasses, esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
+import { Box, Button, createTheme, styled, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { FormZonasReg } from '../../components/formCat/FormZonasReg';
@@ -14,6 +14,12 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
 
 export const ZonasRegiones= () => {
   const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useZonasStore();
@@ -122,26 +128,31 @@ const columns = [
                     Nuevo
                 </Button>
             </Stack>
+
       <ThemeProvider theme={theme}>
-      <DataGrid
+
+      <StripedDataGrid
         onCellClick={onSelect}
         getRowId={(row) => row.idzonasregiones}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+        }
         autoHeight={true}
-          rows={events}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10]}
-          components={{
-            Toolbar: QuickSearchToolbar ,
-            BooleanCellFalseIcon:colorClose,
-            BooleanCellTrueIcon:colorDone
-          }}
-          sx={{
-            boxShadow:5,
-            border:4,
-            borderColor:'rgba(228, 125, 35, 1)',
-            '& .MuiDataGrid-cell:hover':{
-            color:'rgba(228, 125, 35, 1)',
+        rows={events}
+        columns={columns}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
+        components={{
+          Toolbar: QuickSearchToolbar ,
+          BooleanCellFalseIcon:colorClose,
+          BooleanCellTrueIcon:colorDone
+        }}
+        sx={{
+          boxShadow:5,
+          border:4,
+          borderColor:'rgba(228, 125, 35, 1)',
+          '& .MuiDataGrid-cell:hover':{
+          color:'rgba(228, 125, 35, 1)',
           },
         }}
       />

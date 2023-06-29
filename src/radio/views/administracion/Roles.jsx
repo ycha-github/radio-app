@@ -1,6 +1,6 @@
-import { DataGrid, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import { DataGrid, gridClasses, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { useEffect, useState } from "react";
-import { Box, Button, IconButton,Stack, Switch } from '@mui/material';
+import { Box, Button, styled, IconButton,Stack, Switch } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit} from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -13,6 +13,11 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
 export const Roles = () => {
   const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useRolStore();
   const { OpenModal, mostrarActualizar } = useModalHook();
@@ -102,7 +107,7 @@ export const Roles = () => {
 
   return (
     <>
-      <h2 className='colorAdmin'>Roles</h2>
+      <h2 className='colorAdmin'>ROLES</h2>
       <div style={{ height: 400, width: '100%' }}>
         <div style={{ display: 'flex', height: '100%' }}>
           <div style={{ flexGrow: 1 }}>
@@ -122,9 +127,12 @@ export const Roles = () => {
                 </Button>
             </Stack>
               <ThemeProvider theme={theme}>
-                <DataGrid
-                onCellClick={onSelect}
+                <StripedDataGrid
+                  onCellClick={onSelect}
                   getRowId={(row) => row.idrol}
+                  getRowClassName={(params) =>
+                    params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+                  }
                   autoHeight={true}
                   rows={events}
                   columns={columns}

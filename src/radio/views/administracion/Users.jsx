@@ -1,6 +1,6 @@
-import { DataGrid, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import { DataGrid, gridClasses, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import { useEffect, useState } from "react";
-import { Box, Button, IconButton,Stack, Switch } from '@mui/material';
+import { Box, Button, IconButton, styled, Stack, Switch } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormUser } from '../../components/formAdmin/FormUser';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit} from '@mui/icons-material';
@@ -13,6 +13,13 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
+
 export const Users = () => {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useUsersStore();
   const { OpenModal, mostrarActualizar } = useModalHook();
@@ -106,7 +113,7 @@ export const Users = () => {
 
   return (
     <>
-      <h2 className='colorAdmin'>USUARIOS</h2>
+      <h2 className='colorAdmin'>USUARIOS DEL SISTEMA</h2>
       <div style={{ height: 400, width: '100%' }}>
         <div style={{ display: 'flex', height: '100%' }}>
           <div style={{ flexGrow: 1 }}>
@@ -126,9 +133,13 @@ export const Users = () => {
                 </Button>
             </Stack>
               <ThemeProvider theme={theme}>
-                <DataGrid
-                onCellClick={onSelect}
+
+                <StripedDataGrid
+                  onCellClick={onSelect}
                   getRowId={(row) => row.idusers}
+                  getRowClassName={(params) =>
+                    params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+                  }
                   autoHeight={true}
                   rows={events}
                   columns={columns}

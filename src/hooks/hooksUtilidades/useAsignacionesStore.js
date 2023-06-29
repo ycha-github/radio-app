@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"; 
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent, onFiltrar,onFiltrarBateria, onFiltrarGps} from "../../store/utilidades/asignacionesSlice";
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent, onFiltrar,onFiltrarBateria, onFiltrarGps, onFiltrarCorporacion} from "../../store/utilidades/asignacionesSlice";
 
 export const useAsignacionesStore= () => {
   const dispatch = useDispatch();
-  const { events, activeEvent, accesoriosFiltrado,accesoriosFiltradoBateria,accesoriosFiltradoGps } = useSelector( state => state.asignaciones );
+  const { events, activeEvent, accesoriosFiltrado,accesoriosFiltradoBateria,accesoriosFiltradoGps,corporacionesFiltrado } = useSelector( state => state.asignaciones );
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
@@ -75,6 +75,18 @@ export const useAsignacionesStore= () => {
         console.log(error);
       }
     }
+
+    const startLoadingCorporacion = async ()=>{
+      try {
+        const { data } = await radioApi.get('/corporaciones')
+        dispatch(onFiltrarCorporacion(data))
+        //console.log(data)
+       
+      } catch (error) {
+        console.log('Error cargando Eventos');
+        console.log(error);
+      }
+    }
   return {
     // Propiedades
     activeEvent,
@@ -82,12 +94,14 @@ export const useAsignacionesStore= () => {
     accesoriosFiltrado,
     accesoriosFiltradoBateria,
     accesoriosFiltradoGps,
+    corporacionesFiltrado,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,
     setActiveEvent,
     startSavingEvent,
     startLoadingEvents,
+    startLoadingCorporacion,
     cambiarSue,
     filtrarAccesorio,
     filtrarAccesorioBateria,
