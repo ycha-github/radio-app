@@ -1,12 +1,11 @@
 import {useState , useEffect} from "react";
-import { DataGrid, esES, GridActionsCellItem, GridPagination, GridRow, GridToolbar, GridToolbarExport, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
-import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, Toolbar, paginationClasses } from '@mui/material';
-import { AddCircleOutlineOutlined, Block, Close, Done, Edit, Javascript, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
+import { DataGrid, gridClasses, esES, GridActionsCellItem, GridPagination, GridToolbarExport, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
+import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, styled } from '@mui/material';
+import { AddCircleOutlineOutlined, Close, Done, Edit, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
 import { FormAsignaciones } from '../../components/formUtilidades/FormAsignaciones';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { CrearPdf } from './CrearPdf';
 import radioApi from "../../../api/radioApi";
 import Swal from "sweetalert2";
@@ -17,6 +16,13 @@ const colorClose=()=>{
 const colorDone=()=>{ 
   return <Done color='success'/>
 }
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
+
 const NuevoFooter=()=>{ 
   return <>
     <Box sx={{pl: '35%', alignContent:'center', background:'rgb(214, 204, 230)'}}>
@@ -27,18 +33,23 @@ const NuevoFooter=()=>{
 }
  
   export const Asignaciones=()=> {
-  const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useAsignacionesStore();
+  const { events, setActiveEvent, startLoadingEvents,deleteEvent, corporacionesFiltrado, startLoadingCorporacion } = useAsignacionesStore();
   const {OpenModal, mostrarActualizar,disableForm}=useModalHook();
   const [state, setState] =useState([]);
  const [abrirPdf, setAbrirPdf]= useState(false);
+ const [abrirPdfReporte, setAbrirPdfReporte]= useState(false);
  const [imprimir, setImprimir]= useState({});
 
  
   const [configReport, setConfigReport] = useState({})
   const navigate = useNavigate();
+
+  let lengthCorporaciones = corporacionesFiltrado.length;
+   
  
   useEffect(() => {
-    startLoadingEvents()
+    startLoadingEvents();
+    startLoadingCorporacion();
   }, [])
 
   const newRow =()=>{
@@ -67,6 +78,7 @@ const NuevoFooter=()=>{
     })
     OpenModal();
     setAbrirPdf(false);
+    setAbrirPdfReporte(false);
     //navigate('../asignaciones');
   }
   
@@ -111,7 +123,8 @@ const NuevoFooter=()=>{
 
   const cambiar = ( ) =>  {
     //navigate('../asignaciones');
-    setAbrirPdf(false)
+    setAbrirPdf(false);
+    setAbrirPdfReporte(false);
     OpenModal();
     mostrarActualizar();
   }
@@ -143,11 +156,21 @@ const NuevoFooter=()=>{
 
   const mostrarPdf = ( event) =>  {
     setAbrirPdf(true);
+    setAbrirPdfReporte(false);
     OpenModal();
     //navigate('../mostrar-pdf');
     //setAbrirPdf(true);
     //return (imprimir)
-}
+  }
+
+  const mostrarPdfReporteCorp = ( event) =>  {
+    setAbrirPdf(true);
+    setAbrirPdfReporte(true);
+    OpenModal();
+    //navigate('../mostrar-pdf');
+    //setAbrirPdf(true);
+    //return (imprimir)
+  }
   const onSelect = ( event ) =>  {
     console.log(event.row)
     setActiveEvent( event.row );
@@ -179,11 +202,12 @@ const NuevoFooter=()=>{
 
 const columns =  [
 
-  { field: 'idasignacion', headerClassName: "super", headerName: 'ID',width: 90,  },
+  { field: 'idasignacion', headerClassName: "super", headerName: 'ID',width: 60,  },
   { field: 'nombre_completo', headerClassName: "super", headerName: 'Asignado a' ,width: 250,  },
-  { field: 'clave_elector', headerClassName: "super", headerName: 'Clave Elector' ,width: 200,  },
+  { field: 'nombreCorporacion', headerClassName: "super", headerName: 'Corporacion',width: 300,  },
   { field: 'serie_radio',headerClassName: "super", headerName: 'Radio Asignado',flex: 2 , minWidth: 90 },
   { field: 'rfsi',headerClassName: "super", headerName: 'RFSI',flex: 2 , minWidth: 90 },
+  { field: 'tipo',headerClassName: "super", headerName: 'Tipo',flex: 2 , minWidth: 90 },
   { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 2, minWidth: 90 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 2, minWidth: 120 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 2, minWidth: 120 },
@@ -261,24 +285,31 @@ const columns =  [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-      {abrirPdf ===true?<CrearPdf datos={imprimir} isCartaFijo={true} formato={configReport} />: ""}
-      {abrirPdf=== false?<FormAsignaciones   />:""}
+      {abrirPdf ===true && abrirPdfReporte===false ?<CrearPdf datos={imprimir} isCartaFijo={true} isReporte={false} formato={configReport} />: ""}
+      {abrirPdf ===true && abrirPdfReporte===true ?<CrearPdf datos={events} isCartaFijo={false} isReporte={true} lengthCorporaciones={lengthCorporaciones} />: ""}
+      {abrirPdf=== false?<FormAsignaciones />:""}
       {/* <FormAsignacionGeneral/> */}
       {/* {let printData = document.getElementById("datagrid1").innerHTML} */}
         <Stack direction="row" spacing={1} marginBottom={2}>
-                <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
-                    Nuevo
-                </Button>
-            </Stack>
+          <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
+            Nuevo
+          </Button>
+          <Button onClick={mostrarPdfReporteCorp} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
+            Reporte por Corporación
+          </Button>
+        </Stack>
            
             <ThemeProvider theme={theme}>
 
                     
-      <DataGrid
+      <StripedDataGrid
         class="tabla"
         id="imprimible"
         onCellClick={onSelect}
         getRowId={(row) => row.idasignacion}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+        }
         autoHeight={true}
         rows={events}
         columns={columns}

@@ -1,5 +1,5 @@
-import { DataGrid,  esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
-import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
+import { DataGrid,  esES, GridActionsCellItem, GridToolbarQuickFilter, gridClasses } from '@mui/x-data-grid';
+import { Box, Button, createTheme, IconButton, styled, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { usePuestosStore } from '../../../hooks/hooksCatalogo/usePuestosStore';
@@ -12,6 +12,13 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
+
 export const Puestos= () => {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = usePuestosStore();
   const {OpenModal, mostrarActualizar}=useModalHook();
@@ -122,10 +129,13 @@ const columns = [
                 </Button>
             </Stack>
             <ThemeProvider theme={theme}>
-      <DataGrid
-      onCellClick={onSelect}
-      getRowId={(row) => row.idpuesto}
-      autoHeight={true}
+      <StripedDataGrid
+        onCellClick={onSelect}
+        getRowId={(row) => row.idpuesto}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+        }
+        autoHeight={true}
         rows={events}
         columns={columns}
         pageSize={10}

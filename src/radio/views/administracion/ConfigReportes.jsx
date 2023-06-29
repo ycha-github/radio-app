@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { DataGrid,  esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
-import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
-import { AddCircleOutlineOutlined, Block, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
+import { DataGrid,  esES, GridActionsCellItem, gridClasses, GridToolbarQuickFilter  } from '@mui/x-data-grid';
+import { Box, Button, createTheme, IconButton, Stack, styled, Switch, ThemeProvider } from '@mui/material';
+import { AddCircleOutlineOutlined, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
 import { FormConfigReportes } from '../../components/formAdmin/formConfigReportes';
@@ -12,6 +12,12 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
 
 export const ConfigReportes= () => {
   const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useConfigReportesStore();
@@ -160,12 +166,17 @@ const columns = [
                     Nuevo
                 </Button>
             </Stack>
+
             <ThemeProvider theme={theme}>
-      <DataGrid
-      onCellClick={onSelect}
-      getRowId={(row) => row.idconfigReportes}
-      autoHeight={true}
+
+      <StripedDataGrid
+        onCellClick={onSelect}
+        getRowId={(row) => row.idconfigReportes}
+        autoHeight={true}
         rows={events}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+        }
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}

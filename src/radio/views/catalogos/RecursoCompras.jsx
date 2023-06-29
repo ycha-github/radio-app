@@ -1,5 +1,5 @@
-import { DataGrid,  esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
-import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
+import { DataGrid, gridClasses, esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
+import { Box, Button, createTheme, styled, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useRecursosStore } from '../../../hooks/hooksCatalogo/useRecursosStore';
@@ -13,6 +13,12 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
 
 export const RecursoCompras = () => {
   const { events, setActiveEvent, startLoadingEvents, deleteEvent} = useRecursosStore();
@@ -119,10 +125,13 @@ const columns = [
                 </Button>
             </Stack>
             <ThemeProvider theme={theme}>
-      <DataGrid
-      onCellClick={onSelect}
-      getRowId={(row) => row.idrecursoCompras}
-      autoHeight={true}
+      <StripedDataGrid
+        onCellClick={onSelect}
+        getRowId={(row) => row.idrecursoCompras}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+        }
+        autoHeight={true}
         rows={events}
         columns={columns}
         pageSize={10}

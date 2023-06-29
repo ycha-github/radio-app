@@ -1,6 +1,6 @@
 import  {useState , useEffect} from "react";
-import { DataGrid, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
-import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, Hidden } from '@mui/material';
+import { DataGrid, gridClasses, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
+import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, styled } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAccesoriosStore } from '../../../hooks/hooksCatalogo/useAccesoriosStore';
@@ -12,6 +12,13 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
+
   export const Accesorios=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useAccesoriosStore();
   const {OpenModal, mostrarActualizar}=useModalHook();
@@ -144,9 +151,12 @@ const columns =  [
                 </Button>
             </Stack>
             <ThemeProvider theme={theme}>
-      <DataGrid
+      <StripedDataGrid
         onCellClick={onSelect}
         getRowId={(row) => row.idaccesorios}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+        }
         autoHeight={true}
         rows={events}
         columns={columns}

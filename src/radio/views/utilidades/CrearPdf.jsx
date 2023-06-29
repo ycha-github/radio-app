@@ -4,12 +4,11 @@ import { Box } from '@mui/material';
 import { ModalRadio } from '../../components/ModalRadio';
 import { CartaFijo } from './CartaFijo';
 import { ImprimirHServicio } from './ImprimirHServicio';
-//import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
-//import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
+import { ImpReporteCorp } from './ImpReporteCorp';
 
 
 // Create Document Component
-export const CrearPdf=({datos, datoHoja, formato,isCartaFijo},customStyles) => {
+export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,isReporte,lengthCorporaciones},customStyles) => {
 
  return (
   <ModalRadio  >
@@ -19,6 +18,8 @@ export const CrearPdf=({datos, datoHoja, formato,isCartaFijo},customStyles) => {
   {
     isCartaFijo===true ?
     (<CartaFijo datos={datos} formato={formato} />) :
+    isReporte ===true ?
+    (<ImpReporteCorp datos={datos} lengthCorporaciones={lengthCorporaciones} />) :
     (<ImprimirHServicio datos={datoHoja} formato={formato} />) 
   }
   </PDFViewer>

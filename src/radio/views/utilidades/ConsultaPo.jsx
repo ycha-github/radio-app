@@ -11,11 +11,12 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
     }
   }));
  
-  export const ConsultaPo=()=> {
-  const { events, startLoadingEvents } = useAsignacionesStore();
- 
+export const ConsultaPo=()=> {
+    const { events, startLoadingEvents } = useAsignacionesStore();
+
+
   useEffect(() => {
-    startLoadingEvents()
+    startLoadingEvents();
   }, [])
 
   const theme = createTheme(

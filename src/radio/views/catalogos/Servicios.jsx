@@ -1,6 +1,6 @@
-import { DataGrid, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import { DataGrid, gridClasses, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import  {useState , useEffect} from "react";
-import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button } from '@mui/material';
+import { Box, IconButton,createTheme, styled, Switch,ThemeProvider, Stack, Button } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useServiciosStore } from '../../../hooks/hooksCatalogo/useServiciosStore';
@@ -12,6 +12,12 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
 
 export const Servicios = () => {
 
@@ -121,10 +127,13 @@ const columns = [
                 </Button>
             </Stack>
             <ThemeProvider theme={theme}>
-      <DataGrid
-      onCellClick={onSelect}
-      getRowId={(row) => row.idservicios}
-      autoHeight={true}
+      <StripedDataGrid
+        onCellClick={onSelect}
+        getRowId={(row) => row.idservicios}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+        }
+        autoHeight={true}
         rows={events}
         columns={columns}
         pageSize={10}

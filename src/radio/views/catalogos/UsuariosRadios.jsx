@@ -1,5 +1,5 @@
-import { DataGrid,  esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
-import { Box, Button, createTheme, IconButton, Stack, Switch, ThemeProvider } from '@mui/material';
+import { DataGrid, gridClasses,  esES, GridActionsCellItem, GridToolbarQuickFilter  } from '@mui/x-data-grid';
+import { Box, Button, createTheme, IconButton, styled, Stack, Switch, ThemeProvider } from '@mui/material';
 import { AddCircleOutlineOutlined, Block, Close, Done, Edit, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useUsuariosStore } from '../../../hooks/hooksCatalogo/useUsuariosStore';
@@ -15,6 +15,12 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+  }
+}));
 
 export const UsuariosRadios= () => {
   const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useUsuariosStore();
@@ -170,7 +176,7 @@ const columns = [
 
   return (
     <>
-     <h2 className='colorCat'>Usuarios</h2>
+     <h2 className='colorCat'>USUARIOS DE RADIOS</h2>
      <div style={{ height: 400, width: '100%' }}>
     <div style={{ height: 'flex', width: '100%' }}>
     <div style={{ flexGrow: 1 }}>
@@ -192,10 +198,13 @@ const columns = [
                 </Button>
             </Stack>
             <ThemeProvider theme={theme}>
-      <DataGrid
-      onCellClick={onSelect}
-      getRowId={(row) => row.idusuarios}
-      autoHeight={true}
+      <StripedDataGrid
+        onCellClick={onSelect}
+        getRowId={(row) => row.idusuarios}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
+        }
+        autoHeight={true}
         rows={events}
         columns={columns}
         pageSize={10}
