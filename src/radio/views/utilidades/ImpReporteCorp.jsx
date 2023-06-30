@@ -148,7 +148,7 @@ let encabezado=(e,y)=>{
     
     <View  style={styles.table} >
                 
-    <View key={y} style={styles.tableRow} >
+    <View style={styles.tableRow} >
       <View style={styles.tableCol} >
         <Text style={styles.tableCell} > No. </Text> 
       </View> 
@@ -215,7 +215,7 @@ const determinar=()=>{
       
         <Page size="letter" style={styles.body} >
 
-          
+               
             <View style={styles.section} >
               <View style={styles.table} >
                 
