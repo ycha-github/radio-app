@@ -69,10 +69,6 @@ export const ImpReporteCorp = ({datos, lengthCorporaciones}) => {
 // let corpora=datos.filter(ev => ev.idcorporaciones == 1 )
 
 
-useEffect(() => {
-  mostrar() 
-}, [])
-
 
 
 
@@ -169,12 +165,12 @@ for (i;i<=buscar.length-1;i++){
 
 let encabezado=(e,y)=>{
   console.log(`encabezado ${y}`) 
-  //console.log(e);
+  console.log(e);
   return (
     
-    <View style={styles.table} >
+    <View  style={styles.table} >
                 
-    <View style={styles.tableRow} >
+    <View key={y} style={styles.tableRow} >
       <View style={styles.tableCol} >
         <Text style={styles.tableCell} > No. </Text> 
       </View> 
