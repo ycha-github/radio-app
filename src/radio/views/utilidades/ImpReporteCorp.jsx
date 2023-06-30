@@ -1,4 +1,5 @@
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { useState } from 'react';
 const styles = StyleSheet.create({
     title: {
       fontSize: 12,
@@ -137,10 +138,32 @@ buscar.map(function (element, index, array) {
     })
 })
 
-// datos.sort();
-// console.log(datos);
+ // let corp=[];
 
+  //     for (let i=0; i<=lengthCorporaciones; i++){
+  //     corp[i] =  datos.filter(ev => ev.idcorporaciones == i )
+  //     console.log(corp[i])
+  //   }
+let datosf =[];
+let variables=[]
+let i=0
+let j=0
+const [corpo, setCorpo] = useState([])
 
+// for (let i=0; i<=lengthCorporaciones; i++){
+//   variables = ("corp"+i)+variables;
+// }
+
+//  for (i; i<=lengthCorporaciones; i++){
+  // variables = ("corp"+i)+variables;
+  // for(j; j<=datos.length;j++){}
+//   datos.map((element) =>{
+//     element.
+//   // variables = variables+i;
+//  datosf[i] = datos.filter( ev => ev.idcorporaciones ===i)
+//   }
+//  console.log(datosf[i][i])
+// }
 
 
   return (
@@ -150,6 +173,7 @@ buscar.map(function (element, index, array) {
 
           
             <View style={styles.section} >
+
               <View style={styles.table} >
                 
                 <View style={styles.tableRow} >
@@ -169,16 +193,18 @@ buscar.map(function (element, index, array) {
 
                 {
                   // filtrado
-          
+                  
+                  datosf.map( (element, index) => {
+                      return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion)
 
-                  // datos.map( (element, index) => {
-                  //     // console.log(element);
-                  //     return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion );
-                  //   })
+                  } 
 
+
+                )
                 }
 
-              </View>
+              </View> 
+ 
             </View>
 
         </Page>
