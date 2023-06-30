@@ -1,13 +1,15 @@
 import  {useState , useEffect} from "react";
-import { DataGrid, gridClasses, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
-import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, styled } from '@mui/material';
+// import { useNavigate } from 'react-router-dom';
+import { DataGrid, esES, GridActionsCellItem, GridToolbar, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
+import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, TextField } from '@mui/material';
 import { AddCircleOutlineOutlined, Close, Done, Edit, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
 import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServicio';
+import dayjs from "dayjs";
 import { CrearPdf } from './CrearPdf';
 import radioApi from "../../../api/radioApi";
-
+// import { render } from "react-dom";
 
 let hoy = new Date();
 let fecha = hoy.getFullYear()+"-" + (hoy.getMonth() + 1) +"-" + hoy.getDate();
@@ -18,13 +20,6 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: theme.palette.grey[200],
-  }
-}));
-
   export const HojaServicios=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useHojaServicioStore();
   const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, disableForm }=useModalHook();
@@ -35,37 +30,8 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 
   const [hServicio, setHServicio] = useState({})
   // const navigate = useNavigate();
-  let users = [
-    {firstName : "Susan", lastName: "Steward"},
-    {firstName : "Susan", lastName: "Stew"},
-    {firstName : "Daniel", lastName: "Lon"},
-    {firstName : "Daniel", lastName: "Longbo"},
-    {firstName : "Daniel", lastName: "Longbottom"},
-    {firstName : "Jacob", lastName: "Black"}
-  ];
-  let buscar=["Susan","Daniel","Jacob"];
-  let u=[];
-  buscar.map(function(element, index, array){
-   
-    let x=element
+ 
     
-   const filtrar= users.map(function(element,index,array){
-    //u=index
-    //let y = array
-    //console.log(array)
-      if (element.firstName == x){
-      return element;
-    }
-    })
-     u =filtrar.map(function(element,index,array){
-      //console.log(element)
-      return element
-    })
-    //console.log(definir); // 80
-  });
-    
-  let pequeños = u.filter(persona => persona[0].firstName == "Susan")
-console.log(pequeños)
   useEffect(() => {
     startLoadingEvents()
   }, [])
@@ -236,15 +202,12 @@ const columns = [
                 </Button>
             </Stack>
             <ThemeProvider theme={theme}>
-      <StripedDataGrid
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
+      <DataGrid
+      disableColumnFilter
+      disableColumnSelector
+      disableDensitySelector
         onCellClick={onSelect}
         getRowId={(row) => row.idhojaservicios}
-        getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
-        }
         autoHeight={true}
         rows={events}
         columns={columns}
