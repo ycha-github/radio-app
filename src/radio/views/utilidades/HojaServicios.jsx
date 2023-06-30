@@ -1,13 +1,15 @@
 import  {useState , useEffect} from "react";
-import { DataGrid, gridClasses, esES, GridActionsCellItem, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
-import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, styled } from '@mui/material';
+// import { useNavigate } from 'react-router-dom';
+import { DataGrid, esES, GridActionsCellItem, GridToolbar, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
+import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, TextField } from '@mui/material';
 import { AddCircleOutlineOutlined, Close, Done, Edit, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
 import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServicio';
+import dayjs from "dayjs";
 import { CrearPdf } from './CrearPdf';
 import radioApi from "../../../api/radioApi";
-
+// import { render } from "react-dom";
 
 let hoy = new Date();
 let fecha = hoy.getFullYear()+"-" + (hoy.getMonth() + 1) +"-" + hoy.getDate();
@@ -18,13 +20,6 @@ const colorClose=()=>{
 const colorDone=()=>{
   return <Done color='success'/>
 }
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: theme.palette.grey[200],
-  }
-}));
-
   export const HojaServicios=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useHojaServicioStore();
   const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, disableForm }=useModalHook();
@@ -35,13 +30,13 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 
   const [hServicio, setHServicio] = useState({})
   // const navigate = useNavigate();
-  const ev= {...events, fecha_entrega: new Date(events.fecha_entrega).toLocaleString()}
-
+ 
+    
   useEffect(() => {
     startLoadingEvents()
   }, [])
 
-  const newRow =()=>{
+  const newRow =()=>{ 
     setActiveEvent({
       fecha_servicio: fecha,
       fk_idasignacion_ur: '',
@@ -54,6 +49,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
       usuario_entrega: '',
       fk_tecnico_entrega: null,
       estatus: 1,
+      folio:'',
     })
     OpenModal();
     setAbrirPdf(false);
@@ -68,7 +64,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
           });
       }, []);
 
-      console.log(configReport.length);
+     // console.log(configReport.length);
       useEffect(() => {
         if (configReport.length > 1){
           Swal.fire({
@@ -206,15 +202,12 @@ const columns = [
                 </Button>
             </Stack>
             <ThemeProvider theme={theme}>
-      <StripedDataGrid
-        disableColumnFilter
-        disableColumnSelector
-        disableDensitySelector
+      <DataGrid
+      disableColumnFilter
+      disableColumnSelector
+      disableDensitySelector
         onCellClick={onSelect}
         getRowId={(row) => row.idhojaservicios}
-        getRowClassName={(params) =>
-          params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
-        }
         autoHeight={true}
         rows={events}
         columns={columns}

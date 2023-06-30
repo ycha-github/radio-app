@@ -32,7 +32,7 @@ export const FormHojaServicio = (customStyles) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const { CloseModal, isActualizar, mostrarGuardar, isVer } = useModalHook();
-    const { activeEvent, startSavingEvent } = useHojaServicioStore();
+    const { activeEvent, startSavingEvent, consultarUltimoRegistro } = useHojaServicioStore();
 
     const [usuarios, setUsuarios] = useState([0]);
     const [supervisores, setSupervisores] = useState([0]);
@@ -59,6 +59,7 @@ export const FormHojaServicio = (customStyles) => {
         usuario_entrega: '',
         fk_tecnico_entrega: null,
         estatus: '',
+        folio:'',
     });
     const [asignaciones, setAsignaciones] = useState({
         nombreCorporacion: "",
@@ -303,6 +304,7 @@ export const FormHojaServicio = (customStyles) => {
        // if (formValues.rfsi.length <= 0) return;
         console.log(formValues);
         //TODO:
+        isActualizar === true ? "":consultarUltimoRegistro();
         await startSavingEvent(formValues);
         CloseModal();
         setFormSubmitted(false);
@@ -538,8 +540,8 @@ export const FormHojaServicio = (customStyles) => {
                                                                 //})
                                                             }}
                                                             onInputChange={(e, newInputValue2) => {
-                                                                console.log(newInputValue2)
-                                                                console.log(usuarioBuscar)
+                                                                
+                                                                
                                                                 setInputValue2(newInputValue2)
                                                                 selectAsignacionesPorRfsi(newInputValue2,inputValue)
                                                             }}

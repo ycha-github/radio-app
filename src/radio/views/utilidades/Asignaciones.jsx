@@ -91,7 +91,7 @@ const NuevoFooter=()=>{
           });
       }, []);
 
-      console.log(configReport.length);
+    //  console.log(configReport.length);
       useEffect(() => {
         if (configReport.length > 1){
           Swal.fire({

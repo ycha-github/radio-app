@@ -1,5 +1,4 @@
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
-import { useState } from 'react';
 const styles = StyleSheet.create({
     title: {
       fontSize: 12,
@@ -51,24 +50,27 @@ const styles = StyleSheet.create({
 
 export const ImpReporteCorp = ({datos, lengthCorporaciones}) => {
 
-  // let corp=[];
+//   // let corp=[];
 
-  //     for (let i=0; i<=lengthCorporaciones; i++){
-  //     corp[i] =  datos.filter(ev => ev.idcorporaciones == i )
-  //     console.log(corp[i])
-  //   }
-  let corp=[];
-  for (let i=0; i<=lengthCorporaciones; i++){
-    // let cor = "asigcor"+i;
-    corp[i]=datos.filter(ev => ev.idcorporaciones == i )
-    // console.log(cor)
+//   //     for (let i=0; i<=lengthCorporaciones; i++){
+//   //     corp[i] =  datos.filter(ev => ev.idcorporaciones == i )
+//   //     console.log(corp[i])
+//   //   }
+//   let corp=[];
+//   for (let i=0; i<=lengthCorporaciones; i++){
+//     // let cor = "asigcor"+i;
+//     corp[i]=datos.filter(ev => ev.idcorporaciones == i )
+//     // console.log(cor)
     
-  }
+//   }
 
-//  console.log(corp)
-let corpora=datos.filter(ev => ev.idcorporaciones == 1 )
+// //  console.log(corp)
+// let corpora=datos.filter(ev => ev.idcorporaciones == 1 )
 
 
+useEffect(() => {
+  mostrar() 
+}, [])
 
 
 
@@ -105,75 +107,54 @@ let buscar = ["Policía Estatal Preventiva", "Centro de Mando y Comunicaciones"]
 let filtrado=[]
 let mapdato=[]
 
-for(let i=0; i<lengthCorporaciones; i++){
-  if(buscar[i] === datos.idcorporaciones ){
+// for(let i=0; i<lengthCorporaciones; i++){
+//   if(buscar[i] === datos.idcorporaciones ){
     
-    mapdato = datos.map( (element, index, array) => {
-      // console.log(element);
-       let d= array.filter(ev=>ev.idcorporaciones == buscar[i])
-      // console.log(buscar[i])
-      return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion );
-    })
-  }
-} 
+//     mapdato = datos.map( (element, index, array) => {
+//       // console.log(element);
+//        let d= array.filter(ev=>ev.idcorporaciones == buscar[i])
+//       // console.log(buscar[i])
+//       return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion );
+//     })
+//   }
+// } 
 
-buscar.map(function (element, index, array) {
-  let cor = element
+// buscar.map(function (element, index, array) {
+//   let cor = element
     
-     filtrado = datos.map( function ( element, index ) {
-      // console.log(element.nombreCorporacion)
-      if(element.nombreCorporacion == cor){
-        // return element
-        let ss = [element];
-        // ss.map( (element, index) => {
-        //   console.log(element)
+//      filtrado = datos.map( function ( element, index ) {
+//       // console.log(element.nombreCorporacion)
+//       if(element.nombreCorporacion == cor){
+//         // return element
+//         let ss = [element];
+//         // ss.map( (element, index) => {
+//         //   console.log(element)
 
           
-        // }
-        // )
-        return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion )
-      }
+//         // }
+//         // )
+//         return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion )
+//       }
       
       
-    })
-})
+//     })
+// })
 
- // let corp=[];
+// datos.sort();
+// console.log(datos);
 
-  //     for (let i=0; i<=lengthCorporaciones; i++){
-  //     corp[i] =  datos.filter(ev => ev.idcorporaciones == i )
-  //     console.log(corp[i])
-  //   }
-let datosf =[];
-let variables=[]
-let i=0
-let j=0
-const [corpo, setCorpo] = useState([])
 
-// for (let i=0; i<=lengthCorporaciones; i++){
-//   variables = ("corp"+i)+variables;
-// }
-
-//  for (i; i<=lengthCorporaciones; i++){
-  // variables = ("corp"+i)+variables;
-  // for(j; j<=datos.length;j++){}
-//   datos.map((element) =>{
-//     element.
-//   // variables = variables+i;
-//  datosf[i] = datos.filter( ev => ev.idcorporaciones ===i)
-//   }
-//  console.log(datosf[i][i])
-// }
 
 
   return (
 
     <Document>
+
+      
         <Page size="letter" style={styles.body} >
 
           
             <View style={styles.section} >
-
               <View style={styles.table} >
                 
                 <View style={styles.tableRow} >
@@ -189,22 +170,20 @@ const [corpo, setCorpo] = useState([])
                   <View style={styles.tableCol} >
                     <Text style={styles.tableCell} > Corporación </Text> 
                   </View> 
-                </View> 
+                </View>  */}
 
                 {
                   // filtrado
-                  
-                  datosf.map( (element, index) => {
-                      return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion)
+          
 
-                  } 
+                  // datos.map( (element, index) => {
+                  //     // console.log(element);
+                  //     return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion );
+                  //   })
 
-
-                )
                 }
 
-              </View> 
- 
+              </View>
             </View>
 
         </Page>
