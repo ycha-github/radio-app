@@ -68,10 +68,6 @@ export const ImpReporteCorp = ({datos, lengthCorporaciones}) => {
 // let corpora=datos.filter(ev => ev.idcorporaciones == 1 )
 
 
-// useEffect(() => {
-//   mostrar() 
-// }, [])
-
 
 
 
@@ -145,6 +141,72 @@ let mapdato=[]
 
 
 
+let encabezado=(e,y)=>{
+  console.log(`encabezado ${y}`) 
+  console.log(e);
+  return (
+    
+    <View  style={styles.table} >
+                
+    <View key={y} style={styles.tableRow} >
+      <View style={styles.tableCol} >
+        <Text style={styles.tableCell} > No. </Text> 
+      </View> 
+      <View style={styles.tableCol} >
+        <Text style={styles.tableCell} > RFSI </Text> 
+      </View> 
+      <View style={styles.tableCol} >
+        <Text style={styles.tableCell} > Tipo </Text> 
+      </View> 
+      <View style={styles.tableCol} >
+        <Text style={styles.tableCell} > Corporación </Text> 
+      </View> 
+    </View> 
+    { 
+    
+    j=e.map((element,index,array)=>{
+       console.log(element)
+       return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion )
+      }
+      )
+    }
+    </View> 
+  )
+}
+//console.log(c)
+// let j=r.map((element,index,array)=>{
+//  console.log(element)
+//  return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion )
+// }
+//)
+//console.log(j)
+// for(let y=0;y<buscar.length;y++){
+//   let e= r.filter((element,index,array)=>element.nombreCorporacion == buscar[y])
+//   console.log(e);
+// }
+const mostrar=()=>
+{for(let y=0;y<buscar.length;y++){
+  let e= r.filter(function(element,index,array){
+   return(
+    element.nombreCorporacion == buscar[y]
+   )
+})
+encabezado(e,y);
+//console.log(e);
+}}
+
+const determinar=()=>{
+  mostrar()
+  const promesa= new Promise((resolve,reject)=>{
+    setTimeout(()=>{
+      resolve();
+    },2000)
+  });
+  promesa.then(()=>{
+    return  encabezado
+  })
+  
+}
 
   return (
 
