@@ -68,9 +68,9 @@ export const ImpReporteCorp = ({datos, lengthCorporaciones}) => {
 // let corpora=datos.filter(ev => ev.idcorporaciones == 1 )
 
 
-useEffect(() => {
-  mostrar() 
-}, [])
+// useEffect(() => {
+//   mostrar() 
+// }, [])
 
 
 
@@ -170,7 +170,7 @@ let mapdato=[]
                   <View style={styles.tableCol} >
                     <Text style={styles.tableCell} > Corporación </Text> 
                   </View> 
-                </View>  */}
+                </View> 
 
                 {
                   // filtrado
