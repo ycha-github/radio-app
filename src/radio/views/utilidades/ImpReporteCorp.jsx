@@ -1,4 +1,5 @@
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { useEffect } from 'react';
 const styles = StyleSheet.create({
     title: {
       fontSize: 12,
@@ -70,35 +71,6 @@ export const ImpReporteCorp = ({datos, lengthCorporaciones}) => {
 
 
 
-
-  const tbAsigCorp = (index, rfsi, tipo, nombreCorporacion) => 
-    // console.log(nombreCorporacion)
-        
-            <View style={styles.tableRow} >
-              <View style={styles.tableCol} >
-                <Text style={styles.tableCell} >
-                  {index}
-                </Text> 
-              </View> 
-              <View style={styles.tableCol} >
-                <Text style={styles.tableCell} >
-                  {rfsi}
-                </Text> 
-              </View> 
-              <View style={styles.tableCol} >
-                <Text style={styles.tableCell} >
-                  {tipo}
-                </Text> 
-              </View> 
-              <View style={styles.tableCol} >
-                <Text style={styles.tableCell} >
-                  {nombreCorporacion}
-                </Text> 
-              </View> 
-            </View>
-
-
-
 let buscar = ["Policía Estatal Preventiva", "Centro de Mando y Comunicaciones"]
 let filtrado=[]
 let mapdato=[]
@@ -138,14 +110,35 @@ let mapdato=[]
 
 // datos.sort();
 // console.log(datos);
+let c=[];
+let r=[];
+let j=[];
+let i=0
+let x=0
+let y=0
 
+for (i;i<=buscar.length-1;i++){
+  //console.log(i)
+  while (x < datos.length){
+    //console.log(buscar[i])
+        
+    if (buscar[i]==datos[x].nombreCorporacion){
+      c= datos[x]
+      r.push(c)
+     //let y=[...m ,datos[x]];
+     //console.log(c)
+    }
+    x++
 
+    //console.log(x)
+  }
+  x=0
+}
 
 let encabezado=(e,y)=>{
   console.log(`encabezado ${y}`) 
   console.log(e);
   return (
-    
     <View  style={styles.table} >
                 
     <View style={styles.tableRow} >
@@ -184,14 +177,16 @@ let encabezado=(e,y)=>{
 //   let e= r.filter((element,index,array)=>element.nombreCorporacion == buscar[y])
 //   console.log(e);
 // }
+let e =[]
 const mostrar=()=>
 {for(let y=0;y<buscar.length;y++){
-  let e= r.filter(function(element,index,array){
+  e= r.filter(function(element,index,array){
    return(
     element.nombreCorporacion == buscar[y]
    )
 })
 encabezado(e,y);
+tabla(e,y);
 //console.log(e);
 }}
 
@@ -207,46 +202,149 @@ const determinar=()=>{
   })
   
 }
+const determinar2=()=>{
+  mostrar()
+  const promesa= new Promise((resolve,reject)=>{
+    setTimeout(()=>{
+      resolve();
+    },2000)
+  });
+  promesa.then(()=>{
+    return  tabla()
+  })
+  
+}
+
+
+const tbEncabezado = () =>
+          <View style={styles.tableRow} >
+          <View style={styles.tableCol} >
+            <Text style={styles.tableCell} > No. </Text> 
+          </View> 
+          <View style={styles.tableCol} >
+            <Text style={styles.tableCell} > RFSI </Text> 
+          </View> 
+          <View style={styles.tableCol} >
+            <Text style={styles.tableCell} > Tipo </Text> 
+          </View> 
+          <View style={styles.tableCol} >
+            <Text style={styles.tableCell} > Corporación </Text> 
+          </View> 
+          </View>
+
+
+  const tbAsigCorp = (index, rfsi, tipo, nombreCorporacion) => 
+    // console.log(nombreCorporacion)
+        
+            <View key={index} style={styles.tableRow} >
+              <View style={styles.tableCol} >
+                <Text style={styles.tableCell} >
+                  {index}
+                </Text> 
+              </View> 
+              <View style={styles.tableCol} >
+                <Text style={styles.tableCell} >
+                  {rfsi}
+                </Text> 
+              </View> 
+              <View style={styles.tableCol} >
+                <Text style={styles.tableCell} >
+                  {tipo}
+                </Text> 
+              </View> 
+              <View style={styles.tableCol} >
+                <Text style={styles.tableCell} >
+                  {nombreCorporacion}
+                </Text> 
+              </View> 
+            </View>
+
+const obtener = () => {
+  for(let y=0;y<buscar.length;y++){
+    e=r.filter(function(element,index,array){
+      return(
+        element.nombreCorporacion == buscar[y]
+      )
+    },
+    e.map((element,index,array)=>{
+      console.log(element)
+      return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion )
+    })
+    )
+  }
+}
+
+
+
+
+let otra = [];
+
+for(y; y<=buscar.length;y++){
+otra[y] = datos.filter(function(element,index,array){
+  return(
+    element.nombreCorporacion == buscar[y]
+  )
+
+})
+}
+
+
+
+const tabla = () => {
+for(y; y<=buscar.length;y++){
+  console.log(y)
+  return  (<View style={styles.section} >
+            <View style={styles.table} >
+              {tbEncabezado()}
+              {  
+                otra[y].map((element,index,array)=>{
+                  console.log(otra[y])
+                  return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion )
+                }) 
+              }
+            </View>
+          </View>)
+  }
+}
+
+const tablas = () => {
+  for(y; y<=buscar.length;y++){
+    return tabla(y)
+  }
+}
 
   return (
 
     <Document>
-
-      
         <Page size="letter" style={styles.body} >
-
-               
-            <View style={styles.section} >
-              <View style={styles.table} >
-                
-                <View style={styles.tableRow} >
-                  <View style={styles.tableCol} >
-                    <Text style={styles.tableCell} > No. </Text> 
-                  </View> 
-                  <View style={styles.tableCol} >
-                    <Text style={styles.tableCell} > RFSI </Text> 
-                  </View> 
-                  <View style={styles.tableCol} >
-                    <Text style={styles.tableCell} > Tipo </Text> 
-                  </View> 
-                  <View style={styles.tableCol} >
-                    <Text style={styles.tableCell} > Corporación </Text> 
-                  </View> 
-                </View> 
-
-                {
-                  // filtrado
           
-
-                  // datos.map( (element, index) => {
-                  //     // console.log(element);
-                  //     return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion );
-                  //   })
-
-                }
-
-              </View>
+            {
+              tabla()
+            }
+          
+        
+          {/* <View  style={styles.section} >
+            <View  style={styles.table} >
+              {tbEncabezado()}
+              {  
+                otra[0].map((element,index,array)=>{
+                  return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion )
+                }) 
+              }
             </View>
+          </View> */}
+
+        
+          {/* <View style={styles.section} >
+            <View style={styles.table} >
+              {tbEncabezado()}
+              {  
+                otra[1].map((element,index,array)=>{
+                  return tbAsigCorp(index+1, element.rfsi, element.tipo, element.nombreCorporacion )
+                }) 
+              }
+            </View>
+          </View> */}
 
         </Page>
     </Document>

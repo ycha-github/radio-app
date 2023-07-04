@@ -16,6 +16,7 @@ let hoy = new Date();
 let options = { day: 'numeric', month: 'long', year: 'numeric' }
 let fechaActual = hoy.toLocaleString('es-MX', options);
 // let fechaActual = hoy.getDate() + ' de ' + (hoy.getMonth()+1) + ' de ' + hoy.getFullYear();
+let anioActual = hoy.getFullYear();
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -304,7 +305,7 @@ export const FormHojaServicio = (customStyles) => {
        // if (formValues.rfsi.length <= 0) return;
         console.log(formValues);
         //TODO:
-        isActualizar === true ? "":consultarUltimoRegistro();
+        // isActualizar === true ? "":consultarUltimoRegistro();
         await startSavingEvent(formValues);
         CloseModal();
         setFormSubmitted(false);
@@ -321,10 +322,13 @@ export const FormHojaServicio = (customStyles) => {
                         <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> CENTRO DE MANDO Y COMUNICACIONES C4 </b> </Typography>
                         <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> DIRECCIÓN TÉCNICA </b> </Typography>
                         <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > DEPARTAMENTO DE RADIOCOMUNICACIONES </Typography><br />
-                        <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> REPORTE DE SERVICIO </b> </Typography><br />
+                        <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> REPORTE DE SERVICIO </b></Typography> <br />
                         <form onSubmit={onSubmit}>
 
                             <Grid container justify="center" sx={{ pr: 4 }}>
+                                {/* <Grid item xs={12} sx={{ textAlign: 'right' }} >
+                                    <TextField variant="filled" value={ isActualizar ? formValues.folio+'/'+ anioActual : "" }></TextField> 
+                                </Grid> */}
                                 <Grid item xs={12} sx={{ textAlign: 'right' }} >
                                     <TextField variant='filled' value={!isActualizar ? 'Villahermosa, Tab. A ' + fechaActual : formValues.fecha_servicio === null ? 'Sin fecha de Servicio' :'Villahermosa, Tab. A ' + new Date(formValues.fecha_servicio.split('-').join('/')).toLocaleString('es-MX', options) } sx={{ width: 335 }} /><br /><br />
                                 </Grid>

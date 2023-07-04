@@ -11,6 +11,9 @@ import { CrearPdf } from './CrearPdf';
 import radioApi from "../../../api/radioApi";
 // import { render } from "react-dom";
 
+
+let anioActual = new Date('2023').getFullYear()+1;
+// let anioActual = 2023;
 let hoy = new Date();
 let fecha = hoy.getFullYear()+"-" + (hoy.getMonth() + 1) +"-" + hoy.getDate();
 
@@ -27,16 +30,25 @@ const colorDone=()=>{
   const [abrirPdf, setAbrirPdf]= useState(false);
   const [imprimir, setImprimir]= useState({});
   const [configReport, setConfigReport]= useState({});
+  const [folioNew, setFolioNew]= useState(0);
 
   const [hServicio, setHServicio] = useState({})
   // const navigate = useNavigate();
- 
+
     
   useEffect(() => {
     startLoadingEvents()
   }, [])
 
   const newRow =()=>{ 
+    const promesa= new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+        resolve();
+      },2000)
+    });
+    let newFolio;
+    
+    promesa.then(()=>{
     setActiveEvent({
       fecha_servicio: fecha,
       fk_idasignacion_ur: '',
@@ -49,13 +61,25 @@ const colorDone=()=>{
       usuario_entrega: '',
       fk_tecnico_entrega: null,
       estatus: 1,
-      folio:'',
+      folio: newFolio,
     })
+  })
+    let anio = new Date(events[0]['createdAt']).getFullYear();
+    let folio = events[0]['folio'];
+    anio !== anioActual ? newFolio=1 : newFolio = folio+1   
+    console.log(newFolio)
+    console.log(anio)
+    console.log(anioActual)
+ 
+
+
     OpenModal();
     setAbrirPdf(false);
-    // mostrarGuardar();
-    // navigate('../hoja-serviciof');
+
   }
+  
+
+  
 
   useEffect(() => {
     radioApi.get(`/configreportes/estatus`).
@@ -93,6 +117,7 @@ const colorDone=()=>{
     OpenModal();
     mostrarActualizar();
   }
+  
 
   const mostrarPdf = ( event) =>  {
     setAbrirPdf(true);
@@ -127,6 +152,7 @@ const colorDone=()=>{
       </Box>
     );
   }
+
 
 const columns = [
   
