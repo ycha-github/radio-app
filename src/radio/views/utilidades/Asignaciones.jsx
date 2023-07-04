@@ -1,6 +1,6 @@
 import {useState , useEffect} from "react";
 import { DataGrid, gridClasses, esES, GridActionsCellItem, GridPagination, GridToolbarExport, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
-import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, styled } from '@mui/material';
+import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, styled, FormControl, InputLabel, Select, OutlinedInput, MenuItem, Checkbox, ListItemText } from '@mui/material';
 import { AddCircleOutlineOutlined, Close, Done, Edit, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignacionesStore';
@@ -31,7 +31,17 @@ const NuevoFooter=()=>{
       </Box>
   </>
 }
- 
+ const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
   export const Asignaciones=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent, corporacionesFiltrado, startLoadingCorporacion } = useAsignacionesStore();
   const {OpenModal, mostrarActualizar,disableForm}=useModalHook();
@@ -39,7 +49,9 @@ const NuevoFooter=()=>{
  const [abrirPdf, setAbrirPdf]= useState(false);
  const [abrirPdfReporte, setAbrirPdfReporte]= useState(false);
  const [imprimir, setImprimir]= useState({});
-
+ const [buscarCorporaciones, setBuscarCorporaciones] = useState([])
+ const [enviarCorporaciones, setEnviarCorporaciones] = useState([])
+ const [corporacionesArray, setCorporacionesArray] = useState([])
  
   const [configReport, setConfigReport] = useState({})
   const navigate = useNavigate();
@@ -83,7 +95,13 @@ const NuevoFooter=()=>{
   }
   
   //let image = axios.get(`http://localhost:8000/api/v0/documentos/1:13`, {responseType: 'arraybuffer'});
-  
+  useEffect(() => {
+    radioApi.get('/corporaciones/estatus/').
+  then((response)=>{
+    setBuscarCorporaciones(response.data);
+  });
+ }, []);
+
     useEffect(() => {
     radioApi.get(`/configreportes/estatus`).
           then((response) => {
@@ -129,6 +147,19 @@ const NuevoFooter=()=>{
     mostrarActualizar();
   }
   
+  const handleSelectChange = (event) => {
+        
+    const {
+        target: { value },
+    } = event;
+    setCorporacionesArray(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(', ') : value,
+        );
+        setEnviarCorporaciones([`${value}`]);
+        console.log(value)
+      };
+      console.log(corporacionesArray)
   //  
   //  abrirPdf===true?
   //  <CrearPdf/>:
@@ -286,7 +317,7 @@ const columns =  [
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
       {abrirPdf ===true && abrirPdfReporte===false ?<CrearPdf datos={imprimir} isCartaFijo={true} isReporte={false} formato={configReport} />: ""}
-      {abrirPdf ===true && abrirPdfReporte===true ?<CrearPdf datos={events} isCartaFijo={false} isReporte={true} lengthCorporaciones={lengthCorporaciones} />: ""}
+      {abrirPdf ===true && abrirPdfReporte===true ?<CrearPdf datos={events} isCartaFijo={false} isReporte={true} CorporacionesABuscar={corporacionesArray} />: ""}
       {abrirPdf=== false?<FormAsignaciones />:""}
       {/* <FormAsignacionGeneral/> */}
       {/* {let printData = document.getElementById("datagrid1").innerHTML} */}
@@ -294,9 +325,33 @@ const columns =  [
           <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
             Nuevo
           </Button>
-          <Button onClick={mostrarPdfReporteCorp} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
+          {/* <Button onClick={mostrarPdfReporteCorp} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
             Reporte por Corporación
-          </Button>
+          </Button> */}
+          <FormControl sx={{ border: 'none', mb: 1, width: 400 }}>
+          <InputLabel id="demo-multiple-checkbox-label"  color={'secondary'} >Reporte corporaciones</InputLabel>
+           <Select
+               //disabled={isVer}
+               labelId="demo-multiple-checkbox-label"
+               id="demo-multiple-checkbox"
+               multiple
+               onClose={corporacionesArray !="" ? mostrarPdfReporteCorp:console.log("")}
+               value={corporacionesArray}
+               onChange={handleSelectChange}
+               input={<OutlinedInput label="Servicios" />}
+               renderValue={(selected) => selected.join(', ')}
+               MenuProps={MenuProps}
+               color={'secondary'}
+           >
+               {
+               buscarCorporaciones.map((service) => 
+                   { return <MenuItem key={service.idcorporaciones} value={service.nombreCorporacion} > 
+                       <Checkbox  checked={ corporacionesArray.indexOf(service.nombreCorporacion) > - 1 } />
+                       <ListItemText primary={service.nombreCorporacion} />
+                   </MenuItem> }
+               )}  
+           </Select>
+           </FormControl>                                       
         </Stack>
            
             <ThemeProvider theme={theme}>

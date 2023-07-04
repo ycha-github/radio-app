@@ -8,7 +8,7 @@ import { ImpReporteCorp } from './ImpReporteCorp';
 
 
 // Create Document Component
-export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,isReporte,lengthCorporaciones},customStyles) => {
+export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,isReporte,CorporacionesABuscar},customStyles) => {
 
  return (
   <ModalRadio  >
@@ -19,7 +19,7 @@ export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,isReporte,lengthCor
     isCartaFijo===true ?
     (<CartaFijo datos={datos} formato={formato} />) :
     isReporte ===true ?
-    (<ImpReporteCorp datos={datos} lengthCorporaciones={lengthCorporaciones} />) :
+    (<ImpReporteCorp datos={datos} CorporacionesABuscar={CorporacionesABuscar} />) :
     (<ImprimirHServicio datos={datoHoja} formato={formato} />) 
   }
   </PDFViewer>

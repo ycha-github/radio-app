@@ -209,7 +209,7 @@ export const FormHojaServicio = (customStyles) => {
                 ...formValues,
                 ['servicios'] : `${value}`,
             });
-            console.log('value:'+ value)
+            console.log([value])
             // console.log(servicio)
       };
 
