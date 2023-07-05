@@ -12,8 +12,7 @@ import radioApi from "../../../api/radioApi";
 // import { render } from "react-dom";
 
 
-let anioActual = new Date('2023').getFullYear()+1;
-// let anioActual = 2023;
+let anioActual = new Date().getFullYear();
 let hoy = new Date();
 let fecha = hoy.getFullYear()+"-" + (hoy.getMonth() + 1) +"-" + hoy.getDate();
 
@@ -33,22 +32,32 @@ const colorDone=()=>{
   const [folioNew, setFolioNew]= useState(0);
 
   const [hServicio, setHServicio] = useState({})
-  // const navigate = useNavigate();
 
     
   useEffect(() => {
     startLoadingEvents()
   }, [])
 
+  let anio;
+  let newFolio;
+
   const newRow =()=>{ 
-    const promesa= new Promise((resolve,reject)=>{
-      setTimeout(()=>{
-        resolve();
-      },2000)
-    });
-    let newFolio;
+    // const promesa= new Promise((resolve,reject)=>{
+    //   setTimeout(()=>{
+    //     resolve();
+    //   },2000)
+    // });
     
-    promesa.then(()=>{
+    
+    // promesa.then(()=>{
+
+      anio = new Date(events[0]['createdAt']).getFullYear();
+      let folio = events[0]['folio'];
+      anio !== anioActual ? newFolio=1 : newFolio = folio+1   
+      console.log(newFolio)
+      console.log(anio)
+      console.log(anioActual)
+
     setActiveEvent({
       fecha_servicio: fecha,
       fk_idasignacion_ur: '',
@@ -63,13 +72,8 @@ const colorDone=()=>{
       estatus: 1,
       folio: newFolio,
     })
-  })
-    let anio = new Date(events[0]['createdAt']).getFullYear();
-    let folio = events[0]['folio'];
-    anio !== anioActual ? newFolio=1 : newFolio = folio+1   
-    console.log(newFolio)
-    console.log(anio)
-    console.log(anioActual)
+  // })
+    
  
 
 
@@ -77,8 +81,6 @@ const colorDone=()=>{
     setAbrirPdf(false);
 
   }
-  
-
   
 
   useEffect(() => {
@@ -156,15 +158,16 @@ const colorDone=()=>{
 
 const columns = [
   
-  { field: 'idhojaservicios', headerClassName: "super", headerName: 'ID',width: 40,  },
+  { field: 'idhojaservicios', headerClassName: "super", headerName: 'ID',width: 40 },
+  { field: 'folio', valueGetter: (params) => { return `${params.row.folio+'/'}${new Date(params.row.createdAt).getFullYear()}`}, headerClassName: "super", headerName: 'Folio',width: 100 },
   { field: 'fecha_servicio',headerClassName: "super",headerName: 'Fecha creación', flex: 1, minWidth: 60 },
-  { field: 'nombre_completo', headerClassName: "super", headerName: 'Usuario', flex: 1, minWidth: 230 },
-  { field: 'serie',headerClassName: "super", headerName: 'Radio', flex: 1, minWidth: 90 },
-  { field: 'fecha_entrega', type: "dateTime",valueGetter:({value})=>value && new Date(value),headerClassName: "super",headerName: 'Fecha Entrega',flex: 1, minWidth: 110 },
+  { field: 'nombre_completo', headerClassName: "super", headerName: 'Usuario Asignado', flex: 1, minWidth: 230 },
+  { field: 'serie',headerClassName: "super", headerName: 'Serie Radio', flex: 1, minWidth: 60 },
   { field: 'nombreSupervisorTec',headerClassName: "super",headerName: 'Supervisor Técnico', flex: 1, minWidth: 230 },
-  // { field: 'usuario_servicio',headerClassName: "super",headerName: 'Usuario Servicio',  width: 230 },
+  { field: 'usuario_servicio',headerClassName: "super",headerName: 'Usuario Servicio',  width: 230 },
+  { field: 'fecha_entrega', type: "dateTime",valueGetter:({value})=>value && new Date(value), headerClassName: "super",headerName: 'Fecha Entrega',flex: 1, minWidth: 110 },
   // { field: 'usuario_entrega',headerClassName: "super",headerName: 'Usuario Entrega', width: 230 },
-  { field: 'nombreTecEntrega',headerClassName: "super",headerName: 'Técnico Entrega', flex: 1, minWidth: 230 },
+  // { field: 'nombreTecEntrega',headerClassName: "super",headerName: 'Técnico Entrega', flex: 1, minWidth: 230 },
   { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus', width: 75 },
   // { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 1, minWidth: 120 },
   // { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 120 },

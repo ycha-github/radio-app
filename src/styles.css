@@ -11,6 +11,10 @@
     text-align: center;
 }
 
+.letraRoja{
+    color: red;
+}
+
 .colorCat{
     background-color: rgb(228, 125, 35);
 }

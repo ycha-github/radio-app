@@ -35,12 +35,12 @@ export const useHojaServicioStore= () => {
       //Actualizando
         const {data}= await  radioApi.put(`/hojasservicios/${zonasEvent.idhojaservicios}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
-        //window.location.reload(true);
+        window.location.reload(true);
     }else{
       //creando
       const {data}= await radioApi.post('/hojasservicios', zonasEvent);
       dispatch(onAddNewEvent({...zonasEvent, idhojaservicios:data.idhojaservicios, user}));
-      // window.location.reload(true);
+      window.location.reload(true);
       //navigate('../hoja-servicio')
     }
   }

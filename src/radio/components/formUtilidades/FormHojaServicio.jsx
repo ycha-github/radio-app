@@ -33,7 +33,7 @@ export const FormHojaServicio = (customStyles) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const { CloseModal, isActualizar, mostrarGuardar, isVer } = useModalHook();
-    const { activeEvent, startSavingEvent, consultarUltimoRegistro } = useHojaServicioStore();
+    const { activeEvent, startSavingEvent } = useHojaServicioStore();
 
     const [usuarios, setUsuarios] = useState([0]);
     const [supervisores, setSupervisores] = useState([0]);
@@ -210,7 +210,7 @@ export const FormHojaServicio = (customStyles) => {
                 ...formValues,
                 ['servicios'] : `${value}`,
             });
-            console.log('value:'+ value)
+            console.log([value])
             // console.log(servicio)
       };
 
@@ -313,6 +313,7 @@ export const FormHojaServicio = (customStyles) => {
     
     //console.log(supervisores)
     //console.log(tecnicos)
+
     return (
         <>
             <ModalRadio >
@@ -321,19 +322,20 @@ export const FormHojaServicio = (customStyles) => {
                     <Box overflow={'scroll'} maxHeight={650} sx={{ border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 1, mb: 1, mt: 2, pl: 1 }} >
                         <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> CENTRO DE MANDO Y COMUNICACIONES C4 </b> </Typography>
                         <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> DIRECCIÓN TÉCNICA </b> </Typography>
-                        <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > DEPARTAMENTO DE RADIOCOMUNICACIONES </Typography><br />
-                        <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> REPORTE DE SERVICIO </b></Typography> <br />
+                        <Typography sx={{ textAlign: 'center', fontSize: '16px', pb:1 }} > DEPARTAMENTO DE RADIOCOMUNICACIONES </Typography>
+                        <Typography sx={{ textAlign: 'center', fontSize: '16px', pb:1 }} > <b> REPORTE DE SERVICIO </b></Typography>
+                        {/* <Typography    > { formValues.folio+'/'+ anioActual } </Typography> */}
                         <form onSubmit={onSubmit}>
 
                             <Grid container justify="center" sx={{ pr: 4 }}>
-                                {/* <Grid item xs={12} sx={{ textAlign: 'right' }} >
-                                    <TextField variant="filled" value={ isActualizar ? formValues.folio+'/'+ anioActual : "" }></TextField> 
-                                </Grid> */}
+                                <Grid item xs={12} sx={{ textAlign: 'right', pr: 5, pb: 1 }} >
+                                    <b>FOLIO: </b> <b className='letraRoja'> { formValues.folio+'/'+ anioActual } </b>
+                                </Grid>
                                 <Grid item xs={12} sx={{ textAlign: 'right' }} >
-                                    <TextField variant='filled' value={!isActualizar ? 'Villahermosa, Tab. A ' + fechaActual : formValues.fecha_servicio === null ? 'Sin fecha de Servicio' :'Villahermosa, Tab. A ' + new Date(formValues.fecha_servicio.split('-').join('/')).toLocaleString('es-MX', options) } sx={{ width: 335 }} /><br /><br />
+                                    <TextField variant='filled' value={!isActualizar ? 'Villahermosa, Tab. A ' + fechaActual : formValues.fecha_servicio === null ? 'Sin fecha de Servicio' :'Villahermosa, Tab. A ' + new Date(formValues.fecha_servicio.split('-').join('/')).toLocaleString('es-MX', options) } sx={{ width: 335, pb:2 }} />
                                 </Grid>
                                 <Box sx={{ width: 1850, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
-                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Datos del Usuario </Typography><br />
+                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', pb:2 }} > Datos del Usuario </Typography>
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -511,7 +513,7 @@ export const FormHojaServicio = (customStyles) => {
                                     </Stack>
                                 </Box>
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
-                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Datos del Equipo </Typography><br />
+                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', pb: 2 }} > Datos del Equipo </Typography>
 
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
@@ -703,7 +705,7 @@ export const FormHojaServicio = (customStyles) => {
                                     </Stack>
                                 </Box>
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
-                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Servicios </Typography><br />
+                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', pb:2 }} > Servicios </Typography>
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -790,7 +792,7 @@ export const FormHojaServicio = (customStyles) => {
                                 </Box>
 
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
-                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Recepción de Equipo </Typography><br />
+                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', pb:2 }} > Recepción de Equipo </Typography>
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
