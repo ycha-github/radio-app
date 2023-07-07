@@ -300,7 +300,7 @@ const columns =  [
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
       {abrirPdf ===true && abrirPdfReporte===false ?<CrearPdf datos={imprimir} isCartaFijo={true} isReporte={false} formato={configReport} />: ""}
-      {abrirPdf ===true && abrirPdfReporte===true ?<CrearPdf datos={events} isCartaFijo={false} isReporte={true} CorporacionesABuscar={corporacionesArray} />: ""}
+      {abrirPdf ===true && abrirPdfReporte===true ?<CrearPdf datos={events} isCartaFijo={false} isReporte={true} CorporacionesABuscar={corporacionesArray} formato={configReport} />: ""}
       {abrirPdf ===false ? <FormAsignaciones />:""}
       {/* <FormAsignacionGeneral/> */}
       {/* {let printData = document.getElementById("datagrid1").innerHTML} */}
