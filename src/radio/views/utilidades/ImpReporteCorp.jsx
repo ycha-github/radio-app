@@ -9,10 +9,20 @@ const styles = StyleSheet.create({
       margin: '0 0 0 0',
       textDecoration: 'none'
     },
+    image: {
+      margin: '40 0 10 0',
+      width:170,
+      height:60,
+      padding: '0 0 0 0',
+    },
+    body: {
+      // margin: '40 0 5 0',
+      padding: '0 0 80 0',
+    },
     section: {
-      margin: '10 0 10 0',
+      margin: '5 0 5 0',
       border: '0px none none',
-      padding: '10 0 10 0',
+      padding: '0 0 0 0',
       // '@media max-height: 1300': {
       //   margin: '40 0 100 0',
         // padding: '0 0 150.6 0',
@@ -20,7 +30,7 @@ const styles = StyleSheet.create({
     
     },
     margen: {
-      margin: '40 50 40 50',
+      margin: '0 50 40 50',
       // border: '0px none none',
       // padding: '0 0 0 0',
     },
@@ -175,7 +185,7 @@ console.log({formato})
     <Document>
       <Page size="letter" /*orientation="landscape"*/ style={styles.body} >
         <View style={styles.margen} >
-          {/* <Image  src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} /> */}
+          <Image  src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} style={styles.image} fixed />
           {  
             mostrar()
           }
