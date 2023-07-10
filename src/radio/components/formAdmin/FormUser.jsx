@@ -73,7 +73,7 @@ export const FormUser = () => {
                         </Grid>
                         <Grid item >
                             <TextField
-                                disabled={isActualizar}
+                                // disabled={isActualizar}
                                 id="password-input"
                                 label="Contraseña"
                                 sx={{ border: 'none', mb: 1, width: 400 }}

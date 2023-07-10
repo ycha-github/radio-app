@@ -1,4 +1,5 @@
 import { Grid, Typography } from "@mui/material"
+import image from "./senial.jpg"; 
 
 export const AuthLayout = ({ children, title='' }) => {
   return (
@@ -8,7 +9,7 @@ export const AuthLayout = ({ children, title='' }) => {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        sx={{ minHeight: '100vh', backgroundColor: 'primary.main', padding: 4 }}
+        sx={{  height: '100vh', backgroundSize: 'cover', backgroundImage:`url(${image})`, padding: 4 }}
     >
         <Grid item 
             className='box-shadow' 
