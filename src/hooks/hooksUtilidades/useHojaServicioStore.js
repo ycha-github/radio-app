@@ -47,7 +47,7 @@ export const useHojaServicioStore= () => {
    const deleteEvent=async(zonasEvent, state)=>{
     const {data} = await  radioApi.delete(`/hojasservicios/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
-  //window.location.reload(true);
+  window.location.reload(true);
   
     }
 

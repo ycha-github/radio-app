@@ -460,7 +460,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         onChange={(event, newFormValues) => {
                                             console.log(newFormValues)
                                             setFormValues({
-                                                ...formValues,
+                                                ...formValues, 
                                                 ['cable_principal']: newFormValues,
                                             });
                                         }}

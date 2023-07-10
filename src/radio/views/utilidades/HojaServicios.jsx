@@ -200,7 +200,7 @@ const columns = [
         size="small"
         aria-label="Estatus"
       >
-        <Switch color='secondary' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idaccesorios)} />
+        <Switch color='secondary' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idhojaservicios)} />
      </IconButton> 
     ], 
   }, 

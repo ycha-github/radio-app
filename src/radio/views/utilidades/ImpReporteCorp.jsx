@@ -19,6 +19,15 @@ const styles = StyleSheet.create({
       // },
     
     },
+    body:{
+      padding:'0 0 80 0'
+    },
+    image:{
+      margin:'40 0 10 0',
+      width:150,
+      height:50,
+
+    },
     margen: {
       margin: '40 50 40 50',
       // border: '0px none none',
@@ -84,12 +93,12 @@ export const ImpReporteCorp = ({datos, formato, CorporacionesABuscar }) => {
                   {index}
                 </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "20%" }} >
+              <View style={{...styles.tableCol, width: "20%" }}>
                 <Text style={styles.tableCell} >
                   { rfsi }
                 </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "10%" }} >
+              <View style={{...styles.tableCol, width: "10%" }}>
                 <Text style={styles.tableCell} >
                   {tipo}
                 </Text> 
@@ -126,9 +135,9 @@ n.push(e)
 return(
   CorporacionesABuscar.map((element,index,array)=>{
     return (
-      <View key={index} style={styles.section} >
+      <View key={index} style={styles.section} wrap>
         <Text style={{...styles.title, textAlign: 'left'}} >{element}</Text>
-      <View style={styles.table} >
+      <View style={styles.table}   >
       
       <View style={styles.tableRowHead} >
         <View style={{...styles.tableCol, width: "5%" }} >
@@ -173,9 +182,9 @@ console.log({formato})
   return (
 
     <Document>
-      <Page size="letter" /*orientation="landscape"*/ style={styles.body} >
+      <Page size="letter" /*orientation="landscape"*/ style={styles.body}  >
         <View style={styles.margen} >
-          {/* <Image  src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} /> */}
+          <Image style={styles.image} src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} fixed />
           {  
             mostrar()
           }

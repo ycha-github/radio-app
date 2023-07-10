@@ -12,13 +12,13 @@ export const NavBar = ({ drawerWidth = 240 }) => {
         }}
     >
         <Toolbar className='navbar'>
-            <IconButton
+            {/* <IconButton
                 color='inherit'
                 edge="start"
                 sx={{ mr: 2, display: { sm: 'none'} }}
             >
                 <MenuOutlined />
-            </IconButton>
+            </IconButton> */}
 
             <Grid container direction='row' justifyContent='space-between' alignItems='center'>
                 <Typography variant='h6' noWrap component='div'><CellTower /> Radiocomunicaciones</Typography>

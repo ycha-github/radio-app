@@ -19,7 +19,7 @@ export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,isReporte,Corporaci
     isCartaFijo===true ?
     (<CartaFijo datos={datos} formato={formato} />) :
     isReporte ===true ?
-    (<ImpReporteCorp datos={datos} CorporacionesABuscar={CorporacionesABuscar} />) :
+    (<ImpReporteCorp datos={datos} formato={formato} CorporacionesABuscar={CorporacionesABuscar} />) :
     (<ImprimirHServicio datos={datoHoja} formato={formato} />) 
   }
   </PDFViewer>
