@@ -45,6 +45,7 @@ export const useMarcasStore = () => {
     // Propiedades
     activeEvent,
     events,
+    user,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,

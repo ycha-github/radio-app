@@ -1,6 +1,8 @@
 
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import { useEffect } from 'react';
+import { radioApi } from '../../../api';
+//import { radioApi } from '../../../api/radioApi';
 const styles = StyleSheet.create({
     title: {
       fontSize: 12,
@@ -29,15 +31,15 @@ const styles = StyleSheet.create({
       // },
     
     },
-    body:{
-      padding:'0 0 80 0'
-    },
-    image:{
-      margin:'40 0 10 0',
-      width:150,
-      height:50,
+    // body:{
+    //   padding:'0 0 80 0'
+    // },
+    // image:{
+    //   margin:'40 0 10 0',
+    //   width:150,
+    //   height:50,
 
-    },
+    // },
     margen: {
       margin: '0 50 40 50',
       // border: '0px none none',
@@ -188,13 +190,12 @@ return(
   
 // }
 
-console.log({formato})
   return (
 
     <Document>
       <Page size="letter" /*orientation="landscape"*/ style={styles.body}  >
         <View style={styles.margen} >
-          <Image  src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} style={styles.image} fixed />
+          <Image  src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} style={styles.image} fixed />
           {  
             mostrar()
           }

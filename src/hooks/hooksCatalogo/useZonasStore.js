@@ -45,6 +45,7 @@ export const useZonasStore = () => {
     // Propiedades
     activeEvent,
     events,
+    user,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,

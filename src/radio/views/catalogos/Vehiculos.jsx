@@ -21,7 +21,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 
 export const Vehiculos=()=> { 
 
-  const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useVehiculosStore();
+  const { events, setActiveEvent, startLoadingEvents, deleteEvent,user } = useVehiculosStore();
   const { OpenModal, mostrarActualizar } = useModalHook();
   const [state, setState] =useState([]);
 
@@ -147,6 +147,7 @@ export const Vehiculos=()=> {
         autoHeight={true}
         rows={events}
         columns={columns}
+        columnVisibilityModel={user.rol==3? {actions:false} : {actions:true}}
         pageSize={10}
         rowsPerPageOptions={[10]}
         components={{

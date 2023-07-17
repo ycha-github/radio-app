@@ -9,6 +9,7 @@ import { TextareaAutosize } from '@mui/base';
 import { styled } from '@mui/system';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 
@@ -941,27 +942,29 @@ export const FormHojaServicio = (customStyles) => {
                                                 <Grid item={6}>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DateTimePicker
-                                                  label="Controlled picker"
+                                                  label="Fecha de Entrega"
                                                   name = "fecha_entrega"
                                                   //inputFormat="DD/MM/YYYY HH:mm"
                                                   color="secondary"
                                                   value={dayjs(formValues.fecha_entrega)}
                                                   onChange={(newValue) => {
-                                                    console.log(newValue);
-                                                    console.log(formValues.fecha_entrega)
+                                                    // console.log(newValue);
+                                                    // console.log(formValues.fecha_entrega)
                                                     let x= (newValue.$M+1)+"-"+newValue.$D+"-"+newValue.$y+" "+newValue.$H+":"+newValue.$m+":"+newValue.$s
-                                                    console.log(x);
+                                                    // let x= newValue.$y+"/"+newValue.$D+"/"+(newValue.$M+1)+" "+newValue.$H+":"+newValue.$m+":"+newValue.$s;
+                                                    // console.log(x);
                                                     let y= new Date(x);
                                                     let options = { day: '2-digit', month: '2-digit', year: 'numeric' }
                                                     let optionsTime={h24: true, hour:'2-digit', minute:'2-digit', second:'2-digit'}
                                                     let fechaAsignacion = y.toLocaleString('es-MX', options); 
                                                     let horaAsignacion = y.toLocaleString('es-MX', optionsTime); 
                                                     let info = fechaAsignacion.split('/').reverse().join('-');
-                                                    console.log(fechaAsignacion);
-                                                    //setValueFecha(newValue);
+                                                    // console.log(fechaAsignacion);
+                                                    // setValueFecha(newValue);
                                                     setFormValues({
                                                         ...formValues,
                                                         ['fecha_entrega']: info+" "+horaAsignacion,
+                                                        // ['fecha_entrega']:x,
                                                     })}}
                                                 />
                                                 </LocalizationProvider>

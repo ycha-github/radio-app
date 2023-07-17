@@ -91,6 +91,7 @@ export const useAsignacionesStore= () => {
     // Propiedades
     activeEvent,
     events,
+    user,
     accesoriosFiltrado,
     accesoriosFiltradoBateria,
     accesoriosFiltradoGps,

@@ -20,7 +20,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 }));
 
 export const Corporaciones= () => {
-  const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useCorporacionesStore();
+  const { events, setActiveEvent, startLoadingEvents, deleteEvent,user } = useCorporacionesStore();
   const { OpenModal, mostrarActualizar } = useModalHook();
   const [state, setState] =useState([]);
 
@@ -135,6 +135,7 @@ const columns = [
         autoHeight={true}
         rows={events}
         columns={columns}
+        columnVisibilityModel={user.rol==3? {actions:false} : {actions:true}}
         pageSize={10}
         rowsPerPageOptions={[10]}
         components={{

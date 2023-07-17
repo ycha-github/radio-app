@@ -45,6 +45,7 @@ export const useTiposStore = () => {
     // Propiedades
     activeEvent,
     events,
+    user,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,

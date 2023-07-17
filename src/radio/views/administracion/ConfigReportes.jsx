@@ -5,6 +5,8 @@ import { AddCircleOutlineOutlined, Close, Done, Edit, VisibilityOutlined } from 
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useConfigReportesStore } from '../../../hooks/hooksAdministracion/useConfigReportesStore';
 import { FormConfigReportes } from '../../components/formAdmin/formConfigReportes';
+import Swal from 'sweetalert2';
+import { radioApi } from '../../../api';
 
 const colorClose=()=>{
   return <Close color='error'/>
@@ -23,6 +25,7 @@ export const ConfigReportes= () => {
   const { events, setActiveEvent, startLoadingEvents, deleteEvent } = useConfigReportesStore();
   const { OpenModal, mostrarActualizar, disableForm } = useModalHook();
   const [state, setState] =useState([]);
+  const [configReport, setConfigReport]= useState({});
 
   useEffect(() => {
     startLoadingEvents()
@@ -58,6 +61,24 @@ export const ConfigReportes= () => {
     
     await deleteEvent(r);
   };
+
+  useEffect(() => {
+    radioApi.get(`/configreportes/estatus`).
+          then((response) => {
+            setConfigReport(response.data);
+          });
+      }, []);
+
+
+  useEffect(() => {
+    if (configReport.length > 1){
+      Swal.fire({
+        icon:'question',
+        text:'Favor de elegir el correcto ',
+        title: 'Hay mas de una configuracion de reportes con estatus activo',
+        confirmButtonText: '<a >Confirmar</a>',});
+    }
+  }, [configReport])
 
   function QuickSearchToolbar() {
     return (

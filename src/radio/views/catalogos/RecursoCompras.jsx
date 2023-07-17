@@ -21,7 +21,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 }));
 
 export const RecursoCompras = () => {
-  const { events, setActiveEvent, startLoadingEvents, deleteEvent} = useRecursosStore();
+  const { events, setActiveEvent, startLoadingEvents, deleteEvent,user} = useRecursosStore();
   const { OpenModal, mostrarActualizar } = useModalHook();
   const [state, setState] =useState([]);
 
@@ -134,6 +134,7 @@ const columns = [
         autoHeight={true}
         rows={events}
         columns={columns}
+        columnVisibilityModel={user.rol==3? {actions:false} : {actions:true}}
         pageSize={10}
         rowsPerPageOptions={[10]}
         components={{

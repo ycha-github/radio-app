@@ -9,6 +9,7 @@ import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServic
 import dayjs from "dayjs";
 import { CrearPdf } from './CrearPdf';
 import radioApi from "../../../api/radioApi";
+import Swal from "sweetalert2";
 // import { render } from "react-dom";
 
 
@@ -23,7 +24,7 @@ const colorDone=()=>{
   return <Done color='success'/>
 }
   export const HojaServicios=()=> {
-  const { events, setActiveEvent, startLoadingEvents,deleteEvent } = useHojaServicioStore();
+  const { events, setActiveEvent, startLoadingEvents,deleteEvent,user } = useHojaServicioStore();
   const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, disableForm }=useModalHook();
   const [state, setState] =useState([]);
   const [abrirPdf, setAbrirPdf]= useState(false);
@@ -42,14 +43,6 @@ const colorDone=()=>{
   let newFolio;
 
   const newRow =()=>{ 
-    // const promesa= new Promise((resolve,reject)=>{
-    //   setTimeout(()=>{
-    //     resolve();
-    //   },2000)
-    // });
-    
-    
-    // promesa.then(()=>{
 
       anio = new Date(events[0]['createdAt']).getFullYear();
       let folio = events[0]['folio'];
@@ -72,11 +65,7 @@ const colorDone=()=>{
       estatus: 1,
       folio: newFolio,
     })
-  // })
     
- 
-
-
     OpenModal();
     setAbrirPdf(false);
 
@@ -90,16 +79,16 @@ const colorDone=()=>{
           });
       }, []);
 
-     // console.log(configReport.length);
-      useEffect(() => {
-        if (configReport.length > 1){
-          Swal.fire({
-            icon:'question',
-            text:'Favor de elegir el correcto ',
-            title: 'Hay mas de una configuracion de reportes con estatus activo',
-            confirmButtonText: '<a " href="http://localhost:5173/radio/config-reportes">Solucionar</a>',});
-        }
-      }, [configReport])
+  //    // console.log(configReport.length);
+  //     useEffect(() => {
+  //       if (configReport.length > 1){
+  //         Swal.fire({
+  //           icon:'question',
+  //           text:'Favor de elegir el correcto ',
+  //           title: 'Hay mas de una configuracion de reportes con estatus activo',
+  //           confirmButtonText: '<a href=`config-reportes`>Solucionar</a>',});
+  //       }
+  //     }, [configReport])
 
   const handleChange =async (event,r) => {
     setState({ ...state, [event.target.name]: event.target.checked });
@@ -111,11 +100,11 @@ const colorDone=()=>{
     OpenModal();
     setAbrirPdf(false)
     mostrarActualizar();
-    // navigate('../hoja-serviciof');
   }
 
   const ver = () =>  {
     disableForm();
+    setAbrirPdf(false)
     OpenModal();
     mostrarActualizar();
   }
@@ -240,8 +229,9 @@ const columns = [
         autoHeight={true}
         rows={events}
         columns={columns}
-        pageSize={11}
-        rowsPerPageOptions={[11]}
+        columnVisibilityModel={user.rol==3? {actions:false} : {actions:true}}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
         components={{
            Toolbar: QuickSearchToolbar ,
           BooleanCellFalseIcon:colorClose,

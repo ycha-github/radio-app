@@ -45,6 +45,7 @@ export const useServiciosStore= () => {
     // Propiedades
     activeEvent,
     events,
+    user,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,

@@ -44,6 +44,7 @@ export const useAccesoriosStore= () => {
     // Propiedades
     activeEvent,
     events,
+    user,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,

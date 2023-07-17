@@ -69,6 +69,7 @@ let idimagenCuip;
     // Propiedades
     activeEvent,
     events,
+    user,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,

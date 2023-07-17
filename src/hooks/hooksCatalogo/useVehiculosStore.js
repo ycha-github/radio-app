@@ -45,6 +45,7 @@ export const useVehiculosStore = () => {
     // Propiedades
     activeEvent,
     events,
+    user,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,

@@ -43,7 +43,7 @@ const MenuProps = {
 };
 
   export const Asignaciones=()=> {
-  const { events, setActiveEvent, startLoadingEvents,deleteEvent, corporacionesFiltrado, startLoadingCorporacion } = useAsignacionesStore();
+  const { events, setActiveEvent, startLoadingEvents,deleteEvent, corporacionesFiltrado, startLoadingCorporacion,user } = useAsignacionesStore();
   const {OpenModal, mostrarActualizar,disableForm}=useModalHook();
   const [state, setState] =useState([]);
  const [abrirPdf, setAbrirPdf]= useState(false);
@@ -54,10 +54,8 @@ const MenuProps = {
  const [corporacionesArray, setCorporacionesArray] = useState([])
  
   const [configReport, setConfigReport] = useState({})
-  const navigate = useNavigate();
 
-  let lengthCorporaciones = corporacionesFiltrado.length;
-   
+  
  
   useEffect(() => {
     startLoadingEvents();
@@ -109,16 +107,16 @@ const MenuProps = {
           });
       }, []);
 
-    //  console.log(configReport.length);
-      useEffect(() => {
-        if (configReport.length > 1){
-          Swal.fire({
-            icon:'question',
-            text:'Favor de elegir el correcto ',
-            title: 'Hay mas de una configuracion de reportes con estatus activo',
-            confirmButtonText: '<a " href="http://localhost:5173/radio/config-reportes">Solucionar</a>',});
-        }
-      }, [configReport])
+    // //  console.log(configReport.length);
+    //   useEffect(() => {
+    //     if (configReport.length > 1){
+    //       Swal.fire({
+    //         icon:'question',
+    //         text:'Favor de elegir el correcto ',
+    //         title: 'Hay mas de una configuracion de reportes con estatus activo',
+    //         confirmButtonText: '<a href=`config-reportes`>Solucionar</a>',});
+    //     }
+    //   }, [configReport])
 
     //  console.log(tableAccesorio);
     //  let r='';
@@ -140,7 +138,6 @@ const MenuProps = {
   };
 
   const cambiar = ( ) =>  {
-    //navigate('../asignaciones');
     setAbrirPdf(false);
     setAbrirPdfReporte(false);
     OpenModal();
@@ -162,6 +159,8 @@ const MenuProps = {
       // console.log(corporacionesArray)
   
   const ver = () =>  {
+    setAbrirPdf(false);
+    setAbrirPdfReporte(false);
     disableForm();
     OpenModal();
     mostrarActualizar();
@@ -222,7 +221,7 @@ const columns =  [
   { field: 'serie_radio',headerClassName: "super", headerName: 'Serie Radio',flex: 2 , minWidth: 90 },
   { field: 'rfsi',headerClassName: "super", headerName: 'RFSI',flex: 2 , minWidth: 90 },
   { field: 'tipo',headerClassName: "super", headerName: 'Tipo Radio',flex: 2 , minWidth: 90 },
-  { field: 'Unidad',headerClassName: "super",headerName: 'Unidad', flex: 2, minWidth: 120 },
+  { field: 'unidad',headerClassName: "super",headerName: 'Unidad', flex: 2, minWidth: 120 },
   { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 2, minWidth: 90 },
   // { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 2, minWidth: 120 },
   {
@@ -247,7 +246,7 @@ const columns =  [
       <GridActionsCellItem
         icon={<PrintOutlined/>}
         color="secondary"
-        label="Delete"
+        label="Print"
         onClick={mostrarPdf}
       />,
       <IconButton
@@ -321,7 +320,7 @@ const columns =  [
              onClose={corporacionesArray !="" ? mostrarPdfReporteCorp:console.log("")}
              value={corporacionesArray}
              onChange={handleSelectChange}
-             input={<OutlinedInput label="Servicios" />}
+             input={<OutlinedInput label="Reporte corporaciones" />}
              renderValue={(selected) => selected.join(', ')}
              MenuProps={MenuProps}
              color={'secondary'}
@@ -355,6 +354,7 @@ const columns =  [
         rows={events}
         columns={columns}
         pageSize={10}
+        columnVisibilityModel={user.rol==3? {actions:false} : {actions:true}}
         rowsPerPageOptions={[10]}
         components={{
           Toolbar: QuickSearchToolbar ,

@@ -1,5 +1,6 @@
 import { border } from '@mui/system';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { radioApi } from '../../../api';
 
 let options = { day: 'numeric', month: 'long', year: 'numeric' }
 
@@ -79,18 +80,19 @@ const styles = StyleSheet.create({
 
 export const ImprimirHServicio = ({datos, formato}) => {
  console.log( datos)
+ let anioActual = new Date(datos.createdAt).getFullYear();
   return (
 
     <Document>
         <Page size="letter" style={styles.page} >
 
             <View style={styles.section} >
-                <Image style={styles.image} src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} />
+                <Image style={styles.image} src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} />
                 <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > CENTRO DE MANDO Y COMUNICACIONES C4 </Text>
                 <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > DIRECCIÓN TÉCNICA </Text>
                 <Text style={{ ...styles.title, margin: '0 0 10 0' }} > DEPARTAMENTO DE RADIOCOMUNICACIONES </Text>
-                <Image style={styles.image2} src={`http://localhost:8000/api/v0/documentos/users/${formato[0].fk_logo_c4}`} />
-                <Text  style={{ ...styles.title, textAlign: 'right', margin: '0 20 0 0', fontFamily: 'Times-Bold' }} > Folio: {datos.idhojaservicios} </Text>
+                <Image style={styles.image2} src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0].fk_logo_c4}`} />
+                <Text  style={{ ...styles.title, textAlign: 'right', margin: '0 20 0 0', fontFamily: 'Times-Bold' }} > Folio: {datos.folio+"/"+anioActual} </Text>
                 <Text style={styles.title} > REPORTE DE SERVICIO </Text>
             </View>
             <View>

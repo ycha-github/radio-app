@@ -14,18 +14,18 @@ export const useHojaServicioStore= () => {
 
     dispatch( onSetActiveEvent(zonasEvent ));
   }
- let folio;
- let fecha;
-  const consultarUltimoRegistro= async ()=>{
-      const { data } = await radioApi.get('/hojasservicios/ultimo')
-      console.log(data)
-      const nuevaFecha = new Date(data.createdAt);
-      let options = { year: 'numeric' }
-      let year = nuevaFecha.toLocaleString('es-MX', options); 
-      folio=data.folio;
-      fecha=year;
+//  let folio;
+//  let fecha;
+//   const consultarUltimoRegistro= async ()=>{
+//       const { data } = await radioApi.get('/hojasservicios/ultimo')
+      // console.log(data)
+      // const nuevaFecha = new Date(data.createdAt);
+      // let options = { year: 'numeric' }
+      // let year = nuevaFecha.toLocaleString('es-MX', options); 
+      // folio=data.folio;
+      // fecha=year;
     //console.log(year)
-  }
+  //}
 //console.log(folio)
 //console.log(fecha)
 
@@ -65,9 +65,10 @@ export const useHojaServicioStore= () => {
     // Propiedades
     activeEvent,
     events,
+    user,
     hasEventSelected: !!activeEvent,
     // Metodos
-    consultarUltimoRegistro,
+    //consultarUltimoRegistro,
     deleteEvent,
     setActiveEvent,
     startSavingEvent,

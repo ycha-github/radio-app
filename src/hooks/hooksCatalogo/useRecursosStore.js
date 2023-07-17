@@ -45,6 +45,7 @@ export const useRecursosStore = () => {
     // Propiedades
     activeEvent,
     events,
+    user,
     hasEventSelected: !!activeEvent,
     // Metodos
     deleteEvent,
