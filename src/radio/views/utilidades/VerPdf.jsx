@@ -56,7 +56,7 @@ export const VerPdf = ({enviarIdImg, idEnviado}) => {
   console.log(idImagen);
     return(
         <ModalRadio>
-            <PDFViewer src={`http://localhost:8000/api/v0/documentos/users/${idImagen}.pdf`} style={{width:"55vw", height:"75vh"}}>
+            <PDFViewer src={`http://172.16.21.222:8000/api/v0/documentos/users/${idImagen}.pdf`} style={{width:"55vw", height:"75vh"}}>
     <Document>
       <Page size="A4" style={styles.page}>
     
