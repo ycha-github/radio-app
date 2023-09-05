@@ -219,7 +219,7 @@ export const CartaFijo = ({datos, formato}) => {
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
-                 Reviso 
+                 Revisó 
                 </Text>
               </View>
             </View>
@@ -260,21 +260,22 @@ export const CartaFijo = ({datos, formato}) => {
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
-                {datos.nombre_completo}
+                {datos.titulo + ' ' + datos.nombre_completo}
                 </Text>
               </View>
             </View>
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
-                {formato[0].nombre_revisor}
+                {formato[0].titulorev + ' ' + formato[0].nombre_revisor}
                 </Text>
               </View>
             </View>
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
-                {formato[0].nombre_responsable}
+                {formato[0].titulores + ' ' + formato[0].nombre_responsable}
+                {console.log(formato)}
                 </Text>
               </View>
             </View>
@@ -299,6 +300,30 @@ export const CartaFijo = ({datos, formato}) => {
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
                 {formato[0].nombrePuestoRes}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.tableRow2}> 
+            <View style={styles.tableCol2}> 
+              <View style={styles.tableCell2}>
+                <Text style={styles.text4 }> 
+                {datos.nombreCorporacion}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.tableCol2}> 
+              <View style={styles.tableCell2}>
+                <Text style={styles.text4 }> 
+                {formato[0].corporacionRevisor}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.tableCol2}> 
+              <View style={styles.tableCell2}>
+                <Text style={styles.text4 }> 
+                {formato[0].corporacionResponsable}
                 </Text>
               </View>
             </View>

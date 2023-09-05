@@ -198,14 +198,14 @@ export const DatosAsignacion = ({styles, datos}) => {
                     <View style={styles.tableCol}>
                     <View style={styles.tableCell}>
                         <Text style={{...styles.text, textAlign: 'left'}}>  
-                        Placas: 
+                        No.Económico: 
                         </Text>
                     </View>
                     </View>
                     <View style={styles.tableColVehEsp}>
                     <View style={styles.tableCell}> 
                         <Text style={styles.text3}>
-                        {datos.placa}
+                        {datos.unidad}
                         </Text>
                     </View>
                     </View>
@@ -215,11 +215,12 @@ export const DatosAsignacion = ({styles, datos}) => {
         </View>
     ) : "" }
 
-      {/* Tabla de accesorios */}
+    {/* Tabla de GPS */}
     { datos.tipo !== 'Fijo' ? 
     <View >  
     <Text style={{padding:5}}></Text>
-
+          
+    {datos.nombreGps === null ? "":
       <View style={styles.table} >
 
         <View style={styles.tableRow}> 
@@ -230,24 +231,6 @@ export const DatosAsignacion = ({styles, datos}) => {
                 </Text>
             </View>
           </View>
-          { datos.tipo === 'Movil' ? '' : (
-          <View style={styles.tableCol2}>
-            <View style={styles.tableCell}> 
-              <Text style={styles.text3}>
-                {datos.nombreBateria}
-              </Text>
-            </View>
-          </View>
-          ) }
-          { datos.tipo === 'Movil' ? '' : (
-          <View style={styles.tableCol2}>
-            <View style={styles.tableCell}> 
-              <Text style={styles.text3}>
-                {datos.nombreCargador}
-              </Text>
-            </View>
-          </View>
-          )}
           { datos.tipo === 'Movil' ? (
             <View style={styles.tableCol2}>
                 <View style={styles.tableCell}> 
@@ -267,26 +250,8 @@ export const DatosAsignacion = ({styles, datos}) => {
               </Text>
             </View>
           </View>
-          { datos.tipo === 'Movil' ? '' : (
-          <View style={styles.tableCol2}>
-            <View style={styles.tableCell}>
-              <Text style={styles.text3}> 
-                {datos.marcaBateria + ' / ' + datos.modeloBateria}
-              </Text>
-            </View>
-          </View>
-          ) }
-          { datos.tipo === 'Movil' ? '' : (
-          <View style={styles.tableCol2}>
-            <View style={styles.tableCell}>
-              <Text style={styles.text3}> 
-                {datos.marcaCargador + ' / ' + datos.modeloCargador}
-              </Text>
-            </View>
-          </View>
-          )}
           { datos.tipo === 'Movil' ? (
-            <View style={styles.tableCol2}>
+            <View style={{...styles.tableCol2, width: "17%"}}>
                 <View style={styles.tableCell}>
                 <Text style={styles.text3}> 
                     {datos.marcaGps + ' / ' + datos.modeloGps}
@@ -304,24 +269,6 @@ export const DatosAsignacion = ({styles, datos}) => {
                 </Text>
             </View>
           </View>
-          { datos.tipo === 'Movil' ? '' : (
-          <View style={styles.tableCol2}>
-            <View style={styles.tableCell}> 
-              <Text style={styles.text3}>
-                {datos.serie_bateria}
-              </Text>
-            </View>
-          </View>
-          )}
-          { datos.tipo === 'Movil' ? '' : (
-          <View style={styles.tableCol2}>
-            <View style={styles.tableCell}> 
-              <Text style={styles.text3}>
-                {datos.serie_cargador}
-              </Text>
-            </View>
-          </View>
-          )}
           { datos.tipo === 'Movil' ? (
             <View style={styles.tableCol2}>
                 <View style={styles.tableCell}> 
@@ -341,24 +288,6 @@ export const DatosAsignacion = ({styles, datos}) => {
               </Text>
             </View>
           </View>
-          { datos.tipo === 'Movil' ? '' : (
-          <View style={styles.tableCol2}>
-            <View style={styles.tableCell}> 
-              <Text style={styles.text3}>
-                {datos.inventarioSpBateria}
-              </Text>
-            </View>
-          </View>
-          )}
-          { datos.tipo === 'Movil' ? '' : (
-          <View style={styles.tableCol2}>
-            <View style={styles.tableCell}> 
-              <Text style={styles.text3}>
-                {datos.inventarioSpCargador}
-              </Text>
-            </View>
-          </View>
-          )}
           { datos.tipo === 'Movil' ? (
           <View style={styles.tableCol2}>
             <View style={styles.tableCell}> 
@@ -371,7 +300,99 @@ export const DatosAsignacion = ({styles, datos}) => {
         </View>
 
       </View> 
+      }
+    </View>
+    : "" }
+
+    {/* Tabla de cargador */}
+    { datos.tipo !== 'Fijo' ? 
+    <View >  
+    <Text style={{padding:5}}></Text>
+          
+    {datos.nombreCargador === null ? "":
+      <View style={styles.table} >
+
+        <View style={styles.tableRow}> 
+        {datos.nombreCargador === null ? "":
+          <View style={styles.tableCol}>               
+            <View style={styles.tableCell}>
+                <Text style={{...styles.text, textAlign: 'left'}}>  
+                  Accesorio: 
+                </Text>
+            </View>
+          </View>}
+          { datos.tipo === 'Movil' ? '' : (
+            (datos.nombreCargador === null ? "":
+          <View style={styles.tableCol2}>
+            <View style={styles.tableCell}> 
+              <Text style={styles.text3}>
+                {datos.nombreCargador}
+              </Text>
+            </View>
+          </View>
+            )
+          )}
+        </View>
+
+        <View style={styles.tableRow}> 
+          <View style={styles.tableCol}>
+            <View style={styles.tableCell}>
+             <Text style={{...styles.text, textAlign: 'left'}}>  
+                Marca / Modelo: 
+              </Text>
+            </View>
+          </View>
+          { datos.tipo === 'Movil' ? '' : (
+          <View style={styles.tableCol2}>
+            <View style={styles.tableCell}>
+              <Text style={styles.text3}> 
+                {datos.marcaCargador + ' / ' + datos.modeloCargador}
+              </Text>
+            </View>
+          </View>
+          )}
+        </View>
+
+        <View style={styles.tableRow}> 
+          <View style={styles.tableCol}>
+            <View style={styles.tableCell}>
+                <Text style={{...styles.text, textAlign: 'left'}}>  
+                    Serie: 
+                </Text>
+            </View>
+          </View>
+          { datos.tipo === 'Movil' ? '' : (
+          <View style={styles.tableCol2}>
+            <View style={styles.tableCell}> 
+              <Text style={styles.text3}>
+                {datos.serie_cargador}
+              </Text>
+            </View>
+          </View>
+          )}
+        </View>
  
+        <View style={styles.tableRow}>
+          <View style={styles.tableCol}>
+            <View style={styles.tableCell}>
+                <Text style={{...styles.text, textAlign: 'left'}}>  
+                Inventario: 
+              </Text>
+            </View>
+          </View>
+          { datos.tipo === 'Movil' ? '' : (
+          <View style={styles.tableCol2}>
+            <View style={styles.tableCell}>
+              <Text style={styles.text3}>
+                {datos.inventarioSpCargador}
+              </Text>
+            </View>
+          </View>
+          )}
+        </View>
+
+      </View> 
+      }
     </View>
     : "" }
 
