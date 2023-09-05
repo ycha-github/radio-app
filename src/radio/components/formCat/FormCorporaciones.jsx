@@ -37,7 +37,7 @@ export const FormCorporaciones = () => {
         setFormSubmitted(true);
 
         if (formValues.nombreCorporacion.length <= 0 )return;
-        console.log(formValues);
+        // console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
         CloseModal();

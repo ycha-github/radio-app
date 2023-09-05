@@ -33,6 +33,7 @@ const columns =  [
     { field: 'nombre_completo', headerClassName: "super", headerName: 'Asignado a' ,width: 250,  },
     { field: 'nombrePuestoUsuario',headerClassName: "super",headerName: 'Puesto',flex: 2, minWidth: 120 },
     { field: 'placa',headerClassName: "super",headerName: 'Placas',flex: 2, minWidth: 120 },
+    { field: 'unidad',headerClassName: "super",headerName: 'Unidad',flex: 2, minWidth: 120 },
 ]
 
 function QuickSearchToolbar(){

@@ -107,29 +107,7 @@ const MenuProps = {
           });
       }, []);
 
-    // //  console.log(configReport.length);
-    //   useEffect(() => {
-    //     if (configReport.length > 1){
-    //       Swal.fire({
-    //         icon:'question',
-    //         text:'Favor de elegir el correcto ',
-    //         title: 'Hay mas de una configuracion de reportes con estatus activo',
-    //         confirmButtonText: '<a href=`config-reportes`>Solucionar</a>',});
-    //     }
-    //   }, [configReport])
-
-    //  console.log(tableAccesorio);
-    //  let r='';
-
-    //  const recibir = (id,tipoaccesorio) => {
-    //      r={id,tipoaccesorio}
-
-    //  console.log(r);
-    //  }
-  
-    //  tableAccesorio.map((accesorio) => {
-    //      return recibir(accesorio.idaccesorios, accesorio.accesorio);
-    //  })
+    
 
   const handleChange =async (event,r) => {
     setState({ ...state, [event.target.name]: event.target.checked });
@@ -145,7 +123,7 @@ const MenuProps = {
   }
   
   const handleSelectChange = (event) => {
-        
+
     const {
         target: { value },
     } = event;
@@ -185,7 +163,7 @@ const MenuProps = {
     //return (imprimir)
   }
   const onSelect = ( event ) =>  {
-    console.log(event.row)
+    // console.log(event.row)
     setActiveEvent( event.row );
     setImprimir(event.row)
     
@@ -259,29 +237,6 @@ const columns =  [
   ], 
   }, 
 ]
-// function imprimirElemento(elemento) {
-//   var ventana = window.open('', 'PRINT', 'height=400,width=600');
-//   ventana.document.write('<style>.tabla{width:100%;border-collapse:collapse;margin:16px 0 16px 0;}.tabla th{border:1px solid #ddd;padding:4px;background-color:#d4eefd;text-align:left;font-size:15px;}.tabla td{border:1px solid #ddd;text-align:left;padding:6px;}</style>');
-//   ventana.document.write('<html><head><title>' + document.title + '</title>');
-//   ventana.document.write('<link rel="stylesheet" href="style.css">');
-//   ventana.document.write('</head><body >');
-//   ventana.document.write(document.querySelector("#imprimible").innerHTML);
-//   ventana.document.write('</body></html>');
-//   ventana.document.close();
-//   ventana.focus();
-//   ventana.onload = function () {
-
-//     ventana.print();
-//     ventana.close();
-//   }
-//   return true;
-// }
-
-//document.querySelector("#btnImprimirDiv").addEventListener("click", function () {
-//  var div = document.querySelector("#imprimible");
-//  imprimirElemento(div);
-//});
-
   return (
     <>
     <h2 className='colorUti'>ASIGNACIONES</h2>
@@ -310,11 +265,12 @@ const columns =  [
           {/* <Button onClick={mostrarPdfReporteCorp} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
             Reporte por Corporación
           </Button> */}
-          <FormControl sx={{ border: 'none', mb: 1, width: 400 }}>
+          <FormControl sx={{ border: 'none', mb: 1, width: 600 }}>
           <InputLabel id="demo-multiple-checkbox-label"  color={'secondary'} >Reporte corporaciones</InputLabel>
            <Select
              //disabled={isVer}
              labelId="demo-multiple-checkbox-label"
+             sx={{heigth:500}}
              id="demo-multiple-checkbox"
              multiple
              onClose={corporacionesArray !="" ? mostrarPdfReporteCorp:console.log("")}

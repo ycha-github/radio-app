@@ -37,7 +37,7 @@ export const FormRoles = () => {
         setFormSubmitted(true);
 
         if (formValues.rol.length <= 0) return;
-        console.log(formValues);
+        // console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
         CloseModal();

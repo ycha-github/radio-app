@@ -7,8 +7,6 @@ export const useUsuariosStore = () => {
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector( state => state.usuarios );
   const { user } = useSelector( state => state.auth );
-  const [idImagenIne, setIdImagenIne]=useState("")
-  const [idImagenCuip, setIdImagenCuip]=useState("")
 
   const setActiveEvent = ( zonasEvent ) => {
 
@@ -19,34 +17,35 @@ let idimagenCuip;
 
   const subirImagen = async(zonasEvent)=>{
     const {data}= await  radioApi.post(`/documentos/ine`,zonasEvent);
+    console.log(data);
     idimagenIne=data.iddocumentos;
   }
   const subirImagen2 = async(zonasEvent)=>{
     const {data}= await  radioApi.post(`/documentos/cuip`, zonasEvent);
+     console.log(data);
     idimagenCuip=data.iddocumentos;
   }
   const promesa= new Promise((resolve,reject)=>{
     setTimeout(()=>{
       resolve();
-    },2000)
+    },3500)
   });
+  console.log(idimagenCuip)
+  console.log(idimagenIne)
  
-  const startSavingEvent =(zonasEvent)=>{
-    promesa.then(()=>{
+  const startSavingEvent =async (zonasEvent)=>{
     //TODO: Update event
     if(zonasEvent.idusuarios){
       //Actualizando
-        const {data}= radioApi.put(`/usuarios/${zonasEvent.idusuarios}`,{...zonasEvent, fk_documento_ine: idimagenIne, fk_documento_cuip:idimagenCuip});
-        console.log(zonasEvent);
+        const {data}=await promesa.then(()=>{ return radioApi.put(`/usuarios/${zonasEvent.idusuarios}`,{...zonasEvent, fk_documento_ine: idimagenIne, fk_documento_cuip:idimagenCuip})});
         dispatch(onUpdateEvent({...zonasEvent, user}));
         window.location.reload(true);
     }else{
       //creando
-      const {data}= radioApi.post('/usuarios', {...zonasEvent, fk_documento_ine: idimagenIne, fk_documento_cuip:idimagenCuip});
+      const {data}=await promesa.then(()=>{ return radioApi.post('/usuarios', {...zonasEvent, fk_documento_ine: idimagenIne, fk_documento_cuip:idimagenCuip})});
       dispatch(onAddNewEvent({...zonasEvent, idusuarios:data.idusuarios, user}));
       window.location.reload(true);
     }
-  })
 }
 
    const deleteEvent=async(zonasEvent, state)=>{

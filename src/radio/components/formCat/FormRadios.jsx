@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
+import { Autocomplete, Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useRadiosStore } from '../../../hooks/hooksCatalogo/useRadiosStore';
@@ -11,24 +11,25 @@ import { radioApi } from '../../../api';
 export const FormRadios = (customStyles) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
-   
+    const [inputValue1, setInputValue1] = useState('');
     const [formValues, setFormValues] = useState({
         serie: '',
         logico: '',
         inventario_interno: '',
         inventario_segpub: '',
         fk_propietario: '',
+        nombreCorporacion: '',
         fk_recurso_compra: '',
         contrato_compra: '',
         fk_marca: '',
         nombreMarcas: '',
-        fecha_actualizacion: '',
-        fecha_asignacion: '',
+        fecha_actualizacion: null,
+        fecha_asignacion: null,
         observaciones: '',
         fecha_recepcion: '',
         situacion: '',
         ubicacion: '',
-        estatus: '',
+        estatus: 1,
         createdAt: '',
         updatedAt: '',
         tipo:'',
@@ -76,7 +77,7 @@ useEffect(() => {
         setFormSubmitted(true);
 
        // if (formValues.serie.length <= 0) return;
-        console.log(formValues);
+        // console.log(formValues);
         //TODO:
         await startSavingEvent1(formValues);
         CloseModal();
@@ -96,7 +97,7 @@ useEffect(() => {
                     <Stack  noValidate spacing={3}>
                         <Grid container alignItems="center" justify="center" direction="column" >
                         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                        <Grid item xs={6}>
+                        {/* <Grid item xs={6}>
                                 <TextField
                                     id="tipo-input"
                                     sx={{ border: 'none', mb: 1, width: 300}}
@@ -109,6 +110,25 @@ useEffect(() => {
                                     value={formValues.tipo}
                                     onChange={handleInputChange} />
                             
+                            </Grid> */}
+                            <Grid item xs={6}>
+                                <FormControl fullWidth>
+                                    <InputLabel id="tipo-input" color='warning'>Tipo de Radio</InputLabel>
+                                    <Select
+                                        sx={{ border: 'none', mb: 1, width: 300 }}
+                                        labelId="demo-simple-select-label"
+                                        id="tipo-input"
+                                        name="tipo"
+                                        required
+                                        color='warning'
+                                        value={formValues.tipo}
+                                        label="Tipo de Radio"
+                                        onChange={handleInputChange}>
+                                         <MenuItem value={"Fijo"}>Fijo</MenuItem>
+                                         <MenuItem value={"Movil"}>Movil</MenuItem>
+                                         <MenuItem value={"Portatil"}>Portatil</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField
@@ -160,7 +180,7 @@ useEffect(() => {
                                     value={formValues.inventario_segpub}
                                     onChange={handleInputChange} />
                             </Grid>
-                            <Grid item xs={6}>
+                            {/* <Grid item xs={6}>
                                 <FormControl fullWidth>
                                     <InputLabel id="fk_propietario-input" color='warning'>Propietario</InputLabel>
                                     <Select
@@ -179,7 +199,52 @@ useEffect(() => {
                                             })}
                                     </Select>
                                 </FormControl>
-                            </Grid>
+                            </Grid> */}
+                            {isActualizar?
+                        (<Grid item xs={6}>
+                            <Autocomplete
+                                    name="fk_propietario"
+                                    required
+                                    value={formValues}
+                                    sx={{ width: 300, mb:1 }}
+                                    onChange={(event, newFormValues1) => {
+                                        setFormValues({
+                                            ...formValues,
+                                            ['fk_propietario']: newFormValues1.idcorporaciones,
+                                            ['nombreCorporacion']: newFormValues1.nombreCorporacion,
+                                        });
+                                    }}
+                                    inputValue={inputValue1}
+                                    onInputChange={(event, newInputValue1) => {
+                                        setInputValue1(newInputValue1);
+                                    }}
+                                    options={selectPropie}
+                                    getOptionLabel={(selectPropie) => selectPropie.nombreCorporacion || ""}
+                                    //isOptionEqualToValue={(option, value) =>{
+                                    //    option.serie === value.serie
+                                    //    //console.log(option.serie);
+                                    //    //console.log(value.serie_radio);
+                                    //}}
+                                    renderInput={(params) => <TextField  {...params} variant="outlined" color='warning' label="Propietario" />}       
+                            />
+                            </Grid>):
+                            (<Grid item xs={6}>
+                                <Autocomplete
+                                        name="fk_propietario"
+                                        required
+                                        options={selectPropie}
+                                        getOptionLabel={(selectPropie) => selectPropie.nombreCorporacion || ""}
+                                        sx={{ width: 300, mb:1 }}
+                                        onChange={(event, newFormValues) => {
+                                            setFormValues({
+                                                ...formValues,
+                                                ['fk_propietario']: newFormValues.idcorporaciones,
+                                            });
+                                        }}
+                                        renderInput={(params) => <TextField  {...params} variant="outlined" color='warning' label="Propietario" />}       
+                                />
+                                </Grid>)
+                            } 
                             <Grid item xs={6}>
                                 <FormControl fullWidth>
                                     <InputLabel id="fk_recurso_compra-input" color='warning'>Recurso Compra</InputLabel>
@@ -227,7 +292,7 @@ useEffect(() => {
                                         onChange={handleInputChange}>
                                     {
                                             selectMarca.map(elemento=>{
-                                            return <MenuItem key={elemento.idmarcas} value={elemento.idmarcas} >{elemento.nombreMarcas}</MenuItem> 
+                                            return <MenuItem key={elemento.idmarcas} value={elemento.idmarcas} >{elemento.nombreMarcas + " | "+ elemento.nombreModelos}</MenuItem> 
                                             })}
                                     </Select>
                                 </FormControl>
@@ -305,8 +370,12 @@ useEffect(() => {
                                             onChange={handleInputChange}
                                         >
                                             <MenuItem value={'Asignado'}  >Asignado</MenuItem>
+                                            <MenuItem value={'Baja'} >Baja</MenuItem>
+                                            <MenuItem value={'Dañado'} >Dañado</MenuItem>
                                             <MenuItem value={'Disponible'} >Disponible</MenuItem>
-                                            <MenuItem value={'sdfsdf'} >sdfsdf</MenuItem>
+                                            <MenuItem value={'Extraviado'} >Extraviado</MenuItem>
+                                            <MenuItem value={'Funcional'} >Funcional</MenuItem>
+                                            <MenuItem value={'Sustituido (Garantia)'} >Sustituido (Garantia)</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Grid >
@@ -323,9 +392,10 @@ useEffect(() => {
                                             label="Ubicacion"
                                             onChange={handleInputChange}
                                         >
-                                            <MenuItem value={'Operativo'}  >Operativo</MenuItem>
                                             <MenuItem value={'Bodega'} >Bodega</MenuItem>
-                                            <MenuItem value={'sdfsdf'} >sdfsdf</MenuItem>
+                                            <MenuItem value={'Baja'} >Baja</MenuItem>
+                                            <MenuItem value={'CDR-EADS'} >CDR-EADS</MenuItem>
+                                            <MenuItem value={'Operativo'}  >Operativo</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Grid >

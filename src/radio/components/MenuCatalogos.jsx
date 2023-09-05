@@ -57,11 +57,11 @@ export const MenuCatalogos = () => {
           icon: <DirectionsCarFilledOutlined color={ iconColorCat } />, 
           path: 'vehiculos', 
         },
-        { 
-          text: 'Zonas-Regiones', 
-          icon: <SouthAmericaTwoTone color={ iconColorCat } />, 
-          path: 'zonas-regiones', 
-        },
+        // { 
+        //   text: 'Zonas-Regiones', 
+        //   icon: <SouthAmericaTwoTone color={ iconColorCat } />, 
+        //   path: 'zonas-regiones', 
+        // },
       ];
       
 

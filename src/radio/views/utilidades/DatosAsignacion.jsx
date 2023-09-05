@@ -96,7 +96,7 @@ export const DatosAsignacion = ({styles, datos}) => {
           <View style={styles.tableCol}>
             <View style={styles.tableCell}> 
               <Text style={styles.text3}>
-                {datos.inventario_segpub}
+                {datos.inventario_interno}
               </Text>
             </View>
           </View>

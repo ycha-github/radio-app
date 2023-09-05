@@ -41,15 +41,17 @@ const colorDone=()=>{
 
   let anio;
   let newFolio;
-
+  let folio 
+  let primeraFecha = `${events[0]?.['createdAt']}`;
+  let primerFolio = `${events[0]?.['folio']}`;
   const newRow =()=>{ 
-
-      anio = new Date(events[0]['createdAt']).getFullYear();
-      let folio = events[0]['folio'];
+      //console.log( events[0].createdAt)
+      primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
+      primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
       anio !== anioActual ? newFolio=1 : newFolio = folio+1   
-      console.log(newFolio)
-      console.log(anio)
-      console.log(anioActual)
+      // console.log(newFolio)
+      // console.log(anio)
+      // console.log(anioActual)
 
     setActiveEvent({
       fecha_servicio: fecha,
@@ -64,6 +66,8 @@ const colorDone=()=>{
       fk_tecnico_entrega: null,
       estatus: 1,
       folio: newFolio,
+      foto1:"",
+      foto2:"",
     })
     
     OpenModal();
@@ -116,7 +120,7 @@ const colorDone=()=>{
 }
 
   const onSelect = ( event ) =>  {
-    console.log(event.row)
+    // console.log(event.row)
     setActiveEvent( event.row );
     setImprimir(event.row);
     setHServicio(event.row );
@@ -151,7 +155,7 @@ const columns = [
   { field: 'folio', valueGetter: (params) => { return `${params.row.folio+'/'}${new Date(params.row.createdAt).getFullYear()}`}, headerClassName: "super", headerName: 'Folio',width: 100 },
   { field: 'fecha_servicio',headerClassName: "super",headerName: 'Fecha creación', flex: 1, minWidth: 60 },
   { field: 'nombre_completo', headerClassName: "super", headerName: 'Usuario Asignado', flex: 1, minWidth: 230 },
-  { field: 'serie',headerClassName: "super", headerName: 'Serie Radio', flex: 1, minWidth: 60 },
+  { field: 'serie',headerClassName: "super", headerName: 'Serie Radio', flex: 1, minWidth: 220 },
   { field: 'nombreSupervisorTec',headerClassName: "super",headerName: 'Supervisor Técnico', flex: 1, minWidth: 230 },
   { field: 'usuario_servicio',headerClassName: "super",headerName: 'Usuario Servicio',  width: 230 },
   { field: 'fecha_entrega', type: "dateTime",valueGetter:({value})=>value && new Date(value), headerClassName: "super",headerName: 'Fecha Entrega',flex: 1, minWidth: 110 },

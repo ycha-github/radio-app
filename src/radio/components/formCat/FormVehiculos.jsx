@@ -19,7 +19,7 @@ export const FormVehiculos = () => {
         await radioApi.get(`/marcas/tipo/${1}`).
         then((response)=>{
             setMarcasTipo(response.data);
-            console.log(response.data);
+            // console.log(response.data);
         }).catch(error=>{
             console.log(error);
         });
@@ -32,14 +32,14 @@ export const FormVehiculos = () => {
 
 
     const [formValues, setFormValues] = useState({
-        marcas_idmarcas: '',
+        marcas_idmarcas:null,
         // linea:'',
         anio:'',
         tipo:'',
         color:'',
         placa:'',
         unidad:'',
-        fk_zonaregion:'',
+        fk_zonaregion:null,
         estatus:'',
         createdAt:'',
         updatedAt:'',
@@ -76,7 +76,7 @@ export const FormVehiculos = () => {
         setFormSubmitted(true);
 
         // if (formValues.nombreVehiculo.length <= 0) return;
-        console.log(formValues);
+        // console.log(formValues);
         // console.log(marcaId) 
         //TODO:
         await startSavingEvent(formValues);
@@ -97,7 +97,6 @@ export const FormVehiculos = () => {
                                         sx={{ border: 'none', mb: 1, width: 300 }}
                                         id="marcas_idmarcas-input"
                                         name={'marcas_idmarcas'}
-                                        required
                                         value={formValues}
                                         onChange={(event, newFormValues) => {
                                             setFormValues(
@@ -108,7 +107,7 @@ export const FormVehiculos = () => {
                                                     ['nombreModelos']: newFormValues.nombreModelos
                                                 }
                                             );
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                         }}
                                         options={marcasTipo}
                                     
@@ -126,8 +125,9 @@ export const FormVehiculos = () => {
                                         //         console.log(value.nombreModelos);
                                         //     } 
                                         // }
+                                        
                                         renderInput={(params) => (
-                                            <TextField {...params} label="Marcas / Modelos" />
+                                            <TextField {...params} label="Marcas / Modelos" color='warning' />
                                         )}
                                     />  
                                 </Grid>
@@ -138,6 +138,7 @@ export const FormVehiculos = () => {
                                         id="marcas_idmarcas-input"
                                         name={'marcas_idmarcas'}
                                         required
+                                        
                                         onChange={(event, newFormValues) => {
                                             setFormValues(
                                                 { 
@@ -145,12 +146,12 @@ export const FormVehiculos = () => {
                                                     ['marcas_idmarcas']: newFormValues.idmarcas,
                                                 }
                                             );
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                         }}
                                         options={marcasTipo}
                                         getOptionLabel={ (options) => options.nombreMarcas + " / " + options.nombreModelos }
                                         renderInput={(params) => (
-                                            <TextField {...params} label="Marcas / Modelos" />
+                                            <TextField {...params} label="Marcas / Modelos" color='warning' />
                                         )}
                                     /> 
                                 </Grid> 
@@ -221,14 +222,13 @@ export const FormVehiculos = () => {
                                 value={formValues.unidad}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item >
+                        {/* <Grid item >
                             <FormControl fullWidth sx={{ border: 'none', mt: 1, mb: 1, width: 300 }}>
                                 <InputLabel id="fk_zonaregion-input" color='warning'>Zona / Región</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="fk_zonaRegion-input"
                                     name="fk_zonaregion"
-                                    required
                                     color='warning'
                                     value={formValues.fk_zonaregion}
                                     label="Zona / Región"
@@ -239,7 +239,7 @@ export const FormVehiculos = () => {
                                         })}
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
                         {/* <Grid item >
                             <FormControl fullWidth sx={{ border: 'none', mb: 1, width: 300 }}>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>

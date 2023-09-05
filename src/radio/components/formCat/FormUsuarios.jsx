@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useUsuariosStore } from '../../../hooks/hooksCatalogo/useUsuariosStore';
@@ -20,21 +20,21 @@ export const FormUsuarios = () => {
         {
             archivo:"",
         });
-
+        const [inputValue1, setInputValue1] = useState('');
         const [idIne, setIdIne]= useState({});
         const [idCuip, setIdCuip]= useState({});
 
         useEffect(() => {
             radioApi.get(`/documentos/ine`).
                   then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     setIdIne(response.data.documentos[0].iddocumentos);
                   });
               }, []);
         useEffect(() => {
             radioApi.get(`/documentos/cuip`).
                   then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     setIdCuip(response.data.documentos[0].iddocumentos);
                   });
               }, []);
@@ -47,6 +47,7 @@ export const FormUsuarios = () => {
       apellido_pat:'',
       apellido_mat:'',
       fk_puesto:'',
+      nombrePuesto:'',
       cuip:'',
       clave_elector:'',
       imagen_ine:'',
@@ -80,17 +81,16 @@ export const FormUsuarios = () => {
               });
           }, []);
 
-          
     const onSubmit = async (event) => {
         //console.log(event)
         event.preventDefault();
         setFormSubmitted(true);
         if (formValues.nombre.length <= 0) return;
-        console.log(formValues);
+        // console.log(formValues);
         //TODO:
         const formData = new FormData()
         formData.append('archivo', archivo1.archivo)
-        subirImagen(formData, formValues);
+        subirImagen(formData);
         const formData2 = new FormData()
         formData2.append('archivo', archivo2.archivo)
         subirImagen2(formData2);
@@ -148,7 +148,7 @@ export const FormUsuarios = () => {
                                 value={formValues.apellido_mat}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item >
+                        {/* <Grid item >
                             <FormControl fullWidth sx={{ border: 'none',  mb: 1, width: 400 }}>
                                 <InputLabel id="fk_puesto-input" color='warning'>Puesto</InputLabel>
                                 <Select
@@ -166,7 +166,52 @@ export const FormUsuarios = () => {
                                         })}
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
+                         {isActualizar?
+                        (<Grid item xs={6}>
+                            <Autocomplete
+                                    name="fk_puesto"
+                                    required
+                                    value={formValues}
+                                    sx={{ width: 400, mb:1 }}
+                                    onChange={(event, newFormValues1) => {
+                                        setFormValues({
+                                            ...formValues,
+                                            ['fk_puesto']: newFormValues1.idpuesto,
+                                            ['nombrePuesto']: newFormValues1.nombrePuesto,
+                                        });
+                                    }}
+                                    inputValue={inputValue1}
+                                    onInputChange={(event, newInputValue1) => {
+                                        setInputValue1(newInputValue1);
+                                    }}
+                                    options={puestoUsuario}
+                                    getOptionLabel={(puestoUsuario) => puestoUsuario.nombrePuesto+ " | "+puestoUsuario.nombreCorporacion || ""}
+                                    //isOptionEqualToValue={(option, value) =>{
+                                    //    option.serie === value.serie
+                                    //    //console.log(option.serie);
+                                    //    //console.log(value.serie_radio);
+                                    //}}
+                                    renderInput={(params) => <TextField  {...params} variant="outlined" color='warning' label="Puesto" />}       
+                            />
+                            </Grid>):
+                            (<Grid item xs={6}>
+                                <Autocomplete
+                                        name="fk_puesto"
+                                        required
+                                        options={puestoUsuario}
+                                        getOptionLabel={(puestoUsuario) => puestoUsuario.nombrePuesto+ " | "+puestoUsuario.nombreCorporacion || ""}
+                                        sx={{ width: 400, mb:1 }}
+                                        onChange={(event, newFormValues) => {
+                                            setFormValues({
+                                                ...formValues,
+                                                ['fk_puesto']: newFormValues.idpuesto,
+                                            });
+                                        }}
+                                        renderInput={(params) => <TextField  {...params} variant="outlined" color='warning' label="Puesto" />}       
+                                />
+                                </Grid>)
+                            } 
                         <Grid item>
                             <TextField
                                 id="cuip-input"
@@ -209,7 +254,7 @@ export const FormUsuarios = () => {
                                                     disableUnderline: true,
                                                 }}
                                                 onChange={({target})=>{
-                                                    console.log(target.files);
+                                                    // console.log(target.files);
                                                     setFormValues({
                                                         ...formValues,
                                                         ['imagen_ine']: target.value,
@@ -253,7 +298,7 @@ export const FormUsuarios = () => {
                                                     disableUnderline: true,
                                                 }}
                                                 onChange={({target})=>{
-                                                    console.log(target.files);
+                                                    // console.log(target.files);
                                                     setFormValues({
                                                         ...formValues,
                                                         ['imagen_cuip']: target.value,

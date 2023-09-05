@@ -34,7 +34,7 @@ export const FormHojaServicio = (customStyles) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const { CloseModal, isActualizar, mostrarGuardar, isVer } = useModalHook();
-    const { activeEvent, startSavingEvent } = useHojaServicioStore();
+    const { activeEvent, startSavingEvent,subirImagen,subirImagen2 } = useHojaServicioStore();
 
     const [usuarios, setUsuarios] = useState([0]);
     const [supervisores, setSupervisores] = useState([0]);
@@ -46,6 +46,14 @@ export const FormHojaServicio = (customStyles) => {
     const [ rfsiBuscar, setRfsiBuscar ] = useState([]);
     const [ selectServicio, setSelectServicio ] = useState([]);
     const [ servicio, setServicio ] = useState([]);
+    const [archivo1, setArchivo1] = useState(
+        {
+            archivo:"",
+        });
+        const [archivo2, setArchivo2] = useState(
+        {
+            archivo:"",
+        });
     
     const [ usuarioBuscar, setUsuarioBuscar ] = useState("");
 
@@ -62,6 +70,8 @@ export const FormHojaServicio = (customStyles) => {
         fk_tecnico_entrega: null,
         estatus: '',
         folio:'',
+        foto1:"",
+        foto2:"",
     });
     const [asignaciones, setAsignaciones] = useState({
         nombreCorporacion: "",
@@ -99,7 +109,7 @@ export const FormHojaServicio = (customStyles) => {
     
 
     const selectUsuarios = async () => {
-        await radioApi.get(`/usuarios/`).
+        await radioApi.get(`/usuarios`).
             then((response) => {
                 setUsuarios(response.data);
                 //console.log(response.data);
@@ -109,7 +119,7 @@ export const FormHojaServicio = (customStyles) => {
     }
 
     const selectSupervisores = async () => {
-        await radioApi.get(`/usuarios/supervisores/${1}`).
+        await radioApi.get(`/usuarios/supervisores/${8}`).
             then((response) => {
                 setSupervisores(response.data);
                 //console.log(response.data);
@@ -119,7 +129,7 @@ export const FormHojaServicio = (customStyles) => {
     }
 
     const selectTecnicos = async () => {
-        await radioApi.get(`/usuarios/responsables/${1}`).
+        await radioApi.get(`/usuarios/responsables/${8}`).
             then((response) => {
                 setTecnicos(response.data);
                 //console.log(response.data);
@@ -306,6 +316,12 @@ export const FormHojaServicio = (customStyles) => {
        // if (formValues.rfsi.length <= 0) return;
         console.log(formValues);
         //TODO:
+        const formData = new FormData()
+        formData.append('archivo', archivo1.archivo)
+        subirImagen(formData);
+        const formData2 = new FormData()
+        formData2.append('archivo', archivo2.archivo)
+        subirImagen2(formData2);
         // isActualizar === true ? "":consultarUltimoRegistro();
         await startSavingEvent(formValues);
         CloseModal();
@@ -346,7 +362,7 @@ export const FormHojaServicio = (customStyles) => {
                                                             disabled={isVer}
                                                             sx={{ width: 400, mb: 1 }}
                                                             id="usuarios_idusuarios-input"
-                                                            name="usuarios_idusuarios"
+                                                            name="fk_idasignacion_ur"
                                                             options={usuarios}
                                                             getOptionLabel={(usuarios) => usuarios.nombre + " " + usuarios.apellido_pat + " " + usuarios.apellido_mat || ""}     
                                                             value={formValues}
@@ -354,7 +370,7 @@ export const FormHojaServicio = (customStyles) => {
                                                             onChange={(event, newFormValues) => {
                                                                 setFormValues({
                                                                     ...formValues,
-                                                                    ['usuarios_idusuarios']: newFormValues.idusuarios,
+                                                                    ['fk_idasignacion_ur']: newFormValues.idusuarios,
                                                                     ['nombre']: newFormValues.nombre,
                                                                     ['apellido_pat']: newFormValues.apellido_pat,
                                                                     ['apellido_mat']: newFormValues.apellido_mat,
@@ -392,13 +408,13 @@ export const FormHojaServicio = (customStyles) => {
                                                         <Autocomplete
                                                             sx={{ width: 400, mb: 1 }}
                                                             id="usuarios_idusuarios-input"
-                                                            name="usuarios_idusuarios"
+                                                            name="fk_idasignacion_ur"
                                                             options={usuarios}
                                                             getOptionLabel={(usuarios) => usuarios.nombre + " " + usuarios.apellido_pat + " " + usuarios.apellido_mat || ""}
                                                             onChange={(event, newFormValues) => {
                                                                 setFormValues({
                                                                     ...formValues,
-                                                                    ['usuarios_idusuarios']: newFormValues.idusuarios,
+                                                                    ['fk_idasignacion_ur']: newFormValues.idusuarios,
                                                                     ['tipo']: "",
                                                                     ['serie']: "",
                                                                     ['inventario_segpub']: "",
@@ -449,11 +465,11 @@ export const FormHojaServicio = (customStyles) => {
                                                     />
                                                 </Grid>
 
-                                                <Grid item xs={6}>
+                                                <Grid item xs={12}>
                                                     <TextField
                                                         disabled={true}
                                                         // size='normal'
-                                                        sx={{ border: 'none', mb: 1, width: 408, pr: 1 }}
+                                                        sx={{ border: 'none', mb: 1, width: 795, pr: 1 }}
                                                         type="text"
                                                         id="corporacion-input"
                                                         name="nombreCorporacion"
@@ -469,7 +485,7 @@ export const FormHojaServicio = (customStyles) => {
                                                     // onChange={handleInputChange} 
                                                     />
                                                 </Grid>
-                                                <Grid item xs={6}>
+                                                {/* <Grid item xs={6}>
                                                     <TextField
                                                         disabled={true}
                                                         // size='normal'
@@ -488,7 +504,7 @@ export const FormHojaServicio = (customStyles) => {
                                                     // value={formValues.ccp_carta}
                                                     // onChange={handleInputChange} 
                                                     />
-                                                </Grid>
+                                                </Grid> */}
                                                 <Grid item xs={6}>
                                                     <TextField
                                                         disabled={true}
@@ -866,6 +882,104 @@ export const FormHojaServicio = (customStyles) => {
                                         </Grid>
                                     </Stack>
                                 </Box>
+                                <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
+                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Fotos de Evidencia </Typography><br />
+                                    <Stack noValidate spacing={3}>
+                                        <Grid container alignItems="center" justify="center" direction="column" >
+                                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                            <Grid item xs={6}>
+                        <Box sx={{ border: '1px solid', width: 380, borderRadius: 2, borderColor: 'rgb(192, 192, 192)',  mb: 1, pl:1 }}>
+                                            <TextField
+                                                id="foto1-input"
+                                                type="file"
+                                                name="foto1"
+                                                color={"warning"}
+                                                label="Foto Evidencia 1"
+                                                variant="standard"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                InputProps={{
+                                                    disableUnderline: true,
+                                                }}
+                                                onChange={({target})=>{
+                                                    // console.log(target.files);
+                                                    setFormValues({
+                                                        ...formValues,
+                                                        ['foto1']: target.value,
+                                                        //["fk_documento_ine"]:idIne,
+                                                        
+                                                    });
+                                                    //subirImagen(event.target.files)
+                                                    setArchivo1({
+                                                        ...archivo1,
+                                                       ['archivo']: target.files[0]});
+                                                }}
+                                            />
+                                           <TextField 
+                                                disabled
+                                                 id='foto1-input'
+                                                type="text"
+                                                variant='standard'
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                InputProps={{
+                                                    disableUnderline: true,
+                                                }}
+                                               value={formValues.foto1}
+                                            />
+                                        </Box>
+                        </Grid>
+                        
+                            <Grid item xs={6}>
+                        <Box sx={{ border: '1px solid', width: 380, borderRadius: 2, borderColor: 'rgb(192, 192, 192)',  mb: 1, pl:1 }}>
+                                            <TextField
+                                                id="foto2-input"
+                                                type="file"
+                                                name="foto2"
+                                                color={"warning"}
+                                                label="Foto Evidencia 2"
+                                                variant="standard"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                InputProps={{
+                                                    disableUnderline: true,
+                                                }}
+                                                onChange={({target})=>{
+                                                    // console.log(target.files);
+                                                    setFormValues({
+                                                        ...formValues,
+                                                        ['foto2']: target.value,
+                                                        //["fk_documento_cuip"]:idCuip,
+                                                        
+                                                    });
+                                                    //subirImagen(event.target.files)
+                                                    setArchivo2({
+                                                        ...archivo2,
+                                                       ['archivo']: target.files[0]});
+                                                }}
+                                            />
+                                           <TextField 
+                                                disabled
+                                                 id='foto2-input'
+                                                type="text"
+                                                variant='standard'
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                InputProps={{
+                                                    disableUnderline: true,
+                                                }}
+                                               value={formValues.foto2}
+                                            />
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+                                </Grid>
+                                    </Stack>
+                                </Box>
                                 {isActualizar == true?
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
                                     <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Entrega de Equipo </Typography><br />
@@ -975,8 +1089,9 @@ export const FormHojaServicio = (customStyles) => {
                                 </Box>
                                 :
                                 ""
-                                };
+                                }
                             </Grid>
+                            
                             <Grid container justifyContent={'center'} >
                                 <Button variant="contained" color="secondary" type="submit" sx={{ width: 628, pl: 1, pr: 1 }}>
                                     {!isVer ? (isActualizar ? 'Actualizar' : 'Guardar') : 'Cerrar'}

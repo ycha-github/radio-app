@@ -24,7 +24,7 @@ export const FormConfigReportes = (customStyles) => {
     });
 //console.log(archivo2);
     const selectUsuariosRevisores = async() => {
-        await radioApi.get(`/usuarios/revisores/${1}`).
+        await radioApi.get(`/usuarios/revisores/${8}`).
         then((response)=>{
             setUsuariosRevisores(response.data);
             // console.log(response.data);
@@ -34,7 +34,7 @@ export const FormConfigReportes = (customStyles) => {
     }
 
     const selectUsuariosResposables = async() => {
-        await radioApi.get(`/usuarios/responsables/${1}`).
+        await radioApi.get(`/usuarios/responsables/${8}`).
         then((response)=>{
             setUsuariosResponsables(response.data);
             // console.log(response.data);
@@ -61,8 +61,8 @@ export const FormConfigReportes = (customStyles) => {
         fk_revisor:'',
         fk_responsable_entrega: '',
         ccp_carta:'',
-        fecha_inicial:'',
-        fecha_final:'',
+        fecha_inicial:null,
+        fecha_final:null,
         estatus:'',
         createdAt: '',
         updatedAt: '',
@@ -89,20 +89,18 @@ export const FormConfigReportes = (customStyles) => {
         //console.log(event)
         event.preventDefault();
         setFormSubmitted(true);
-
         if (formValues.encabezado_carta.length <= 0) return;
-        console.log(formValues);
+        // console.log(formValues);
         //TODO:
-        await startSavingEvent(formValues);
-        CloseModal();
-        setFormSubmitted(false);
         const formData = new FormData()
         formData.append('archivo', archivo1.archivo)
         subirImagen(formData);
         const formData2 = new FormData()
         formData2.append('archivo', archivo2.archivo)
         subirImagen2(formData2);
-        
+        await startSavingEvent(formValues);
+        CloseModal();
+        setFormSubmitted(false);
     };
 
     const btn =()=>{
@@ -288,7 +286,6 @@ export const FormConfigReportes = (customStyles) => {
                                             <TextField
                                                 id="logoc4-input"
                                                 type="file"
-                                                required
                                                 name="logoc4"
                                                 color={"info"}
                                                 label="Logo C4"
@@ -300,7 +297,7 @@ export const FormConfigReportes = (customStyles) => {
                                                     disableUnderline: true,
                                                 }}
                                                 onChange={({target})=>{
-                                                    console.log(target.files);
+                                                    // console.log(target.files);
                                                     setFormValues({
                                                         ...formValues,
                                                         ['logoc4']: target.value,
@@ -352,7 +349,6 @@ export const FormConfigReportes = (customStyles) => {
                                             <TextField
                                                 id="logo_ssypc-input"
                                                 type="file"
-                                                required
                                                 name="logo_ssypc"
                                                 color={"info"}
                                                 label="Logo SSYPC"
@@ -364,7 +360,7 @@ export const FormConfigReportes = (customStyles) => {
                                                     disableUnderline: true,
                                                 }}
                                                 onChange={({target})=>{
-                                                    console.log(target.files);
+                                                    // console.log(target.files);
                                                     setFormValues({
                                                         ...formValues,
                                                         ['logo_ssypc']: target.value,
@@ -441,7 +437,8 @@ export const FormConfigReportes = (customStyles) => {
                                             setFormValues({
                                                 ...formValues,
                                                 ['fk_revisor']: newFormValues.idusuarios,
-                                            }); console.log(newFormValues)
+                                            }); 
+                                        // console.log(newFormValues)
                                         }}
                                         options={usuariosRevisores}
                                         getOptionLabel={(options) => options.nombre +" "+ options.apellido_pat +" "+ options.apellido_mat || ""}
@@ -490,7 +487,8 @@ export const FormConfigReportes = (customStyles) => {
                                             setFormValues({
                                                 ...formValues,
                                                 ['fk_responsable_entrega']: newFormValues2.idRes,
-                                            }); console.log(newFormValues2)
+                                            }); 
+                                            // console.log(newFormValues2)
                                         }}
                                         options={usuariosResponsables}
                                         getOptionLabel={(options) => options.nombreRes + " " +  options.appatRes + " " + options.apmatRes || ""}

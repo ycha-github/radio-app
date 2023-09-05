@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Autocomplete, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { usePuestosStore } from '../../../hooks/hooksCatalogo/usePuestosStore';
@@ -10,7 +10,7 @@ export const FormPuestos = () => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [tableData, setTableData] = useState([])
-
+    const [inputValue1, setInputValue1] = useState('');
     const [formValues, setFormValues] = useState({
         nombre:'',
         nombreCorporacion:'',
@@ -49,7 +49,7 @@ export const FormPuestos = () => {
         setFormSubmitted(true);
 
         if (formValues.nombre.length <= 0 )return;
-        console.log(formValues);
+        // console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
         CloseModal();
@@ -65,7 +65,7 @@ export const FormPuestos = () => {
                         <Grid item>
                             <TextField
                                 id="nombre-input"
-                                sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
+                                sx={{ border: 'none', mb: 1, mt: 2, width: 500 }}
                                 type="text"
                                 name="nombre"
                                 required
@@ -75,7 +75,7 @@ export const FormPuestos = () => {
                                 value={formValues.nombre}
                                 onChange={handleInputChange} />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="fk_corporacion-input" color='warning'>Corporaciones</InputLabel>
                                 <Select
@@ -94,7 +94,52 @@ export const FormPuestos = () => {
                                         })}
                                 </Select>
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
+                        {isActualizar?
+                        (<Grid item xs={6}>
+                            <Autocomplete
+                                    name="fk_corporacion"
+                                    required
+                                    value={formValues}
+                                    sx={{ width: 500, mb:1 }}
+                                    onChange={(event, newFormValues1) => {
+                                        setFormValues({
+                                            ...formValues,
+                                            ['fk_corporacion']: newFormValues1.idcorporaciones,
+                                             ['nombreCorporacion']: newFormValues1.nombreCorporacion,
+                                        });
+                                    }}
+                                    inputValue={inputValue1}
+                                    onInputChange={(event, newInputValue1) => {
+                                        setInputValue1(newInputValue1);
+                                    }}
+                                    options={tableData}
+                                    getOptionLabel={(tableData) => tableData.nombreCorporacion || ""}
+                                    //isOptionEqualToValue={(option, value) =>{
+                                    //    option.serie === value.serie
+                                    //    //console.log(option.serie);
+                                    //    //console.log(value.serie_radio);
+                                    //}}
+                                    renderInput={(params) => <TextField  {...params} variant="outlined" color='warning' label="Corporaciones" />}       
+                            />
+                            </Grid>):
+                            (<Grid item xs={6}>
+                                <Autocomplete
+                                        name="fk_corporacion"
+                                        required
+                                        options={tableData}
+                                        getOptionLabel={(tableData) => tableData.nombreCorporacion || ""}
+                                        sx={{ width: 500, mb:1 }}
+                                        onChange={(event, newFormValues) => {
+                                            setFormValues({
+                                                ...formValues,
+                                                ['fk_corporacion']: newFormValues.idcorporaciones,
+                                            });
+                                        }}
+                                        renderInput={(params) => <TextField  {...params} variant="outlined" color='warning' label="Corporaciones" />}       
+                                />
+                                </Grid>)
+                            } 
                         {/* <Grid item>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='warning'>Estatus</InputLabel>
@@ -112,7 +157,7 @@ export const FormPuestos = () => {
                                 </Select>
                             </FormControl>
                         </Grid> */}
-                        <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar} sx={{  width: 300 }} >
+                        <Button variant="contained" color="warning" type="submit" onClick={mostrarGuardar} sx={{  width: 400 }} >
                         {isActualizar? 'Actualizar' : 'Guardar'}
                         </Button>
                     </Grid>

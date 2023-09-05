@@ -37,7 +37,7 @@ export const FormRecursos = () => {
         setFormSubmitted(true);
 
         if (formValues.nombreRecursoCompra.length <= 0) return;
-        console.log(formValues);
+        // console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
         CloseModal();

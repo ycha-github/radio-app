@@ -39,7 +39,7 @@ export const FormMarcas = () => {
         setFormSubmitted(true);
 
         if (formValues.nombreMarcas.length <= 0 )return;
-        console.log(formValues);
+        // console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
         CloseModal();

@@ -30,7 +30,6 @@ export const UsuariosRadios= () => {
   const [enviarIdImg, setEnviarIdImg]= useState({});
   const [idEnviado, setIdEnviado]= useState({});
   
-
   useEffect(() => {
     startLoadingEvents()
   }, [])
@@ -43,6 +42,7 @@ export const UsuariosRadios= () => {
       apellido_pat:'',
       apellido_mat:'',
       fk_puesto:'',
+      nombrePuesto:'',
       cuip:'',
       clave_elector:'',
       imagen_ine:'',
@@ -94,7 +94,7 @@ export const UsuariosRadios= () => {
 
   const onSelect = ( event ) =>  {
     //console.log(event.row+`${enviarIdImg}`)
-    //console.log(`event.row.enviarIdImg()`)
+    console.log(event.row)
     setActiveEvent( event.row );
     setEnviarIdImg(event.row);
   }

@@ -11,31 +11,44 @@ const styles = StyleSheet.create({
       // position: 'relative'
     },
     title: {
-      fontSize: 12,
+      fontSize: 8,
       textAlign: 'center',
       fontFamily: 'Times-Roman',
       margin: '0 0 0 0',
       textDecoration: 'none'
     },
     section: {
-      margin: '10 50 0 50',
+      margin: '3 50 0 50',
       border: '0px none none',
-      padding: '8 0 8 0',
+      padding: '2 0 2 0',
     },
     image: {
-        top: 50,
-        width:150,
-        height:50,
-        paddingRight: 35
+        top: 40,
+        width:120,
+        height:40,
+        paddingRight: 35,
       },
       image2: {
         position:'absolute',
         float: 'right',
         right: 20,
-        top: 50,
+        top: 42,
         // left: 250,
-        width:50,
-        height:40
+        width:35,
+        height:30
+      },
+      imganexo: {
+        width:230,
+        height:300,
+        margin: '0 0 5 5',
+      },
+      imganexo2: {
+        width:230,
+        height:300,
+        position:'absolute',
+        float: 'right',
+        right: 5,
+        top: 18,
       },
       table: {
         alignItems: 'flex-start',
@@ -90,13 +103,14 @@ export const ImprimirHServicio = ({datos, formato}) => {
                 <Image style={styles.image} src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} />
                 <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > CENTRO DE MANDO Y COMUNICACIONES C4 </Text>
                 <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > DIRECCIÓN TÉCNICA </Text>
-                <Text style={{ ...styles.title, margin: '0 0 10 0' }} > DEPARTAMENTO DE RADIOCOMUNICACIONES </Text>
+                <Text style={{ ...styles.title, margin: '0 0 5 0' }} > DEPARTAMENTO DE RADIOCOMUNICACIONES </Text>
+                {/* <Image style={styles.image2} src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0].fk_logo_c4}`} /> */}
                 <Image style={styles.image2} src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0].fk_logo_c4}`} />
-                <Text  style={{ ...styles.title, textAlign: 'right', margin: '0 20 0 0', fontFamily: 'Times-Bold' }} > Folio: {datos.folio+"/"+anioActual} </Text>
+                <Text  style={{ ...styles.title, textAlign: 'right', margin: '0 10 0 0', fontFamily: 'Times-Bold' }} > Folio: {datos.folio+"/"+anioActual} </Text>
                 <Text style={styles.title} > REPORTE DE SERVICIO </Text>
             </View>
             <View>
-                <Text  style={{ ...styles.title, textAlign: 'right', margin: '0 70 10 0'}} > Villahermosa, Tab. A { new Date(datos.fecha_servicio.split('-').join('/')).toLocaleString('es-MX', options) } </Text>
+                <Text  style={{ ...styles.title, textAlign: 'right', margin: '0 50 5 0'}} > Villahermosa, Tab. A { new Date(datos.fecha_servicio.split('-').join('/')).toLocaleString('es-MX', options) } </Text>
             </View>
 
            
@@ -165,7 +179,7 @@ export const ImprimirHServicio = ({datos, formato}) => {
                 <View style={styles.tableObjeto}> {/*   (Tabla absoluta, flotante ) Tabla de datos de usuario - unidad- zona/región    */}
                     <View style={{...styles.table, width: 150 }}> {/*    Tabla de datos de usuario - unidad- zona/región    */}
 
-                        <View style={styles.tableRow}> 
+                        {/* <View style={styles.tableRow}> 
                             <View style={{...styles.tableCol, width: '50%' }}> 
                                 <View style={styles.tableCell}>
                                     <Text style={{ ...styles.title, textAlign: 'left' }}> 
@@ -180,7 +194,7 @@ export const ImprimirHServicio = ({datos, formato}) => {
                                     </Text>
                                 </View>
                             </View>
-                        </View>
+                        </View> */}
 
                         <View style={styles.tableRow}>
                             <View style={{...styles.tableCol, width: '50%' }}> 
@@ -204,8 +218,6 @@ export const ImprimirHServicio = ({datos, formato}) => {
                 ) }
 
             </View>   {/*    Cierre de Sección de datos de usuario    */}
-
-
 
  {/**************************** *******************************   Sección de datos del equipo    ****************************************************************/}
 
@@ -397,7 +409,6 @@ export const ImprimirHServicio = ({datos, formato}) => {
 
             </View>   {/*    Cierre de Sección de datos del equipo   */}
 
-
     
 {/* ****************************************************************    Sección de servicios (intervención del equipo)     ****************************************************************/}
             <View style={{...styles.section, border: '1px solid rgb(192, 192, 192)' }}> 
@@ -437,10 +448,7 @@ export const ImprimirHServicio = ({datos, formato}) => {
 
                 </View> {/*    Cierre de Tabla de servicios (Intervención del equipo)    */}
 
-
             </View>   {/*    Cierre de Sección de servicios (intervención del equipo)     */}
-
-
 
 
 {/* ****************************************************************    Sección de Firmas de recepción de equipo     ****************************************************************/}
@@ -522,13 +530,9 @@ export const ImprimirHServicio = ({datos, formato}) => {
                         </View>
                     </View>
 
-
                 </View> {/*    Cierre de Tabla de Recepción del equipo (Firmas)    */}
 
-
             </View>   {/*    Cierre de Sección de Firmas de recepción de equipo     */}
-
-
 
 {/* ****************************************************************    Sección de Firmas de entrega del equipo     ****************************************************************/}
             <View style={{...styles.section, border: '1px solid rgb(192, 192, 192)' }}> 
@@ -554,9 +558,9 @@ export const ImprimirHServicio = ({datos, formato}) => {
                         </View>
                         <View style={{...styles.tableCol, width: '40%' }}> 
                             <View style={styles.tableCell}>
-                                <Text style={{...styles.title, margin: '4 0 10 0'}}> 
+                            {datos?.fecha_entrega == undefined ?"":(<Text style={{...styles.title, margin: '4 0 10 0'}}> 
                                 Fecha y hora: { new Date(datos.fecha_entrega).toLocaleString() }
-                                </Text>
+                                </Text>)}
                             </View>
                         </View>
                     </View>
@@ -633,13 +637,15 @@ export const ImprimirHServicio = ({datos, formato}) => {
                         </View>
                     </View>
 
-
                 </View> {/*    Cierre de Tabla de entrega del equipo (Firmas)    */}
-
 
             </View>   {/*    Cierre de Sección de Firmas de entrega del equipo     */}
 
-
+            <View style={{...styles.section, border: '1px solid rgb(192, 192, 192)' }}> 
+                <Text style={{...styles.title, margin: '0 0 6 0', fontFamily: 'Times-Bold'}} > ANEXOS </Text>
+                <Image style={styles.imganexo} src={`http://172.16.21.222:8000/api/v0/documentos/users/${datos.fk_foto1}`} />
+                <Image style={styles.imganexo2} src={`http://172.16.21.222:8000/api/v0/documentos/users/${datos.fk_foto2}`} />
+            </View>
 
 
 
@@ -647,3 +653,6 @@ export const ImprimirHServicio = ({datos, formato}) => {
     </Document>
   )
 }
+
+
+

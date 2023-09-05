@@ -28,21 +28,44 @@ export const useHojaServicioStore= () => {
   //}
 //console.log(folio)
 //console.log(fecha)
+let foto1;
+  let foto2;
 
+  const subirImagen = async(zonasEvent)=>{
+    const {data}= await  radioApi.post(`/documentos/evidencia`, zonasEvent);
+    console.log(data);
+    foto1=data.iddocumentos;
+  }
+  const subirImagen2 = async(zonasEvent)=>{
+    const {data}= await  radioApi.post(`/documentos/evidencia`, zonasEvent);
+    console.log(data);
+    foto2=data.iddocumentos;
+  }
+   const promesa= new Promise((resolve,reject)=>{
+     setTimeout(()=>{
+       resolve();
+     },3500)
+   });
+console.log(foto1)
+console.log(foto2)
   const startSavingEvent =async(zonasEvent)=>{
+    // promesa.then(()=>{
     //TODO: Update event
     if(zonasEvent.idhojaservicios){
       //Actualizando
-        const {data}= await  radioApi.put(`/hojasservicios/${zonasEvent.idhojaservicios}`,zonasEvent);
+        const {data}= await promesa.then(()=>{ return radioApi.put(`/hojasservicios/${zonasEvent.idhojaservicios}`,{...zonasEvent, fk_foto1:foto1, fk_foto2:foto2})});
         dispatch(onUpdateEvent({...zonasEvent, user}));
         window.location.reload(true);
+    
     }else{
       //creando
-      const {data}= await radioApi.post('/hojasservicios', zonasEvent);
+      const {data}=await promesa.then(()=>{ return radioApi.post('/hojasservicios', {...zonasEvent, fk_foto1:foto1, fk_foto2:foto2}) });
       dispatch(onAddNewEvent({...zonasEvent, idhojaservicios:data.idhojaservicios, user}));
       window.location.reload(true);
       //navigate('../hoja-servicio')
+   
     }
+  // })
   }
    const deleteEvent=async(zonasEvent, state)=>{
     const {data} = await  radioApi.delete(`/hojasservicios/${zonasEvent}`);
@@ -73,5 +96,7 @@ export const useHojaServicioStore= () => {
     setActiveEvent,
     startSavingEvent,
     startLoadingEvents,
+    subirImagen,
+    subirImagen2,
   }
 }

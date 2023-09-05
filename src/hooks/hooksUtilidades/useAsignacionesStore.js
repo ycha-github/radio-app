@@ -26,7 +26,7 @@ export const useAsignacionesStore= () => {
     }
   }
    const deleteEvent=async(zonasEvent, state)=>{
-    console.log(zonasEvent);
+    // console.log(zonasEvent);
     const {data} = await  radioApi.delete(`/asig_usuarios/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
   window.location.reload(true);

@@ -30,16 +30,16 @@ export const FormAccesorios = (customStyles) => {
 
     const [formValues, setFormValues] = useState({
         accesorio:'',
-        serie_bateria: '',
-        serie_cargador: '',
-        serie_gps: '',
+        serie_bateria: null,
+        serie_cargador:null,
+        serie_gps: null,
         marcas_idMarcas:'',
         inventario_interno:'',
         inventario_segpub:'',
         contrato_compra:'',
         observaciones:'',
         fecha_recepcion:'',
-        estatus:'',
+        estatus:1,
         createdAt:'',
         updatedAt:'',
     }); 
@@ -63,7 +63,7 @@ export const FormAccesorios = (customStyles) => {
     const onSubmit = async(event) => {
         event.preventDefault();
         setFormSubmitted(true);
-        console.log(formValues);
+        // console.log(formValues);
         //TODO:
         await startSavingEvent(formValues);
         CloseModal();
@@ -90,7 +90,6 @@ export const FormAccesorios = (customStyles) => {
                                                 labelId="demo-simple-select-label"
                                                 id="accesorio-input"
                                                 name="accesorio"
-                                                required
                                                 color='warning'
                                                 value={formValues.accesorio}
                                                 label="Tipo Accesorio"
@@ -99,6 +98,9 @@ export const FormAccesorios = (customStyles) => {
                                                         setFormValues({
                                                             ...formValues,
                                                             ['accesorio']: newFormValues.props.value,
+                                                            ['serie_bateria']: "",
+                                                                 ['serie_cargador']: "",
+                                                                 ['serie_gps']: "",
                                                         })
                                                     }
                                                 }
@@ -117,7 +119,6 @@ export const FormAccesorios = (customStyles) => {
                                                 sx={{ border: 'none', mt: 2, width: 300 }}
                                                 labelId="demo-simple-select-label"
                                                 id="accesorio-input"
-                                                required
                                                 name="accesorio"
                                                 color='warning'
                                                 value={formValues.accesorio}
@@ -139,7 +140,6 @@ export const FormAccesorios = (customStyles) => {
                                                 id="serie_vacio-input"
                                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                                 type="text"
-                                                required
                                                 name="serie_vacio"
                                                 color='warning'
                                                 disabled
@@ -152,12 +152,10 @@ export const FormAccesorios = (customStyles) => {
                                             type="text"
                                             name="serie_bateria"
                                             color='warning'
-                                            required
                                             label="Numero de serie bateria"
                                             variant="outlined"
                                             value={  formValues.serie_bateria }
                                             onChange={ ({target} ) =>{
-                                                console.log(target)
                                                 setFormValues({
                                                                  ...formValues,
                                                                  ['serie_bateria']: target.value,
@@ -174,7 +172,6 @@ export const FormAccesorios = (customStyles) => {
                                             id="serie_cargador-input"
                                             sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                             type="text"
-                                            required
                                             name="serie_cargador"
                                             color='warning'
                                             label="Numero de serie cargador"
@@ -198,18 +195,17 @@ export const FormAccesorios = (customStyles) => {
                                             sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                             type="text"
                                             name="serie_gps"
-                                            required
                                             color='warning'
                                             label="Numero de serie gps"
                                             variant="outlined"
                                             value={ formValues.serie_gps }
                                             onChange={
-                                                ( event, newFormValues ) =>{
+                                                ( {target} ) =>{
                                                     setFormValues({
                                                                      ...formValues,
                                                                      ['serie_bateria']: "",
                                                                      ['serie_cargador']: "",
-                                                                     ['serie_gps']: newFormValues.props.value,
+                                                                     ['serie_gps']: target.value,
                                                                  })
                                                 } 
                                             } 
@@ -233,7 +229,7 @@ export const FormAccesorios = (customStyles) => {
                                                                 ['nombreModelos']: newFormValues.nombreModelos
                                                             }
                                                         );
-                                                        console.log(newFormValues)
+                                                        // console.log(newFormValues)
                                                     }}
                                                     options={marcasTipo}
                                                     inputValue={inputValue}
@@ -262,7 +258,7 @@ export const FormAccesorios = (customStyles) => {
                                                                 ['marcas_idMarcas']: newFormValues.idmarcas,
                                                             }
                                                         );
-                                                        console.log(newFormValues)
+                                                        // console.log(newFormValues)
                                                     }}
                                                     options={marcasTipo}
                                                     getOptionLabel={ (options) => options.nombreMarcas + " / " + options.nombreModelos }

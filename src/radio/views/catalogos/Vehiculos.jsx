@@ -31,13 +31,13 @@ export const Vehiculos=()=> {
 
   const newRow =()=>{
     setActiveEvent({
-      marcas_idmarcas:'',
+      marcas_idmarcas:null,
       anio:'',
       tipo:'',
       color:'',
       placa:'',
       unidad:'',
-      fk_zonaregion:'',
+      fk_zonaregion:null,
       estatus:1,
       createdAt:'',
       updatedAt:'',
@@ -68,7 +68,7 @@ export const Vehiculos=()=> {
   }
 
   const onSelect = ( event ) =>  {
-    console.log(event.row)
+    // console.log(event.row)
     setActiveEvent( event.row );
   }
  const theme = createTheme(
@@ -86,7 +86,7 @@ export const Vehiculos=()=> {
     { field: 'color', headerClassName: "super", headerName: 'Color', flex: 1, minWidth: 90 },
     { field: 'placa', headerClassName: "super", headerName: 'Placa', flex: 1, minWidth: 90 },
     { field: 'unidad', headerClassName: "super", headerName: 'Unidad', flex: 1, minWidth: 90 },
-    { field: 'nombreZonasRegiones', headerClassName: "super", headerName: 'Zona/Región', flex: 1, minWidth: 90 },
+    // { field: 'nombreZonasRegiones', headerClassName: "super", headerName: 'Zona/Región', flex: 1, minWidth: 90 },
     { field: 'createdAt', headerClassName: "super", headerName: 'Fechadecreacion', flex: 1, minWidth: 90 },
     { field: 'updatedAt', headerClassName: "super", headerName: 'Fechadeactualizacion', flex: 1, minWidth: 90 },
     { field: 'estatus', type: 'boolean', headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },

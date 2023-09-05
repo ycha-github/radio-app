@@ -37,7 +37,7 @@ export const FormServicio = () => {
         setFormSubmitted(true);
 
         if (formValues.nombreServicios.length <= 0 )return;
-        console.log(formValues);
+        // console.log(formValues);
 
         //TODO:
         await startSavingEvent(formValues);

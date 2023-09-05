@@ -31,9 +31,9 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   const newRow =()=>{
     setActiveEvent({
       accesorio:'',
-      serie_bateria: '',
-      serie_cargador: '',
-      serie_gps: '',
+      serie_bateria: null,
+      serie_cargador: null,
+      serie_gps: null,
       marcas_idMarcas:'',
       inventario_interno:'',
       inventario_segpub:'',

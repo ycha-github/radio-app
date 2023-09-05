@@ -57,7 +57,13 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
     useEffect(() => {
         radioApi.get('/usuarios').
             then((response) => {
-                setTableData(response.data);
+                let usuarioActivo=[]
+                usuarioActivo =response.data.filter(function(element){
+                    return(
+                        element.estatus ==true
+                    )
+                })
+                setTableData(usuarioActivo);
             });
         }, []);
 
@@ -83,7 +89,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
        
     };
     const handleChange = (event) => {
-        console.log(event.target.checked);
+        // console.log(event.target.checked);
         setFormValues({
           ...formValues,
           [event.target.name]: event.target.checked
@@ -93,9 +99,8 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
     const onSubmit = async (event) => {
         event.preventDefault();
         //setFormSubmitted(true);
-        console.log(formValues);
+        // console.log(formValues);
         //if (formValues.estatus.length <= 0) return;
-        console.log(formValues)
         await startSavingEvent(formValues);
         await cambiarSue(formValues.radios_idradios);
         //onResetForm();
@@ -134,7 +139,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         setInputValue2(newInputValue2);
                                     }}
                             options={tableData}
-                            getOptionLabel={(tableData) => tableData.nombre +" "+ tableData.apellido_pat +" "+ tableData.apellido_mat || ""}
+                            getOptionLabel={(tableData) => tableData.nombre +" "+ tableData.apellido_pat +" "+ tableData.apellido_mat +" | "+ tableData.nombrePuesto+" | "+tableData.nombreCorporacion || ""}
                             //isOptionEqualToValue={(option, value) =>
                         //    option.nombre === value.nombre
                         //}
@@ -146,7 +151,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 name="usuarios_idusuarios"
                                 required
                                 options={tableData}
-                                getOptionLabel={(tableData) => tableData.nombre +" "+ tableData.apellido_pat +" "+ tableData.apellido_mat || ""}
+                                getOptionLabel={(tableData) => tableData.nombre +" "+ tableData.apellido_pat +" "+ tableData.apellido_mat+" | "+ tableData.nombrePuesto+" | "+tableData.nombreCorporacion || ""}
                                 sx={{ width: 300, mb:1 }}
                                 onChange={(event, newFormValues) => {
                                     setFormValues({
@@ -227,7 +232,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     onClick={filtrarAccesorioBateria('Bateria')}
                                     sx={{ width: 300, mb:1 }}
                                 onChange={(event, newFormValues) => {
-                                    console.log(newFormValues);
+                                    // console.log(newFormValues);
                                     setFormValues({
                                         ...formValues,
                                         ['fk_accesorio_bateria']: newFormValues.idaccesorios,
@@ -275,7 +280,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     onClick={filtrarAccesorio('Cargador')}
                                     sx={{ width: 300, mb:1 }}
                                 onChange={(event, newFormValues3) => {
-                                    console.log(newFormValues3.serie_cargador);
+                                    // console.log(newFormValues3.serie_cargador);
                                     setFormValues({
                                         ...formValues,
                                         ['fk_accesorio_cargador']: newFormValues3.idaccesorios,
@@ -284,7 +289,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     }}
                                     inputValue={inputValue3}
                                     onInputChange={(event, newInputValue3) => {
-                                        console.log(newInputValue3);
+                                        // console.log(newInputValue3);
                                         setInputValue3(newInputValue3);
                                     }}
                                     options={accesoriosFiltrado}
@@ -351,18 +356,15 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         getOptionLabel={(accesoriosFiltradoGps) => accesoriosFiltradoGps.serie_gps || ""}
                                         sx={{ width: 300, mb:1 }}
                                         onChange={(event, newFormValues) => {
-                                            
                                             setFormValues({
                                                 ...formValues,
                                                 ['fk_accesorio_gps']: newFormValues.idaccesorios,
                                             })
-
                                         }}
                                         renderInput={(params) => <TextField  {...params} variant="outlined" label="Gps" />}       
                                 />
                                 </Grid>)
                             }
-                            
                             
                         <Grid item xs={3}>
                             <FormControlLabel
@@ -374,7 +376,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.funda}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
                                                 ['funda']: newFormValues,
@@ -395,7 +397,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.antena}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
                                                 ['antena']: newFormValues,
@@ -416,7 +418,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.bocina}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
                                                 ['bocina']: newFormValues,
@@ -437,7 +439,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.c2h}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
                                                 ['c2h']: newFormValues,
@@ -458,7 +460,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.cable_principal}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues, 
                                                 ['cable_principal']: newFormValues,
@@ -479,7 +481,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.caratula}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
                                                 ['caratula']: newFormValues,
@@ -500,7 +502,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.micro}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
                                                 ['micro']: newFormValues,
@@ -521,7 +523,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.cofre}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
                                                 ['cofre']: newFormValues,
@@ -542,7 +544,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.porta_caratula}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
                                                 ['porta_caratula']: newFormValues,
@@ -563,7 +565,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         checked={formValues.cuello_cisne}
                                         //onChange={handleChange}
                                         onChange={(event, newFormValues) => {
-                                            console.log(newFormValues)
+                                            // console.log(newFormValues)
                                             setFormValues({
                                                 ...formValues,
                                                 ['cuello_cisne']: newFormValues,
@@ -588,7 +590,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     setFormValues({
                                         ...formValues,
                                         ['fk_vehiculo']: newFormValues5.idvehiculo,
-                                        ['placa']:newFormValues5.placa,
+                                        ['unidad']:newFormValues5.unidad,
                                     });
                                     }}
                                     inputValue={inputValue5}
@@ -596,7 +598,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         setInputValue5(newInputValue5);
                                     }}
                                     options={tableVehi}
-                                    getOptionLabel={(tableVehi) => tableVehi.placa || ""}
+                                    getOptionLabel={(tableVehi) => tableVehi.unidad || ""}
                                     //isOptionEqualToValue={(option, value) =>{
                                     //    option.num_serie === value.num_serie
                                     //    //console.log(option.num_serie);
@@ -610,7 +612,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                         name="fk_vehiculo"
                                         //onClick={filtrarAccesorioGps('Gps')}
                                         options={tableVehi}
-                                        getOptionLabel={(tableVehi) => tableVehi.placa || ""}
+                                        getOptionLabel={(tableVehi) => tableVehi.unidad || ""}
                                         sx={{ width: 300, mb:1 }}
                                         onChange={(event, newFormValues) => {
                                             setFormValues({

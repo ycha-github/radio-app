@@ -93,13 +93,13 @@ export const Roles = () => {
           label="Delete"
           onClick={cambiar}
         />,
-        <IconButton
-        color="inherit"
-        size="small"
-        aria-label="delete"
-        >
-          <Switch color='info' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idrol)} />
-       </IconButton> 
+      //   <IconButton
+      //   color="inherit"
+      //   size="small"
+      //   aria-label="delete"
+      //   >
+      //     <Switch color='info' checked={evento.row.estatus} name="estatus" onChange={(event)=>handleChange(event, evento.row.idrol)} />
+      //  </IconButton> 
        
     ], 
     }, 
@@ -122,9 +122,9 @@ export const Roles = () => {
               {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
               <FormRoles/>
               <Stack direction="row" spacing={1} marginBottom={2}>
-                <Button onClick={newRow} color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
+                {/* <Button onClick={newRow} color={'info'} variant="outlined" startIcon={<AddCircleOutlineOutlined />}>
                     Nuevo
-                </Button>
+                </Button> */}
             </Stack>
               <ThemeProvider theme={theme}>
                 <StripedDataGrid

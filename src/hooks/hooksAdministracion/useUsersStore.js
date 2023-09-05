@@ -22,7 +22,7 @@ export const useUsersStore= () => {
       //creando
       const {data}= await radioApi.post('/users', zonasEvent);
       dispatch(onAddNewEvent({...zonasEvent, idusers:data.idusers, user}));
-      console.log(data);
+      // console.log(data);
       window.location.reload(true);
     }
   }
