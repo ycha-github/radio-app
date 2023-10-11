@@ -158,7 +158,7 @@ export const FormAccesorios = (customStyles) => {
                                             onChange={ ({target} ) =>{
                                                 setFormValues({
                                                                  ...formValues,
-                                                                 ['serie_bateria']: target.value,
+                                                                 ['serie_bateria']: target.value= target.value.toUpperCase(),
                                                                  ['serie_cargador']: "",
                                                                  ['serie_gps']: "",
                                                              })
@@ -182,7 +182,7 @@ export const FormAccesorios = (customStyles) => {
                                                     setFormValues({
                                                                      ...formValues,
                                                                      ['serie_bateria']: "",
-                                                                     ['serie_cargador']: target.value,
+                                                                     ['serie_cargador']: target.value= target.value.toUpperCase(),
                                                                      ['serie_gps']: "",
                                                                  })
                                                 } 
@@ -205,7 +205,7 @@ export const FormAccesorios = (customStyles) => {
                                                                      ...formValues,
                                                                      ['serie_bateria']: "",
                                                                      ['serie_cargador']: "",
-                                                                     ['serie_gps']: target.value,
+                                                                     ['serie_gps']: target.value= target.value.toUpperCase(),
                                                                  })
                                                 } 
                                             } 
@@ -219,7 +219,6 @@ export const FormAccesorios = (customStyles) => {
                                                     id="marcas_idmarcas-input"
                                                     name={'marcas_idMarcas'}
                                                     value={formValues}
-                                                    required
                                                     onChange={(event, newFormValues) => {
                                                         setFormValues(
                                                             { 
@@ -250,7 +249,6 @@ export const FormAccesorios = (customStyles) => {
                                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                                     id="marcas_idmarcas-input"
                                                     name={'marcas_idMarcas'}
-                                                    required
                                                     onChange={(event, newFormValues) => {
                                                         setFormValues(
                                                             { 
@@ -273,7 +271,7 @@ export const FormAccesorios = (customStyles) => {
                                         <TextField
                                             id="inventario_interno-input"
                                             sx={{ border: 'none', mb: 1,  width: 300 }}
-                                            type="text"
+                                            type="number"
                                             name="inventario_interno"
                                             color='warning'
                                             label="Inventario interno"
@@ -291,7 +289,14 @@ export const FormAccesorios = (customStyles) => {
                                             label="Inventario Seguridad Pública"
                                             variant="outlined"
                                             value={formValues.inventario_segpub}
-                                            onChange={handleInputChange} />
+                                            // onChange={handleInputChange}
+                                            onChange={( {target}) => {
+                                                setFormValues({
+                                                    ...formValues,
+                                                    [target.name]:target.value = target.value.toUpperCase(),
+                                                }); 
+                                            }}
+                                            />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <TextField
@@ -324,7 +329,6 @@ export const FormAccesorios = (customStyles) => {
                                             sx={{ border: 'none',  width: 300 }}
                                             type="date"
                                             name='fecha_recepcion'
-                                            required
                                             color='warning'
                                             label="Fecha de recepción"
                                             variant="outlined"

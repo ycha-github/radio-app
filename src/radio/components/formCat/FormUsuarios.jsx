@@ -116,7 +116,6 @@ export const FormUsuarios = () => {
                                 type="text"
                                 name="nombre"
                                 color='warning'
-                                required
                                 label="Nombre"
                                 variant="outlined"
                                 value={formValues.nombre}
@@ -128,7 +127,6 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="apellido_pat"
-                                required
                                 color='warning'
                                 label="Apellido Paterno"
                                 variant="outlined"
@@ -141,7 +139,6 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="apellido_mat"
-                                required
                                 color='warning'
                                 label="Apellido Materno"
                                 variant="outlined"
@@ -171,7 +168,6 @@ export const FormUsuarios = () => {
                         (<Grid item xs={6}>
                             <Autocomplete
                                     name="fk_puesto"
-                                    required
                                     value={formValues}
                                     sx={{ width: 400, mb:1 }}
                                     onChange={(event, newFormValues1) => {
@@ -198,7 +194,6 @@ export const FormUsuarios = () => {
                             (<Grid item xs={6}>
                                 <Autocomplete
                                         name="fk_puesto"
-                                        required
                                         options={puestoUsuario}
                                         getOptionLabel={(puestoUsuario) => puestoUsuario.nombrePuesto+ " | "+puestoUsuario.nombreCorporacion || ""}
                                         sx={{ width: 400, mb:1 }}
@@ -218,7 +213,6 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="cuip"
-                                required
                                 color='warning'
                                 label="Cuip"
                                 variant="outlined"
@@ -231,7 +225,6 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="clave_elector"
-                                required
                                 color='warning'
                                 label="Clave Elector"
                                 variant="outlined"
@@ -332,7 +325,6 @@ export const FormUsuarios = () => {
                                 sx={{ border: 'none', mb: 1, width: 400 }}
                                 type="text"
                                 name="titulo"
-                                required
                                 color='warning'
                                 label="Titulo"
                                 variant="outlined"

@@ -29,7 +29,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
        porta_caratula: false,
        cuello_cisne: false,
        fk_vehiculo:null,
-       fecha_asignacion:"",
+       fecha_asignacion:null,
        estatus:  "",
        createdAt: "",
        updatedAt: "",
@@ -121,7 +121,6 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                         (<Grid item xs={6}>
                             <Autocomplete
                             name="usuarios_idusuarios"
-                            required
                             disabled={isVer}
                             value={formValues}
                             sx={{ width: 300, mb:1 }}
@@ -149,7 +148,6 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             (<Grid item xs={6}>
                                 <Autocomplete
                                 name="usuarios_idusuarios"
-                                required
                                 options={tableData}
                                 getOptionLabel={(tableData) => tableData.nombre +" "+ tableData.apellido_pat +" "+ tableData.apellido_mat+" | "+ tableData.nombrePuesto+" | "+tableData.nombreCorporacion || ""}
                                 sx={{ width: 300, mb:1 }}
@@ -167,7 +165,6 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                         (<Grid item xs={6}>
                             <Autocomplete
                                     name="radios_idradios"
-                                    required
                                     disabled={isVer}
                                     value={formValues}
                                     sx={{ width: 300, mb:1 }}
@@ -195,7 +192,6 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             (<Grid item xs={6}>
                                 <Autocomplete
                                         name="radios_idradios"
-                                        required
                                         options={tableSue}
                                         getOptionLabel={(tableSue) => tableSue.serie || ""}
                                         sx={{ width: 300, mb:1 }}
@@ -214,7 +210,6 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     id="rfsi"
                                     sx={{ border: 'none', mb:1,  width: 300 }}
                                     type="text"
-                                    required
                                     name="rfsi"
                                     disabled={isVer}
                                     color='secondary'
@@ -242,6 +237,13 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     inputValue={inputValue}
                                     onInputChange={(event, newInputValue) => {
                                         setInputValue(newInputValue);
+                                        {newInputValue === "" 
+                                        setFormValues({
+                                            ...formValues,
+                                            ['fk_accesorio_bateria']: null,
+                                            ['serie_bateria']:newInputValue
+                                        });
+                                    }
                                     }}
                                     options={accesoriosFiltradoBateria}
                                     getOptionLabel={(accesoriosFiltradoBateria) => accesoriosFiltradoBateria.serie_bateria || ""}
@@ -289,8 +291,14 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     }}
                                     inputValue={inputValue3}
                                     onInputChange={(event, newInputValue3) => {
-                                        // console.log(newInputValue3);
-                                        setInputValue3(newInputValue3);
+                                        setInputValue3(newInputValue3)
+                                    //     {newInputValue3 === "" 
+                                    //     setFormValues({
+                                    //         ...formValues,
+                                    //         ['fk_accesorio_cargador']: null,
+                                    //         ['serie_cargador']:newInputValue3
+                                    //     });
+                                    // }
                                     }}
                                     options={accesoriosFiltrado}
                                     getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.serie_cargador || ""}
@@ -315,6 +323,18 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                                 ['fk_accesorio_cargador']: newFormValues.idaccesorios,
                                             });
                                         }}
+                                    //     inputValue={inputValue3}
+                                    // onInputChange={(event, newInputValue3) => {
+                                    //     // console.log(newInputValue3);
+                                    //     setInputValue3(newInputValue3)
+                                    //     {newInputValue3 === "" 
+                                    //     setFormValues({
+                                    //         ...formValues,
+                                    //         ['serie_cargador']:newInputValue3
+                                    //     });
+                                    // }
+                                        
+                                    // }}
                                         renderInput={(params) => <TextField  {...params} variant="outlined" label="Cargador" />}       
                                 />
                                 </Grid>)
@@ -337,6 +357,13 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     inputValue={inputValue4}
                                     onInputChange={(event, newInputValue4) => {
                                         setInputValue4(newInputValue4);
+                                    //     {newInputValue4 === "" 
+                                    //     setFormValues({
+                                    //         ...formValues,
+                                    //         ['fk_accesorio_gps']: null,
+                                    //         ['serie_gps']:newInputValue4
+                                    //     });
+                                    // }
                                     }}
                                     options={accesoriosFiltradoGps}
                                     getOptionLabel={(accesoriosFiltradoGps) => accesoriosFiltradoGps.serie_gps || ""}
@@ -596,6 +623,13 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     inputValue={inputValue5}
                                     onInputChange={(event, newInputValue5) => {
                                         setInputValue5(newInputValue5);
+                                    //     {newInputValue5 === "" 
+                                    //     setFormValues({
+                                    //         ...formValues,
+                                    //         ['fk_vehiculo']: null,
+                                    //         ['unidad']:newInputValue5
+                                    //     });
+                                    // }
                                     }}
                                     options={tableVehi}
                                     getOptionLabel={(tableVehi) => tableVehi.unidad || ""}
@@ -624,7 +658,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 />
                                 </Grid>)
                             }
-                            <Grid item xs={6}>
+                            {/* <Grid item xs={6}>
                                 <TextField
                                     id="fecha_asignacion-input"
                                     disabled={isVer}
@@ -638,7 +672,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     }}
                                     value={formValues.fecha_asignacion}
                                     onChange={handleInputChange} />
-                            </Grid>
+                            </Grid> */}
                         {/* <Grid item xs={4}>
                             <FormControl fullWidth>
                                 <InputLabel id="estatus-input" color='secondary'>Estatus</InputLabel>

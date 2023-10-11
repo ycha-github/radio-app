@@ -136,9 +136,7 @@ export const FormVehiculos = () => {
                                     <Autocomplete 
                                         sx={{ border: 'none', mb: 1, width: 300 }}
                                         id="marcas_idmarcas-input"
-                                        name={'marcas_idmarcas'}
-                                        required
-                                        
+                                        name={'marcas_idmarcas'}                                       
                                         onChange={(event, newFormValues) => {
                                             setFormValues(
                                                 { 
@@ -163,7 +161,6 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="anio"
-                                required
                                 color='warning'
                                 label="Año"
                                 variant="outlined"
@@ -176,7 +173,6 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="tipo"
-                                required
                                 color='warning'
                                 label="Tipo"
                                 variant="outlined"
@@ -189,7 +185,6 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="color"
-                                required
                                 color='warning'
                                 label="Color"
                                 variant="outlined"
@@ -202,7 +197,6 @@ export const FormVehiculos = () => {
                                 sx={{ border: 'none', mb: 1, width: 300 }}
                                 type="text"
                                 name="placa"
-                                required
                                 color='warning'
                                 label="Placa"
                                 variant="outlined"
@@ -217,7 +211,6 @@ export const FormVehiculos = () => {
                                 name="unidad"
                                 color='warning'
                                 label="Unidad"
-                                required
                                 variant="outlined"
                                 value={formValues.unidad}
                                 onChange={handleInputChange} />

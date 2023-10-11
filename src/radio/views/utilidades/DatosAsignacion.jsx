@@ -126,7 +126,7 @@ export const DatosAsignacion = ({styles, datos}) => {
         (<View style={styles.seccionVeh} >
             <View style={styles.table}>
 
-                <View style={styles.tableRow}> 
+                {datos.tipoVehiculo == null ?"":<View style={styles.tableRow}> 
                     <View style={styles.tableCol}> 
                     <View style={styles.tableCell}>
                             <Text style={{...styles.text, textAlign: 'left'}}>  
@@ -141,9 +141,9 @@ export const DatosAsignacion = ({styles, datos}) => {
                         </Text>
                     </View>
                     </View>
-                </View>
+                </View>}
 
-                <View style={styles.tableRow}> 
+                {datos.marcaVehiculo==null? "" : <View style={styles.tableRow}> 
                     <View style={styles.tableCol}>
                     <View style={styles.tableCell}>
                         <Text style={{...styles.text, textAlign: 'left'}}>  
@@ -158,9 +158,9 @@ export const DatosAsignacion = ({styles, datos}) => {
                         </Text>
                     </View>
                     </View>
-                </View>
+                </View>}
 
-                <View style={styles.tableRow}> 
+                {datos.anio == null ? "":<View style={styles.tableRow}> 
                     <View style={styles.tableCol}>
                     <View style={styles.tableCell}>
                         <Text style={{...styles.text, textAlign: 'left'}}>  
@@ -175,9 +175,9 @@ export const DatosAsignacion = ({styles, datos}) => {
                         </Text>
                     </View>
                     </View>
-                </View>
+                </View>}
         
-                <View style={styles.tableRow}>
+                { datos.color== null? "":  <View style={styles.tableRow}>
                     <View style={styles.tableCol}> 
                     <View style={styles.tableCell}>
                         <Text style={{...styles.text, textAlign: 'left'}}>  
@@ -192,9 +192,9 @@ export const DatosAsignacion = ({styles, datos}) => {
                         </Text>
                     </View>
                     </View>
-                </View>
+                </View>}
 
-                <View style={styles.tableRow}> 
+                {datos.unidad == null? "": <View style={styles.tableRow}> 
                     <View style={styles.tableCol}>
                     <View style={styles.tableCell}>
                         <Text style={{...styles.text, textAlign: 'left'}}>  
@@ -209,7 +209,7 @@ export const DatosAsignacion = ({styles, datos}) => {
                         </Text>
                     </View>
                     </View>
-                </View>
+                </View>}
 
             </View>
         </View>

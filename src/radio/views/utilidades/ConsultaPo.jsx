@@ -29,9 +29,9 @@ const columns =  [
 
     { field: 'rfsi',headerClassName: "super", headerName: 'RFSI',flex: 2 , minWidth: 90 },
     { field: 'tipo',headerClassName: "super",headerName: 'Tipo', flex: 2, minWidth: 120 },
-    { field: 'nombreCorporacion', headerClassName: "super",headerName: 'Corporación',flex: 2, minWidth: 90 },
-    { field: 'nombre_completo', headerClassName: "super", headerName: 'Asignado a' ,width: 250,  },
-    { field: 'nombrePuestoUsuario',headerClassName: "super",headerName: 'Puesto',flex: 2, minWidth: 120 },
+    { field: 'nombreCorporacion', headerClassName: "super",headerName: 'Corporación', width: 450 },
+    { field: 'nombre_completo', headerClassName: "super", headerName: 'Asignado a' ,width: 270,  },
+    { field: 'nombrePuesto',headerClassName: "super",headerName: 'Puesto', width: 320 },
     { field: 'placa',headerClassName: "super",headerName: 'Placas',flex: 2, minWidth: 120 },
     { field: 'unidad',headerClassName: "super",headerName: 'Unidad',flex: 2, minWidth: 120 },
 ]

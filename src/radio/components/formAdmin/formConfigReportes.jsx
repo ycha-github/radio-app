@@ -137,7 +137,6 @@ export const FormConfigReportes = (customStyles) => {
                                     color={"info"}
                                     label="Encabezado de carta"
                                     variant="outlined"
-                                    required
                                     multiline
                                     rows={3}
                                     //inputProps={{ maxLength: 250 }}
@@ -153,7 +152,6 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo1"
                                     color={"info"}
                                     label="Artículo parte 1"
-                                    required
                                     variant="outlined"
                                     multiline
                                     rows={3}
@@ -170,7 +168,6 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo2"
                                     color={"info"}
                                     label="Artículo parte 2"
-                                    required
                                     multiline
                                     rows={3}
                                     //inputProps={{ maxLength: 250 }}
@@ -187,7 +184,6 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo3"
                                     color={"info"}
                                     label="Artículo parte 3"
-                                    required
                                     multiline
                                     rows={3}
                                     //inputProps={{ maxLength: 250 }}
@@ -204,7 +200,6 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo4"
                                     color={"info"}
                                     label="Artículo parte 4"
-                                    required
                                     multiline
                                     rows={3}
                                     //inputProps={{ maxLength: 250 }}
@@ -221,7 +216,6 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo5"
                                     color={"info"}
                                     label="Artículo parte 5"
-                                    required
                                     multiline
                                     rows={3}
                                     //inputProps={{ maxLength: 250 }}
@@ -238,7 +232,6 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo6"
                                     color={"info"}
                                     label="Artículo parte 6"
-                                    required
                                     multiline
                                     rows={3}
                                    // inputProps={{ maxLength: 250 }}
@@ -255,7 +248,6 @@ export const FormConfigReportes = (customStyles) => {
                                     name="articulo7"
                                     color={"info"}
                                     label="Artículo parte 7"
-                                    required
                                     multiline
                                     rows={3}
                                     //inputProps={{ maxLength: 250 }}
@@ -398,7 +390,6 @@ export const FormConfigReportes = (customStyles) => {
                                         disabled={isVer}
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         id="fk_revisor-input"
-                                        required
                                         name="fk_revisor"
                                         value={formValues}
                                         onChange={(event, newFormValues) => {
@@ -432,7 +423,6 @@ export const FormConfigReportes = (customStyles) => {
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         id="fk_revisor-input"
                                         name="fk_revisor"
-                                        required
                                         onChange={(event, newFormValues) => {
                                             setFormValues({
                                                 ...formValues,
@@ -452,7 +442,6 @@ export const FormConfigReportes = (customStyles) => {
                                         disabled={isVer}
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         name="fk_responsable_entrega"
-                                        required
                                         value={formValues}
                                         onChange={(event, newFormValues2) => {
                                             
@@ -482,7 +471,6 @@ export const FormConfigReportes = (customStyles) => {
                                         sx={{ border: 'none', mb: 1, mt: 2, width: 300, pl:1, pr:1 }}
                                         id="fk_responsable_entrega-input"
                                         name="fk_responsable_entrega"
-                                        required
                                         onChange={(event, newFormValues2) => {
                                             setFormValues({
                                                 ...formValues,
@@ -506,7 +494,6 @@ export const FormConfigReportes = (customStyles) => {
                                     type="text"
                                     name="ccp_carta"
                                     color={"info"}
-                                    required
                                     label="Ccp de Carta"
                                     variant="outlined"
                                     value={formValues.ccp_carta}

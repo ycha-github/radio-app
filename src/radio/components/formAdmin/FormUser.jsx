@@ -67,7 +67,6 @@ export const FormUser = () => {
                                 color='info'
                                 label="Nombre de Usuario"
                                 variant="outlined"
-                                required
                                 value={formValues.username}
                                 onChange={handleInputChange} />
                         </Grid>
@@ -82,7 +81,6 @@ export const FormUser = () => {
                                 fullWidth
                                 name='password'
                                 color='info'
-                                required
                                 value={formValues.password}
                                 onChange={handleInputChange}
                             />
@@ -98,7 +96,6 @@ export const FormUser = () => {
                                     color='info'
                                     value={formValues.roles_idrol}
                                     label="Rol"
-                                    required
                                     onChange={handleInputChange}>
                                       {
                                         tableData.map(elemento=>{

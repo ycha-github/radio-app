@@ -68,7 +68,6 @@ export const FormPuestos = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 500 }}
                                 type="text"
                                 name="nombre"
-                                required
                                 color='warning'
                                 label="Nombre"
                                 variant="outlined"
@@ -99,7 +98,6 @@ export const FormPuestos = () => {
                         (<Grid item xs={6}>
                             <Autocomplete
                                     name="fk_corporacion"
-                                    required
                                     value={formValues}
                                     sx={{ width: 500, mb:1 }}
                                     onChange={(event, newFormValues1) => {
@@ -126,7 +124,6 @@ export const FormPuestos = () => {
                             (<Grid item xs={6}>
                                 <Autocomplete
                                         name="fk_corporacion"
-                                        required
                                         options={tableData}
                                         getOptionLabel={(tableData) => tableData.nombreCorporacion || ""}
                                         sx={{ width: 500, mb:1 }}

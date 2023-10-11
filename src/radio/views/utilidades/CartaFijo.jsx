@@ -19,13 +19,16 @@ const styles = StyleSheet.create({
       margin: '50 0 10 0'
     },
     section: {
-      margin: '10 50 10 50'
+      margin: '10 55 10 52',
+      justifyContent: 'spaceBetween',
     },
     otrosAcc: {
       margin: '5 60 5 60',
     },
     section2: {
-      justifyContent: 'space-between',
+      //textAlign: 'justify',
+      // insetInline:"5%",
+      textAlign: 'left',
       margin: '0 50 0 50'
     },
     seccionVeh: {
@@ -50,7 +53,8 @@ const styles = StyleSheet.create({
     text: {
       fontSize: 10,
       textAlign: 'justify',
-      fontFamily: 'Times-Bold'
+      fontFamily: 'Times-Bold',
+      textIndent: '-3px'
     },
     text3: {
       fontSize: 10,
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
     },
     text4: {
       fontSize: 10,
-      textAlign: 'left',
+      textAlign: 'center',
       fontFamily: 'Times-Roman'
     },
     text5: {
@@ -77,7 +81,8 @@ const styles = StyleSheet.create({
       fontSize: 10,
       textAlign: 'justify',
       fontFamily: 'Times-Roman',
-      margin: '0 0 5 0'
+      margin: '0 0 5 0',
+      textIndent: '-2px'
     },
     textArt3: {
       fontSize: 10,
@@ -139,27 +144,31 @@ const styles = StyleSheet.create({
       alignSelf: "stretch",
     }, 
     table2: {
-      paddingLeft:'38px',
-      alignContent: 'center',
+      paddingLeft:'60px',
+      // alignContent: 'center',
       borderStyle: "none", 
-      width: "800px", 
+      width: "780px", 
       margin: '15 0 15 0'
     }, 
     tableRow2: { 
-      margin: "auto", 
+      // margin: "auto", 
       flexDirection: "row",
-      width: "800px"  
+      width: "780px",
+      textAlign: 'center'
     }, 
     tableRow2Especial: { 
-      margin: "30 0 0 0", 
+      margin: "30 0 0 28",
+      display: "flex",
       flexDirection: "row",
-      width: "800px"  
+      width: "800",
+      alignItems: "center"
     }, 
     tableCol2: { 
-      width: "22%"   
-    },
+      width: "22%"
+      
+      },
     tableCell2: { 
-      margin: "auto", 
+      // margin: "auto auto", 
       fontSize: 13 
     }, 
     piePagina: {
@@ -174,7 +183,7 @@ export const CartaFijo = ({datos, formato}) => {
      info = datos.fecha_asignacion.split('-').join('/');
     let fecha = new Date(info);
     let options = { day: 'numeric', month: 'long', year: 'numeric' }
-    let fechaAsignacion = fecha.toLocaleString('es-MX', options); 
+    let fechaAsignacion = new Date().toLocaleString('es-MX', options); 
 
   return (
     <Document>
@@ -275,7 +284,6 @@ export const CartaFijo = ({datos, formato}) => {
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
                 {formato[0].titulores + ' ' + formato[0].nombre_responsable}
-                {console.log(formato)}
                 </Text>
               </View>
             </View>
@@ -285,7 +293,7 @@ export const CartaFijo = ({datos, formato}) => {
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
-                {datos.nombrePuestoUsuario}
+                {datos.nombrePuesto}
                 </Text>
               </View>
             </View>
@@ -315,14 +323,14 @@ export const CartaFijo = ({datos, formato}) => {
             </View>
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
-                <Text style={styles.text4 }> 
+                <Text style={styles.text4}> 
                 {formato[0].corporacionRevisor}
                 </Text>
               </View>
             </View>
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
-                <Text style={styles.text4 }> 
+                <Text style={styles.text4}> 
                 {formato[0].corporacionResponsable}
                 </Text>
               </View>

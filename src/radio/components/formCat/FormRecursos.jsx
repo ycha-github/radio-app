@@ -56,7 +56,6 @@ export const FormRecursos = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreRecursoCompra"
-                                required
                                 color='warning'
                                 label="Recurso de Compra"
                                 variant="outlined"

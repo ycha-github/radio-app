@@ -57,7 +57,6 @@ export const FormServicio = () => {
                                 sx={{ border: 'none', mb: 1, mt: 2, width: 300 }}
                                 type="text"
                                 name="nombreServicios"
-                                required
                                 color='warning'
                                 label="Nombre de servicio"
                                 variant="outlined"

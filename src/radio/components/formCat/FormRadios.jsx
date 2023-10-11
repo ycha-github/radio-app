@@ -6,6 +6,7 @@ import { useModalHook } from '../../../hooks/useModalHook';
 import axios from 'axios';
 import { Box } from '@mui/system';
 import { radioApi } from '../../../api';
+import { TextFormat } from '@mui/icons-material';
 
 
 export const FormRadios = (customStyles) => {
@@ -71,6 +72,9 @@ useEffect(() => {
         });
     };
 
+    const mayus =(e)=>{
+        e.value = e.value.toUpperCase();
+    }
     const onSubmit = async (event) => {
         //console.log(event)
         event.preventDefault();
@@ -119,7 +123,6 @@ useEffect(() => {
                                         labelId="demo-simple-select-label"
                                         id="tipo-input"
                                         name="tipo"
-                                        required
                                         color='warning'
                                         value={formValues.tipo}
                                         label="Tipo de Radio"
@@ -136,12 +139,18 @@ useEffect(() => {
                                     sx={{ border: 'none', mb: 1, width: 300}}
                                     type="text"
                                     name="serie"
-                                    required
                                     color='warning'
                                     label="serie"
                                     variant="outlined"
                                     value={formValues.serie}
-                                    onChange={handleInputChange} />
+                                    //onChange={handleInputChange} />
+                                    onChange={( {target}) => {
+                                        setFormValues({
+                                            ...formValues,
+                                            [target.name]:target.value = target.value.toUpperCase(),
+                                        }); 
+                                    }}
+                                    />
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField
@@ -149,7 +158,6 @@ useEffect(() => {
                                     sx={{ border: 'none', mb: 1, width: 300 }}
                                     type="text"
                                     name="logico"
-                                    required
                                     color='warning'
                                     label="logico"
                                     variant="outlined"
@@ -160,7 +168,7 @@ useEffect(() => {
                                 <TextField
                                     id="inventario_interno-input"
                                     sx={{ border: 'none', mb: 1, width: 300 }}
-                                    type="text"
+                                    type="number"
                                     name="inventario_interno"
                                     color='warning'
                                     label="inventario_interno"
@@ -178,7 +186,14 @@ useEffect(() => {
                                     label="inventario_segpub"
                                     variant="outlined"
                                     value={formValues.inventario_segpub}
-                                    onChange={handleInputChange} />
+                                    //onChange={handleInputChange} 
+                                    onChange={( {target}) => {
+                                        setFormValues({
+                                            ...formValues,
+                                            [target.name]:target.value = target.value.toUpperCase(),
+                                        }); 
+                                    }}
+                                    />
                             </Grid>
                             {/* <Grid item xs={6}>
                                 <FormControl fullWidth>
@@ -204,7 +219,6 @@ useEffect(() => {
                         (<Grid item xs={6}>
                             <Autocomplete
                                     name="fk_propietario"
-                                    required
                                     value={formValues}
                                     sx={{ width: 300, mb:1 }}
                                     onChange={(event, newFormValues1) => {
@@ -231,7 +245,6 @@ useEffect(() => {
                             (<Grid item xs={6}>
                                 <Autocomplete
                                         name="fk_propietario"
-                                        required
                                         options={selectPropie}
                                         getOptionLabel={(selectPropie) => selectPropie.nombreCorporacion || ""}
                                         sx={{ width: 300, mb:1 }}
@@ -253,7 +266,6 @@ useEffect(() => {
                                         labelId="demo-simple-select-label"
                                         id="fk_recurso_compra-input"
                                         name="fk_recurso_compra"
-                                        required
                                         color='warning'
                                         value={formValues.fk_recurso_compra}
                                         label="Recurso Compra"
@@ -285,7 +297,6 @@ useEffect(() => {
                                         labelId="demo-simple-select-label"
                                         id="fk_marca-input"
                                         name="fk_marca"
-                                        required
                                         color='warning'
                                         label='Marca'
                                         value={formValues.fk_marca}

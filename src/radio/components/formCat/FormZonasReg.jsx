@@ -58,7 +58,6 @@ export const FormZonasReg = () => {
                                 type="text"
                                 name="nombreZonasRegiones"
                                 color='warning'
-                                required
                                 label="Zona"
                                 variant="outlined"
                                 value={formValues.nombreZonasRegiones}

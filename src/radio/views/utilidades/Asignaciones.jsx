@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 const colorClose=()=>{
   return <Close color='error'/>
 }
-const colorDone=()=>{ 
+const colorDone=()=>{
   return <Done color='success'/>
 }
 
@@ -23,7 +23,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   }
 }));
 
-const NuevoFooter=()=>{ 
+const NuevoFooter=()=>{
   return <>
     <Box sx={{pl: '35%', alignContent:'center', background:'rgb(214, 204, 230)'}}>
       <GridToolbarExport color='secondary'  sx={{ textAlign: 'center', position: 'relative',width: 200, float: 'left', pt:2}} />
@@ -55,8 +55,6 @@ const MenuProps = {
  
   const [configReport, setConfigReport] = useState({})
 
-  
- 
   useEffect(() => {
     startLoadingEvents();
     startLoadingCorporacion();
@@ -81,7 +79,7 @@ const MenuProps = {
        porta_caratula: false,
        cuello_cisne: false,
        fk_vehiculo: null,
-       fecha_asignacion:"",
+       fecha_asignacion:null,
        estatus:  1,
        createdAt: "",
        updatedAt: "",
@@ -163,7 +161,7 @@ const MenuProps = {
     //return (imprimir)
   }
   const onSelect = ( event ) =>  {
-    // console.log(event.row)
+     console.log(event.row)
     setActiveEvent( event.row );
     setImprimir(event.row)
     
@@ -195,11 +193,14 @@ const columns =  [
 
   { field: 'idasignacion', headerClassName: "super", headerName: 'ID',width: 60,  },
   { field: 'nombre_completo', headerClassName: "super", headerName: 'Asignado a' ,width: 250,  },
-  { field: 'nombreCorporacion', headerClassName: "super", headerName: 'Corporacion',width: 300,  },
-  { field: 'serie_radio',headerClassName: "super", headerName: 'Serie Radio',flex: 2 , minWidth: 90 },
-  { field: 'rfsi',headerClassName: "super", headerName: 'RFSI',flex: 2 , minWidth: 90 },
+  { field: 'rfsi',headerClassName: "super", headerName: 'RFSI' , width: 150 },
+  { field: 'nombrePuesto', headerClassName: "super", headerName: 'Puesto' ,width: 350,  },
+  { field: 'nombreCorporacion', headerClassName: "super", headerName: 'Corporacion',width: 450,  },
+  { field: 'inventario_interno',headerClassName: "super", headerName: 'Inventario Interno Radio', width: 220 },
+  { field: 'serie_radio',headerClassName: "super", headerName: 'Serie Radio', width: 220 },
+  { field: 'inventarioSpCargador',headerClassName: "super", headerName: 'Inventario Interno Cargador',width: 220 },
   { field: 'tipo',headerClassName: "super", headerName: 'Tipo Radio',flex: 2 , minWidth: 90 },
-  { field: 'unidad',headerClassName: "super",headerName: 'Unidad', flex: 2, minWidth: 120 },
+  { field: 'unidad',headerClassName: "super",headerName: 'Unidad', width: 90 },
   { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 2, minWidth: 90 },
   // { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 2, minWidth: 120 },
   {
@@ -262,9 +263,9 @@ const columns =  [
           <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
             Nuevo
           </Button>
-          {/* <Button onClick={mostrarPdfReporteCorp} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
+          <Button onClick={mostrarPdfReporteCorp} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
             Reporte por Corporación
-          </Button> */}
+          </Button>
           <FormControl sx={{ border: 'none', mb: 1, width: 600 }}>
           <InputLabel id="demo-multiple-checkbox-label"  color={'secondary'} >Reporte corporaciones</InputLabel>
            <Select
@@ -273,7 +274,7 @@ const columns =  [
              sx={{heigth:500}}
              id="demo-multiple-checkbox"
              multiple
-             onClose={corporacionesArray !="" ? mostrarPdfReporteCorp:console.log("")}
+             //onClose={corporacionesArray !="" ? mostrarPdfReporteCorp:console.log("")}
              value={corporacionesArray}
              onChange={handleSelectChange}
              input={<OutlinedInput label="Reporte corporaciones" />}
