@@ -40,7 +40,7 @@ export const FormHojaServicio = (customStyles) => {
     const [supervisores, setSupervisores] = useState([0]);
     const [tecnicos, setTecnicos] = useState([0]);
     const [inputValue, setInputValue] = useState("");
-    const [inputValue2, setInputValue2] = useState('');
+    const [inputValue2, setInputValue2] = useState("");
     const [inputValue3, setInputValue3] = useState('');
     const [inputValue4, setInputValue4] = useState('');
     const [ rfsiBuscar, setRfsiBuscar ] = useState([]);
@@ -69,6 +69,7 @@ export const FormHojaServicio = (customStyles) => {
         usuario_entrega: '',
         fk_tecnico_entrega: null,
         estatus: '',
+        unidad: '',
         folio:'',
         foto1:"",
         foto2:"",
@@ -76,7 +77,7 @@ export const FormHojaServicio = (customStyles) => {
     const [asignaciones, setAsignaciones] = useState({
         nombreCorporacion: "",
         nombre: "",
-        unidad: "",
+        //unidad: "",
         nombreZonasRegiones: "",
         //rfsi: "",
     });
@@ -160,12 +161,13 @@ export const FormHojaServicio = (customStyles) => {
                     ['serie']: response.data[0].serie,
                     ['inventario_segpub']: response.data[0].inventario_segpub,
                     ['fk_idasignacion_ur']: response.data[0].idasignacion,
-                    ['serie_bateria']: response.data[0].serie_bateria,
+                    ['serie_bateria']: (response.data[0]?.serie_bateria== undefined)? "" : response.data[0].serie_bateria,
                     // ['inventario_segpub_bateria']: response.data[0].inventario_sp_bateria,
-                    ['serie_cargador']: response.data[0].serie_cargador,
+                    ['serie_cargador']: (response.data[0]?.serie_cargador == undefined)? "" : response.data[0].serie_cargador,
                     // ['inventario_segpub_cargador']: response.data[0].inventario_segpub_cargador,
-                    ['serie_gps']: response.data[0].serie_gps,
+                    ['serie_gps']: (response.data[0]?.serie_gps == undefined)? "" : response.data[0].serie_gps,
                     // ['inventario_segpub_gps']: response.data[0].inventario_segpub_gps,
+                    ['unidad']:(response.data[0]?.unidad == undefined )? "" : response.data[0].unidad
                 })
                 // console.log(response.data[0].idasignacion)
             }).catch(error => {
@@ -307,7 +309,7 @@ export const FormHojaServicio = (customStyles) => {
         }
       `,
       );
-
+      console.log(formValues)
     const onSubmit = async (event) => {
         //console.log(event)
         event.preventDefault();
@@ -377,12 +379,15 @@ export const FormHojaServicio = (customStyles) => {
                                                                     ['tipo']: "",
                                                                     ['serie']: "",
                                                                     ['inventario_segpub']: "",
+                                                                    ['serie_cargador']: "",
+                                                                    ['serie_bateria']: "",
+                                                                    ['serie_gps']: "",
                                                                 });
                                                                 setAsignaciones({
                                                                     ...asignaciones,
                                                                     ["nombreCorporacion"]:newFormValues.nombreCorporacion,
                                                                     ["nombre"]: newFormValues.nombrePuesto,
-                                                                    ["unidad"]: "",
+                                                                    //["unidad"]: "",
                                                                     ["nombreZonasRegiones"]: "",
                                                                    
                                                                 });
@@ -418,12 +423,15 @@ export const FormHojaServicio = (customStyles) => {
                                                                     ['tipo']: "",
                                                                     ['serie']: "",
                                                                     ['inventario_segpub']: "",
+                                                                    ['serie_cargador']: "",
+                                                                    ['serie_bateria']: "",
+                                                                    ['serie_gps']: "",
                                                                 });
                                                                 setAsignaciones({
                                                                     ...asignaciones,
                                                                     ["nombreCorporacion"]:newFormValues.nombreCorporacion,
                                                                     ["nombre"]: newFormValues.nombrePuesto,
-                                                                    ["unidad"]: "",
+                                                                    //["unidad"]: "",
                                                                     ["nombreZonasRegiones"]: "",
                                                                    
                                                                 })
@@ -456,7 +464,7 @@ export const FormHojaServicio = (customStyles) => {
                                                         label="Unidad"
                                                         variant="outlined"
                                                         value={
-                                                            asignaciones.unidad
+                                                            formValues.unidad
                                                         }
                                                         InputLabelProps={{
                                                             shrink: true,
@@ -513,10 +521,10 @@ export const FormHojaServicio = (customStyles) => {
                                                         type="text"
                                                         id="cargo-input"
                                                         name="nombre"
-                                                        label="Cargo"
+                                                        label="Puesto"
                                                         variant="outlined"
                                                         value={
-                                                            asignaciones.nombre
+                                                            asignaciones.nombrePuesto
                                                         }
                                                         InputLabelProps={{
                                                             shrink: true,
@@ -548,7 +556,7 @@ export const FormHojaServicio = (customStyles) => {
                                                             value={formValues}
                                                             inputValue={inputValue2}
                                                             onChange={(event, newFormValues2) => {
-                                                                //console.log(newFormValues2)
+                                                                console.log(newFormValues2)
                                                                 setFormValues({
                                                                     ...formValues,
                                                                     ['rfsi']: newFormValues2.rfsi,
@@ -559,7 +567,7 @@ export const FormHojaServicio = (customStyles) => {
                                                                 });
                                                                 //setRadioRfsi({
                                                                 //    ...radioRfsi,
-                                                                //   
+                                                                //
                                                                 //})
                                                             }}
                                                             onInputChange={(e, newInputValue2) => {
@@ -584,6 +592,7 @@ export const FormHojaServicio = (customStyles) => {
                                                                     ...formValues,
                                                                     ['rfsi']: newFormValues2.rfsi,
                                                                     ['fk_idasignacion_ur']: newFormValues2.fk_idasignacion_ur,
+                                                                    
                                                                 })
                                                                 //setFormValues({
                                                                 //    ...formValues,
@@ -614,11 +623,14 @@ export const FormHojaServicio = (customStyles) => {
                                                         label="Tipo"
                                                         variant="outlined"
                                                         value={
+                                                            
                                                             formValues.tipo
+                                                            
                                                         }
                                                         InputLabelProps={{
                                                             shrink: true,
                                                         }}
+                                                        
                                                     // onChange={handleInputChange} 
                                                     />
                                                 </Grid>
