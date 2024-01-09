@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import { CrearPdf } from './CrearPdf';
 import radioApi from "../../../api/radioApi";
 import Swal from "sweetalert2";
+import { FormHojaServicioRfsi } from "../../components/formUtilidades/FormHojaServicioRfsi";
 // import { render } from "react-dom";
 
 
@@ -24,17 +25,19 @@ const colorDone=()=>{
   return <Done color='success'/>
 }
   export const HojaServicios=()=> {
-  const { events, setActiveEvent, startLoadingEvents,deleteEvent,user } = useHojaServicioStore();
+  const { events, setActiveEvent, startLoadingEvents,deleteEvent,user,activeEvent, startSavingEvent } = useHojaServicioStore();
   const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, disableForm }=useModalHook();
   const [state, setState] =useState([]);
   const [abrirPdf, setAbrirPdf]= useState(false);
+  const [nuevoPorRfsi, setNuevoPorRfsi]= useState(false);
   const [imprimir, setImprimir]= useState({});
   const [configReport, setConfigReport]= useState({});
-  const [folioNew, setFolioNew]= useState(0);
+  const [folioNew, setFolioNew]= useState({});
 
   const [hServicio, setHServicio] = useState({})
 
-    
+  
+
   useEffect(() => {
     startLoadingEvents()
   }, [])
@@ -45,14 +48,57 @@ const colorDone=()=>{
   let primeraFecha = `${events[0]?.['createdAt']}`;
   let primerFolio = `${events[0]?.['folio']}`;
   const newRow =()=>{ 
-      //console.log( events[0].createdAt)
+    startLoadingEvents();
+     radioApi.get(`/hojasservicios`).
+           then((response) => {
+             setFolioNew(response.data)
+            //  console.log(response.data);
+            return response.data
+           });
       primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
-      primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
+      // primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
+      primerFolio== "undefined"? folio = 1 : folio= folioNew[0].folio;
       anio !== anioActual ? newFolio=1 : newFolio = folio+1   
       // console.log(newFolio)
       // console.log(anio)
       // console.log(anioActual)
-
+    setActiveEvent({
+      fecha_servicio: fecha,
+      fk_idasignacion_ur: '',
+      servicios: null,
+      descripcion: '',
+      entrego_equipo: false,
+      fecha_entrega: null,
+      fk_supervisortec: '',
+      usuario_servicio: '',
+      usuario_entrega: '',
+      fk_tecnico_entrega: null,
+      estatus: 1,
+      folio: newFolio,
+      foto1:"",
+      foto2:"",
+    })
+    setNuevoPorRfsi(false)
+    // startSavingEvent(datoNuevo)
+    OpenModal();
+    setAbrirPdf(false);
+  }
+  
+  const newRow2 =()=>{ 
+    startLoadingEvents();
+     radioApi.get(`/hojasservicios`).
+           then((response) => {
+             setFolioNew(response.data)
+            //  console.log(response.data);
+            return response.data
+           });
+      primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
+      // primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
+      primerFolio== "undefined"? folio = 1 : folio= folioNew[0].folio;
+      anio !== anioActual ? newFolio=1 : newFolio = folio+1   
+      // console.log(newFolio)
+      // console.log(anio)
+      // console.log(anioActual)
     setActiveEvent({
       fecha_servicio: fecha,
       fk_idasignacion_ur: '',
@@ -70,11 +116,17 @@ const colorDone=()=>{
       foto2:"",
     })
     
+    // startSavingEvent(datoNuevo)
+    setNuevoPorRfsi(true)
     OpenModal();
     setAbrirPdf(false);
-
   }
-  
+useEffect(() => {
+    radioApi.get(`/hojasservicios`).
+          then((response) => {
+            setFolioNew(response.data);
+          });
+      }, []);
 
   useEffect(() => {
     radioApi.get(`/configreportes/estatus`).
@@ -82,6 +134,7 @@ const colorDone=()=>{
             setConfigReport(response.data);
           });
       }, []);
+ 
 
   //    // console.log(configReport.length);
   //     useEffect(() => {
@@ -115,15 +168,17 @@ const colorDone=()=>{
   
 
   const mostrarPdf = ( event) =>  {
+    setNuevoPorRfsi(false)
     setAbrirPdf(true);
     OpenModal();
 }
 
   const onSelect = ( event ) =>  {
-    // console.log(event.row)
+    console.log(event.row)
     setActiveEvent( event.row );
     setImprimir(event.row);
     setHServicio(event.row );
+    
   }
 
 
@@ -215,12 +270,15 @@ const columns = [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-      { abrirPdf ===true?<CrearPdf datoHoja={hServicio} isCartaFijo={false} formato={configReport} />: "" }
-      { abrirPdf ===false? <FormHojaServicio />:"" }
+      { abrirPdf ===true & nuevoPorRfsi === false?<CrearPdf datoHoja={hServicio} isCartaFijo={false} formato={configReport} />: "" }
+      { abrirPdf ===false & nuevoPorRfsi === false ? <FormHojaServicio />:nuevoPorRfsi === true?<FormHojaServicioRfsi/>:"" }
         {/* <FormHojaServicio/> */}
         <Stack direction="row" spacing={1} marginBottom={2}>
                 <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo
+                </Button>
+                <Button onClick={newRow2} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
+                    Nuevo por RFSI
                 </Button>
             </Stack>
             <ThemeProvider theme={theme}>

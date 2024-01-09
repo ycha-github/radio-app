@@ -30,13 +30,14 @@ const MenuProps = {
   },
 };
 
-export const FormHojaServicio = (customStyles) => {
+export const FormHojaServicioRfsi = (customStyles) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const { CloseModal, isActualizar, mostrarGuardar, isVer } = useModalHook();
     const { activeEvent, startSavingEvent,subirImagen,subirImagen2 } = useHojaServicioStore();
 
     const [usuarios, setUsuarios] = useState([0]);
+    const [rfsib, setRfsib] = useState([0]);
     const [supervisores, setSupervisores] = useState([0]);
     const [tecnicos, setTecnicos] = useState([0]);
     const [inputValue, setInputValue] = useState("");
@@ -119,6 +120,15 @@ console.log(activeEvent)
                 //console.log(error);
             });
     }
+    const selectRfsi = async () => {
+        await radioApi.get(`/asig_usuarios`).
+            then((response) => {
+                setRfsib(response.data);
+                //console.log(response.data);
+            }).catch(error => {
+                //console.log(error);
+            });
+    }
 
     const selectSupervisores = async () => {
         await radioApi.get(`/usuarios/supervisores/${8}`).
@@ -151,14 +161,16 @@ console.log(activeEvent)
                 console.log(error);
             });
     }
-    const selectAsignacionesPorRfsi = (rfsi, usuarioBuscar) => {
+    const selectAsignacionesPorSoloRfsi = (rfsi) => {
         //console.log(rfsi)
         //console.log(usuarioBuscar)
-        radioApi.get(`/asig_usuarios/radio/${rfsi}/${usuarioBuscar}`).
+        radioApi.get(`/asig_usuarios/radio/${rfsi}`).
             then((response) => {
+                console.log(response.data)
                 setFormValues({
                     ...formValues,
                     ['tipo']: response.data[0].tipo,
+                    ['nombre_completo']: response.data[0].nombre_completo,
                     ['serie']: response.data[0].serie,
                     ['inventario_interno']: response.data[0].inventario_interno,
                     ['fk_idasignacion_ur']: response.data[0].idasignacion,
@@ -168,7 +180,9 @@ console.log(activeEvent)
                     // ['inventario_segpub_cargador']: response.data[0].inventario_segpub_cargador,
                     ['serie_gps']: (response.data[0]?.serie_gps == undefined)? "" : response.data[0].serie_gps,
                     // ['inventario_segpub_gps']: response.data[0].inventario_segpub_gps,
-                    ['unidad']:(response.data[0]?.unidad == undefined )? "" : response.data[0].unidad
+                    ['unidad']:response.data[0].unidad,
+                    ['nombreCorporacion']: response.data[0].nombreCorporacion,
+                    ['nombrePuesto']:response.data[0].nombrePuesto
                 })
                 // console.log(response.data[0].idasignacion)
             }).catch(error => {
@@ -177,6 +191,7 @@ console.log(activeEvent)
     }
 
     useEffect(() => {
+        selectRfsi();
         selectUsuarios();
         selectSupervisores();
         selectTecnicos();
@@ -337,7 +352,7 @@ console.log(activeEvent)
         <>
             <ModalRadio >
                 <Box sx={{ ...customStyles, maxWidth: '900px' }}>
-                    <Typography variant='h5' color={'secondary'} sx={{ pl: 4 }}> {isActualizar ? 'Actualizar Hoja de Servicios' : 'Nueva Hoja de Servicios'}</Typography>
+                    <Typography variant='h5' color={'secondary'} sx={{ pl: 4 }}> {isActualizar ? 'Actualizar Hoja de Servicios' : 'Nueva Hoja de Servicios por RFSI'}</Typography>
                     <Box overflow={'scroll'} maxHeight={650} sx={{ border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 1, mb: 1, mt: 2, pl: 1 }} >
                         <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> CENTRO DE MANDO Y COMUNICACIONES C4 </b> </Typography>
                         <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> DIRECCIÓN TÉCNICA </b> </Typography>
@@ -358,7 +373,7 @@ console.log(activeEvent)
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                                {isActualizar ? ( 
+                                                {/* {isActualizar ? ( 
                                                     <Grid item xs={6}>
                                                         <Autocomplete
                                                             disabled={isVer}
@@ -457,7 +472,26 @@ console.log(activeEvent)
                                                             renderInput={(params) => <TextField  {...params} variant="outlined" label="Usuario" />}
                                                         />
                                                     </Grid>
-                                                )}
+                                                )} */}
+                                                 <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={true}
+                                                        // size='normal'
+                                                        sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
+                                                        type="text"
+                                                        id="nombre-input"
+                                                        name="Nombre"
+                                                        label="Nombre"
+                                                        variant="outlined"
+                                                        value={
+                                                            formValues.nombre_completo
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    // onChange={handleInputChange} 
+                                                    />
+                                                </Grid>
                                                 <Grid item xs={6}>
                                                     <TextField
                                                         disabled={true}
@@ -489,7 +523,7 @@ console.log(activeEvent)
                                                         label="Corporación"
                                                         variant="outlined"
                                                         value={
-                                                            asignaciones.nombreCorporacion
+                                                            formValues.nombreCorporacion
                                                         }
                                                         InputLabelProps={{
                                                             shrink: true,
@@ -529,7 +563,7 @@ console.log(activeEvent)
                                                         label="Puesto"
                                                         variant="outlined"
                                                         value={
-                                                            asignaciones.nombrePuesto
+                                                            formValues.nombrePuesto
                                                         }
                                                         InputLabelProps={{
                                                             shrink: true,
@@ -556,8 +590,8 @@ console.log(activeEvent)
                                                             sx={{ width: 390, mb: 1 }}
                                                             id="rfsi-input"
                                                             //getOptionLabel={(usuarios) => usuarios.nombre || ""}
-                                                            options={rfsiBuscar}
-                                                            getOptionLabel={(rfsiBuscar) => rfsiBuscar.rfsi || ""}
+                                                            options={rfsib}
+                                                            getOptionLabel={(rfsib) => rfsib.rfsi || ""}
                                                             value={formValues}
                                                             inputValue={inputValue2}
                                                             onChange={(event, newFormValues2) => {
@@ -583,7 +617,7 @@ console.log(activeEvent)
                                                                 setInputValue2(
                                                                     newInputValue2
                                                                 )
-                                                                    selectAsignacionesPorRfsi(newInputValue2,inputValue)
+                                                                    selectAsignacionesPorSoloRfsi(newInputValue2)
                                                                 }}
                                                                 
                                                                 
@@ -596,9 +630,9 @@ console.log(activeEvent)
                                                             sx={{ width: 390, mb: 1 }}
                                                             id="rfsi-input"
                                                             name="rfsi"
-                                                            options={rfsiBuscar}
+                                                            options={rfsib}
                                                             clearOnBlur={true}
-                                                            getOptionLabel={(rfsiBuscar) => rfsiBuscar.rfsi || ""}
+                                                            getOptionLabel={(rfsib) => rfsib.rfsi || ""}
                                                             onChange={(event, newFormValues2) => {
                                                                 //console.log(newFormValues2);
                                                                 setFormValues({
@@ -621,7 +655,7 @@ console.log(activeEvent)
                                                                 setInputValue2(
                                                                     newInputValue2
                                                                 )
-                                                                selectAsignacionesPorRfsi(newInputValue2,inputValue)
+                                                                selectAsignacionesPorSoloRfsi(newInputValue2)
                                                             }}
                                                             renderInput={(params) => <TextField  {...params} variant="outlined" label="RFSI" />}
                                                         />

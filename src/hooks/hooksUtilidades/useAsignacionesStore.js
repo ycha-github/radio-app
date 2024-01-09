@@ -40,6 +40,7 @@ export const useAsignacionesStore= () => {
 
     const filtrarAccesorio=async(zonasEvent)=>{
       try {
+        
       const {data} = await  radioApi.get(`/accesorios/filtrado/${zonasEvent}`);
       dispatch(onFiltrar(data));
     } catch (error) {

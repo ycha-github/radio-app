@@ -282,14 +282,14 @@ export const ImprimirHServicio = ({datos, formato}) => {
                         <View style={{...styles.tableCol, width: '50%' }}> 
                             <View style={styles.tableCell}>
                                 <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                    Inventario SSyPC: 
+                                    Inventario Interno: 
                                 </Text>
                             </View>
                         </View>
                         <View style={{...styles.tableCol, width: '50%' }}> 
                             <View style={styles.tableCell}>
                                 <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                    {datos.inventario_segpub}
+                                    {datos.inventario_interno}
                                 </Text>
                             </View>
                         </View>
@@ -320,7 +320,7 @@ export const ImprimirHServicio = ({datos, formato}) => {
                                     <View style={{...styles.tableCol, width: '40%' }}> 
                                         <View style={styles.tableCell}>
                                             <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                                Inventario SSyPC
+                                                Inventario Interno
                                             </Text>
                                         </View>
                                     </View>
@@ -346,7 +346,7 @@ export const ImprimirHServicio = ({datos, formato}) => {
                                             <View style={{...styles.tableCol, width: '40%' }}> 
                                                 <View style={styles.tableCell}>
                                                     <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                                        {datos.inventario_sp_bateria}
+                                                        {datos.inventario_int_bateria}
                                                     </Text>
                                                 </View>
                                             </View>
@@ -369,7 +369,7 @@ export const ImprimirHServicio = ({datos, formato}) => {
                                             <View style={{...styles.tableCol, width: '40%' }}> 
                                                 <View style={styles.tableCell}>
                                                     <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                                        {datos.inventario_segpub_cargador}
+                                                        {datos.inventario_int_cargador}
                                                     </Text>
                                                 </View>
                                             </View>
@@ -395,7 +395,7 @@ export const ImprimirHServicio = ({datos, formato}) => {
                                     <View style={{...styles.tableCol, width: '40%' }}> 
                                         <View style={styles.tableCell}>
                                             <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                                {datos.inventario_segpub_gps}
+                                                {datos.inventario_int_gps}
                                             </Text>
                                         </View>
                                     </View>

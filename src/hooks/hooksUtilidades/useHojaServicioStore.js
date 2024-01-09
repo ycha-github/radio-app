@@ -46,12 +46,14 @@ let foto1;
        resolve();
      },3500)
    });
-console.log(foto1)
-console.log(foto2)
+//console.log(foto1)
+//console.log(foto2)
   const startSavingEvent =async(zonasEvent)=>{
     // promesa.then(()=>{
+      console.log(zonasEvent)
     //TODO: Update event
     if(zonasEvent.idhojaservicios){
+      
       //Actualizando
         const {data}= await promesa.then(()=>{ return radioApi.put(`/hojasservicios/${zonasEvent.idhojaservicios}`,{...zonasEvent, fk_foto1:foto1, fk_foto2:foto2})});
         dispatch(onUpdateEvent({...zonasEvent, user}));

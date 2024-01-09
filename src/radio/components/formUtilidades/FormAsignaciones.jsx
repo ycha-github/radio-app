@@ -1,4 +1,4 @@
-import { Autocomplete, Box,Stack, Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box,Stack, Button, Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Select, TextField, Typography, Divider } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { ModalRadio } from '../ModalRadio';
 import { useModalHook } from '../../../hooks/useModalHook';
@@ -6,7 +6,7 @@ import { useAsignacionesStore } from '../../../hooks/hooksUtilidades/useAsignaci
 import axios from 'axios';
 import { radioApi } from '../../../api';
 
-export const FormAsignaciones = ({usuario, radio}, customStyles) => {
+export const FormAsignaciones = ({usuario, radio, datoClick}, customStyles) => {
 
     const { CloseModal, isActualizar, mostrarGuardar,isVer } = useModalHook();
     const { activeEvent, startSavingEvent, cambiarSue, filtrarAccesorio, accesoriosFiltrado,filtrarAccesorioBateria,accesoriosFiltradoBateria,filtrarAccesorioGps,accesoriosFiltradoGps } = useAsignacionesStore();
@@ -50,9 +50,10 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
         }
     }, [activeEvent]);
 
-    useEffect(() => {
-        accesoriosFiltrado
-    }, [accesoriosFiltrado])
+    // console.log(datoClick);
+    // useEffect(() => {
+    //     accesoriosFiltrado
+    // }, [accesoriosFiltrado])
 
     useEffect(() => {
         radioApi.get('/usuarios').
@@ -224,7 +225,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 name="fk_accesorio_bateria"
                                     value={formValues}
                                     disabled={isVer}
-                                    onClick={filtrarAccesorioBateria('Bateria')}
+                                    onClick={datoClick == true?filtrarAccesorioBateria('Bateria'):""}
                                     sx={{ width: 300, mb:1 }}
                                 onChange={(event, newFormValues) => {
                                     // console.log(newFormValues);
@@ -258,7 +259,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                             (<Grid item xs={6}>
                                 <Autocomplete
                                         name="fk_accesorio_bateria"
-                                        onClick={filtrarAccesorioBateria('Bateria')}
+                                        onClick={datoClick==true? filtrarAccesorioBateria('Bateria'): ""}
                                         options={accesoriosFiltradoBateria}
                                         getOptionLabel={(accesoriosFiltradoBateria) => accesoriosFiltradoBateria.serie_bateria || ""}
                                         sx={{ width: 300, mb:1 }}
@@ -279,7 +280,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 name="fk_accesorio_cargador"
                                     value={formValues}
                                     disabled={isVer}
-                                    onClick={filtrarAccesorio('Cargador')}
+                                    onClick={datoClick== true? filtrarAccesorio('Cargador'): ""}
                                     sx={{ width: 300, mb:1 }}
                                 onChange={(event, newFormValues3) => {
                                     // console.log(newFormValues3.serie_cargador);
@@ -314,7 +315,7 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 <Autocomplete
                                         name='fk_accesorio_cargador'
                                         options={accesoriosFiltrado}
-                                        onClick={filtrarAccesorio('Cargador')}
+                                        onClick={datoClick== true? filtrarAccesorio('Cargador'): ""}
                                         getOptionLabel={(accesoriosFiltrado) => accesoriosFiltrado.serie_cargador || ""}
                                         sx={{ width: 300, mb:1 }}
                                         onChange={(event, newFormValues) => {
@@ -339,13 +340,40 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 />
                                 </Grid>)
                             }
+                            {isVer?(<Grid item xs={6} >
+                                <TextField
+                                    id="rfsi"
+                                    sx={{ border: 'none', mb:1,  width: 300 }}
+                                    type="text"
+                                    name="rfsi"
+                                    disabled={isVer}
+                                    color='secondary'
+                                    label="Inventario Interno Bateria"
+                                    variant="outlined"
+                                    value={formValues.inventarioSpBateria}
+                                    onChange={handleInputChange} />
+                            </Grid >): ""}
+                            {isVer? (<Grid item xs={6} >
+                                 <TextField
+                                     id="rfsi"
+                                     sx={{ border: 'none', mb:1,  width: 300 }}
+                                     type="text"
+                                     name="rfsi"
+                                     disabled={isVer}
+                                     color='secondary'
+                                     label="Inventario Interno Cargador"
+                                     variant="outlined"
+                                     value={formValues.inventarioSpCargador}
+                                     onChange={handleInputChange} />
+                             </Grid >):
+                             ""}
                             {isActualizar?
                         (<Grid item xs={6}>
                             <Autocomplete
                                 name="fk_accesorio_gps"
                                 disabled={isVer}
                                     value={formValues}
-                                    onClick={filtrarAccesorioGps('Gps')}
+                                    onClick={datoClick==true? filtrarAccesorioGps('Gps'):""}
                                     sx={{ width: 300, mb:1 }}
                                 onChange={(event, newFormValues4) => {
                                     setFormValues({
@@ -372,13 +400,13 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                     //    //console.log(option.num_serie);
                                     //    //console.log(value);
                                     //}}
-                                    renderInput={(params) => <TextField  {...params} variant="outlined" label="Gps" />}       
+                                    renderInput={(params) => <TextField  {...params} variant="outlined" label="Gps" />}
                             />
                             </Grid>):
                             (<Grid item xs={6}>
                                 <Autocomplete
                                         name="fk_accesorio_gps"
-                                        onClick={filtrarAccesorioGps('Gps')}
+                                        onClick={datoClick== true? filtrarAccesorioGps('Gps'): ""}
                                         options={accesoriosFiltradoGps}
                                         getOptionLabel={(accesoriosFiltradoGps) => accesoriosFiltradoGps.serie_gps || ""}
                                         sx={{ width: 300, mb:1 }}
@@ -393,6 +421,26 @@ export const FormAsignaciones = ({usuario, radio}, customStyles) => {
                                 </Grid>)
                             }
                             
+                            {isVer?(<Grid item xs={6} >
+                                        <Divider
+                                             sx={{ border:"0px", mb:1, width: 300 }}
+                                            />
+                                    </Grid >): ""}
+                            
+                                    {isVer?(<Grid item xs={6} >
+                                        <TextField
+                                            id="rfsi"
+                                            
+                                            sx={{ border: 'none', mb:1,  width: 300 }}
+                                            type="text"
+                                            name="rfsi"
+                                            disabled={isVer}
+                                            color='secondary'
+                                            label="Inventario Interno GPS"
+                                            variant="outlined"
+                                            value={formValues.inventarioSpGps}
+                                            onChange={handleInputChange} />
+                                    </Grid >): ""}
                         <Grid item xs={3}>
                             <FormControlLabel
                                 control={

@@ -48,10 +48,12 @@ const MenuProps = {
   const [state, setState] =useState([]);
  const [abrirPdf, setAbrirPdf]= useState(false);
  const [abrirPdfReporte, setAbrirPdfReporte]= useState(false);
+ const [onclick1, setOnclick1]= useState(false);
  const [imprimir, setImprimir]= useState({});
  const [buscarCorporaciones, setBuscarCorporaciones] = useState([])
  const [enviarCorporaciones, setEnviarCorporaciones] = useState([])
  const [corporacionesArray, setCorporacionesArray] = useState([])
+//  const [arregloCorp, setArregloCorp] = useState([])
  
   const [configReport, setConfigReport] = useState({})
 
@@ -85,6 +87,7 @@ const MenuProps = {
        updatedAt: "",
     })
     OpenModal();
+    setOnclick1(true);
     setAbrirPdf(false);
     setAbrirPdfReporte(false);
     //navigate('../asignaciones');
@@ -97,6 +100,8 @@ const MenuProps = {
     setBuscarCorporaciones(response.data);
   });
  }, []);
+
+//  console.log(buscarCorporaciones[1]?.nombreCorporacion)
 
     useEffect(() => {
     radioApi.get(`/configreportes/estatus`).
@@ -116,6 +121,7 @@ const MenuProps = {
   const cambiar = ( ) =>  {
     setAbrirPdf(false);
     setAbrirPdfReporte(false);
+    setOnclick1(true);
     OpenModal();
     mostrarActualizar();
   }
@@ -130,7 +136,7 @@ const MenuProps = {
         typeof value === 'string' ? value.split(', ') : value,
         );
         setEnviarCorporaciones([`${value}`]);
-        // console.log(value)
+      // console.log(value)
       };
       // console.log(corporacionesArray)
   
@@ -141,7 +147,18 @@ const MenuProps = {
     OpenModal();
     mostrarActualizar();
   }
-
+//   let f =[]
+// const formarArrayCorp =()=>{
+// let s=[]
+//   for ( let i = 0; i < buscarCorporaciones.length; i++) {
+//     // console.log(buscarCorporaciones[i].nombreCorporacion);
+//     f.push(buscarCorporaciones[i]?.nombreCorporacion)
+//      s=f
+//     } 
+//     setArregloCorp(s)
+// }
+// //console.log(f);
+// console.log(arregloCorp);
 
   const mostrarPdf = ( event) =>  {
     setAbrirPdf(true);
@@ -156,6 +173,7 @@ const MenuProps = {
     setAbrirPdf(true);
     setAbrirPdfReporte(true);
     OpenModal();
+    // formarArrayCorp();
     //navigate('../mostrar-pdf');
     //setAbrirPdf(true);
     //return (imprimir)
@@ -256,7 +274,7 @@ const columns =  [
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
       {abrirPdf ===true && abrirPdfReporte===false ?<CrearPdf datos={imprimir} isCartaFijo={true} isReporte={false} formato={configReport} />: ""}
       {abrirPdf ===true && abrirPdfReporte===true ?<CrearPdf datos={events} isCartaFijo={false} isReporte={true} CorporacionesABuscar={corporacionesArray} formato={configReport} />: ""}
-      {abrirPdf ===false ? <FormAsignaciones />:""}
+      {abrirPdf ===false ? <FormAsignaciones datoClick={onclick1} />:""}
       {/* <FormAsignacionGeneral/> */}
       {/* {let printData = document.getElementById("datagrid1").innerHTML} */}
         <Stack direction="row" spacing={1} marginBottom={2}>
