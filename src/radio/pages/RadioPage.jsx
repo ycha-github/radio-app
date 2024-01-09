@@ -1,14 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
 import { FormHojaServicio } from '../components/formUtilidades/FormHojaServicio';
 import { RadioLayout } from '../layout/RadioLayout';
-import { Accesorios, Asignaciones, ConfigReportes, Corporaciones, HojaServicios, Marcas, PasswordUpdate,  Puestos, Radios, RecursoCompras, Roles, Servicios, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
+import { Accesorios, Asignaciones, ConfigReportes, Corporaciones, ConsultaPo, Consultas, HojaServicios, Marcas, PasswordUpdate,  Puestos, Radios, RecursoCompras, Roles, Servicios, Users, UsuariosRadios, Vehiculos, ZonasRegiones } from '../views';
 import { FormAsignaciones } from '../components/formUtilidades/FormAsignaciones';
 import { CrearPdf } from '../views/utilidades/CrearPdf';
 import { PDFViewer } from '@react-pdf/renderer';
 import { useAsignacionesStore } from '../../hooks/hooksUtilidades/useAsignacionesStore';
 import { useState } from 'react';
 import { useAuthStore } from '../../hooks';
-import { ConsultaPo } from '../views/utilidades/ConsultaPo';
+// import { ConsultaPo, Consultas } from '../views/utilidades';
+
 
 export const RadioPage = () => {
 
@@ -45,6 +46,7 @@ export const RadioPage = () => {
           <Route path="asignaciones" element={ user.rol===4 ? <ConsultaPo /> : <FormAsignaciones/> }/>
           <Route path="consulta-po" element={ user.rol===4 ? <ConsultaPo /> : < ConsultaPo /> }/>
           <Route path="hoja-servicio" element={ user.rol===4 ? <ConsultaPo /> : <HojaServicios /> }/>
+          <Route path="consultas" element={ user.rol===4 ? <ConsultaPo /> : <Consultas /> }/>
           <Route path="mostrar-pdf" element={ user.rol===4 ? <ConsultaPo /> : <CrearPdf datos= {activeEvent}/> }/>
           {/* <Route path="hoja-serviciof" element={ <FormHojaServicio /> }/> */}
           <Route path="config-reportes" element={user.rol=== 1 ? <ConfigReportes /> : <Asignaciones /> }/>

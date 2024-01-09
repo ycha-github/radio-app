@@ -144,7 +144,7 @@ export const FormHojaServicio = (customStyles) => {
         radioApi.get(`/asig_usuarios/usuarios/${nombre}`).
             then((response) => {
                 setAsignaciones({ ...response.data[0] });
-                setRfsiBuscar(response.data)
+                // setRfsiBuscar(response.data)
                 //console.log(response.data)
             }).catch(error => {
                 console.log(error);
@@ -155,6 +155,7 @@ export const FormHojaServicio = (customStyles) => {
         console.log(usuarioBuscar)
         radioApi.get(`/asig_usuarios/radio/${rfsi}/${usuarioBuscar}`).
             then((response) => {
+                console.log(response.data[0].idasignacion)
                 setFormValues({
                     ...formValues,
                     ['tipo']: response.data[0].tipo,
@@ -309,7 +310,7 @@ export const FormHojaServicio = (customStyles) => {
         }
       `,
       );
-      console.log(formValues)
+    //   console.log(formValues)
     const onSubmit = async (event) => {
         //console.log(event)
         event.preventDefault();
