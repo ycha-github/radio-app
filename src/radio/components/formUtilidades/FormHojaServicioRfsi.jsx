@@ -180,7 +180,7 @@ console.log(activeEvent)
                     // ['inventario_segpub_cargador']: response.data[0].inventario_segpub_cargador,
                     ['serie_gps']: (response.data[0]?.serie_gps == undefined)? "" : response.data[0].serie_gps,
                     // ['inventario_segpub_gps']: response.data[0].inventario_segpub_gps,
-                    ['unidad']:response.data[0].unidad,
+                    ['unidad']:(response.data[0]?.unidad == undefined )? "" : response.data[0].unidad,
                     ['nombreCorporacion']: response.data[0].nombreCorporacion,
                     ['nombrePuesto']:response.data[0].nombrePuesto
                 })
