@@ -285,7 +285,7 @@ const columns =  [
             Reporte por Corporación
           </Button>
           <FormControl sx={{ border: 'none', mb: 1, width: 600 }}>
-          <InputLabel id="demo-multiple-checkbox-label"  color={'secondary'} >Reporte corporaciones</InputLabel>
+          <InputLabel id="demo-multiple-checkbox-label" color={'secondary'} >Reporte corporaciones</InputLabel>
            <Select
              //disabled={isVer}
              labelId="demo-multiple-checkbox-label"

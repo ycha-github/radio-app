@@ -46,8 +46,8 @@ let foto1;
        resolve();
      },3500)
    });
-//console.log(foto1)
-//console.log(foto2)
+// console.log(foto1)
+// console.log(foto2)
   const startSavingEvent =async(zonasEvent)=>{
     // promesa.then(()=>{
       console.log(zonasEvent)

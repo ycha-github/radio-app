@@ -145,7 +145,7 @@ console.log(activeEvent)
         radioApi.get(`/asig_usuarios/usuarios/${nombre}`).
             then((response) => {
                 setAsignaciones({ ...response.data[0] });
-                setRfsiBuscar(response.data)
+                // setRfsiBuscar(response.data)
                 //console.log(response.data)
             }).catch(error => {
                 console.log(error);
@@ -156,6 +156,7 @@ console.log(activeEvent)
         //console.log(usuarioBuscar)
         radioApi.get(`/asig_usuarios/radio/${rfsi}/${usuarioBuscar}`).
             then((response) => {
+                console.log(response.data[0].idasignacion)
                 setFormValues({
                     ...formValues,
                     ['tipo']: response.data[0].tipo,

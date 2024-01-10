@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Collapse, IconButton, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { ArtTrack, Assignment, AssignmentIndRounded, DescriptionOutlined, ExpandLess, ExpandMore, ShoppingBagTwoTone } from '@mui/icons-material';
+import PlagiarismIcon from '@mui/icons-material/Plagiarism';
 
 export const MenuUtilidades = () => {
 
@@ -21,6 +22,11 @@ export const MenuUtilidades = () => {
       text: 'Hoja de servicio', 
       icon: <DescriptionOutlined color={ iconColorUti } />, 
       path: 'hoja-servicio',
+    },
+    {  
+      text: 'Consultas', 
+      icon: <PlagiarismIcon color={ iconColorUti } />, 
+      path: 'consultas',
     },
     //{  
     //  text: 'Historial de entradas', 
