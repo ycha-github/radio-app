@@ -1,51 +1,7 @@
-import { Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Text, View } from '@react-pdf/renderer';
 
-const styles = StyleSheet.create({
-        title: {
-        fontSize: 8,
-        textAlign: 'center',
-        fontFamily: 'Times-Roman',
-        margin: '0 0 0 0',
-        textDecoration: 'none'
-    },
-        section: {
-        margin: '3 50 0 50',
-        border: '0px none none',
-        padding: '2 0 2 0',
-    },
-        table: {
-        alignItems: 'flex-start',
-        border: '0px none none',
-        // border: '1px solid rgb(192, 192, 192)',
-        width: 350,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignContent: "stretch",
-        flexWrap: "nowrap",
-      }, 
-        tableRow: { 
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignContent: "stretch",
-        flexWrap: "nowrap",
-        alignItems: "stretch",
-      }, 
-        tableCol: { 
-        width: "20%",
-        alignSelf: 'flex-start',
-      },
-        tableCell: { 
-        flexGrow: 1,
-        flexShrink: 1,
-        flexBasis: "auto",
-        alignSelf: "stretch",
-        margin: '0 0 0 5',
-      }, 
-    });
 
-export const ServiciosPdf=({datos})=> {
+export const ServiciosPdf=({datos, styles})=> {
 
     return (
         <View style={{...styles.section, border: '1px solid rgb(192, 192, 192)' }}> 

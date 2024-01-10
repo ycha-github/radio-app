@@ -1,29 +1,6 @@
-import { Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Text, View } from '@react-pdf/renderer';
 
-const styles = StyleSheet.create({
-    tableSa: { 
-        display: "table", 
-        borderStyle: "solid", 
-        fontFamily: 'Times-Bold',
-      }, 
-      tableRowSa: { 
-        margin: "auto", 
-        flexDirection: "row" 
-      }, 
-      tableColSa: { 
-        width: "15%", 
-        borderStyle: "solid", 
-        border: '1px solid rgb(192, 192, 192)',
-      }, 
-      tableCellSa: { 
-        margin: "auto", 
-        marginTop: 5, 
-        fontSize: 8,
-      }
-});
-
-
-export const Satis=()=> {
+export const Satis=({styles})=> {
 
     return(
         <View style={styles.tableSa}>

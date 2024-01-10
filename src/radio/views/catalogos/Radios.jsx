@@ -42,7 +42,7 @@ export const Radios= () => {
       fecha_actualizacion :null,
       fecha_asignacion :null,
       observaciones :'',
-      fecha_recepcion :'',
+      fecha_recepcion :null,
       situacion: '',
       ubicacion: '',
       estatus :1,
