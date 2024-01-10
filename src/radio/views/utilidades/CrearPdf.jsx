@@ -5,10 +5,11 @@ import { ModalRadio } from '../../components/ModalRadio';
 import { CartaFijo } from './CartaFijo';
 import { ImprimirHServicio } from './ImprimirHServicio';
 import { ImpReporteCorp } from './ImpReporteCorp';
+import { DocumentoTarjeta } from './DocumetoTargeta';
 
 
 // Create Document Component
-export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,isReporte,CorporacionesABuscar},customStyles) => {
+export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,target,isReporte,CorporacionesABuscar},customStyles) => {
 
  return (
   <ModalRadio  >
@@ -20,6 +21,8 @@ export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,isReporte,Corporaci
     (<CartaFijo datos={datos} formato={formato} />) :
     isReporte ===true ?
     (<ImpReporteCorp datos={datos} formato={formato} CorporacionesABuscar={CorporacionesABuscar} />) :
+    target ===true ?
+    (<DocumentoTarjeta datos={datoHoja} formato={formato}/>):
     (<ImprimirHServicio datos={datoHoja} formato={formato} />) 
   }
   </PDFViewer>

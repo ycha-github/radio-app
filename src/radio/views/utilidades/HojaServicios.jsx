@@ -2,7 +2,7 @@ import  {useState , useEffect} from "react";
 // import { useNavigate } from 'react-router-dom';
 import { DataGrid, esES, GridActionsCellItem, GridToolbar, GridToolbarQuickFilter } from '@mui/x-data-grid'; 
 import { Box, IconButton,createTheme, Switch,ThemeProvider, Stack, Button, TextField } from '@mui/material';
-import { AddCircleOutlineOutlined, Close, Done, Edit, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, Article, ArticleOutlined, Close, Done, Edit, PrintOutlined, VisibilityOutlined } from '@mui/icons-material';
 import { useModalHook } from '../../../hooks/useModalHook';
 import { useHojaServicioStore } from '../../../hooks/hooksUtilidades/useHojaServicioStore';
 import { FormHojaServicio } from '../../components/formUtilidades/FormHojaServicio';
@@ -29,6 +29,7 @@ const colorDone=()=>{
   const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, disableForm }=useModalHook();
   const [state, setState] =useState([]);
   const [abrirPdf, setAbrirPdf]= useState(false);
+  const [isTargeta, setIsTargeta]= useState(false);
   const [nuevoPorRfsi, setNuevoPorRfsi]= useState(false);
   const [imprimir, setImprimir]= useState({});
   const [configReport, setConfigReport]= useState({});
@@ -170,6 +171,13 @@ useEffect(() => {
   const mostrarPdf = ( event) =>  {
     setNuevoPorRfsi(false)
     setAbrirPdf(true);
+    setIsTargeta(false);
+    OpenModal();
+}
+  const Targeta = ( event) =>  {
+    setNuevoPorRfsi(false)
+    setAbrirPdf(true);
+    setIsTargeta(true);
     OpenModal();
 }
 
@@ -224,13 +232,19 @@ const columns = [
     type: 'actions',
     headerClassName: "super",
     flex: 1,
-    minWidth: 190,
+    minWidth: 230,
     getActions: (evento) => [
       <GridActionsCellItem
         color='secondary'
         icon={<Edit />}
         label="Delete"
         onClick={ cambiar }
+      />,
+      <GridActionsCellItem
+        color='secondary'
+        icon={<ArticleOutlined />}
+        label="Delete"
+        onClick={ Targeta }
       />,
       <GridActionsCellItem 
         color='secondary'
@@ -270,13 +284,13 @@ const columns = [
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-      { abrirPdf ===true & nuevoPorRfsi === false?<CrearPdf datoHoja={hServicio} isCartaFijo={false} formato={configReport} />: "" }
+      { abrirPdf ===true & nuevoPorRfsi === false?<CrearPdf datoHoja={hServicio} isCartaFijo={false} target={isTargeta} formato={configReport} />: "" }
       { abrirPdf ===false & nuevoPorRfsi === false ? <FormHojaServicio />:nuevoPorRfsi === true?<FormHojaServicioRfsi/>:"" }
         {/* <FormHojaServicio/> */}
         <Stack direction="row" spacing={1} marginBottom={2}>
-                <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
+                {/* <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo
-                </Button>
+                </Button> */}
                 <Button onClick={newRow2} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo por RFSI
                 </Button>

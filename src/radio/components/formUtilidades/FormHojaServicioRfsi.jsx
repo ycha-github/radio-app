@@ -368,214 +368,7 @@ console.log(activeEvent)
                                 <Grid item xs={12} sx={{ textAlign: 'right' }} >
                                     <TextField variant='filled' value={!isActualizar ? 'Villahermosa, Tab. A ' + fechaActual : formValues.fecha_servicio === null ? 'Sin fecha de Servicio' :'Villahermosa, Tab. A ' + new Date(formValues.fecha_servicio.split('-').join('/')).toLocaleString('es-MX', options) } sx={{ width: 335, pb:2 }} />
                                 </Grid>
-                                <Box sx={{ width: 1850, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
-                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', pb:2 }} > Datos del Usuario </Typography>
-                                    <Stack noValidate spacing={3}>
-                                        <Grid container alignItems="center" justify="center" direction="column" >
-                                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                                {/* {isActualizar ? ( 
-                                                    <Grid item xs={6}>
-                                                        <Autocomplete
-                                                            disabled={isVer}
-                                                            sx={{ width: 400, mb: 1 }}
-                                                            id="usuarios_idusuarios-input"
-                                                            name="fk_idasignacion_ur"
-                                                            options={usuarios}
-                                                            autoComplete
-                                                            getOptionLabel={(usuarios) => usuarios.nombre + " " + usuarios.apellido_pat + " " + usuarios.apellido_mat || ""}     
-                                                            value={formValues}
-                                                            inputValue={inputValue}
-                                                            onChange={(event, newFormValues) => {
-
-                                                                setFormValues({
-                                                                    ...formValues,
-                                                                    //['fk_idasignacion_ur']: newFormValues.idusuarios,
-                                                                    ['nombre']: newFormValues.nombre,
-                                                                    ['apellido_pat']: newFormValues.apellido_pat,
-                                                                    ['apellido_mat']: newFormValues.apellido_mat,
-                                                                    ['tipo']: "",
-                                                                    ['serie']: "",
-                                                                    ['inventario_interno']: "",
-                                                                    ['serie_cargador']: "",
-                                                                    ['serie_bateria']: "",
-                                                                    ['serie_gps']: "",
-                                                                    ['unidad']: "",
-
-                                                                });
-                                                                setAsignaciones({
-                                                                    ...asignaciones,
-                                                                    ["nombreCorporacion"]:newFormValues.nombreCorporacion,
-                                                                    ["nombre"]: newFormValues.nombrePuesto,
-                                                                    //["unidad"]: "",
-                                                                    ["nombreZonasRegiones"]: "",
-                                                                   
-                                                                });
-                                                                setRadioRfsi({
-                                                                    ["tipo"]:"",
-                                                                    ["serie"]:"",
-                                                                    ["inventario_interno"]:"",
-                                                                });
-                                                                setInputValue2("");
-                                                            }}
-                                                            onInputChange={(e, newInputValue) => {
-                                                                
-                                                                setInputValue(newInputValue)
-                                                                selectAsignacionesPorUsuario(newInputValue)
-                                                                setUsuarioBuscar(newInputValue)
-                                                            }}
-                                                            renderInput={(params) => <TextField  {...params} variant="outlined" label="Usuario" />}
-                                                        />
-                                                       
-                                                    </Grid>
-                                                ) : (
-                                                    <Grid item xs={6}>
-                                                        <Autocomplete
-                                                            sx={{ width: 400, mb: 1 }}
-                                                            id="usuarios_idusuarios-input"
-                                                            name="fk_idasignacion_ur"
-                                                            options={usuarios}
-                                                            getOptionLabel={(usuarios) => usuarios.nombre + " " + usuarios.apellido_pat + " " + usuarios.apellido_mat || ""}
-                                                            onChange={(event, newFormValues) => {
-                                                                //console.log(newFormValues)
-                                                                setFormValues({
-                                                                    ...formValues,
-                                                                   // ['fk_idasignacion_ur']: newFormValues.idusuarios,
-                                                                    ['tipo']: "",
-                                                                    ['serie']: "",
-                                                                    ['inventario_interno']: "",
-                                                                    ['serie_cargador']: "",
-                                                                    ['serie_bateria']: "",
-                                                                    ['serie_gps']: "",
-                                                                    ['unidad']: "",
-                                                                });
-                                                                setAsignaciones({
-                                                                    ...asignaciones,
-                                                                    ["nombreCorporacion"]:newFormValues.nombreCorporacion,
-                                                                    ["nombre"]: newFormValues.nombrePuesto,
-                                                                    //["unidad"]: "",
-                                                                    ["nombreZonasRegiones"]: "",
-                                                                   
-                                                                })
-                                                                setRadioRfsi({
-                                                                    ["tipo"]:"",
-                                                                    ["serie"]:"",
-                                                                    ["inventario_interno"]:"",
-                                                                });
-                                                                setInputValue2("");
-                                                            }}
-                                                            onInputChange={(e, newInputValue) => {
-                                                               
-                                                                setInputValue(newInputValue)
-                                                                selectAsignacionesPorUsuario(newInputValue)
-                                                                setUsuarioBuscar(newInputValue)
-                                                            }}
-                                                            renderInput={(params) => <TextField  {...params} variant="outlined" label="Usuario" />}
-                                                        />
-                                                    </Grid>
-                                                )} */}
-                                                 <Grid item xs={6}>
-                                                    <TextField
-                                                        disabled={true}
-                                                        // size='normal'
-                                                        sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
-                                                        type="text"
-                                                        id="nombre-input"
-                                                        name="Nombre"
-                                                        label="Nombre"
-                                                        variant="outlined"
-                                                        value={
-                                                            formValues.nombre_completo
-                                                        }
-                                                        InputLabelProps={{
-                                                            shrink: true,
-                                                        }}
-                                                    // onChange={handleInputChange} 
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        disabled={true}
-                                                        // size='normal'
-                                                        sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
-                                                        type="text"
-                                                        id="unidad-input"
-                                                        name="unidad"
-                                                        label="Unidad"
-                                                        variant="outlined"
-                                                        value={
-                                                            formValues.unidad
-                                                        }
-                                                        InputLabelProps={{
-                                                            shrink: true,
-                                                        }}
-                                                    // onChange={handleInputChange} 
-                                                    />
-                                                </Grid>
-
-                                                <Grid item xs={12}>
-                                                    <TextField
-                                                        disabled={true}
-                                                        // size='normal'
-                                                        sx={{ border: 'none', mb: 1, width: 795, pr: 1 }}
-                                                        type="text"
-                                                        id="corporacion-input"
-                                                        name="nombreCorporacion"
-                                                        label="Corporación"
-                                                        variant="outlined"
-                                                        value={
-                                                            formValues.nombreCorporacion
-                                                        }
-                                                        InputLabelProps={{
-                                                            shrink: true,
-                                                        }}
-                                                    // value={formValues.ccp_carta}
-                                                    // onChange={handleInputChange} 
-                                                    />
-                                                </Grid>
-                                                {/* <Grid item xs={6}>
-                                                    <TextField
-                                                        disabled={true}
-                                                        // size='normal'
-                                                        sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
-                                                        type="text"
-                                                        id="zona_region-input"
-                                                        name="nombreZonasRegiones"
-                                                        label="Zona / Región"
-                                                        variant="outlined"
-                                                        value={
-                                                            asignaciones.nombreZonasRegiones
-                                                        }
-                                                        InputLabelProps={{
-                                                            shrink: true,
-                                                        }}
-                                                    // value={formValues.ccp_carta}
-                                                    // onChange={handleInputChange} 
-                                                    />
-                                                </Grid> */}
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        disabled={true}
-                                                        // size='normal'
-                                                        sx={{ border: 'none', mb: 1, width: 408, pr: 1 }}
-                                                        type="text"
-                                                        id="cargo-input"
-                                                        name="nombre"
-                                                        label="Puesto"
-                                                        variant="outlined"
-                                                        value={
-                                                            formValues.nombrePuesto
-                                                        }
-                                                        InputLabelProps={{
-                                                            shrink: true,
-                                                        }}
-                                                    // value={formValues.ccp_carta}
-                                                    // onChange={handleInputChange} 
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </Stack>
-                                </Box>
+                               
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
                                     <Typography sx={{ textAlign: 'center', fontSize: '16px', pb: 2 }} > Datos del Equipo </Typography>
 
@@ -782,6 +575,115 @@ console.log(activeEvent)
                                         </Grid>
                                     </Stack>
                                 </Box>
+                                <Box sx={{ width: 1850, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
+                                    <Typography sx={{ textAlign: 'center', fontSize: '16px', pb:2 }} > Datos del Usuario </Typography>
+                                    <Stack noValidate spacing={3}>
+                                        <Grid container alignItems="center" justify="center" direction="column" >
+                                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                                
+                                                 <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={true}
+                                                        // size='normal'
+                                                        sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
+                                                        type="text"
+                                                        id="nombre-input"
+                                                        name="Nombre"
+                                                        label="Nombre"
+                                                        variant="outlined"
+                                                        value={
+                                                            formValues.nombre_completo
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    // onChange={handleInputChange} 
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={true}
+                                                        // size='normal'
+                                                        sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
+                                                        type="text"
+                                                        id="unidad-input"
+                                                        name="unidad"
+                                                        label="Unidad"
+                                                        variant="outlined"
+                                                        value={
+                                                            formValues.unidad
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    // onChange={handleInputChange} 
+                                                    />
+                                                </Grid>
+
+                                                <Grid item xs={12}>
+                                                    <TextField
+                                                        disabled={true}
+                                                        // size='normal'
+                                                        sx={{ border: 'none', mb: 1, width: 795, pr: 1 }}
+                                                        type="text"
+                                                        id="corporacion-input"
+                                                        name="nombreCorporacion"
+                                                        label="Corporación"
+                                                        variant="outlined"
+                                                        value={
+                                                            formValues.nombreCorporacion
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    // value={formValues.ccp_carta}
+                                                    // onChange={handleInputChange} 
+                                                    />
+                                                </Grid>
+                                                {/* <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={true}
+                                                        // size='normal'
+                                                        sx={{ border: 'none', mb: 1, width: 380, pr: 1 }}
+                                                        type="text"
+                                                        id="zona_region-input"
+                                                        name="nombreZonasRegiones"
+                                                        label="Zona / Región"
+                                                        variant="outlined"
+                                                        value={
+                                                            asignaciones.nombreZonasRegiones
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    // value={formValues.ccp_carta}
+                                                    // onChange={handleInputChange} 
+                                                    />
+                                                </Grid> */}
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={true}
+                                                        // size='normal'
+                                                        sx={{ border: 'none', mb: 1, width: 408, pr: 1 }}
+                                                        type="text"
+                                                        id="cargo-input"
+                                                        name="nombre"
+                                                        label="Puesto"
+                                                        variant="outlined"
+                                                        value={
+                                                            formValues.nombrePuesto
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    // value={formValues.ccp_carta}
+                                                    // onChange={handleInputChange} 
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Stack>
+                                </Box>
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
                                     <Typography sx={{ textAlign: 'center', fontSize: '16px', pb:2 }} > Servicios </Typography>
                                     <Stack noValidate spacing={3}>
@@ -943,7 +845,7 @@ console.log(activeEvent)
                                         </Grid>
                                     </Stack>
                                 </Box>
-                                <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
+                               {isActualizar === true ? (<Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
                                     <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Fotos de Evidencia </Typography><br />
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
@@ -990,7 +892,7 @@ console.log(activeEvent)
                                                 }}
                                                value={formValues.foto1}
                                             />
-                                        </Box>
+                                        </Box> 
                         </Grid>
                         
                             <Grid item xs={6}>
@@ -1040,7 +942,7 @@ console.log(activeEvent)
                                 </Grid>
                                 </Grid>
                                     </Stack>
-                                </Box>
+                                </Box>):("")}
                                 {isActualizar == true?
                                 <Box sx={{ width: 1550, border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 2, mb: 2, mt: 2, pl: 1, pb: 1 }} >
                                     <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > Entrega de Equipo </Typography><br />
