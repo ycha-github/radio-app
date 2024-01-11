@@ -1,7 +1,7 @@
 import { Text, View} from '@react-pdf/renderer';
 
 
-export const DatosUsuario=({datos, styles})=> {
+export const DatosUsuario=({datos, styles, comprobante})=> {
 
     return (
         <View style={{...styles.section, border: '1px solid rgb(192, 192, 192)' }}> 
@@ -63,44 +63,46 @@ export const DatosUsuario=({datos, styles})=> {
             { datos.tipo !== 'Movil' ? '' : (
 
             <View style={styles.tableObjeto}> {/*   (Tabla absoluta, flotante ) Tabla de datos de usuario - unidad- zona/región    */}
-                <View style={{...styles.table, width: 150 }}> {/*    Tabla de datos de usuario - unidad- zona/región    */}
+                { comprobante===true ?
+                    <View style={{...styles.table, width: 80 }}> 
 
-                    {/* <View style={styles.tableRow}> 
-                        <View style={{...styles.tableCol, width: '50%' }}> 
-                            <View style={styles.tableCell}>
-                                <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                    Zona/Región:
-                                </Text>
+                        <View style={styles.tableRow}>
+                            <View style={{...styles.tableCol, width: '50%' }}> 
+                                <View style={styles.tableCell}>
+                                    <Text style={{ ...styles.title, textAlign: 'left' }}> 
+                                        Unidad:
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={{...styles.tableCol, width: '50%' }}> 
+                                <View style={styles.tableCell}>
+                                    <Text style={{ ...styles.title, textAlign: 'left' }}> 
+                                        {datos.unidad}
+                                    </Text>
+                                </View>
                             </View>
                         </View>
-                        <View style={{...styles.tableCol, width: '50%' }}> 
-                            <View style={styles.tableCell}>
-                                <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                    {datos.nombreZonasRegiones}
-                                </Text>
+                    </View> :
+                    <View style={{...styles.table, width: 150 }}> 
+                        <View style={styles.tableRow}>
+                            <View style={{...styles.tableCol, width: '50%' }}> 
+                                <View style={styles.tableCell}>
+                                    <Text style={{ ...styles.title, textAlign: 'left' }}> 
+                                        Unidad:
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={{...styles.tableCol, width: '50%' }}> 
+                                <View style={styles.tableCell}>
+                                    <Text style={{ ...styles.title, textAlign: 'left' }}> 
+                                        {datos.unidad}
+                                    </Text>
+                                </View>
                             </View>
                         </View>
-                    </View> */}
-
-                    <View style={styles.tableRow}>
-                        <View style={{...styles.tableCol, width: '50%' }}> 
-                            <View style={styles.tableCell}>
-                                <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                    Unidad:
-                                </Text>
-                            </View>
-                        </View>
-                        <View style={{...styles.tableCol, width: '50%' }}> 
-                            <View style={styles.tableCell}>
-                                <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                    {datos.unidad}
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-
-                </View> {/*    Cierre de Tabla de datos de usuario - unidad- zona/región    */}
-            </View>     /*   ( Cierre de Tabla absoluta, flotante ) Tabla de datos de usuario - unidad- zona/región    */
+                    </View> 
+                }
+            </View>    
             ) }
 
         </View>   
