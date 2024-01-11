@@ -281,12 +281,12 @@ const columns =  [
           <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
             Nuevo
           </Button>
-          <Button onClick={mostrarPdfReporteCorp} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
+          {/* <Button onClick={mostrarPdfReporteCorp} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
             Reporte por Corporación
           </Button>
           <FormControl sx={{ border: 'none', mb: 1, width: 600 }}>
-          <InputLabel id="demo-multiple-checkbox-label" color={'secondary'} >Reporte corporaciones</InputLabel>
-           <Select
+          <InputLabel id="demo-multiple-checkbox-label" color={'secondary'} >Reporte corporaciones</InputLabel> */}
+           {/* <Select
              //disabled={isVer}
              labelId="demo-multiple-checkbox-label"
              sx={{heigth:500}}
@@ -301,7 +301,7 @@ const columns =  [
              color={'secondary'}
            >
               {
-                buscarCorporaciones.map((service) => 
+                buscarCorporaciones.map((service) =>
                   { 
                     return <MenuItem key={service.idcorporaciones} value={service.nombreCorporacion} > 
                             <Checkbox  checked={ corporacionesArray.indexOf(service.nombreCorporacion) > - 1 } />
@@ -310,8 +310,8 @@ const columns =  [
                   }
                 )
               }  
-           </Select>
-           </FormControl>                                       
+           </Select> */}
+           {/* </FormControl> */}
         </Stack>
            
     <ThemeProvider theme={theme}>

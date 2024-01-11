@@ -21,7 +21,7 @@ let styles = StyleSheet.create({
       textDecoration: 'none'
     },
     section: {
-      margin: '15 30 0 30',
+      margin: '15 15 0 15',
       border: '0px none none',
       padding: '2 2 2 0',
     },
@@ -29,7 +29,7 @@ let styles = StyleSheet.create({
         alignItems: 'flex-start',
         border: '0px none none',
         // border: '1px solid rgb(192, 192, 192)',
-        width: 350,
+        width: 400,
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",

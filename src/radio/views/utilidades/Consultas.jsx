@@ -144,10 +144,10 @@ export const Consultas=()=> {
           </Grid>
           <Grid item sx={{ pl:5, pb:5}}>
             <FormControl sx={{color: 'rgb(78,54,122)'}} >
-              <FormLabel id="demo-controlled-radio-buttons-group" sx={{color: 'rgb(78,54,122)',fontWeight: 'bold', fontSize:'16px' }}  >
+              {/* <FormLabel id="demo-controlled-radio-buttons-group" sx={{color: 'rgb(78,54,122)',fontWeight: 'bold', fontSize:'16px' }}  >
                 Tipos de radios
-              </FormLabel>
-              <RadioGroup
+              </FormLabel> */}
+              {/* <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={value}
@@ -156,7 +156,7 @@ export const Consultas=()=> {
                 <FormControlLabel value="Movil" control={<Radio />} label="Móvil" />
                 <FormControlLabel value="Fijo" control={<Radio />} label="Fijo" />
                 <FormControlLabel value="Portatil" control={<Radio />} label="Portátil" />
-              </RadioGroup>
+              </RadioGroup> */}
             </FormControl>
           </Grid>
           <Grid item sx={{pl:5, pb:5}}>
@@ -165,7 +165,7 @@ export const Consultas=()=> {
           {/* {abrirPdf ===false ? <Consultas />:""} */}
             {/* <Button key="Corporacion" className="">Corporación</Button>
             <Button key="Usuario">Usuario</Button> */}
-            <nav>
+            {/* <nav>
               <ul>
                 <li key="Corporacion" onClick={mostrarPdfReporteCorp2}>
                   <span></span><span></span><span></span><span></span> Corporación <SearchIcon/>
@@ -174,7 +174,7 @@ export const Consultas=()=> {
                   <span></span><span></span><span></span><span></span> Usuario <SearchIcon/>
                 </li>
               </ul>
-            </nav>
+            </nav> */}
           </Grid>
         </Box>
       </Grid> 
