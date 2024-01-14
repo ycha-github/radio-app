@@ -35,7 +35,7 @@ export const FirmasEntrega=({datos, styles})=> {
                     <View style={{...styles.tableCol, width: '40%' }}> 
                         <View style={styles.tableCell}>
                             <Text style={styles.title}>  
-                                USUARIO
+                                TÉCNICO
                             </Text>
                         </View>
                     </View>
@@ -49,7 +49,7 @@ export const FirmasEntrega=({datos, styles})=> {
                     <View style={{...styles.tableCol, width: '40%' }}> 
                         <View style={styles.tableCell}>
                             <Text style={styles.title}> 
-                                TÉCNICO
+                                USUARIO
                             </Text>
                         </View>
                     </View>
@@ -59,7 +59,7 @@ export const FirmasEntrega=({datos, styles})=> {
                     <View style={{...styles.tableCol, width: '40%' }}> 
                         <View style={styles.tableCell}>
                             <Text style={{...styles.title, textDecoration: 'underline'}}> 
-                                {datos.usuario_entrega}
+                                { datos.nombreTecEntrega }
                             </Text>
                         </View>
                     </View>
@@ -73,7 +73,7 @@ export const FirmasEntrega=({datos, styles})=> {
                     <View style={{...styles.tableCol, width: '40%' }}> 
                         <View style={styles.tableCell}>
                             <Text style={{...styles.title, textDecoration: 'underline'}}>  
-                                { datos.nombreTecEntrega }
+                                {datos.usuario_entrega}
                             </Text>
                         </View>
                     </View>

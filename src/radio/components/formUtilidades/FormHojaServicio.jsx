@@ -808,9 +808,9 @@ console.log(activeEvent)
                                                         onChange={handleInputChange}
                                                         variant="outlined"
                                                         multiline
-                                                        label="Descripcion de las actividades"
+                                                        label="Descripcion de las actividadeskjkj"
                                                         rows={3}
-                                                        inputProps={{ maxLength: 250 }}
+                                                        InputProps={{ maxLength: 2000 }}
                                                     />
                                                 </Grid>
                                                 {/* <Grid item xs={6}>
@@ -1014,24 +1014,6 @@ console.log(activeEvent)
                                     <Stack noValidate spacing={3}>
                                         <Grid container alignItems="center" justify="center" direction="column" >
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                        disabled={isVer}
-                                                        sx={{ border: 'none', mb: 1, width: 380}}
-                                                        type="text"
-                                                        id="usuario_entrega-input"
-                                                        name="usuario_entrega"
-                                                        label="Usuario"
-                                                        variant="outlined"
-                                                        onChange={handleInputChange}
-                                                        value={
-                                                            formValues.usuario_entrega
-                                                        }
-                                                        InputLabelProps={{
-                                                            shrink: true,
-                                                        }}
-                                                    />
-                                                </Grid>
                                                 {isActualizar ? (
                                                     <Grid item xs={6}>
                                                         <Autocomplete
@@ -1081,6 +1063,24 @@ console.log(activeEvent)
                                                         />
                                                     </Grid>
                                                 )}
+                                                <Grid item xs={6}>
+                                                    <TextField
+                                                        disabled={isVer}
+                                                        sx={{ border: 'none', mb: 1, width: 380}}
+                                                        type="text"
+                                                        id="usuario_entrega-input"
+                                                        name="usuario_entrega"
+                                                        label="Usuario"
+                                                        variant="outlined"
+                                                        onChange={handleInputChange}
+                                                        value={
+                                                            formValues.usuario_entrega
+                                                        }
+                                                        InputLabelProps={{
+                                                            shrink: true,
+                                                        }}
+                                                    />
+                                                </Grid>
                                                 <Grid item={6}>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DateTimePicker

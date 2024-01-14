@@ -260,24 +260,24 @@ export const DatosEquipo=({datos, styles, comprobante})=> {
                             <View style={{...styles.table, width: 280 }}> {/*    Tabla de datos del equipo - series de accesorios  */}
 
                                 <View style={styles.tableRow}> 
-                                    <View style={{...styles.tableCol, width: '25%' }}> 
+                                    <View style={{...styles.tableCol, width: '20%' }}> 
                                         <View style={styles.tableCell}>
                                             <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                 {/* Accesorio */}
                                             </Text>
                                         </View>
                                     </View>
-                                    <View style={{...styles.tableCol, width: '35%' }}> 
+                                    <View style={{...styles.tableCol, width: '45%' }}> 
                                         <View style={styles.tableCell}>
                                             <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                 Serie
                                             </Text>
                                         </View>
                                     </View>
-                                    <View style={{...styles.tableCol, width: '40%' }}> 
+                                    <View style={{...styles.tableCol, width: '35%' }}> 
                                         <View style={styles.tableCell}>
                                             <Text style={{ ...styles.title, textAlign: 'left' }}> 
-                                                Inventario Interno
+                                                Inventario
                                             </Text>
                                         </View>
                                     </View>
@@ -286,21 +286,21 @@ export const DatosEquipo=({datos, styles, comprobante})=> {
                                 { datos.tipo === 'Movil' ? '' :  
                                     <View>
                                         <View style={styles.tableRow}> 
-                                            <View style={{...styles.tableCol, width: '25%' }}> 
+                                            <View style={{...styles.tableCol, width: '20%' }}> 
                                                 <View style={styles.tableCell}>
                                                     <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                         Bateria:
                                                     </Text>
                                                 </View>
                                             </View>
-                                            <View style={{...styles.tableCol, width: '35%' }}> 
+                                            <View style={{...styles.tableCol, width: '45%' }}> 
                                                 <View style={styles.tableCell}>
                                                     <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                         {datos.serie_bateria}
                                                     </Text>
                                                 </View>
                                             </View>
-                                            <View style={{...styles.tableCol, width: '40%' }}> 
+                                            <View style={{...styles.tableCol, width: '35%' }}> 
                                                 <View style={styles.tableCell}>
                                                     <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                         {datos.inventario_int_bateria}
@@ -309,21 +309,21 @@ export const DatosEquipo=({datos, styles, comprobante})=> {
                                             </View>
                                         </View>
                                         <View style={styles.tableRow}>
-                                            <View style={{...styles.tableCol, width: '25%' }}> 
+                                            <View style={{...styles.tableCol, width: '20%' }}> 
                                                 <View style={styles.tableCell}>
                                                     <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                         Cargador:
                                                     </Text>
                                                 </View>
                                             </View>
-                                            <View style={{...styles.tableCol, width: '35%' }}> 
+                                            <View style={{...styles.tableCol, width: '45%' }}> 
                                                 <View style={styles.tableCell}>
                                                     <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                         {datos.serie_cargador}
                                                     </Text>
                                                 </View>
                                             </View>
-                                            <View style={{...styles.tableCol, width: '40%' }}> 
+                                            <View style={{...styles.tableCol, width: '35%' }}> 
                                                 <View style={styles.tableCell}>
                                                     <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                         {datos.inventario_int_cargador}
@@ -335,21 +335,21 @@ export const DatosEquipo=({datos, styles, comprobante})=> {
                                 }
                                 { datos.tipo === 'Movil' ?  
                                 <View style={styles.tableRow}>
-                                    <View style={{...styles.tableCol, width: '25%' }}> 
+                                    <View style={{...styles.tableCol, width: '20%' }}> 
                                         <View style={styles.tableCell}>
                                             <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                 Gps:
                                             </Text>
                                         </View>
                                     </View>
-                                    <View style={{...styles.tableCol, width: '35%' }}> 
+                                    <View style={{...styles.tableCol, width: '45%' }}> 
                                         <View style={styles.tableCell}>
                                             <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                 {datos.serie_gps}
                                             </Text>
                                         </View>
                                     </View>
-                                    <View style={{...styles.tableCol, width: '40%' }}> 
+                                    <View style={{...styles.tableCol, width: '35%' }}> 
                                         <View style={styles.tableCell}>
                                             <Text style={{ ...styles.title, textAlign: 'left' }}> 
                                                 {datos.inventario_int_gps}
