@@ -8,7 +8,7 @@ export const ServiciosPdf=({datos, styles, comprobante})=> {
             <Text style={{...styles.title, margin: '0 0 2 0', fontFamily: 'Times-Bold'}} > Servicios (Intervención del equipo) </Text>
             
             { comprobante===true ?
-            <View style={{...styles.table, width: 200 }}> 
+            <View style={{...styles.table, width: 260 }}> 
                 <View style={styles.tableRow}> 
                     <View style={{...styles.tableCol, width: '100%' }}> 
                         <View style={styles.tableCell}>
