@@ -2,12 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import radioApi from "../../api/radioApi";
 import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent } from "../../store/utilidades/hojaServicioSlice";
+// import { onShowError } from "../../store";
+import { onShowError,clearErrorMessage } from "../../store/auth/cambiarSlice";
 
 export const useHojaServicioStore= () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector( state => state.hojaServicio);
+  const {errorMessage} = useSelector( state => state.cambiar );
   const { user } = useSelector( state => state.auth );
 
   const setActiveEvent = ( zonasEvent ) => {
@@ -52,6 +55,9 @@ let foto1;
     // promesa.then(()=>{
       console.log(zonasEvent)
     //TODO: Update event
+
+    zonasEvent.fk_foto1 != null? foto1=foto1:foto1=null
+    zonasEvent.fk_foto2 != null? foto2=foto2:foto2=null
     if(zonasEvent.idhojaservicios){
       
       //Actualizando
@@ -61,12 +67,20 @@ let foto1;
     
     }else{
       //creando
+      try{
       const {data}=await promesa.then(()=>{ return radioApi.post('/hojasservicios', {...zonasEvent, fk_foto1:foto1, fk_foto2:foto2}) });
       dispatch(onAddNewEvent({...zonasEvent, idhojaservicios:data.idhojaservicios, user}));
       window.location.reload(true);
+      }
+      catch (error) {
+        dispatch(onShowError(error.response.data?.message || '---'));
+        setTimeout(()=>{
+          dispatch(clearErrorMessage());
+      },5);
       //navigate('../hoja-servicio')
    
     }
+  }
   // })
   }
    const deleteEvent=async(zonasEvent, state)=>{
@@ -89,6 +103,7 @@ let foto1;
   return {
     // Propiedades
     activeEvent,
+    errorMessage,
     events,
     user,
     hasEventSelected: !!activeEvent,
