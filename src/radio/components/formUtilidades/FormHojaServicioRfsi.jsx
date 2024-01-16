@@ -7,11 +7,13 @@ import axios from 'axios';
 import radioApi from '../../../api/radioApi';
 import { TextareaAutosize } from '@mui/base';
 import { styled } from '@mui/system';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
+import { DeleteForever } from '@mui/icons-material';
 
 let hoy = new Date();
 let options = { day: 'numeric', month: 'long', year: 'numeric' }
@@ -74,9 +76,9 @@ export const FormHojaServicioRfsi = (customStyles) => {
         unidad: '',
         folio:'',
         foto1:"",
-        fk_foto1:"",
+        fk_foto1:null,
         foto2:"",
-        fk_foto2:"",
+        fk_foto2:null,
     });
     const [asignaciones, setAsignaciones] = useState({
         nombreCorporacion: "",
@@ -333,6 +335,7 @@ console.log(activeEvent)
             ['foto1']:"",
 
         })
+        console.log(formValues)
         // setArchivo1(null)
       }
 
@@ -343,6 +346,7 @@ console.log(activeEvent)
             ['foto2']:"",
 
         })
+        console.log(formValues)
         // setArchivo2(null)
       }
      // console.log(formValues)
@@ -913,8 +917,16 @@ console.log(activeEvent)
                                                 }}
                                                value={formValues.foto1}
                                             />
-                                            <Button onClick={borrarFoto1} color={'secondary'} variant="outlined" >
-                                            Borrar foto 1
+                                            <Button 
+                                            sx={{marginLeft: 12 }}
+                                            onClick={()=>{
+                                                setFormValues({...formValues,
+                                                    ['fk_foto1']:(null),
+                                                    ['foto1']:"",
+                                            })}} 
+                                            color={'secondary'} 
+                                            variant="outlined" >
+                                            < DeleteForever color='error'/>
                                             </Button>
                                         </Box> 
                         </Grid>
@@ -961,8 +973,17 @@ console.log(activeEvent)
                                                 }}
                                                value={formValues.foto2}
                                             />
-                                            <Button onClick={borrarFoto2} color={'secondary'} variant="outlined">
-                                            Borrar foto 2
+                                            <Button 
+                                            sx={{marginLeft: 12 }}
+                                            // onClick={borrarFoto2} 
+                                            onClick={()=>{
+                                                setFormValues({...formValues,
+                                                    ['fk_foto2']:(null),
+                                                    ['foto2']:"",
+                                            })}} 
+                                            color={'secondary'}
+                                             variant="outlined">
+                                                < DeleteForever color='error'/>
                                             </Button>
                                         </Box>
                                     </Grid>

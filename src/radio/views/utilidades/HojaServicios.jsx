@@ -11,6 +11,7 @@ import { CrearPdf } from './CrearPdf';
 import radioApi from "../../../api/radioApi";
 import Swal from "sweetalert2";
 import { FormHojaServicioRfsi } from "../../components/formUtilidades/FormHojaServicioRfsi";
+import { useCambiarStore } from "../../../hooks/useCambiarStore";
 // import { render } from "react-dom";
 
 
@@ -27,6 +28,7 @@ const colorDone=()=>{
   export const HojaServicios=()=> {
   const { events, setActiveEvent, startLoadingEvents,deleteEvent,user,activeEvent, startSavingEvent } = useHojaServicioStore();
   const { /*mostrarGuardar*/ OpenModal, mostrarActualizar, disableForm }=useModalHook();
+  const { errorMessage }=useCambiarStore();
   const [state, setState] =useState([]);
   const [abrirPdf, setAbrirPdf]= useState(false);
   const [isTargeta, setIsTargeta]= useState(false);
@@ -137,7 +139,17 @@ useEffect(() => {
           });
       }, []);
  
-
+      useEffect(() => {
+         if (errorMessage !== undefined){
+        //   Swal.fire('Ya existe un registro con este folio', errorMessage, 'Intente Nuevamente'confirmButtonText: '<a >Confirmar</a>');
+        Swal.fire({
+          icon:'question',
+          text:'Intente Nuevamente ',
+          title: 'Ya existe un registro con este folio',
+          });
+        }
+      }, [errorMessage])
+         
   //    // console.log(configReport.length);
   //     useEffect(() => {
   //       if (configReport.length > 1){
@@ -164,6 +176,7 @@ useEffect(() => {
 
   const ver = () =>  {
     disableForm();
+    setNuevoPorRfsi(true)
     setAbrirPdf(false)
     OpenModal();
     mostrarActualizar();
@@ -316,16 +329,20 @@ promesa.then(()=>{
       fk_tecnico_entrega: null,
       estatus: 1,
       folio: newFolio,
+      fk_foto1:null,
       foto1:null,
+      fk_foto2:null,
       foto2:null,
       })
       Swal.fire({
         title: "Create!",
         text: "La hoja de servicio ha sido creada.",
-        icon: "success"
+        icon: "success",
+        showConfirmButton: false,
       });
     }
   });
+
 })
 }
 
