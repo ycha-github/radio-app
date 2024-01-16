@@ -74,7 +74,9 @@ export const FormHojaServicioRfsi = (customStyles) => {
         unidad: '',
         folio:'',
         foto1:"",
+        fk_foto1:"",
         foto2:"",
+        fk_foto2:"",
     });
     const [asignaciones, setAsignaciones] = useState({
         nombreCorporacion: "",
@@ -324,6 +326,25 @@ console.log(activeEvent)
         }
       `,
       );
+
+      const borrarFoto1 = ()=>{
+        setFormValues({...formValues,
+            ['fk_foto1']:null,
+            ['foto1']:"",
+
+        })
+        // setArchivo1(null)
+      }
+
+      const borrarFoto2 = (target)=>{
+        console.log(target)
+        setFormValues({...formValues,
+            ['fk_foto2']:null,
+            ['foto2']:"",
+
+        })
+        // setArchivo2(null)
+      }
      // console.log(formValues)
     const onSubmit = async (event) => {
         //console.log(event)
@@ -892,6 +913,9 @@ console.log(activeEvent)
                                                 }}
                                                value={formValues.foto1}
                                             />
+                                            <Button onClick={borrarFoto1} color={'secondary'} variant="outlined" >
+                                            Borrar foto 1
+                                            </Button>
                                         </Box> 
                         </Grid>
                         
@@ -937,6 +961,9 @@ console.log(activeEvent)
                                                 }}
                                                value={formValues.foto2}
                                             />
+                                            <Button onClick={borrarFoto2} color={'secondary'} variant="outlined">
+                                            Borrar foto 2
+                                            </Button>
                                         </Box>
                                     </Grid>
                                 </Grid>

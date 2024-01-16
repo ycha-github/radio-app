@@ -47,81 +47,82 @@ const colorDone=()=>{
   let newFolio;
   let folio 
   let primeraFecha = `${events[0]?.['createdAt']}`;
-  let primerFolio = `${events[0]?.['folio']}`;
-  const newRow =()=>{ 
-    startLoadingEvents();
-     radioApi.get(`/hojasservicios`).
-           then((response) => {
-             setFolioNew(response.data)
-            //  console.log(response.data);
-            return response.data
-           });
-      primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
-      // primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
-      primerFolio== "undefined"? folio = 1 : folio= folioNew[0].folio;
-      anio !== anioActual ? newFolio=1 : newFolio = folio+1   
-      // console.log(newFolio)
-      // console.log(anio)
-      // console.log(anioActual)
-    setActiveEvent({
-      fecha_servicio: fecha,
-      fk_idasignacion_ur: '',
-      servicios: null,
-      descripcion: '',
-      entrego_equipo: false,
-      fecha_entrega: null,
-      fk_supervisortec: '',
-      usuario_servicio: '',
-      usuario_entrega: '',
-      fk_tecnico_entrega: null,
-      estatus: 1,
-      folio: newFolio,
-      foto1:"",
-      foto2:"",
-    })
-    setNuevoPorRfsi(false)
-    // startSavingEvent(datoNuevo)
-    OpenModal();
-    setAbrirPdf(false);
-  }
+  //  let primerFolio = `${events[0]?.['folio']}`;
+   let primerFolio ;
+  // const newRow =()=>{ 
+  //   startLoadingEvents();
+  //    radioApi.get(`/hojasservicios`).
+  //          then((response) => {
+  //            setFolioNew(response.data)
+  //           //  console.log(response.data);
+  //           return response.data
+  //          });
+  //     primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
+  //     // primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
+  //     primerFolio== "undefined"? folio = 1 : folio= folioNew[0].folio;
+  //     anio !== anioActual ? newFolio=1 : newFolio = folio+1   
+  //     // console.log(newFolio)
+  //     // console.log(anio)
+  //     // console.log(anioActual)
+  //   setActiveEvent({
+  //     fecha_servicio: fecha,
+  //     fk_idasignacion_ur: '',
+  //     servicios: null,
+  //     descripcion: '',
+  //     entrego_equipo: false,
+  //     fecha_entrega: null,
+  //     fk_supervisortec: '',
+  //     usuario_servicio: '',
+  //     usuario_entrega: '',
+  //     fk_tecnico_entrega: null,
+  //     estatus: 1,
+  //     folio: newFolio,
+  //     foto1:"",
+  //     foto2:"",
+  //   })
+  //   setNuevoPorRfsi(false)
+  //   // startSavingEvent(datoNuevo)
+  //   OpenModal();
+  //   setAbrirPdf(false);
+  // }
   
-  const newRow2 =()=>{ 
-    startLoadingEvents();
-     radioApi.get(`/hojasservicios`).
-           then((response) => {
-             setFolioNew(response.data)
-            //  console.log(response.data);
-            return response.data
-           });
-      primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
-      // primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
-      primerFolio== "undefined"? folio = 1 : folio= folioNew[0].folio;
-      anio !== anioActual ? newFolio=1 : newFolio = folio+1   
-      // console.log(newFolio)
-      // console.log(anio)
-      // console.log(anioActual)
-    setActiveEvent({
-      fecha_servicio: fecha,
-      fk_idasignacion_ur: '',
-      servicios: null,
-      descripcion: '',
-      entrego_equipo: false,
-      fecha_entrega: null,
-      fk_supervisortec: '',
-      usuario_servicio: '',
-      usuario_entrega: '',
-      fk_tecnico_entrega: null,
-      estatus: 1,
-      folio: newFolio,
-      foto1:"",
-      foto2:"",
-    })
+  // const newRow2 =()=>{ 
+  //   startLoadingEvents();
+  //    radioApi.get(`/hojasservicios`).
+  //          then((response) => {
+  //            setFolioNew(response.data)
+  //           //  console.log(response.data);
+  //           return response.data
+  //          });
+  //     primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
+  //     // primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
+  //     primerFolio== "undefined"? folio = 1 : folio= folioNew[0].folio;
+  //     anio !== anioActual ? newFolio=1 : newFolio = folio+1   
+  //     // console.log(newFolio)
+  //     // console.log(anio)
+  //     // console.log(anioActual)
+  //   setActiveEvent({
+  //     fecha_servicio: fecha,
+  //     fk_idasignacion_ur: '',
+  //     servicios: null,
+  //     descripcion: '',
+  //     entrego_equipo: false,
+  //     fecha_entrega: null,
+  //     fk_supervisortec: '',
+  //     usuario_servicio: '',
+  //     usuario_entrega: '',
+  //     fk_tecnico_entrega: null,
+  //     estatus: 1,
+  //     folio: newFolio,
+  //     foto1:"",
+  //     foto2:"",
+  //   })
     
-    // startSavingEvent(datoNuevo)
-    setNuevoPorRfsi(true)
-    OpenModal();
-    setAbrirPdf(false);
-  }
+  //   // startSavingEvent(datoNuevo)
+  //   setNuevoPorRfsi(true)
+  //   OpenModal();
+  //   setAbrirPdf(false);
+  // }
 useEffect(() => {
     radioApi.get(`/hojasservicios`).
           then((response) => {
@@ -269,10 +270,29 @@ const columns = [
 ]
 
 const mostrarAlert =()=>{
-  primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
+  const promesa= new Promise((resolve,reject)=>{
+    setTimeout(()=>{
+      radioApi.get(`/hojasservicios`).
+           then((response) => {
+             setFolioNew(response.data)
+            //  console.log(response.data);
+            return response.data
+           });
+           primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
   // primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
   primerFolio== "undefined"? folio = 1 : folio= folioNew[0].folio;
-  anio !== anioActual ? newFolio=1 : newFolio = folio+1  
+  anio !== anioActual ? newFolio=1 : newFolio = folio+1
+      resolve();
+    },1000)
+  });
+promesa.then(()=>{
+  radioApi.get(`/hojasservicios`).
+           then((response) => {
+             setFolioNew(response.data)
+            //  console.log(response.data);
+            return response.data
+           });
+    
   Swal.fire({
     title: `Crear nueva hoja de servicio con folio ${newFolio}/${anio} ?`,
     // text: "You won't be able to revert this!",
@@ -306,6 +326,7 @@ const mostrarAlert =()=>{
       });
     }
   });
+})
 }
 
   return (
