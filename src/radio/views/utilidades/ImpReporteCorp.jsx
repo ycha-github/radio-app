@@ -137,7 +137,7 @@ const mostrar=()=>{
    e= datos.filter(function(element,index,array){
  
    return(
-    element.nombreCorporacion == CorporacionesABuscar[y] && element.estatus== true 
+    element.nombreCorporacion == CorporacionesABuscar[y]
    )
 })
 n.push(e)
@@ -171,7 +171,7 @@ return(
    {
     
     n[index].map((element,index,array)=>{
-      return tbAsigCorp(index+1, array[index].rfsi, array[index].tipo, array[index].nombre_completo, array[index].nombrePuestoUsuario )
+      return tbAsigCorp(index+1, array[index].rfsi, (array[index].tipo).sort(), array[index].nombre_completo, array[index].nombrePuestoUsuario )
      })
    }
 </View>

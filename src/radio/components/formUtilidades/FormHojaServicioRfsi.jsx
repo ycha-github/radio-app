@@ -336,8 +336,7 @@ console.log(activeEvent)
         // setArchivo1(null)
       }
 
-      const borrarFoto2 = (target)=>{
-        console.log(target)
+      const borrarFoto2 = ({target})=>{
         setFormValues({...formValues,
             ['fk_foto2']:null,
             ['foto2']:"",
