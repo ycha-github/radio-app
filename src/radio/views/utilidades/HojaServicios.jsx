@@ -155,6 +155,7 @@ useEffect(() => {
   };
 
   const cambiar = ( ) =>  {
+    setNuevoPorRfsi(true)
     OpenModal();
     setAbrirPdf(false)
     mostrarActualizar();
@@ -188,7 +189,6 @@ useEffect(() => {
     setHServicio(event.row );
     
   }
-
 
   const theme = createTheme(
     {
@@ -268,6 +268,46 @@ const columns = [
   }, 
 ]
 
+const mostrarAlert =()=>{
+  primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
+  // primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
+  primerFolio== "undefined"? folio = 1 : folio= folioNew[0].folio;
+  anio !== anioActual ? newFolio=1 : newFolio = folio+1  
+  Swal.fire({
+    title: `Crear nueva hoja de servicio con folio ${newFolio}/${anio} ?`,
+    // text: "You won't be able to revert this!",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Confirmar"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      startSavingEvent({
+        fecha_servicio: fecha,
+      fk_idasignacion_ur: null,
+      servicios: null,
+      descripcion: null,
+      entrego_equipo: false,
+      fecha_entrega: null,
+      fk_supervisortec: null,
+      usuario_servicio: null,
+      usuario_entrega: null,
+      fk_tecnico_entrega: null,
+      estatus: 1,
+      folio: newFolio,
+      foto1:null,
+      foto2:null,
+      })
+      Swal.fire({
+        title: "Create!",
+        text: "La hoja de servicio ha sido creada.",
+        icon: "success"
+      });
+    }
+  });
+}
+
   return (
     <>
     <h2 className='colorUti'>HOJA DE SERVICIO</h2>
@@ -285,13 +325,17 @@ const columns = [
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
       { abrirPdf ===true & nuevoPorRfsi === false?<CrearPdf datoHoja={hServicio} isCartaFijo={false} target={isTargeta} formato={configReport} />: "" }
-      { abrirPdf ===false & nuevoPorRfsi === false ? <FormHojaServicio />:nuevoPorRfsi === true?<FormHojaServicioRfsi/>:"" }
+      {/* { abrirPdf ===false & nuevoPorRfsi === false ? <FormHojaServicio />:nuevoPorRfsi === true?<FormHojaServicioRfsi/>:"" } */}
+      { abrirPdf ===false & nuevoPorRfsi === true ? <FormHojaServicioRfsi/>:nuevoPorRfsi === true?<FormHojaServicio />:"" }
         {/* <FormHojaServicio/> */}
         <Stack direction="row" spacing={1} marginBottom={2}>
                 {/* <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo
                 </Button> */}
-                <Button onClick={newRow2} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
+                {/* <Button onClick={newRow2} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
+                    Nuevo por RFSI
+                </Button> */}
+                <Button onClick={mostrarAlert} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
                     Nuevo por RFSI
                 </Button>
             </Stack>

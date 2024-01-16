@@ -217,6 +217,7 @@ const columns =  [
   { field: 'inventario_interno',headerClassName: "super", headerName: 'Inventario Interno Radio', width: 220 },
   { field: 'serie_radio',headerClassName: "super", headerName: 'Serie Radio', width: 220 },
   { field: 'inventarioSpCargador',headerClassName: "super", headerName: 'Inventario Interno Cargador',width: 220 },
+  { field: 'serie_cargador',headerClassName: "super", headerName: 'Serie Cargador',width: 220 },
   { field: 'tipo',headerClassName: "super", headerName: 'Tipo Radio',flex: 2 , minWidth: 90 },
   { field: 'unidad',headerClassName: "super",headerName: 'Unidad', width: 90 },
   { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 2, minWidth: 90 },
