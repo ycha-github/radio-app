@@ -229,7 +229,8 @@ useEffect(() => {
 const columns = [
   
   { field: 'idhojaservicios', headerClassName: "super", headerName: 'ID',width: 40 },
-  { field: 'folio', valueGetter: (params) => { return `${params.row.folio+'/'}${new Date(params.row.createdAt).getFullYear()}`}, headerClassName: "super", headerName: 'Folio',width: 100 },
+  // { field: 'folio', valueGetter: (params) => { return `${params.row.folio+'/'}${new Date(params.row.createdAt).getFullYear()}`}, headerClassName: "super", headerName: 'Folio',width: 100 },
+  { field: 'folio', headerClassName: "super", headerName: 'Folio',width: 100 },
   { field: 'fecha_servicio',headerClassName: "super",headerName: 'Fecha creación', flex: 1, minWidth: 60 },
   { field: 'nombre_completo', headerClassName: "super", headerName: 'Usuario Asignado', flex: 1, minWidth: 230 },
   { field: 'serie',headerClassName: "super", headerName: 'Serie Radio', flex: 1, minWidth: 220 },
@@ -294,7 +295,7 @@ const mostrarAlert =()=>{
            primeraFecha == "undefined" ? anio = new Date().getFullYear: anio = new Date(events[0]['createdAt']).getFullYear() ;
   // primerFolio== "undefined"? folio = 1 : folio= events[0]['folio'];
   primerFolio== "undefined"? folio = 1 : folio= folioNew[0].folio;
-  anio !== anioActual ? newFolio=1 : newFolio = folio+1
+  anio !== anioActual ? newFolio=1 : newFolio =parseInt(folio) +1
       resolve();
     },1000)
   });
@@ -307,7 +308,7 @@ promesa.then(()=>{
            });
     
   Swal.fire({
-    title: `Crear nueva hoja de servicio con folio ${newFolio}/${anio} ?`,
+    title: `Crear nueva hoja de servicio con folio ${newFolio}/${anioActual} ?`,
     // text: "You won't be able to revert this!",
     icon: "question",
     showCancelButton: true,
@@ -328,7 +329,7 @@ promesa.then(()=>{
       usuario_entrega: null,
       fk_tecnico_entrega: null,
       estatus: 1,
-      folio: newFolio,
+      folio: `${newFolio}/${anioActual}`,
       fk_foto1:null,
       foto1:null,
       fk_foto2:null,
