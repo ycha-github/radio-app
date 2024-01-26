@@ -387,7 +387,7 @@ console.log(activeEvent)
 
                             <Grid container justify="center" sx={{ pr: 4 }}>
                                 <Grid item xs={12} sx={{ textAlign: 'right', pr: 5, pb: 1 }} >
-                                    <b>FOLIO: </b> <b className='letraRoja'> { formValues.folio+'/'+ anioActual } </b>
+                                    <b>FOLIO: </b> <b className='letraRoja'> { formValues.folio } </b>
                                 </Grid>
                                 <Grid item xs={12} sx={{ textAlign: 'right' }} >
                                     <TextField variant='filled' value={!isActualizar ? 'Villahermosa, Tab. A ' + fechaActual : formValues.fecha_servicio === null ? 'Sin fecha de Servicio' :'Villahermosa, Tab. A ' + new Date(formValues.fecha_servicio.split('-').join('/')).toLocaleString('es-MX', options) } sx={{ width: 335, pb:2 }} />
