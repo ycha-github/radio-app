@@ -216,7 +216,7 @@ export const ImprimirHServicio = ({datos, formato}) => {
                 {/* <Image style={styles.image2} src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0].fk_logo_c4}`} /> */}
                 <Image style={styles.image2} src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0].fk_logo_c4}`} />
 
-                <Text  style={{ ...styles.title, textAlign: 'right', margin: '0 10 0 0', fontFamily: 'Times-Bold' }} > Folio: {datos.folio+"/"+anioActual} </Text> 
+                <Text  style={{ ...styles.title, textAlign: 'right', margin: '0 10 0 0', fontFamily: 'Times-Bold' }} > Folio: {datos.folio} </Text> 
                 <Text style={styles.title} > REPORTE DE SERVICIO </Text> 
 
             </View>

@@ -14,13 +14,13 @@ const styles = StyleSheet.create({
       padding: '2 0 2 0',
     },
       imganexo: {
-      width:230,
-      height:300,
+      width:200,
+      height:200,
       margin: '0 0 5 5',
     },
       imganexo2: {
-      width:230,
-      height:300,
+      width:200,
+      height:200,
       position:'absolute',
       float: 'right',
       right: 5,
