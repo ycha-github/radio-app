@@ -21,16 +21,21 @@ const MenuProps = {
 
 export const Consultas=()=> {
 
-  const { events, startLoadingEvents } = useAsignacionesStore();
+  // const { events, startLoadingEvents } = useAsignacionesStore();
   const {OpenModal}=useModalHook();
-  const [abrirPdf, setAbrirPdf]= useState(false);
-  const [abrirPdfReporte, setAbrirPdfReporte]= useState(false);
+  // const [abrirPdf, setAbrirPdf]= useState(false);
+  // const [abrirPdfReporte, setAbrirPdfReporte]= useState(false);
   const [reporte, setReporte]= useState('');
   const [buscarCorporaciones, setBuscarCorporaciones] = useState([]);
+  const [buscarUsuarios, setBuscarUsuarios] = useState([]);
   const [enviarCorporaciones, setEnviarCorporaciones] = useState([]);
+  const [enviarUsuarios, setEnviarUsuarios] = useState([]);
   const [corporacionesArray, setCorporacionesArray] = useState([]);
+  const [usuariosArray, setUsuariosArray] = useState([]);
   const [arregloCorp, setArregloCorp] = useState({});
+  const [arregloUsu, setArregloUsu] = useState({});
   const [configReport, setConfigReport] = useState({});
+  const [asignaciones, setAsignaciones] = useState({});
   
   const [value, setValue] = useState('');
 
@@ -39,23 +44,36 @@ export const Consultas=()=> {
   };
 
 
+  // useEffect(() => {
+  //   startLoadingEvents();
+  // }, [])
+
   useEffect(() => {
-    startLoadingEvents();
-  }, [])
+    radioApi.get('/asig_usuarios/').
+      then((response) => {
+        setAsignaciones(response.data);
+      });
+    }, []);
 
   useEffect(() => {
     radioApi.get('/corporaciones/estatus/').
-  then((response)=>{
-    setBuscarCorporaciones(response.data);
-  });
+      then((response)=>{
+        setBuscarCorporaciones(response.data);
+      });
+    }, []);
 
- }, []);
+  useEffect(() => {
+    radioApi.get('/usuarios/idnombre').
+      then((response)=>{
+        setBuscarUsuarios(response.data);
+      });
+    }, []);
 
- useEffect(() => {
-  radioApi.get('/configreportes/estatus').
-        then((response) => {
-          setConfigReport(response.data);
-        });
+  useEffect(() => {
+    radioApi.get('/configreportes/estatus').
+      then((response) => {
+        setConfigReport(response.data);
+      });
     }, []);
 
     // console.log(buscarCorporaciones);
@@ -66,6 +84,14 @@ export const Consultas=()=> {
       f.push(buscarCorporaciones[i]?.nombreCorporacion);
     } 
     setArregloCorp(f);
+  }
+
+  let u=[]
+    const formarArrayUsu =()=>{
+    for ( let i = 0; i < buscarUsuarios.length; i++) {
+      u.push(buscarUsuarios[i]?.nombreUsuario);
+    } 
+    setArregloUsu(u);
   }
       // console.log(buscarCorporaciones); //Trae el arreglo de objetos
       // console.log(arregloCorp); //Trae el arreglo de sólo los nombres de las corporaciones
@@ -79,12 +105,11 @@ export const Consultas=()=> {
     OpenModal();
     formarArrayCorp();
   }
-  const mostrarPdfReporteCorp2 = ( event) =>  {
-    // console.log('aaaaa');
-    // setAbrirPdf(true);
-    // setAbrirPdfReporte(true);
-    setReporte('tipoRad');
+
+  const mostrarPdfReporteUsu = ( event) =>  {
+    setReporte('usuGral');
     OpenModal();
+    formarArrayUsu();
   }
 
 
@@ -99,6 +124,19 @@ export const Consultas=()=> {
         typeof value === 'string' ? value.split(', ') : value,
         );
         setEnviarCorporaciones([`${value}`]);
+        // console.log(value)
+  };
+
+  const handleSelectChangeU = (event) => {
+
+    const {
+        target: { value },
+    } = event;
+    setUsuariosArray(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(', ') : value,
+        );
+        setEnviarUsuarios([`${value}`]);
         // console.log(value)
   };
 
@@ -140,6 +178,38 @@ export const Consultas=()=> {
               </Button>
              <Button sx={{height:'56px'}}  onClick={()=>window.location.reload()} color={'secondary'} variant="outlined" startIcon={<CachedOutlined/>}>
                 Limpiar
+             </Button>
+          </Grid>
+          <Grid sx={{pt:5, pl:5, pb:5}}>
+            <FormControl sx={{ border: 'none', mb: 1, width: 600 }}>
+              <InputLabel id="demo-multiple-checkbox-label" color={'secondary'} >Reporte usuarios</InputLabel>
+              <Select
+                //disabled={isVer}
+                labelId="demo-multiple-checkbox-label"
+                sx={{heigth:500}}
+                id="demo-multiple-checkbox"
+                multiple
+                defaultValue={""}
+                //onClose={corporacionesArray !="" ? mostrarPdfReporteCorp:console.log("")}
+                value={usuariosArray}
+                onChange={handleSelectChangeU}
+                input={<OutlinedInput label="Reporte usuarios" />}
+                renderValue={(selected) => selected.join(', ')}
+                MenuProps={MenuProps}
+                color={'secondary'}
+              >
+                  {
+                    buscarUsuarios.map((service) => { 
+                      return <MenuItem key={service.idusuarios} value={service.nombreUsuario} > 
+                              <Checkbox  checked={ usuariosArray.indexOf(service.nombreUsuario) > - 1 } />
+                              <ListItemText primary={service.nombreUsuario} />
+                             </MenuItem> 
+                    })
+                  }  
+              </Select>
+             </FormControl>
+             <Button sx={{height:'56px'}}  onClick={mostrarPdfReporteUsu} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
+                Por Usuario
               </Button>
           </Grid>
           <Grid item sx={{ pl:5, pb:5}}>
@@ -161,7 +231,8 @@ export const Consultas=()=> {
           </Grid>
           <Grid item sx={{pl:5, pb:5}}>
           {/* {abrirPdf ===true ? <CrearPdf2 tipo={value} datos={events} corp={buscarCorporaciones} CorporacionesABuscar={corporacionesArray}  repCor={true} />: ""} */}
-            <CrearPdf2 tipo={value} datos={events} corp={buscarCorporaciones} formato={configReport} CorporacionesABuscar={ corporacionesArray.length !== 0 ? corporacionesArray : arregloCorp }  decide={reporte} />
+            <CrearPdf2 tipo={value} /*datos={events}*/ datos={asignaciones} formato={configReport} CorporacionesABuscar={ corporacionesArray.length !== 0 ? corporacionesArray : arregloCorp }  UsuariosABuscar={ usuariosArray.length !== 0 ? usuariosArray : arregloUsu } decide={reporte} />
+            {/* <CrearPdf2 tipo={value}  datos={asignaciones} formato={configReport}   decide={reporte} /> */}
           {/* {abrirPdf ===false ? <Consultas />:""} */}
             {/* <Button key="Corporacion" className="">Corporación</Button>
             <Button key="Usuario">Usuario</Button> */}

@@ -5,7 +5,7 @@ import { ModalRadio } from '../../components/ModalRadio';
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 10,
+    fontSize: 8,
     textAlign: 'center',
     fontFamily: 'Helvetica-Bold',
     margin: '0 0 0 0',
@@ -76,56 +76,70 @@ const styles = StyleSheet.create({
   });
 
 // Create Document Component
-export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decide}, customStyles) => {
+export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABuscar, decide}, customStyles) => {
 
-  const tbAsigCorp = (index, rfsi, tipo, modeloRadio, serie_radio, inventario_interno, nombre_completo, nombrePuesto) => 
+  console.log(UsuariosABuscar);
+
+  const tbAsigCorp = (index, rfsi, tipo, modeloRadio, serie_radio, inventario_interno, serie_cargador, inventarioSpCargador, nombreCorporacion, nombrePuesto) => 
      <View key={index} style={styles.tableRow} >
      <View style={{...styles.tableCol, width: "3%" }} >
        <Text style={styles.tableCell} >
          {index}
        </Text> 
      </View> 
-     <View style={{...styles.tableCol, width: "10%" }}>
+     <View style={{...styles.tableCol, width: "7%" }}>
        <Text style={styles.tableCell} >
          { rfsi }
        </Text> 
      </View> 
-     <View style={{...styles.tableCol, width: "7%" }}>
+     <View style={{...styles.tableCol, width: "5%" }}>
        <Text style={styles.tableCell} >
          {tipo}
        </Text> 
      </View> 
-     <View style={{...styles.tableCol, width: "8%" }}>
+     <View style={{...styles.tableCol, width: "5%" }}>
        <Text style={styles.tableCell} >
          {modeloRadio}
        </Text> 
      </View> 
-     <View style={{...styles.tableCol, width: "20%" }}>
+     <View style={{...styles.tableCol, width: "17%" }}>
        <Text style={styles.tableCell} >
          {serie_radio}
        </Text> 
      </View> 
-     <View style={{...styles.tableCol, width: "7%" }}>
+     <View style={{...styles.tableCol, width: "8%" }}>
        <Text style={styles.tableCell} >
          {inventario_interno}
        </Text> 
      </View> 
-     <View style={{...styles.tableCol, width: "20%" }} >
+     <View style={{...styles.tableCol, width: "17%" }}>
        <Text style={styles.tableCell} >
-         {nombre_completo}
+         {serie_cargador}
        </Text> 
      </View> 
-     <View style={{...styles.tableCol, width: "25%" }} >
+     <View style={{...styles.tableCol, width: "8%" }}>
+       <Text style={styles.tableCell} >
+         {inventarioSpCargador}
+       </Text> 
+     </View> 
+     <View style={{...styles.tableCol, width: "15%" }} >
+       <Text style={styles.tableCell} >
+         {nombreCorporacion}
+       </Text> 
+     </View> 
+     <View style={{...styles.tableCol, width: "15%" }} >
        <Text style={styles.tableCell} >
          {nombrePuesto}
        </Text> 
      </View> 
     </View>
 
+
 //-------------------------------------------------------
 
   let e=[];
   let n=[];
+
 
   // const asignaciones = () => {
   //   for (let y=0; y<(datos.length); y++) {
@@ -140,10 +154,11 @@ export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decid
   // }
 
 
-  const mostrar=()=>{
+  const mostrarCorp=()=>{
 
     for(let y=0;y<CorporacionesABuscar.length;y++){
       
+      // e= [...e,datos.filter(function(element,index,array){
       e= datos.filter(function(element,index,array){
         return(
           element.nombreCorporacion == CorporacionesABuscar[y] && element.estatus== true
@@ -151,8 +166,19 @@ export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decid
         })
         n.push(e)
       }
-      // console.log(n)
-    
+      
+      for(let o=0; o<CorporacionesABuscar.length; o++){
+          n[o].sort( function (a,b){
+            if(a.tipo > b.tipo){
+              return 1;
+            }
+            if(a.tipo < b.tipo){
+              return -1;
+            }
+            return 0;
+          });
+      }
+
       return(
 
         (<View style={styles.section} wrap>
@@ -169,25 +195,31 @@ export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decid
               <View style={{...styles.tableCol, width: "3%" }} >
                 <Text style={styles.tableCell} > No.</Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "10%" }} >
+              <View style={{...styles.tableCol, width: "7%" }} >
                 <Text style={styles.tableCell} > RFSI </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "7%" }} >
+              <View style={{...styles.tableCol, width: "5%" }} >
                 <Text style={styles.tableCell} > Tipo </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "8%" }} >
+              <View style={{...styles.tableCol, width: "5%" }} >
                 <Text style={styles.tableCell} > Modelo </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "20%" }} >
+              <View style={{...styles.tableCol, width: "17%" }} >
                 <Text style={styles.tableCell} > serie </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "7%" }} >
+              <View style={{...styles.tableCol, width: "8%" }} >
                 <Text style={styles.tableCell} > Inventario </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "20%" }} >
+              <View style={{...styles.tableCol, width: "17%" }} >
+                <Text style={styles.tableCell} > serie cargador </Text> 
+              </View> 
+              <View style={{...styles.tableCol, width: "8%" }} >
+                <Text style={styles.tableCell} > Inv. cargador </Text> 
+              </View> 
+              <View style={{...styles.tableCol, width: "15%" }} >
                 <Text style={styles.tableCell} > Usuario </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "25%" }} >
+              <View style={{...styles.tableCol, width: "15%" }} >
                 <Text style={styles.tableCell} > Puesto </Text> 
               </View> 
             </View>
@@ -195,80 +227,101 @@ export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decid
          {
           n[index].map((element,index,array)=>{
            return tbAsigCorp(index+1, array[index].rfsi, array[index].tipo, array[index].modeloRadio, array[index].serie_radio, array[index].inventario_interno,
-            array[index].nombre_completo, array[index].nombrePuesto)
+            array[index].serie_cargador, array[index].inventarioSpCargador, array[index].nombre_completo, array[index].nombrePuesto)
            })
          }
       </View>
       </View>
-      : console.log('y')
+      : console.log('')
       )
       })
       )
-
   }
 
-  const mostrarTipo=()=>{
+  const mostrarUsu=()=>{
 
-    // for(let y=0; y<corp.length; y++){
-    //   e= corp.filter(function(element,index,array){
-        
-    //     return(
-    //       element.tipo == corp[y]
-    //       // element.nombreCorporacion == CorporacionesABuscar[y] && element.estatus== true 
-    //       )
-    //     })
-    //     n.push(e);
-    //     console.log(corp)
-    // }
+    for(let y=0;y<UsuariosABuscar.length;y++){
+      
+      // e= [...e,datos.filter(function(element,index,array){
+      e= datos.filter(function(element,index,array){
+        return(
+          element.nombre_completo == UsuariosABuscar[y] && element.estatus== true
+          )
+        })
+        n.push(e)
+      }
+      
+      for(let o=0; o<UsuariosABuscar.length; o++){
+          n[o].sort( function (a,b){
+            if(a.tipo > b.tipo){
+              return 1;
+            }
+            if(a.tipo < b.tipo){
+              return -1;
+            }
+            return 0;
+          });
+      }
 
-    // for (let y=0; y<(corp.length); y++) {
-    //       e= datos.filter(function(element,index,array){
-    //         return(
-    //           element.tipo == tipo
-    //           )
-    //         })
-    //         // console.log(datos[y])
-    //         n.push(e);
-    //         console.log(n)
-    //       }
+      return(
 
-      // return(
-      //   corp.map((element,index,array)=>{
+        // (<View style={styles.section} wrap>
+        // <Text style={{...styles.title, textAlign: 'left'}} >{tipo}</Text>
+        // </View> ),
+        UsuariosABuscar.map((element,index,array)=>{
           return (
-            <View  style={styles.section} wrap>
-              <Text style={{...styles.title, textAlign: 'left'}} >..</Text>
+            n[index].length !== 0 ?
+            <View key={index} style={styles.section} wrap>
+              <Text style={{...styles.title, textAlign: 'left'}} >{element}</Text>
             <View style={styles.table}   >
             
             <View style={styles.tableRowHead} >
-              <View style={{...styles.tableCol, width: "5%" }} >
+              <View style={{...styles.tableCol, width: "3%" }} >
                 <Text style={styles.tableCell} > No.</Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "20%" }} >
+              <View style={{...styles.tableCol, width: "7%" }} >
                 <Text style={styles.tableCell} > RFSI </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "10%" }} >
+              <View style={{...styles.tableCol, width: "5%" }} >
                 <Text style={styles.tableCell} > Tipo </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "30%" }} >
-                <Text style={styles.tableCell} > Nombre </Text> 
+              <View style={{...styles.tableCol, width: "5%" }} >
+                <Text style={styles.tableCell} > Modelo </Text> 
               </View> 
-              <View style={{...styles.tableCol, width: "35%" }} >
+              <View style={{...styles.tableCol, width: "17%" }} >
+                <Text style={styles.tableCell} > serie </Text> 
+              </View> 
+              <View style={{...styles.tableCol, width: "8%" }} >
+                <Text style={styles.tableCell} > Inventario </Text> 
+              </View> 
+              <View style={{...styles.tableCol, width: "17%" }} >
+                <Text style={styles.tableCell} > serie cargador </Text> 
+              </View> 
+              <View style={{...styles.tableCol, width: "8%" }} >
+                <Text style={styles.tableCell} > Inv. cargador </Text> 
+              </View> 
+              <View style={{...styles.tableCol, width: "15%" }} >
+                <Text style={styles.tableCell} > Corporación </Text> 
+              </View> 
+              <View style={{...styles.tableCol, width: "15%" }} >
                 <Text style={styles.tableCell} > Puesto </Text> 
               </View> 
-            </View>
-         {/* {
-          
+            </View>   
+         {
           n[index].map((element,index,array)=>{
-            return tbAsigCorp(index+1, array[index].rfsi, array[index].tipo, array[index].nombre_completo, array[index].nombrePuestoUsuario )
+           return tbAsigCorp(index+1, array[index].rfsi, array[index].tipo, array[index].modeloRadio, array[index].serie_radio, array[index].inventario_interno, 
+            array[index].serie_cargador, array[index].inventarioSpCargador, array[index].nombreCorporacion, array[index].nombrePuesto)
            })
-         } */}
+         }
       </View>
       </View>
+      : console.log('')
       )
-      // })
-      // )
-
+      })
+      )
   }
+
+
   
 
  return (
@@ -281,9 +334,9 @@ export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decid
               <Image  src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0]?.fk_logo_ssypc}`} style={styles.image} fixed />
                 {  
                   decide == "corpGral" ?
-                  mostrar()  :
-                  decide == "tipoRad" ?
-                  mostrarTipo ()    :
+                  mostrarCorp()  :
+                  decide == "usuGral" ?
+                  mostrarUsu() :
                   decide=""
                 }
             </View>

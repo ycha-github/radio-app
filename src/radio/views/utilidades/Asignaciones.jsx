@@ -26,7 +26,15 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 const NuevoFooter=()=>{
   return <>
     <Box sx={{pl: '35%', alignContent:'center', background:'rgb(214, 204, 230)'}}>
-      <GridToolbarExport color='secondary'  sx={{ textAlign: 'center', position: 'relative',width: 200, float: 'left', pt:2}} />
+      <GridToolbarExport 
+        csvOptions={{
+          fileName: 'Asignaciones',
+          // delimiter: ';',
+          utf8WithBom: true,
+         }} 
+        color='secondary'  
+        sx={{ textAlign: 'center', position: 'relative',width: 200, float: 'left', pt:2}} 
+      />
       <GridPagination sx={{ textAlign: 'center', position: 'relative', width: 300,  }} />
       </Box>
   </>
@@ -209,7 +217,7 @@ const MenuProps = {
 
 const columns =  [
 
-  { field: 'idasignacion', headerClassName: "super", headerName: 'ID',width: 60,  },
+  { field: 'idasignacion', headerClassName: "super", headerName: 'ID',width: 60, },
   { field: 'nombre_completo', headerClassName: "super", headerName: 'Asignado a' ,width: 250,  },
   { field: 'rfsi',headerClassName: "super", headerName: 'RFSI' , width: 150 },
   { field: 'nombrePuesto', headerClassName: "super", headerName: 'Puesto' ,width: 350,  },
@@ -322,6 +330,11 @@ const columns =  [
         class="tabla"
         id="imprimible"
         onCellClick={onSelect}
+        initialState={{
+          sorting: {
+            sortModel: [{ field: 'idasignacion', sort: 'desc' }],
+          },
+        }}
         getRowId={(row) => row.idasignacion}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'
