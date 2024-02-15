@@ -12,7 +12,7 @@ const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      maxHeight: ITEM_HEIGHT * 10.5 + ITEM_PADDING_TOP,
       width: 250,
     },
   },
@@ -21,10 +21,7 @@ const MenuProps = {
 
 export const Consultas=()=> {
 
-  // const { events, startLoadingEvents } = useAsignacionesStore();
   const {OpenModal}=useModalHook();
-  // const [abrirPdf, setAbrirPdf]= useState(false);
-  // const [abrirPdfReporte, setAbrirPdfReporte]= useState(false);
   const [reporte, setReporte]= useState('');
   const [buscarCorporaciones, setBuscarCorporaciones] = useState([]);
   const [buscarUsuarios, setBuscarUsuarios] = useState([]);
@@ -36,17 +33,7 @@ export const Consultas=()=> {
   const [arregloUsu, setArregloUsu] = useState({});
   const [configReport, setConfigReport] = useState({});
   const [asignaciones, setAsignaciones] = useState({});
-  
   const [value, setValue] = useState('');
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
-
-
-  // useEffect(() => {
-  //   startLoadingEvents();
-  // }, [])
 
   useEffect(() => {
     radioApi.get('/asig_usuarios/').
@@ -76,8 +63,6 @@ export const Consultas=()=> {
       });
     }, []);
 
-    // console.log(buscarCorporaciones);
-
     let f=[]
     const formarArrayCorp =()=>{
     for ( let i = 0; i < buscarCorporaciones.length; i++) {
@@ -93,10 +78,7 @@ export const Consultas=()=> {
     } 
     setArregloUsu(u);
   }
-      // console.log(buscarCorporaciones); //Trae el arreglo de objetos
-      // console.log(arregloCorp); //Trae el arreglo de sólo los nombres de las corporaciones
-      
-
+  
   const mostrarPdfReporteCorp = ( event) =>  {    
     // console.log('aaaaa');
     // setAbrirPdf(true);
@@ -112,10 +94,12 @@ export const Consultas=()=> {
     formarArrayUsu();
   }
 
-
+  const mostrarPdfReporteTipo = ( event) =>  {
+    setReporte('porTipo');
+    OpenModal();
+  }
  
   const handleSelectChange = (event) => {
-
     const {
         target: { value },
     } = event;
@@ -140,6 +124,12 @@ export const Consultas=()=> {
         // console.log(value)
   };
 
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  // console.log(value);
+  
   return (
     <>
       <h2 className='colorUti'>CONSULTAS</h2>
@@ -214,10 +204,10 @@ export const Consultas=()=> {
           </Grid>
           <Grid item sx={{ pl:5, pb:5}}>
             <FormControl sx={{color: 'rgb(78,54,122)'}} >
-              {/* <FormLabel id="demo-controlled-radio-buttons-group" sx={{color: 'rgb(78,54,122)',fontWeight: 'bold', fontSize:'16px' }}  >
+              <FormLabel id="demo-controlled-radio-buttons-group" sx={{color: 'rgb(78,54,122)',fontWeight: 'bold', fontSize:'16px' }}  >
                 Tipos de radios
-              </FormLabel> */}
-              {/* <RadioGroup
+              </FormLabel>
+              <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={value}
@@ -226,27 +216,14 @@ export const Consultas=()=> {
                 <FormControlLabel value="Movil" control={<Radio />} label="Móvil" />
                 <FormControlLabel value="Fijo" control={<Radio />} label="Fijo" />
                 <FormControlLabel value="Portatil" control={<Radio />} label="Portátil" />
-              </RadioGroup> */}
+              </RadioGroup>
             </FormControl>
-          </Grid>
-          <Grid item sx={{pl:5, pb:5}}>
-          {/* {abrirPdf ===true ? <CrearPdf2 tipo={value} datos={events} corp={buscarCorporaciones} CorporacionesABuscar={corporacionesArray}  repCor={true} />: ""} */}
-            <CrearPdf2 tipo={value} /*datos={events}*/ datos={asignaciones} formato={configReport} CorporacionesABuscar={ corporacionesArray.length !== 0 ? corporacionesArray : arregloCorp }  UsuariosABuscar={ usuariosArray.length !== 0 ? usuariosArray : arregloUsu } decide={reporte} />
-            {/* <CrearPdf2 tipo={value}  datos={asignaciones} formato={configReport}   decide={reporte} /> */}
-          {/* {abrirPdf ===false ? <Consultas />:""} */}
-            {/* <Button key="Corporacion" className="">Corporación</Button>
-            <Button key="Usuario">Usuario</Button> */}
-            {/* <nav>
-              <ul>
-                <li key="Corporacion" onClick={mostrarPdfReporteCorp2}>
-                  <span></span><span></span><span></span><span></span> Corporación <SearchIcon/>
-                </li>
-                <li key="Usuario" onClick={() => console.log('ayuda2')}>
-                  <span></span><span></span><span></span><span></span> Usuario <SearchIcon/>
-                </li>
-              </ul>
-            </nav> */}
-          </Grid>
+           
+              <Button sx={{height:'56px', ml: 5, mt: 6}}  onClick={mostrarPdfReporteTipo} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
+                Por Tipo
+              </Button>
+              </Grid>
+            <CrearPdf2 tipo={value} datos={asignaciones} formato={configReport} CorporacionesABuscar={ corporacionesArray.length !== 0 ? corporacionesArray : arregloCorp }  UsuariosABuscar={ usuariosArray.length !== 0 ? usuariosArray : arregloUsu } decide={reporte} />
         </Box>
       </Grid> 
     </>

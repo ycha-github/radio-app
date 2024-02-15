@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Document, Image, PDFViewer, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import { Box } from '@mui/material';
 import { ModalRadio } from '../../components/ModalRadio';
+import { TableRowHead } from './TableRowHead';
+import { MapTabAsignaciones } from './MapTabAsignaciones';
 
 const styles = StyleSheet.create({
   title: {
@@ -21,13 +22,13 @@ const styles = StyleSheet.create({
     padding: '0 0 80 0',
   },
   section: {
-    margin: '5 0 5 0',
+    margin: '0 0 0 0',
     border: '0px none none',
-    padding: '0 0 0 0',
+    padding: '10px 0 0 0',
   
   },
   margen: {
-    margin: '0 50 40 50',
+    margin: '0 50 0 50',
     // border: '0px none none',
     // padding: '0 0 0 0',
   },
@@ -35,31 +36,37 @@ const styles = StyleSheet.create({
       display: "table", 
       width: "auto", 
       borderStyle: "solid", 
-      borderWidth: 1, 
-      borderRightWidth: 0, 
-      borderBottomWidth: 0 ,
+      // borderTopWidth: 1, 
+      // borderLeftWidth: 1,
     }, 
     tableRow: { 
-      margin: "auto", 
+      // margin: "auto", 
       flexDirection: "row",
+      alignContent: 'center',
+      borderBottomWidth: 1, 
+      borderLeftWidth: 1,
     }, 
-    tableRowHead: { 
-      margin: "auto", 
-      flexDirection: "row",
-      backgroundColor: 'rgb(210, 210, 210)'
-    }, 
+    // tableRowHead: { 
+    //   margin: "auto", 
+    //   flexDirection: "row",
+    //   backgroundColor: 'rgb(210, 210, 210)'
+    // }, 
     tableCol: { 
-      width: "25%", 
+      width: "0%", 
       borderStyle: "solid", 
-      borderWidth: 1, 
-      borderLeftWidth: 0, 
-      borderTopWidth: 0,
+      borderRightWidth: 1,
+      // textAlign: 'start',
       // border: '1px solid rgb(192, 192, 192)',
     },
-    tableCell: { 
-      margin: "auto", 
+    tableCell: {
+      margin: '0 2px',
+    },
+    tableText: { 
+      margin: 1, 
       marginTop: 5, 
-      fontSize: 9,
+      fontSize: 8,
+      verticalAlign: 'super',
+      textAlign: 'start',
     }, 
 
     piePagina: {
@@ -72,70 +79,25 @@ const styles = StyleSheet.create({
       left: 50,
       right: 50,
       marginTop:10,
-    }
+    },
+
   });
+
+    let listado  = "";
+    let wIndex   = 0;
+    let wRfsi    = 0;
+    let wTipo    = 0;
+    let wModelo  = 0;
+    let wSerieR  = 0;
+    let wInvR    = 0;
+    let wSerieC  = 0;
+    let wInvC    = 0;
+    let wUser    = 0;
+    let wCorp    = 0;
+    let wPuesto  = 0;
 
 // Create Document Component
 export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABuscar, decide}, customStyles) => {
-
-  console.log(UsuariosABuscar);
-
-  const tbAsigCorp = (index, rfsi, tipo, modeloRadio, serie_radio, inventario_interno, serie_cargador, inventarioSpCargador, nombreCorporacion, nombrePuesto) => 
-     <View key={index} style={styles.tableRow} >
-     <View style={{...styles.tableCol, width: "3%" }} >
-       <Text style={styles.tableCell} >
-         {index}
-       </Text> 
-     </View> 
-     <View style={{...styles.tableCol, width: "7%" }}>
-       <Text style={styles.tableCell} >
-         { rfsi }
-       </Text> 
-     </View> 
-     <View style={{...styles.tableCol, width: "5%" }}>
-       <Text style={styles.tableCell} >
-         {tipo}
-       </Text> 
-     </View> 
-     <View style={{...styles.tableCol, width: "5%" }}>
-       <Text style={styles.tableCell} >
-         {modeloRadio}
-       </Text> 
-     </View> 
-     <View style={{...styles.tableCol, width: "17%" }}>
-       <Text style={styles.tableCell} >
-         {serie_radio}
-       </Text> 
-     </View> 
-     <View style={{...styles.tableCol, width: "8%" }}>
-       <Text style={styles.tableCell} >
-         {inventario_interno}
-       </Text> 
-     </View> 
-     <View style={{...styles.tableCol, width: "17%" }}>
-       <Text style={styles.tableCell} >
-         {serie_cargador}
-       </Text> 
-     </View> 
-     <View style={{...styles.tableCol, width: "8%" }}>
-       <Text style={styles.tableCell} >
-         {inventarioSpCargador}
-       </Text> 
-     </View> 
-     <View style={{...styles.tableCol, width: "15%" }} >
-       <Text style={styles.tableCell} >
-         {nombreCorporacion}
-       </Text> 
-     </View> 
-     <View style={{...styles.tableCol, width: "15%" }} >
-       <Text style={styles.tableCell} >
-         {nombrePuesto}
-       </Text> 
-     </View> 
-    </View>
-
-
-//-------------------------------------------------------
 
   let e=[];
   let n=[];
@@ -155,6 +117,19 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
 
 
   const mostrarCorp=()=>{
+      listado  = "Corp",
+      wIndex   = "3%",
+      wRfsi    = "9%",
+      wTipo    = "6%",
+      wModelo  = "6%",
+      wSerieR  = "16%",
+      wInvR    = "7%",
+      wSerieC  = "16%", 
+      wInvC    = "7%",
+      wUser    = "15%",
+      wCorp    = "0%",
+      wPuesto  = "15%"
+
 
     for(let y=0;y<CorporacionesABuscar.length;y++){
       
@@ -179,6 +154,7 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
           });
       }
 
+      
       return(
 
         (<View style={styles.section} wrap>
@@ -190,44 +166,20 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
             <View key={index} style={styles.section} wrap>
               <Text style={{...styles.title, textAlign: 'left'}} >{element}</Text>
             <View style={styles.table}   >
+            <TableRowHead  listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
+                          wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} />
             
-            <View style={styles.tableRowHead} >
-              <View style={{...styles.tableCol, width: "3%" }} >
-                <Text style={styles.tableCell} > No.</Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "7%" }} >
-                <Text style={styles.tableCell} > RFSI </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "5%" }} >
-                <Text style={styles.tableCell} > Tipo </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "5%" }} >
-                <Text style={styles.tableCell} > Modelo </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "17%" }} >
-                <Text style={styles.tableCell} > serie </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "8%" }} >
-                <Text style={styles.tableCell} > Inventario </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "17%" }} >
-                <Text style={styles.tableCell} > serie cargador </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "8%" }} >
-                <Text style={styles.tableCell} > Inv. cargador </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "15%" }} >
-                <Text style={styles.tableCell} > Usuario </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "15%" }} >
-                <Text style={styles.tableCell} > Puesto </Text> 
-              </View> 
-            </View>
             
          {
           n[index].map((element,index,array)=>{
-           return tbAsigCorp(index+1, array[index].rfsi, array[index].tipo, array[index].modeloRadio, array[index].serie_radio, array[index].inventario_interno,
-            array[index].serie_cargador, array[index].inventarioSpCargador, array[index].nombre_completo, array[index].nombrePuesto)
+          //  return tbAsigCorp(index+1, array[index].rfsi, array[index].tipo, array[index].modeloRadio, array[index].serie_radio, array[index].inventario_interno,
+          //   array[index].serie_cargador, array[index].inventarioSpCargador, array[index].nombre_completo, array[index].nombrePuesto)
+          return <MapTabAsignaciones listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
+                                      wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} index={index+1} rfsi={array[index].rfsi} tipo={array[index].tipo} 
+                                      modeloRadio={array[index].modeloRadio} serie_radio={array[index].serie_radio} inventario_interno={array[index].inventario_interno} 
+                                      serie_cargador={array[index].serie_cargador} inventarioSpCargador={array[index].inventarioSpCargador} nombre_completo={array[index].nombre_completo} 
+                                      nombreCorporacion={array[index].nombreCorporacion} nombrePuesto={array[index].nombrePuesto} />
+})
            })
          }
       </View>
@@ -239,6 +191,19 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
   }
 
   const mostrarUsu=()=>{
+
+      listado  = "User",
+      wIndex   = "3%",
+      wRfsi    = "9%",
+      wTipo    = "6%",
+      wModelo  = "6%",
+      wSerieR  = "16%",
+      wInvR    = "7%",
+      wSerieC  = "16%", 
+      wInvC    = "7%",
+      wUser    = "0%",
+      wCorp    = "15%",
+      wPuesto  = "15%"
 
     for(let y=0;y<UsuariosABuscar.length;y++){
       
@@ -265,52 +230,24 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
 
       return(
 
-        // (<View style={styles.section} wrap>
-        // <Text style={{...styles.title, textAlign: 'left'}} >{tipo}</Text>
-        // </View> ),
         UsuariosABuscar.map((element,index,array)=>{
           return (
             n[index].length !== 0 ?
             <View key={index} style={styles.section} wrap>
               <Text style={{...styles.title, textAlign: 'left'}} >{element}</Text>
             <View style={styles.table}   >
-            
-            <View style={styles.tableRowHead} >
-              <View style={{...styles.tableCol, width: "3%" }} >
-                <Text style={styles.tableCell} > No.</Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "7%" }} >
-                <Text style={styles.tableCell} > RFSI </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "5%" }} >
-                <Text style={styles.tableCell} > Tipo </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "5%" }} >
-                <Text style={styles.tableCell} > Modelo </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "17%" }} >
-                <Text style={styles.tableCell} > serie </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "8%" }} >
-                <Text style={styles.tableCell} > Inventario </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "17%" }} >
-                <Text style={styles.tableCell} > serie cargador </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "8%" }} >
-                <Text style={styles.tableCell} > Inv. cargador </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "15%" }} >
-                <Text style={styles.tableCell} > Corporación </Text> 
-              </View> 
-              <View style={{...styles.tableCol, width: "15%" }} >
-                <Text style={styles.tableCell} > Puesto </Text> 
-              </View> 
-            </View>   
+
+            <TableRowHead  listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
+                          wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} />
          {
           n[index].map((element,index,array)=>{
-           return tbAsigCorp(index+1, array[index].rfsi, array[index].tipo, array[index].modeloRadio, array[index].serie_radio, array[index].inventario_interno, 
-            array[index].serie_cargador, array[index].inventarioSpCargador, array[index].nombreCorporacion, array[index].nombrePuesto)
+          //  return tbAsigCorp(index+1, array[index].rfsi, array[index].tipo, array[index].modeloRadio, array[index].serie_radio, array[index].inventario_interno, 
+          //   array[index].serie_cargador, array[index].inventarioSpCargador, array[index].nombreCorporacion, array[index].nombrePuesto)
+          return <MapTabAsignaciones listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
+                                               wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} index={index+1} rfsi={array[index].rfsi} tipo={array[index].tipo} 
+                                               modeloRadio={array[index].modeloRadio} serie_radio={array[index].serie_radio} inventario_interno={array[index].inventario_interno} 
+                                               serie_cargador={array[index].serie_cargador} inventarioSpCargador={array[index].inventarioSpCargador} nombre_completo={array[index].nombre_completo} 
+                                               nombreCorporacion={array[index].nombreCorporacion} nombrePuesto={array[index].nombrePuesto} />
            })
          }
       </View>
@@ -322,6 +259,91 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
   }
 
 
+  const mostrarTipo=()=>{
+    tipo == 'Portatil' ? listado='TipoP': tipo == 'Movil' ? listado='TipoM': listado='TipoF'
+    {listado == 'TipoP' ?
+    (
+      wIndex   = "3%",
+      wRfsi    = "7%",
+      wTipo    = "0%",
+      wModelo  = "6%",
+      wSerieR  = "15%",
+      wInvR    = "7%",
+      wSerieC  = "15%", 
+      wInvC    = "7%",
+      wUser    = "13%",
+      wCorp    = "14%",
+      wPuesto  = "13%"
+    ) :
+    (
+      wIndex   = "3%",
+      wRfsi    = "8%",
+      wTipo    = "0%",
+      wModelo  = "8%",
+      wSerieR  = "16%",
+      wInvR    = "8%",
+      wSerieC  = "0%", 
+      wInvC    = "0%",
+      wUser    = "16%",
+      wCorp    = "21%",
+      wPuesto  = "20%"
+    )}
+    
+    for(let y=0;y<datos.length;y++){
+      
+      e= datos.filter(function(element,index,array){
+        return(
+          element.tipo == tipo
+          )
+        }) 
+        n.push(e)
+      }
+
+      // console.log(n)
+      
+      for(let o=0; o<e.length; o++){
+          n[o].sort( function (a,b){
+            if(a.nombre_completo > b.nombre_completo){
+              return 1;
+            }
+            if(a.nombre_completo < b.nombre_completo){
+              return -1;
+            }
+            return 0;
+          });
+        }
+
+        // console.log(n[0].nombre_completo)
+
+      return(
+
+            <View style={styles.section}>
+               <Text style={{...styles.title, textAlign: 'left', fontSize: 10}} >{`Listado de Radios ${tipo}`}</Text>
+            
+              <View style={styles.table} >
+
+              <TableRowHead  listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
+                              wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} />
+                
+                {
+                  n[0].map((element,index,array)=>{
+                    return <MapTabAsignaciones listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
+                                               wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} index={index+1} rfsi={array[index].rfsi} tipo={array[index].tipo} 
+                                               modeloRadio={array[index].modeloRadio} serie_radio={array[index].serie_radio} inventario_interno={array[index].inventario_interno} 
+                                               serie_cargador={array[index].serie_cargador} inventarioSpCargador={array[index].inventarioSpCargador} nombre_completo={array[index].nombre_completo} 
+                                               nombreCorporacion={array[index].nombreCorporacion} nombrePuesto={array[index].nombrePuesto} />
+                  }) 
+                }
+
+              </View>
+            </View> 
+      // : console.log('')
+      // )
+      // })
+      )
+  }
+
+/* Los portatil tienen cargador   */
   
 
  return (
@@ -329,7 +351,7 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
     <Box sx={{...customStyles, maxWidth: '1100px', maxHeight: '1100px', top: '2%', left: '20%' }}>
       <PDFViewer style={{width:"55vw", height:"75vh"}}>
         <Document>
-          <Page orientation="landscape" size="letter" style={styles.body} >
+          <Page orientation="landscape" size="letter" style={styles.body} wrap>
             <View style={styles.margen} >
               <Image  src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0]?.fk_logo_ssypc}`} style={styles.image} fixed />
                 {  
@@ -337,6 +359,8 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
                   mostrarCorp()  :
                   decide == "usuGral" ?
                   mostrarUsu() :
+                  decide == "porTipo" ?
+                  mostrarTipo()  :
                   decide=""
                 }
             </View>
