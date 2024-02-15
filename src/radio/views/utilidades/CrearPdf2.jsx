@@ -179,16 +179,21 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
                                       modeloRadio={array[index].modeloRadio} serie_radio={array[index].serie_radio} inventario_interno={array[index].inventario_interno} 
                                       serie_cargador={array[index].serie_cargador} inventarioSpCargador={array[index].inventarioSpCargador} nombre_completo={array[index].nombre_completo} 
                                       nombreCorporacion={array[index].nombreCorporacion} nombrePuesto={array[index].nombrePuesto} />
-})
-           })
-         }
-      </View>
-      </View>
-      : console.log('')
-      )
-      })
+              })
+            }
+          </View>
+          </View>
+          : null
+          )
+        })
       )
   }
+
+  
+
+
+
+
 
   const mostrarUsu=()=>{
 
