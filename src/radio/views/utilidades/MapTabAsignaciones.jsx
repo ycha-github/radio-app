@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
 
 export const MapTabAsignaciones = ({listado, wIndex, wRfsi, wTipo=0, wModelo, wSerieR, wInvR, wSerieC=0, wInvC=0, wUser=0, wCorp=0, wPuesto, index, rfsi, tipo=0,  modeloRadio, serie_radio, inventario_interno, serie_cargador=0, inventarioSpCargador=0, nombre_completo=0, nombreCorporacion=0, nombrePuesto}) => 
         {
-            console.log(listado)
             return <View key={index} style={styles.tableRow} wrap={false}>
                 <View style={{...styles.tableCol, width: wIndex }} >
                    <View style={styles.tableCell} >

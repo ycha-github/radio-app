@@ -189,7 +189,7 @@ useEffect(() => {
     setIsTargeta(false);
     OpenModal();
 }
-  const Targeta = ( event) =>  {
+  const Tarjeta = ( event) =>  {
     setNuevoPorRfsi(false)
     setAbrirPdf(true);
     setIsTargeta(true);
@@ -197,7 +197,7 @@ useEffect(() => {
 }
 
   const onSelect = ( event ) =>  {
-    console.log(event.row)
+    // console.log(event.row)
     setActiveEvent( event.row );
     setImprimir(event.row);
     setHServicio(event.row );
@@ -259,7 +259,7 @@ const columns = [
         color='secondary'
         icon={<ArticleOutlined />}
         label="Delete"
-        onClick={ Targeta }
+        onClick={ Tarjeta }
       />,
       <GridActionsCellItem 
         color='secondary'
@@ -348,11 +348,8 @@ promesa.then(()=>{
 }
 
   return (
-    <>
+    <div style={{ height: 'flex', width: '100%', flexGrow: 1 }}>
     <h2 className='colorUti'>HOJA DE SERVICIO</h2>
-    <div style={{ height: 400 , width: '100%' }}>
-    <div style={{ height: 'flex', width: '100%' }}>
-    <div style={{ flexGrow: 1 }}>
       <Box
        sx={{
         height:750,
@@ -363,9 +360,9 @@ promesa.then(()=>{
 
       }}> 
       {/* <Visibility color='warning'/> <Edit color='warning'/> <Block color='warning'/>  */}
-      { abrirPdf ===true & nuevoPorRfsi === false?<CrearPdf datoHoja={hServicio} isCartaFijo={false} target={isTargeta} formato={configReport} />: "" }
+      { abrirPdf ===true & nuevoPorRfsi === false?<CrearPdf datoHoja={hServicio} isCartaFijo={false} target={isTargeta} formato={configReport} />: null }
       {/* { abrirPdf ===false & nuevoPorRfsi === false ? <FormHojaServicio />:nuevoPorRfsi === true?<FormHojaServicioRfsi/>:"" } */}
-      { abrirPdf ===false & nuevoPorRfsi === true ? <FormHojaServicioRfsi/>:nuevoPorRfsi === true?<FormHojaServicio />:"" }
+      { abrirPdf ===false & nuevoPorRfsi === true ? <FormHojaServicioRfsi/>:nuevoPorRfsi === true?<FormHojaServicio />:null }
         {/* <FormHojaServicio/> */}
         <Stack direction="row" spacing={1} marginBottom={2}>
                 {/* <Button onClick={newRow} color={'secondary'} variant="outlined" startIcon={<AddCircleOutlineOutlined/>}>
@@ -408,9 +405,6 @@ promesa.then(()=>{
       />
        </ThemeProvider>
       </Box>
-      </div>
-        </div>
     </div>
-    </>
   );
 }

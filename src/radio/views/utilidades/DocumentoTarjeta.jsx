@@ -1,8 +1,6 @@
-
-
-import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { radioApi } from '../../../api';
-import { ServiciosPdf, DatosEquipo, DatosUsuario } from './';
+import { ServiciosPdf, DatosEquipo, DatosUsuario } from '.';
 
 
 let options = { day: 'numeric', month: 'long', year: 'numeric' }
