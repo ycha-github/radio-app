@@ -38,10 +38,13 @@ const styles = StyleSheet.create({
       borderWidth: 1, 
       borderRightWidth: 0, 
       borderBottomWidth: 0 ,
+      
     }, 
+    unbreakable: { width: '100%', height: '100%' },
     tableRow: { 
       margin: "auto", 
       flexDirection: "row",
+      
     }, 
     tableRowHead: { 
       margin: "auto", 
@@ -61,6 +64,17 @@ const styles = StyleSheet.create({
       marginTop: 5, 
       fontSize: 9,
     }, 
+    // tableRowE: { 
+    //   margin: "auto", 
+    //   flexDirection: "row",
+      
+    // }, 
+    // tableColE: { 
+    //   width: "100%", 
+    // },
+    // tableCelEl: { 
+    //   padding: '10px 0 0 0',
+    // }, 
 
     piePagina: {
       // margin: '20 50 10 50',
@@ -72,14 +86,23 @@ const styles = StyleSheet.create({
       left: 50,
       right: 50,
       marginTop:10,
-    }
+    },
+    pageNumber: {
+      position: 'absolute',
+      fontSize: 12,
+      bottom: 30,
+      left: 0,
+      right: 0,
+      textAlign: 'center',
+      color: 'grey',
+    },
   });
 
 // Create Document Component
 export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decide}, customStyles) => {
 
   const tbAsigCorp = (index, rfsi, tipo, modeloRadio, serie_radio, inventario_interno, nombre_completo, nombrePuesto) => 
-     <View key={index} style={styles.tableRow} >
+     <View wrap={false} key={index} style={styles.tableRow} >
      <View style={{...styles.tableCol, width: "3%" }} >
        <Text style={styles.tableCell} >
          {index}
@@ -115,7 +138,7 @@ export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decid
          {nombre_completo}
        </Text> 
      </View> 
-     <View style={{...styles.tableCol, width: "25%" }} >
+     <View  style={{...styles.tableCol, width: "25%" }} >
        <Text style={styles.tableCell} >
          {nombrePuesto}
        </Text> 
@@ -155,17 +178,23 @@ export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decid
     
       return(
 
-        (<View style={styles.section} wrap>
-        <Text style={{...styles.title, textAlign: 'left'}} >{tipo}</Text>
-        </View> ),
+        // (<View style={styles.section} >
+        // <Text style={{...styles.title, textAlign: 'left'}} >{tipo}</Text>
+        // </View> ),
         CorporacionesABuscar.map((element,index,array)=>{
           return (
             n[index].length !== 0 ?
-            <View key={index} style={styles.section} wrap>
-              <Text style={{...styles.title, textAlign: 'left'}} >{element}</Text>
+            <View key={index} style={styles.section} >
+              <Text   style={{...styles.title, textAlign: 'left'}} >{element}</Text>
             <View style={styles.table}   >
+            {/* <View fixed style={styles.tableRowE} >
+              <View style={styles.tableColE} >
+                <View style={styles.tableCellE} > */}
+                {/* </View>
+                </View>
+                </View> */}
             
-            <View style={styles.tableRowHead} >
+            <View fixed style={styles.tableRowHead} >
               <View style={{...styles.tableCol, width: "3%" }} >
                 <Text style={styles.tableCell} > No.</Text> 
               </View> 
@@ -277,7 +306,7 @@ export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decid
       <PDFViewer style={{width:"55vw", height:"75vh"}}>
         <Document>
           <Page orientation="landscape" size="letter" style={styles.body} >
-            <View style={styles.margen} >
+            <View  style={styles.margen} >
               <Image  src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0]?.fk_logo_ssypc}`} style={styles.image} fixed />
                 {  
                   decide == "corpGral" ?
@@ -287,7 +316,9 @@ export const CrearPdf2=({tipo, corp, datos, formato, CorporacionesABuscar, decid
                   decide=""
                 }
             </View>
-            
+            <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+        `${pageNumber} / ${totalPages}`
+      )} fixed />
           </Page>
         </Document>
       </PDFViewer>
