@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
         // margin: 1, 
         marginTop: 5, 
         fontSize: 8,
+        fontFamily: 'Helvetica-Bold',
         verticalAlign: 'super',
         textAlign: 'start',
       }, 
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
 
 export const TableRowHead=({listado, wIndex, wRfsi, wTipo=0, wModelo, wSerieR, wInvR, wSerieC=0, wInvC=0, wUser=0, wCorp=0, wPuesto}) => {
 
-   return       <View style={styles.tableRowHead} wrap={false}>
+   return       <View fixed style={styles.tableRowHead} wrap>
                   <View style={{...styles.tableCol, width: wIndex }} >
                     <View style={styles.tableCell} >
                       <Text style={styles.tableText} > No.</Text> 
@@ -75,7 +76,7 @@ export const TableRowHead=({listado, wIndex, wRfsi, wTipo=0, wModelo, wSerieR, w
                 {listado==='User' || listado==='Corp' || listado==='TipoP' ?
                   <View style={{...styles.tableCol, width: wInvC }} >
                     <View style={styles.tableCell} >
-                      <Text style={styles.tableText} > Inventario cargador </Text> 
+                      <Text style={styles.tableText} > Inventario </Text> 
                     </View> 
                   </View>
                   : null }

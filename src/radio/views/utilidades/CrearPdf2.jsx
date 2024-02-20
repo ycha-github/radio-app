@@ -22,7 +22,9 @@ const styles = StyleSheet.create({
   },
   margen: {
     margin: '0 50 0 50',
-    // border: '0px none none',
+    height: 100,
+    width:690,
+    border: '1px solid grey',
     // padding: '0 0 0 0',
   },
     // piePagina: {
@@ -36,6 +38,15 @@ const styles = StyleSheet.create({
     //   right: 50,
     //   marginTop:10,
     // },
+    pageNumber: {
+      position: 'absolute',
+      fontSize: 12,
+      bottom: 30,
+      left: 0,
+      right: 0,
+      textAlign: 'center',
+      color: 'grey',
+    },
 
   });
 
@@ -46,11 +57,11 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
   decide == "usuGral" ? 
   nombreListado = "por usuarios" : 
   (decide == "porTipo" && tipo == 'Movil') ? 
-  nombreListado = 'Móvil' : 
+  nombreListado = 'Móviles' : 
   (decide == "porTipo" && tipo == 'Fijo') ? 
-  nombreListado = 'Fijo' : 
+  nombreListado = 'Fijos' : 
   (decide == "porTipo" && tipo == 'Portatil') ? 
-  nombreListado = 'Portátil' : 
+  nombreListado = 'Portátiles' : 
   null
 
  return (
@@ -59,9 +70,11 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
       <PDFViewer style={{width:"55vw", height:"75vh"}}>
         <Document>
           <Page orientation="landscape" size="letter" style={styles.body} wrap>
-            <View style={styles.margen} >
+            <View style={styles.margen} break={false}>
               <Image  src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0]?.fk_logo_ssypc}`} style={styles.image} fixed />
-              <Text style={{...styles.title, textAlign: 'left', fontSize: 12}} fixed >{`Listado de radios ${nombreListado}`}</Text>
+              <Text style={{...styles.title, textAlign: 'left', fontSize: 12}} fixed>{`Listado de Cartas Responsivas de Radios ${nombreListado}`}</Text>
+            </View>
+            <View style={{...styles.margen, margin: '0 50 0 50', height: 420,}} break={false}>
                 {  
                   decide == "corpGral" ?
                   <MostrarCorp CorporacionesABuscar={CorporacionesABuscar} datos={datos} />  :
@@ -72,7 +85,7 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
                   null
                 }
             </View>
-            
+            <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => ( `${pageNumber} / ${totalPages}`)} fixed />
           </Page>
         </Document>
       </PDFViewer>

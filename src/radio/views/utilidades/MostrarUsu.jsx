@@ -3,7 +3,7 @@ import { MapTabAsignaciones, TableRowHead } from './';
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 8,
+        fontSize: 10,
         textAlign: 'center',
         fontFamily: 'Helvetica-Bold',
         margin: '0 0 0 0',
@@ -18,9 +18,16 @@ const styles = StyleSheet.create({
         display: "table", 
         width: "auto", 
         borderStyle: "solid", 
-        // borderTopWidth: 1, 
-        // borderLeftWidth: 1,
       }, 
+      tableRow: { 
+        flexDirection: "row",
+      },
+      tableCol: { 
+        width: "100%", 
+      },
+      tableCell: {
+        padding: '10px 0 0 0',
+      },
     });
 
 export const MostrarUsu=({UsuariosABuscar, datos})=>{
@@ -66,9 +73,9 @@ export const MostrarUsu=({UsuariosABuscar, datos})=>{
       UsuariosABuscar.map((element,index,array)=>{
         return (
           n[index].length !== 0 ?
-          <View key={index} style={styles.section} wrap>
+            <View key={index} style={styles.section} break={false}>
             <Text style={{...styles.title, textAlign: 'left'}} >{element}</Text>
-          <View style={styles.table}   >
+          <View style={styles.table}>
 
           <TableRowHead  listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
                         wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} />

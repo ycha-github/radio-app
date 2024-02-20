@@ -56,6 +56,7 @@ export const FormAsignaciones = ({usuario, radio, datoClick}, customStyles) => {
     // }, [accesoriosFiltrado])
 
     useEffect(() => {
+        datoClick == true ?
         radioApi.get('/usuarios').
             then((response) => {
                 let usuarioActivo=[]
@@ -65,22 +66,27 @@ export const FormAsignaciones = ({usuario, radio, datoClick}, customStyles) => {
                     )
                 })
                 setTableData(usuarioActivo);
-            });
-        }, []);
+            }) :
+            null
+        }, [datoClick]);
 
         useEffect(() => {
+            datoClick == true ?
             radioApi.get('/radios/filtrado').
                 then((response) => {
                     setTableSue(response.data);
-                });
-            }, []);
+                }):
+                null
+            }, [datoClick]);
 
         useEffect(() => {
+            datoClick == true ?
             radioApi.get('/vehiculos/estatus').
                 then((response) => {
                     setTableVehi(response.data);
-                });
-            }, []);
+                }):
+                null
+            }, [datoClick]);
 
    const handleInputChange = (event) => {
        setFormValues({
