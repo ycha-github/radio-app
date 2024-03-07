@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
 export const TableRowHead=({listado, wIndex, wRfsi, wTipo=0, wModelo, wSerieR, wInvR, wSerieC=0, wInvC=0, wUser=0, wCorp=0, wPuesto}) => {
 
-   return       <View fixed style={styles.tableRowHead} wrap>
+   return       <View fixed style={styles.tableRowHead} wrap={false}>
                   <View style={{...styles.tableCol, width: wIndex }} >
                     <View style={styles.tableCell} >
                       <Text style={styles.tableText} > No.</Text> 

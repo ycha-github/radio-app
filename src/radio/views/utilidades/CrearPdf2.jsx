@@ -22,9 +22,7 @@ const styles = StyleSheet.create({
   },
   margen: {
     margin: '0 50 0 50',
-    height: 100,
-    width:690,
-    border: '1px solid grey',
+    // border: '0px none none',
     // padding: '0 0 0 0',
   },
     // piePagina: {
@@ -53,9 +51,9 @@ const styles = StyleSheet.create({
 export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABuscar, decide}, customStyles) => {
   let nombreListado = "";
   decide == "corpGral" ? 
-  nombreListado = "por corporación" : 
+  nombreListado = "por Corporación" : 
   decide == "usuGral" ? 
-  nombreListado = "por usuarios" : 
+  nombreListado = "por Usuarios" : 
   (decide == "porTipo" && tipo == 'Movil') ? 
   nombreListado = 'Móviles' : 
   (decide == "porTipo" && tipo == 'Fijo') ? 
@@ -67,14 +65,12 @@ export const CrearPdf2=({tipo, datos, formato, CorporacionesABuscar, UsuariosABu
  return (
   <ModalRadio  sx={{pl:'100px'}} >
     <Box sx={{...customStyles, maxWidth: '1100px', maxHeight: '1100px', top: '2%', left: '20%' }}>
-      <PDFViewer style={{width:"55vw", height:"75vh"}}>
+      <PDFViewer style={{width:"55vw", height:"75vh"}} >
         <Document>
           <Page orientation="landscape" size="letter" style={styles.body} wrap>
             <View style={styles.margen} break={false}>
               <Image  src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0]?.fk_logo_ssypc}`} style={styles.image} fixed />
               <Text style={{...styles.title, textAlign: 'left', fontSize: 12}} fixed>{`Listado de Cartas Responsivas de Radios ${nombreListado}`}</Text>
-            </View>
-            <View style={{...styles.margen, margin: '0 50 0 50', height: 420,}} break={false}>
                 {  
                   decide == "corpGral" ?
                   <MostrarCorp CorporacionesABuscar={CorporacionesABuscar} datos={datos} />  :

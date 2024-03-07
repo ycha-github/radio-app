@@ -1,33 +1,43 @@
 import { useDispatch, useSelector } from "react-redux"; 
 import radioApi from "../../api/radioApi";
-import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent, onFiltrar,onFiltrarBateria, onFiltrarGps, onFiltrarCorporacion} from "../../store/utilidades/asignacionesSlice";
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent, onDeleteEvent, onLoadEvent, onFiltrar,onFiltrarBateria, onFiltrarGps, onFiltrarCorporacion} from "../../store/utilidades/armarRadioSlice";
 import { onShowError,clearErrorMessage } from "../../store/auth/cambiarSlice";
-export const useAsignacionesStore= () => {
+export const useArmarRadioStore= () => {
   const dispatch = useDispatch();
-  const { events, activeEvent, accesoriosFiltrado,accesoriosFiltradoBateria,accesoriosFiltradoGps,corporacionesFiltrado } = useSelector( state => state.asignaciones );
+  const { eventsarmar, activeEventarmar, accesoriosFiltrado,accesoriosFiltradoBateria,accesoriosFiltradoGps,corporacionesFiltrado } = useSelector( state => state.armarradio );
   const { user } = useSelector( state => state.auth );
   const {errorMessage} = useSelector( state => state.cambiar );
-  const setActiveEvent = ( zonasEvent ) => {
+
+  const setActiveEventarmar = ( zonasEvent ) => {
 
     dispatch( onSetActiveEvent(zonasEvent ));
   }
-  const startSavingEvent =async(zonasEvent)=>{
+  const startSavingEventarmar =async(zonasEvent)=>{
+    console.log(zonasEvent)
     //TODO: Update event
-    if(zonasEvent.idasignacion){
+    if(zonasEvent.idarmar){
       //Actualizando
-        const {data}= await  radioApi.put(`/asig_usuarios/${zonasEvent.idasignacion}`,zonasEvent);
+        const {data}= await  radioApi.put(`/armar_radios/${zonasEvent.idarmar}`,zonasEvent);
         dispatch(onUpdateEvent({...zonasEvent, user}));
-        window.location.reload(true);
+        // window.location.reload(true);
     }else{
       //creando
-      const {data}= await radioApi.post('/asig_usuarios', zonasEvent);
-      dispatch(onAddNewEvent({...zonasEvent, idasignacion:data.idasignacion, user}));
-      window.location.reload(true);
+      try{
+      const {data}= await radioApi.post('/armar_radios', zonasEvent);
+      dispatch(onAddNewEvent({...zonasEvent, idarmar:data.idarmar, user}));
+      // window.location.reload(true);
     }
+    catch (error) {
+      dispatch(onShowError(error.response.data?.message || '---'));
+      setTimeout(()=>{
+        dispatch(clearErrorMessage());
+    },5);
   }
-   const deleteEvent=async(zonasEvent, state)=>{
-    console.log(zonasEvent);
-    const {data} = await  radioApi.delete(`/asig_usuarios/${zonasEvent}`);
+  }
+}
+   const deleteEventarmar=async(zonasEvent, state)=>{
+    // console.log(zonasEvent);
+    const {data} = await  radioApi.delete(`/armar_radios/${zonasEvent}`);
   dispatch(onUpdateEvent(zonasEvent,user));
   window.location.reload(true);
     }
@@ -66,10 +76,11 @@ export const useAsignacionesStore= () => {
       console.log(error);
     }
   }
-    const startLoadingEvents= async ()=>{
+    const startLoadingEventsarmar= async ()=>{
       try {
-        const { data } = await radioApi.get('/asig_usuarios')
+        const { data } = await radioApi.get('/armar_radios')
         dispatch(onLoadEvent(data))
+      
       } catch (error) {
         console.log('Error cargando Eventos');
         console.log(error);
@@ -90,19 +101,19 @@ export const useAsignacionesStore= () => {
   return {
     // Propiedades
     errorMessage,
-    activeEvent,
-    events,
+    activeEventarmar,
+    eventsarmar,
     user,
     accesoriosFiltrado,
     accesoriosFiltradoBateria,
     accesoriosFiltradoGps,
     corporacionesFiltrado,
-    hasEventSelected: !!activeEvent,
+    hasEventSelected: !!activeEventarmar,
     // Metodos
-    deleteEvent,
-    setActiveEvent,
-    startSavingEvent,
-    startLoadingEvents,
+    deleteEventarmar,
+    setActiveEventarmar,
+    startSavingEventarmar,
+    startLoadingEventsarmar,
     startLoadingCorporacion,
     cambiarSue,
     filtrarAccesorio,

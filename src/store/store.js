@@ -4,7 +4,7 @@ import { uiSlice} from './ui/uiSlice';
 import { accesoriosSlice, corporacionesSlice, estatusSlice, marcasSlice, puestosSlice, RadiosSlice, recursosSlice, serviciosSlice, tiposSlice, usuariosSlice, vehiculosSlice, zonasSlice } from './catalogo';
 import { rolSlice, configReportesSlice, userSlice } from './administracion';
 import { cambiarSlice } from './auth/cambiarSlice';
-import { asigAccesorioSlice, asignacionesSlice, hojaServicioSlice } from './utilidades';
+import { armarRadioSlice, asigAccesorioSlice, asignacionesSlice, hojaServicioSlice } from './utilidades';
 
 //import { accesoriosSlice } from './catalogo/accesoriosSlice';
 
@@ -31,6 +31,7 @@ export const store = configureStore({
     cambiar: cambiarSlice.reducer,
     hojaServicio: hojaServicioSlice.reducer,
     asignaciones: asignacionesSlice.reducer,
+    armarradio: armarRadioSlice.reducer,
     asigAccesorio: asigAccesorioSlice.reducer,
   },
   middleware:(getDefaultMiddleware)=>getDefaultMiddleware({

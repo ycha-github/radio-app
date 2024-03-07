@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { PDFViewer, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import { MapTabAsignaciones, TableRowHead } from './';
+import { ModalRadio } from '../../components/ModalRadio';
 
 const styles = StyleSheet.create({
     title: {
@@ -8,6 +9,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica-Bold',
         margin: '0 0 0 0',
         textDecoration: 'none'
+    },
+    body: {
+      padding: '0 0 80 0',
     },
     section: {
         margin: '0 0 0 0',
@@ -39,7 +43,6 @@ export const MostrarCorp=({CorporacionesABuscar, datos})=>{
     let wCorp    = "0%";
     let wPuesto  = "15%";
 
-
   for(let y=0;y<CorporacionesABuscar.length;y++){
     
     // e= [...e,datos.filter(function(element,index,array){
@@ -65,31 +68,28 @@ export const MostrarCorp=({CorporacionesABuscar, datos})=>{
 
     
     return(
+        CorporacionesABuscar.map((element,index,array)=>{
+          return (
+            n[index].length !== 0 ?
+              <View key={index} style={styles.section} break={false}>
+                <Text style={{...styles.title, textAlign: 'left'}} >{element}</Text>
+              <View style={styles.table}>
+              <TableRowHead  listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
+                            wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} />
+            {
+              n[index].map((element,index,array)=>{
+                return <MapTabAsignaciones listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
+                                        wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} index={index+1} rfsi={array[index].rfsi} tipo={array[index].tipo} 
+                                        modeloRadio={array[index].modeloRadio} serie_radio={array[index].serie_radio} inventario_interno={array[index].inventario_interno} 
+                                        serie_cargador={array[index].serie_cargador} inventarioSpCargador={array[index].inventarioSpCargador} nombre_completo={array[index].nombre_completo} 
+                                        nombreCorporacion={array[index].nombreCorporacion} nombrePuesto={array[index].nombrePuesto} />
+              })
+            }
+            </View>
+            </View>
+            : null
+          )
+        })
 
-      CorporacionesABuscar.map((element,index,array)=>{
-        return (
-          n[index].length !== 0 ?
-
-
-          <View key={index} style={styles.section} break={false}>
-            <Text style={{...styles.title, textAlign: 'left'}} >{element}</Text>
-          <View style={styles.table}>
-
-          <TableRowHead  listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
-                        wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} />
-       {
-        n[index].map((element,index,array)=>{
-        return <MapTabAsignaciones listado={listado} wIndex={wIndex} wRfsi={wRfsi} wTipo={wTipo} wModelo={wModelo} wSerieR={wSerieR} wInvR={wInvR} wSerieC={wSerieC} 
-                                    wInvC={wInvC} wUser={wUser} wCorp={wCorp} wPuesto={wPuesto} index={index+1} rfsi={array[index].rfsi} tipo={array[index].tipo} 
-                                    modeloRadio={array[index].modeloRadio} serie_radio={array[index].serie_radio} inventario_interno={array[index].inventario_interno} 
-                                    serie_cargador={array[index].serie_cargador} inventarioSpCargador={array[index].inventarioSpCargador} nombre_completo={array[index].nombre_completo} 
-                                    nombreCorporacion={array[index].nombreCorporacion} nombrePuesto={array[index].nombrePuesto} />
-            })
-          }
-        </View>
-        </View>
-        : null
-        )
-      })
-    )
+  )
 }
