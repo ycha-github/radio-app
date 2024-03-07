@@ -1,7 +1,5 @@
-import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
-import { Box } from '@mui/material';
-import { ModalRadio } from '../../components/ModalRadio';
-// import { MostrarCorp } from './';
+import { Document, Image, PDFViewer, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { ModalRadio } from '../../../components/ModalRadio';
 
 
 const styles = StyleSheet.create({
@@ -49,7 +47,9 @@ const styles = StyleSheet.create({
 
   });
 
-export const CrearPdf2=({tipo, datos, CorporacionesABuscar, UsuariosABuscar, decide}, customStyles) => {
+
+// export const CrearPdf2=()=>({tipo, datos, formato, CorporacionesABuscar, UsuariosABuscar, decide}, customStyles) => {
+export const CrearPdf3=()=>(
   // let nombreListado = "";
   // decide == "corpGral" ? 
   // nombreListado = "por corporación" : 
@@ -63,40 +63,35 @@ export const CrearPdf2=({tipo, datos, CorporacionesABuscar, UsuariosABuscar, dec
   // nombreListado = 'Portátiles' : 
   // null
 
- return (
+
   <ModalRadio  sx={{pl:'100px'}} >
-    <Box sx={{...customStyles, maxWidth: '1100px', maxHeight: '1100px', top: '2%', left: '20%' }}>
-      
+     {/* <Box sx={{...customStyles, maxWidth: '1100px', maxHeight: '1100px', top: '2%', left: '20%' }}> */}
+      <PDFViewer style={{width:"55vw", height:"75vh"}}> 
         <Document>
-          <Page orientation="landscape" size="letter" style={styles.body} wrap>
-            <View style={styles.margen} break={false}>
+          <Page orientation="landscape" size="letter" style={styles.body}>
+            {/* <View style={styles.margen} > */}
+            <Text style={styles.title}>Don Quijote de la Mancha</Text>
               {/* <Image  src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0]?.fk_logo_ssypc}`} style={styles.image} fixed /> */}
               {/* <Text style={{...styles.title, textAlign: 'left', fontSize: 12}} fixed>{`Listado de Cartas Responsivas de Radios ${nombreListado}`}</Text> */}
                 {/* {  
-                  decide == "corpGral" ? */}
-                  {/* <MostrarCorp CorporacionesABuscar={CorporacionesABuscar} datos={datos} />   */}
-                {/* //   :
-                //   decide == "usuGral" ?
-                //   <MostrarUsu UsuariosABuscar={UsuariosABuscar} datos={datos}/> :
-                //   decide == "porTipo" ?
-                //   <MostrarTipo tipo={tipo} datos={datos} />  :
-                //   null
-                // } */}
-            </View>
+                  decide == "corpGral" ?
+                  <MostrarCorp CorporacionesABuscar={CorporacionesABuscar} datos={datos} />  :
+                  decide == "usuGral" ?
+                  <MostrarUsu UsuariosABuscar={UsuariosABuscar} datos={datos}/> :
+                  decide == "porTipo" ?
+                  <MostrarTipo tipo={tipo} datos={datos} />  :
+                  null
+                } */}
+            {/* </View> */}
             {/* <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => ( `${pageNumber} / ${totalPages}`)} fixed /> */}
           </Page>
         </Document>
-      
-    </Box>
-  </ModalRadio>
- )
- }
+      </PDFViewer>
+    {/* </Box> */}
+  //  </ModalRadio>
+ 
+);
 
-
- export const blop= async ()=>{
-  const { pdf } = await import('@react-pdf/renderer');
-  pdf(CrearPdf2).toBlob();
-}
 
 
 

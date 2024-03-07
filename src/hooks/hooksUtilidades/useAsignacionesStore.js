@@ -70,7 +70,6 @@ export const useAsignacionesStore= () => {
       try {
         const { data } = await radioApi.get('/asig_usuarios')
         dispatch(onLoadEvent(data))
-      
       } catch (error) {
         console.log('Error cargando Eventos');
         console.log(error);

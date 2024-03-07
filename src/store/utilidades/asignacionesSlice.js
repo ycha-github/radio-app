@@ -57,7 +57,6 @@ export const asignacionesSlice = createSlice({
 
     },
     onLoadEvent:(state,{payload=[]})=>{
-        //console.log(payload)
       state.isLoadingEvents= false;
       //state.events=  payload;
       payload.forEach(event=>{

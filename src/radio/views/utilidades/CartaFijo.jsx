@@ -1,17 +1,9 @@
 
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import { DatosAsignacion } from './DatosAsignacion';
-import { radioApi } from '../../../api';
-
-
 
 // Create styles
 const styles = StyleSheet.create({
-    page: {
-      // flexDirection: 'row',
-      // margin: '50 50 50 50',
-      // position: 'relative'
-    },
     title: {
       fontSize: 20,
       textAlign: 'center',
@@ -269,21 +261,21 @@ export const CartaFijo = ({datos, formato}) => {
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
-                {datos.titulo + ' ' + datos.nombre_completo}
+                {`${datos.titulo} ${datos.nombre_completo}`}
                 </Text>
               </View>
             </View>
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
-                {formato[0].titulorev + ' ' + formato[0].nombre_revisor}
+                {`${formato[0].titulorev} ${formato[0].nombre_revisor}`}
                 </Text>
               </View>
             </View>
             <View style={styles.tableCol2}> 
               <View style={styles.tableCell2}>
                 <Text style={styles.text4 }> 
-                {formato[0].titulores + ' ' + formato[0].nombre_responsable}
+                {`${formato[0].titulores} ${formato[0].nombre_responsable}`}
                 </Text>
               </View>
             </View>

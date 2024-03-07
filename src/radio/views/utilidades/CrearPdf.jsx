@@ -1,15 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import { PDFViewer} from '@react-pdf/renderer';
 import { Box } from '@mui/material';
 import { ModalRadio } from '../../components/ModalRadio';
-import { CartaFijo } from './CartaFijo';
-import { ImprimirHServicio } from './ImprimirHServicio';
-import { ImpReporteCorp } from './ImpReporteCorp';
-import { DocumentoTarjeta } from './DocumetoTargeta';
+import { CartaFijo, DocumentoTarjeta, ImprimirHServicio } from './';
 
 
 // Create Document Component
-export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,target,isReporte,CorporacionesABuscar},customStyles) => {
+export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,target},customStyles) => {
 
  return (
   <ModalRadio  >
@@ -19,8 +16,6 @@ export const CrearPdf=({datos, datoHoja, formato,isCartaFijo,target,isReporte,Co
   {
     isCartaFijo===true ?
     (<CartaFijo datos={datos} formato={formato} />) :
-    isReporte ===true ?
-    (<ImpReporteCorp datos={datos} formato={formato} CorporacionesABuscar={CorporacionesABuscar} />) :
     target ===true ?
     (<DocumentoTarjeta datos={datoHoja} formato={formato}/>):
     (<ImprimirHServicio datos={datoHoja} formato={formato} />) 
