@@ -178,6 +178,7 @@ console.log(activeEvent)
                     ['serie']: response.data[0].serie,
                     ['inventario_interno']: response.data[0].inventario_interno,
                     ['fk_idasignacion_ur']: response.data[0].idasignacion,
+                    ['rfsi']: response.data[0].rfsi,
                     ['serie_bateria']: (response.data[0]?.serie_bateria== undefined)? "" : response.data[0].serie_bateria,
                     // ['inventario_segpub_bateria']: response.data[0].inventario_sp_bateria,
                     ['serie_cargador']: (response.data[0]?.serie_cargador == undefined)? "" : response.data[0].serie_cargador,
@@ -376,7 +377,7 @@ console.log(activeEvent)
         <>
             <ModalRadio >
                 <Box sx={{ ...customStyles, maxWidth: '900px' }}>
-                    <Typography variant='h5' color={'secondary'} sx={{ pl: 4 }}> {isActualizar ? 'Actualizar Hoja de Servicios' : 'Nueva Hoja de Servicios por RFSI'}</Typography>
+                    <Typography variant='h5' color={'secondary'} sx={{ pl: 4 }}> {isActualizar ? 'Actualizar Hoja de Servicios por RFSI' : 'Nueva Hoja de Servicios por RFSI'}</Typography>
                     <Box overflow={'scroll'} maxHeight={650} sx={{ border: '1px solid', borderRadius: 2, borderColor: 'rgb(192, 192, 192)', ml: 1, mb: 1, mt: 2, pl: 1 }} >
                         <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> CENTRO DE MANDO Y COMUNICACIONES C4 </b> </Typography>
                         <Typography sx={{ textAlign: 'center', fontSize: '16px', }} > <b> DIRECCIÓN TÉCNICA </b> </Typography>
@@ -412,10 +413,9 @@ console.log(activeEvent)
                                                             value={formValues}
                                                             inputValue={inputValue2}
                                                             onChange={(event, newFormValues2) => {
-                                                                console.log(newFormValues2)
                                                                 setFormValues({
                                                                     ...formValues,
-                                                                    //['fk_idasignacion_ur']: newFormValues2.idasignacion,
+                                                                    ['fk_idasignacion_ur']: newFormValues2.idasignacion,
                                                                     ['rfsi']: newFormValues2.rfsi,
                                                                     ['tipo']: newFormValues2.tipo,
                                                                     ['serie']: newFormValues2.serie,
@@ -428,16 +428,13 @@ console.log(activeEvent)
                                                                 }}
                                                                 onInputChange={(e, newInputValue2) => {
                                                                     console.log(newInputValue2)
-                                                                    //setInputValue2(newInputValue2)
+                                                                //     //setInputValue2(newInputValue2)
                                                                     formValues?.tipo == ""? setInputValue2("")
                                                                 :
-                                                                setInputValue2(
-                                                                    newInputValue2
-                                                                )
-                                                                    selectAsignacionesPorSoloRfsi(newInputValue2)
+                                                                setInputValue2(newInputValue2)
+                                                                selectAsignacionesPorSoloRfsi(newInputValue2)
                                                                 }}
-                                                                
-                                                                
+  
                                                             renderInput={(params) => <TextField  {...params} variant="outlined" label="RFSI" />}
                                                         />
                                                     </Grid>

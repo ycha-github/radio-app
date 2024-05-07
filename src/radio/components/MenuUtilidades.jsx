@@ -28,6 +28,7 @@ export const MenuUtilidades = () => {
       icon: <PlagiarismIcon color={ iconColorUti } />, 
       path: 'consultas',
     },
+    
     //{  
     //  text: 'Historial de entradas', 
     //  icon: <Assignment color={ iconColorUti } />, 

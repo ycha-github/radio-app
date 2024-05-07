@@ -1,14 +1,14 @@
-import  { useEffect, useState,Suspense } from "react";
+import  { useEffect, useState,Suspense,lazy } from "react";
 import { Grid, FormControlLabel, Box, Radio, FormControl, FormLabel, RadioGroup, Button, MenuItem, Checkbox, ListItemText, InputLabel, Select, OutlinedInput } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useModalHook } from "../../../hooks/useModalHook";
-import { CrearPdf2 } from "./CrearPdf2";
+import {CrearPdf2 } from "./CrearPdf2";
 import { useAsync } from 'react-use';
 import { radioApi } from "../../../api";
 import { useAsignacionesStore } from "../../../hooks/hooksUtilidades/useAsignacionesStore";
 import { PrintOutlined, CachedOutlined } from "@mui/icons-material";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-const{ RenderedPDFViewer }= await import ("./pdfConfig/RenderedPDFViewer");
+const RenderedPDFViewer =lazy(()=> import ("./pdfConfig/RenderedPDFViewer"));
 import { CrearPdf3 } from "./pdfConfig/CrearPdf3";
 
 const ITEM_HEIGHT = 48;
@@ -67,15 +67,16 @@ export const Consultas= ()=> {
         setConfigReport(response.data);
       });
     }, []);
-
+    useEffect(() => {
     let f=[]
-    const formarArrayCorp =()=>{
+    // const formarArrayCorp =()=>{
     for ( let i = 0; i < buscarCorporaciones.length; i++) {
       f.push(buscarCorporaciones[i]?.nombreCorporacion);
-    } 
+    // } 
     setArregloCorp(f);
   }
-
+}, []);
+console.log(arregloCorp)
   let u=[]
     const formarArrayUsu =()=>{
     for ( let i = 0; i < buscarUsuarios.length; i++) {
@@ -89,9 +90,10 @@ export const Consultas= ()=> {
     // setAbrirPdf(true);
     // setAbrirPdfReporte(true);
     setReporte('corpGral');
+    
     // OpenModal();
     formarArrayCorp();
-    
+    // setPoderver(true)
   }
 
   const mostrarPdfReporteUsu = ( event) =>  {
@@ -134,9 +136,9 @@ export const Consultas= ()=> {
     setValue(event.target.value);
   };
   const llenar = (event) => {
-    
-    setPoderver(true)
-    OpenModal(true)
+
+    // setPoderver(true)
+    // OpenModal(true)
   };
   
 
@@ -147,8 +149,8 @@ export const Consultas= ()=> {
     <>
       <h2 className='colorUti'>CONSULTAS</h2>
       <Grid container justifyContent="center" >
-        <Box  height={755} width={1625} className="bordeCheck" >
-          <Grid sx={{pt:5, pl:5, pb:5}}>
+        <Box  height={700} width={1625} className="bordeCheck" >
+          <Grid sx={{ pt:3, pl:5 }}>
             <FormControl sx={{ border: 'none', mb: 1, width: 600 }}>
               <InputLabel id="demo-multiple-checkbox-label" color={'secondary'} >Reporte corporaciones</InputLabel>
               <Select
@@ -183,8 +185,8 @@ export const Consultas= ()=> {
                 Limpiar
              </Button>
           </Grid>
-          <Grid sx={{pt:5, pl:5, pb:5}}>
-            <FormControl sx={{ border: 'none', mb: 1, width: 600 }}>
+          <Grid sx={{pt:2, pl:5, pb: 2}}>
+            <FormControl sx={{ border: 'none', mb: 1, width: 400 }}>
               <InputLabel id="demo-multiple-checkbox-label" color={'secondary'} >Reporte usuarios</InputLabel>
               <Select
                 //disabled={isVer}
@@ -214,8 +216,8 @@ export const Consultas= ()=> {
              <Button sx={{height:'56px'}}  onClick={mostrarPdfReporteUsu} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
                 Por Usuario
               </Button>
-          </Grid>
-          <Grid item sx={{ pl:5, pb:5}}>
+            </Grid>
+          <Grid item  xs={3} sx={{ pl:5 }}>
             <FormControl sx={{color: 'rgb(78,54,122)'}} >
               <FormLabel id="demo-controlled-radio-buttons-group" sx={{color: 'rgb(78,54,122)',fontWeight: 'bold', fontSize:'16px' }}  >
                 Tipos de radios
@@ -235,31 +237,47 @@ export const Consultas= ()=> {
               <Button sx={{height:'56px', ml: 5, mt: 6}}  onClick={mostrarPdfReporteTipo} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
                 Por Tipo
               </Button>
-              <Button sx={{height:'56px', ml: 5, mt: 6}}  onClick={llenar} color={'secondary'} variant="outlined" startIcon={<PrintOutlined/>}>
-                llenar
-              </Button>
               </Grid>
-              
-                  
-              <CrearPdf2 tipo={value} datos={asignaciones-length !==0?asignaciones: ""} formato={configReport} CorporacionesABuscar={ corporacionesArray.length !== 0 ? corporacionesArray : arregloCorp }  UsuariosABuscar={ usuariosArray.length !== 0 ? usuariosArray : arregloUsu } decide={reporte} />    
-            
+              <Grid item  xs={6} sx={{ float: "rigth", position: "relative", right: -650, top: -220 }}>
+              <Suspense fallback={<div>Cargando botón...</div>}>
+                <RenderedPDFViewer  style={{ backgroundColor: 'grey', width: '950px', height: '560px' }} tipo={value} datos={asignaciones} formato={configReport} CorporacionesABuscar={ corporacionesArray.length !== 0 ? corporacionesArray : arregloCorp }  UsuariosABuscar={ usuariosArray.length !== 0 ? usuariosArray : arregloUsu } decide={reporte} />
+                </Suspense>
+              </Grid>
+              {/* <CrearPdf2 tipo={value} datos={asignaciones} formato={configReport} CorporacionesABuscar={ corporacionesArray.length !== 0 ? corporacionesArray : arregloCorp }  UsuariosABuscar={ usuariosArray.length !== 0 ? usuariosArray : arregloUsu } decide={reporte} aun={"asd"} />      */}
+              {/* {
+                poderver == true ?
+                <>
+               </>
+              :null
+            } */}
+            {/* <button
+        onClick={async () => {
+          const { blop } = await import('./pdfConfig/renderPDF');
+          const blob = await blop();
+          saveAs(blob, 'test.pdf');
+        }}
+      >
+        Download
+      </button> */}
+         
+          
               {/* {llenar().then(
       // setPoderver(true)
     )} */}
     {/* <RenderedPDFViewer/> */}
-             
+    
               {/* <CrearPdf3/> */}
               {/* <Suspense  fallback={ <CrearPdf3/>}> */}
                      
                 {/* </Suspense> */}
-                {poderver == true ? <RenderedPDFViewer/> : null }
+                {/* {poderver == true ? <RenderedPDFViewer/> : null } */}
              
                 
             
               {/* <div>
-    <PDFDownloadLink document={<CrearPdf2 tipo={value} datos={asignaciones} formato={configReport} CorporacionesABuscar={ corporacionesArray.length !== 0 ? corporacionesArray : arregloCorp }  UsuariosABuscar={ usuariosArray.length !== 0 ? usuariosArray : arregloUsu } decide={reporte} />} fileName="somename.pdf">
+    <PDFDownloadLink document={<CrearPdf2  />} fileName="somename.pdf">
       {({ blob, url, loading, error }) =>
-        loading ? <Button color="error">Loading document... </Button> : <Button color="error">Download now! </Button>
+        loading ? <Button color="error" >Loading document... </Button> : <Button color="error">Download now! </Button>
       }
     </PDFDownloadLink>
   </div> */}

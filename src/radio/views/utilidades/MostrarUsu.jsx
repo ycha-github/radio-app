@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from '@react-pdf/renderer';
-import { MapTabAsignaciones, TableRowHead } from './';
+import { TableRowHead } from './TableRowHead';
+import { MapTabAsignaciones } from './MapTabAsignaciones';
+
 
 const styles = StyleSheet.create({
     title: {

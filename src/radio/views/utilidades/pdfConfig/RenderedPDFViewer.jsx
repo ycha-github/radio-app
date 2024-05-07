@@ -1,19 +1,24 @@
 import { useDeferredValue } from 'react';
 import { useRenderPDF } from './useRenderPDF';
-import { ModalRadio } from '../../../components/ModalRadio';
-import { Suspense } from 'react';
-import { CrearPdf3 } from './CrearPdf3';
 
-export const RenderedPDFViewer = ({
+export default function RenderedPDFViewer ({
   style,
   className,
   innerRef,
-  showToolbar = false,
+  tipo,
+  formato,
+  datos,
+  CorporacionesABuscar,
+  UsuariosABuscar,
+  decide,
+  showToolbar = true,
   ...props
-}) => {
-  const text = useDeferredValue();
-  const { url, loading, error } = useRenderPDF();
-
+}) {
+  const datosasig = useDeferredValue({datos});
+  const corporaciones = useDeferredValue({CorporacionesABuscar});
+  // console.log(decide)
+  const { url, loading, error } = useRenderPDF({tipo,formato,datosasig,corporaciones,UsuariosABuscar,decide});
+// console.log(loading)
   const src = url ? `${url}#toolbar=${showToolbar ? 1 : 0}` : null;
   if (loading)
     return (
@@ -37,8 +42,7 @@ export const RenderedPDFViewer = ({
   }
 
   return (
-   
-//    <ModalRadio>
+
     <iframe
       // @ts-ignore
       src={src}
@@ -47,7 +51,7 @@ export const RenderedPDFViewer = ({
       style={style}
       className={className}
       {...props}
+      
     />
-    //  </ModalRadio>
   );
 };
