@@ -89,16 +89,16 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 
 const columns =  [
   
-  { field: 'idaccesorios', headerClassName: "super", headerName: 'ID',width: 50,  },
+  { field: 'idaccesorios', headerClassName: "super", headerName: 'ID',width: 100,  },
   { field: 'accesorio', headerClassName: "super", headerName: 'Tipo Accesorio',width: 120,  },
-  { field: 'serie_bateria', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie Batería',width: 190 },
-  { field: 'serie_cargador', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie Cargador',width: 190 },
-  { field: 'serie_gps', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie GPS',width: 190 },
-  { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marca', width: 190 },
+  { field: 'serie_bateria', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie Batería',width: 230 },
+  { field: 'serie_cargador', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie Cargador',width: 230 },
+  { field: 'serie_gps', valueGetter: ({ value }) => value==="" ? " ----- " : value===null ? " ----- " : value=value, headerClassName: "super", headerName: 'Serie GPS',width: 230 },
+  { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marca', width: 230 },
   { field: 'nombreModelos',headerClassName: "super", headerName: 'Modelo', width: 160 },
   { field: 'inventario_interno',headerClassName: "super", headerName: 'Inventario Interno', flex: 1, minWidth: 170 },
-  { field: 'inventario_segpub',headerClassName: "super",headerName: 'Inv. Seg. Pub.',flex: 1, minWidth: 170 },
-  { field: 'contrato_compra',headerClassName: "super",headerName: 'Contrato',flex: 1, minWidth: 130 },
+  { field: 'inventario_segpub',headerClassName: "super",headerName: 'Inv. Seg. Pub.',flex: 1, minWidth: 230 },
+  { field: 'contrato_compra',headerClassName: "super",headerName: 'Contrato',flex: 1, minWidth: 230 },
   { field: 'observaciones',headerClassName: "super",headerName: 'Observaciones',flex: 1, minWidth: 170 },
   { field: 'fecha_recepcion',headerClassName: "super",headerName: 'Fecha de Recepcion',flex: 1, minWidth: 150 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion', flex: 1, minWidth: 150 },
@@ -153,6 +153,7 @@ const columns =  [
             <ThemeProvider theme={theme}>
       <StripedDataGrid
         onCellClick={onSelect}
+        getRowHeight={() => 'auto'}
         getRowId={(row) => row.idaccesorios}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'

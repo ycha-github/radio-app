@@ -75,7 +75,7 @@ export const RecursoCompras = () => {
 const columns = [
 
   { field: 'idrecursoCompras', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
-  { field: 'nombreRecursoCompra',headerClassName: "super", headerName: 'Recurso', flex: 1, minWidth: 90 },
+  { field: 'nombreRecursoCompra',headerClassName: "super", headerName: 'Recurso', flex: 1, minWidth: 120 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
   { field: 'estatus', type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },

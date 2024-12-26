@@ -15,11 +15,11 @@ import { useArmarRadioStore } from '../../../hooks/hooksUtilidades/useArmarRadio
 import { FormArmarRadio } from '../../components/formUtilidades/FormArmarRadio';
 import { useCambiarStore } from '../../../hooks/useCambiarStore';
 
-const colorClose=()=>{
-  return <Close color='error'/>
+const colorClose = () => {
+  return <Close color='error' />
 }
-const colorDone=()=>{
-  return <Done color='success'/>
+const colorDone = () => {
+  return <Done color='success' />
 }
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
@@ -114,6 +114,7 @@ function a11yProps(index) {
     setActiveEvent({
       usuarios_idusuarios:null,
       fk_armar:null,
+      observaciones:null,
       // rfsi:"",
       //  radios_idradios:"",
       //  fk_accesorio_bateria: null,
@@ -297,23 +298,23 @@ const columns =  [
   
   
 
-  { field: 'idasignacion', headerClassName: "super", headerName: 'ID',width: 60, },
+  { field: 'idasignacion', headerClassName: "super", headerName: 'ID',width: 100, },
   { field: 'tipo',headerClassName: "super", headerName: 'Tipo Radio', width: 90 },
   { field: 'rfsi',headerClassName: "super", headerName: 'RFSI' , width: 110 },
   { field: 'modeloRadio',headerClassName: "super", headerName: 'Modelo' , width: 100 },
   { field: 'serie_radio',headerClassName: "super", headerName: 'Serie Radio', width: 220 },
-  { field: 'inventario_interno',headerClassName: "super", headerName: 'Inv. Int. Radio', width: 100, },
+  { field: 'inventario_interno',headerClassName: "super", headerName: 'Inv. Int. Radio', width: 150, },
   { field: 'nombre_completo', headerClassName: "super", headerName: 'Asignado a' ,width: 250,  },
-  { field: 'nombrePuesto', headerClassName: "super", headerName: 'Puesto' ,width: 430,  },
+  { field: 'nombrePuesto', headerClassName: "super", headerName: 'Puesto' ,width: 230,  },
   { field: 'serie_cargador',headerClassName: "super", headerName: 'Serie Cargador',width: 220 },
-  { field: 'inventarioSpCargador',headerClassName: "super", headerName: 'Inv. Cargador',width: 100 },
-  { field: 'unidad',headerClassName: "super",headerName: 'Unidad', width: 90 },
-  { field: 'nombreCorporacion', headerClassName: "super", headerName: 'Corporacion',width: 475,  },
-  { field: 'nombreRecursoCompra', headerClassName: "super", headerName: 'Recurso Compra',width: 475,  },
-  { field: 'nombrePropietario', headerClassName: "super", headerName: 'Propietario',width: 475,  },
-  { field: 'ubicacion', headerClassName: "super", headerName: 'Ubicación',width: 100,  },
-  { field: 'situacion', headerClassName: "super", headerName: 'Situación',width: 100,  },
-  { field: 'observaciones', headerClassName: "super", headerName: 'Observaciones',width: 475,  },
+  { field: 'inventarioSpCargador',headerClassName: "super", headerName: 'Inv. Cargador',width: 150 },
+  { field: 'unidad',headerClassName: "super",headerName: 'Unidad', width: 100 },
+  { field: 'nombreCorporacion', headerClassName: "super", headerName: 'Corporacion',width: 275,  },
+  { field: 'nombreRecursoCompra', headerClassName: "super", headerName: 'Recurso Compra',width: 275,  },
+  { field: 'nombrePropietario', headerClassName: "super", headerName: 'Propietario',width: 275,  },
+  { field: 'ubicacion', headerClassName: "super", headerName: 'Ubicación',width: 120,  },
+  { field: 'situacion', headerClassName: "super", headerName: 'Situación',width: 120,  },
+  { field: 'observaciones', headerClassName: "super", headerName: 'Observaciones',width: 375,  },
   { field: 'estatus',type: 'boolean',headerClassName: "super",headerName: 'Estatus',flex: 2, minWidth: 70 },
   {
     field: 'actions',
@@ -439,6 +440,7 @@ const columnsarmar =  [
                     sortModel: [{ field: 'idasignacion', sort: 'desc' }],
                   },
                 }}
+                
                 getRowHeight={() => 'auto'}
                 getRowId={(row) => row.idasignacion}
                 getRowClassName={(params) =>

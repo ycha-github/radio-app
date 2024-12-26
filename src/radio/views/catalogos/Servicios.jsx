@@ -129,6 +129,7 @@ const columns = [
             <ThemeProvider theme={theme}>
       <StripedDataGrid
         onCellClick={onSelect}
+        getRowHeight={() => 'auto'}
         getRowId={(row) => row.idservicios}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'

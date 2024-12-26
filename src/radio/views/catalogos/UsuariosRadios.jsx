@@ -104,16 +104,16 @@ export const UsuariosRadios= () => {
 
 const columns = [
 
-  { field: 'idusuarios', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
+  { field: 'idusuarios', headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 120 },
   { field: 'nombre',headerClassName: "super", headerName: 'Nombre', flex: 1, minWidth: 130 },
   { field: 'apellido_pat',headerClassName: "super", headerName: 'Apellido Paterno', flex: 1, minWidth: 130 },
   { field: 'apellido_mat',headerClassName: "super", headerName: 'Apellido Materno', flex: 1, minWidth: 130 },
-  { field: 'nombrePuesto',headerClassName: "super", headerName: 'Puesto', flex: 1, minWidth: 150 },
-  { field: 'cuip',headerClassName: "super", headerName: 'Cuip', flex: 1, minWidth: 190 },
-  { field: 'clave_elector',headerClassName: "super", headerName: 'Clave Elector', flex: 1, minWidth: 190 },
+  { field: 'nombrePuesto',headerClassName: "super", headerName: 'Puesto', flex: 1, minWidth: 200 },
+  { field: 'cuip',headerClassName: "super", headerName: 'Cuip', flex: 1, minWidth: 230 },
+  { field: 'clave_elector',headerClassName: "super", headerName: 'Clave Elector', flex: 1, minWidth: 200 },
   //{ field: 'imagen_ine',headerClassName: "super", headerName: 'Imagen Ine', flex: 1, minWidth: 90 },
   //{ field: 'imagen_cuip',headerClassName: "super", headerName: 'Imagen Cuip', flex: 1, minWidth: 100 },
-  { field: 'titulo',headerClassName: "super", headerName: 'Titulo', flex: 1, minWidth: 130 },
+  { field: 'titulo',headerClassName: "super", headerName: 'Titulo', flex: 1, minWidth: 230 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 130 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 130 },
   { field: 'estatus',type: 'boolean', headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
@@ -200,6 +200,7 @@ const columns = [
             <ThemeProvider theme={theme}>
       <StripedDataGrid
         onCellClick={onSelect}
+        getRowHeight={() => 'auto'}
         getRowId={(row) => row.idusuarios}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'

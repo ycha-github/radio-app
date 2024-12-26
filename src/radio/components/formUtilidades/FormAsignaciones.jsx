@@ -16,6 +16,7 @@ export const FormAsignaciones = ({usuario, radio, datoClick}, customStyles) => {
    const [formValues, setFormValues] = useState({
        usuarios_idusuarios:null,
        fk_armar:null,
+       observaciones:null,
     //    rfsi:"",
     //    radios_idradios:"",
     //    fk_accesorio_bateria:null,
@@ -74,12 +75,12 @@ export const FormAsignaciones = ({usuario, radio, datoClick}, customStyles) => {
         }, [datoClick]);
 
         useEffect(() => {
-            // datoClick == true ?
+            datoClick == true ?
             radioApi.get('/armar_radios/estatus').
                 then((response) => {
                     setTableSue(response.data);
-                })
-            }, []);
+                }):console.log("sfsdfsdfsdf")
+            }, [datoClick]);
             console.log(tableSue)
 
    const handleInputChange = (event) => {
@@ -182,11 +183,11 @@ export const FormAsignaciones = ({usuario, radio, datoClick}, customStyles) => {
                                     }}
                                     options={tableSue}
                                     getOptionLabel={(tableSue) => tableSue.rfsi || ""}
-                                    isOptionEqualToValue={(option, value) =>{
-                                       option.rfsi === value.rfsi
-                                       console.log(option.rfsi);
-                                       console.log(value.rfsi);
-                                    }}
+                                    // isOptionEqualToValue={(option, value) =>{
+                                    //    option.rfsi === value.rfsi
+                                    //    console.log(option.rfsi);
+                                    //    console.log(value.rfsi);
+                                    // }}
                                     renderInput={(params) => <TextField  {...params} variant="outlined" label="Serie Radio" />}       
                             />
                             </Grid>):
@@ -206,6 +207,20 @@ export const FormAsignaciones = ({usuario, radio, datoClick}, customStyles) => {
                                 />
                                 </Grid>)
                             }   
+                            <Grid item xs={12}>
+                                                    <TextField
+                                                        disabled={isVer}
+                                                        name='observaciones'
+                                                        sx={{ border: 'none', mb: 1, width: 680, pr: 1 }}
+                                                        value={formValues.observaciones}
+                                                        onChange={handleInputChange}
+                                                        variant="outlined"
+                                                        multiline
+                                                        label="Observaciones"
+                                                        rows={3}
+                                                        inputProps={{ maxLength: 2000 }}
+                                                    />
+                                                </Grid>
                            
                             {/* <Grid item xs={6}>
                                 <TextField

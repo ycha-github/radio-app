@@ -17,6 +17,9 @@ export const useHojaServicioStore= () => {
 
     dispatch( onSetActiveEvent(zonasEvent ));
   }
+  const limpiarActiveEvent=()=>{
+    dispatch( onSetActiveEvent(""));
+  };
 //  let folio;
 //  let fecha;
 //   const consultarUltimoRegistro= async ()=>{
@@ -61,10 +64,20 @@ let foto1;
     if(zonasEvent.idhojaservicios){
       
       //Actualizando
+      try{
         const {data}= await promesa.then(()=>{ return radioApi.put(`/hojasservicios/${zonasEvent.idhojaservicios}`,{...zonasEvent, fk_foto1:foto1, fk_foto2:foto2})});
         dispatch(onUpdateEvent({...zonasEvent, user}));
         window.location.reload(true);
-    
+      }
+      catch (error) {
+        dispatch(onShowError(error.response.data?.message || '---'));
+        setTimeout(()=>{
+          dispatch(clearErrorMessage());
+      },5);
+      //navigate('../hoja-servicio')
+   
+    }
+
     }else{
       //creando
       try{
@@ -109,6 +122,7 @@ let foto1;
     hasEventSelected: !!activeEvent,
     // Metodos
     //consultarUltimoRegistro,
+    limpiarActiveEvent,
     deleteEvent,
     setActiveEvent,
     startSavingEvent,

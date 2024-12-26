@@ -80,7 +80,7 @@ const columns = [
 
   { field: 'idpuesto', headerClassName: "super", headerName: 'ID', minWidth: 90 },
   { field: 'nombre',headerClassName: "super", headerName: 'Puesto', flex: 1, minWidth: 90 },
-  { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Corporacion', minWidth: 520 },
+  { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Corporacion', minWidth: 230 },
   { field: 'createdAt',headerClassName: "super",headerName: 'Fecha de creacion',flex: 1, minWidth: 90 },
   { field: 'updatedAt',headerClassName: "super",headerName: 'Fecha de actualizacion',flex: 1, minWidth: 90 },
   { field: 'estatus',type: 'boolean',headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
@@ -131,6 +131,7 @@ const columns = [
             <ThemeProvider theme={theme}>
       <StripedDataGrid
         onCellClick={onSelect}
+        getRowHeight={() => 'auto'}
         getRowId={(row) => row.idpuesto}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'

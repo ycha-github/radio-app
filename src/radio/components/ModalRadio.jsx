@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import Modal from 'react-modal';
 import { useModalHook } from '../../hooks/useModalHook';
+import { useHojaServicioStore } from '../../hooks/hooksUtilidades/useHojaServicioStore';
 
 const customStyles = {
   content: {
@@ -18,9 +19,12 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export const ModalRadio = ({ children }) => {
+ const {limpiarActiveEvent}=useHojaServicioStore;
+
   const {isModalOpen, CloseModal,mostrarGuardar}= useModalHook();
   const cambiar3=()=>{
   CloseModal();
+  limpiarActiveEvent()
   mostrarGuardar();
 }
   return (

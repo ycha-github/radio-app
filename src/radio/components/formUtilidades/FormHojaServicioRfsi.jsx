@@ -1067,6 +1067,7 @@ console.log(activeEvent)
                                                   name = "fecha_entrega"
                                                   //inputFormat="DD/MM/YYYY HH:mm"
                                                   color="secondary"
+                                                  ampm={false}
                                                   value={dayjs(formValues.fecha_entrega)}
                                                   onChange={(newValue) => {
                                                     // console.log(newValue);
@@ -1078,7 +1079,7 @@ console.log(activeEvent)
                                                     let options = { day: '2-digit', month: '2-digit', year: 'numeric' }
                                                     let optionsTime={h24: true, hour:'2-digit', minute:'2-digit', second:'2-digit'}
                                                     let fechaAsignacion = y.toLocaleString('es-MX', options); 
-                                                    let horaAsignacion = y.toLocaleString('es-MX', optionsTime); 
+                                                    let horaAsignacion = y.toLocaleString('es-MX', optionsTime).replace(/a.m.|p.m./,''); 
                                                     let info = fechaAsignacion.split('/').reverse().join('-');
                                                     // console.log(fechaAsignacion);
                                                     // setValueFecha(newValue);

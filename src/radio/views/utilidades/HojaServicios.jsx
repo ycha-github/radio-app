@@ -16,6 +16,7 @@ import { useCambiarStore } from "../../../hooks/useCambiarStore";
 
 
 let anioActual = new Date().getFullYear();
+//  let anioActual = 2025
 let hoy = new Date();
 let fecha = hoy.getFullYear()+"-" + (hoy.getMonth() + 1) +"-" + hoy.getDate();
 
@@ -228,14 +229,14 @@ useEffect(() => {
 
 const columns = [
   
-  { field: 'idhojaservicios', headerClassName: "super", headerName: 'ID',width: 40 },
+  { field: 'idhojaservicios', headerClassName: "super", headerName: 'ID',width: 100 },
   // { field: 'folio', valueGetter: (params) => { return `${params.row.folio+'/'}${new Date(params.row.createdAt).getFullYear()}`}, headerClassName: "super", headerName: 'Folio',width: 100 },
-  { field: 'folio', headerClassName: "super", headerName: 'Folio',width: 100 },
-  { field: 'fecha_servicio',headerClassName: "super",headerName: 'Fecha creación', flex: 1, minWidth: 60 },
-  { field: 'nombre_completo', headerClassName: "super", headerName: 'Usuario Asignado', flex: 1, minWidth: 230 },
-  { field: 'serie',headerClassName: "super", headerName: 'Serie Radio', flex: 1, minWidth: 220 },
+  { field: 'folio', headerClassName: "super", headerName: 'Folio',width: 120 },
+  { field: 'fecha_servicio',headerClassName: "super",headerName: 'Fecha creación', flex: 1, minWidth: 120 },
+  { field: 'nombre_completo', headerClassName: "super", headerName: 'Usuario Asignado', flex: 1, minWidth: 240 },
+  { field: 'serie',headerClassName: "super", headerName: 'Serie Radio', flex: 1, minWidth: 240 },
   { field: 'nombreSupervisorTec',headerClassName: "super",headerName: 'Supervisor Técnico', flex: 1, minWidth: 230 },
-  { field: 'usuario_servicio',headerClassName: "super",headerName: 'Usuario Servicio',  width: 230 },
+  { field: 'usuario_servicio',headerClassName: "super",headerName: 'Usuario Servicio',  width: 240 },
   { field: 'fecha_entrega', type: "dateTime",valueGetter:({value})=>value && new Date(value), headerClassName: "super",headerName: 'Fecha Entrega',flex: 1, minWidth: 110 },
   // { field: 'usuario_entrega',headerClassName: "super",headerName: 'Usuario Entrega', width: 230 },
   // { field: 'nombreTecEntrega',headerClassName: "super",headerName: 'Técnico Entrega', flex: 1, minWidth: 230 },
@@ -381,6 +382,7 @@ promesa.then(()=>{
       disableColumnSelector
       disableDensitySelector
         onCellClick={onSelect}
+        getRowHeight={() => 'auto'}
         getRowId={(row) => row.idhojaservicios}
         autoHeight={true}
         rows={events}

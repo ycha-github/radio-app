@@ -168,13 +168,20 @@ useEffect(() => {
                                 <TextField
                                     id="inventario_interno-input"
                                     sx={{ border: 'none', mb: 1, width: 300 }}
-                                    type="number"
+                                    type="text"
                                     name="inventario_interno"
                                     color='warning'
                                     label="inventario_interno"
                                     variant="outlined"
                                     value={formValues.inventario_interno}
-                                    onChange={handleInputChange} />
+                                    //onChange={handleInputChange} 
+                                    onChange={( {target}) => {
+                                        setFormValues({
+                                            ...formValues,
+                                            [target.name]:target.value = target.value.toUpperCase(),
+                                        }); 
+                                    }}
+                                    />
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField

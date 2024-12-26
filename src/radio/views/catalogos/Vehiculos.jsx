@@ -79,16 +79,16 @@ export const Vehiculos=()=> {
   const columns = [
 
     { field: 'idvehiculo' ,headerClassName: "super", headerName: 'ID', flex: 1, minWidth: 90 },
-    { field: 'nombreMarcas', headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 90 },
-    { field: 'nombreModelos', headerClassName: "super", headerName: 'Línea', flex: 1, minWidth: 90 },
+    { field: 'nombreMarcas', headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 110 },
+    { field: 'nombreModelos', headerClassName: "super", headerName: 'Línea', flex: 1, minWidth: 110 },
     { field: 'anio', headerClassName: "super", headerName: 'Año', flex: 1, minWidth: 90 },
-    { field: 'tipo', headerClassName: "super", headerName: 'Tipo', flex: 1, minWidth: 90 },
-    { field: 'color', headerClassName: "super", headerName: 'Color', flex: 1, minWidth: 90 },
+    { field: 'tipo', headerClassName: "super", headerName: 'Tipo', flex: 1, minWidth: 110 },
+    { field: 'color', headerClassName: "super", headerName: 'Color', flex: 1, minWidth: 100 },
     { field: 'placa', headerClassName: "super", headerName: 'Placa', flex: 1, minWidth: 90 },
     { field: 'unidad', headerClassName: "super", headerName: 'Unidad', flex: 1, minWidth: 90 },
     // { field: 'nombreZonasRegiones', headerClassName: "super", headerName: 'Zona/Región', flex: 1, minWidth: 90 },
-    { field: 'createdAt', headerClassName: "super", headerName: 'Fechadecreacion', flex: 1, minWidth: 90 },
-    { field: 'updatedAt', headerClassName: "super", headerName: 'Fechadeactualizacion', flex: 1, minWidth: 90 },
+    { field: 'createdAt', headerClassName: "super", headerName: 'Fecha Creacion', flex: 1, minWidth: 90 },
+    { field: 'updatedAt', headerClassName: "super", headerName: 'Fecha Actualizacion', flex: 1, minWidth: 170 },
     { field: 'estatus', type: 'boolean', headerClassName: "super", headerName: 'Estatus', flex: 1, minWidth: 90 },
     {
       field: 'actions',

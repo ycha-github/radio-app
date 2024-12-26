@@ -85,17 +85,17 @@ export const Radios= () => {
 
 const columns = [
 
-  { field: 'idradios', headerClassName: "super", headerName: 'ID', width: 90 },
+  { field: 'idradios', headerClassName: "super", headerName: 'ID', width: 100 },
   { field: 'tipo',type: 'string',headerClassName: "super", headerName: 'Tipo Radio', flex: 1, minWidth: 120 },
   { field: 'serie',headerClassName: "super", headerName: 'Serie',width: 220 },
   { field: 'logico',headerClassName: "super", headerName: 'Logico', flex: 1, minWidth: 130 },
-  { field: 'inventario_interno',headerClassName: "super", headerName: 'Invent. Interno', flex: 1, minWidth: 150 },
-  { field: 'inventario_segpub',headerClassName: "super", headerName: 'Invent. Seg.Pub.', flex: 1, minWidth: 150 },
+  { field: 'inventario_interno',headerClassName: "super", headerName: 'Invent. Interno', flex: 1, minWidth: 230 },
+  { field: 'inventario_segpub',headerClassName: "super", headerName: 'Invent. Seg.Pub.', flex: 1, minWidth: 230 },
   { field: 'nombreCorporacion',headerClassName: "super", headerName: 'Propietario', width: 340 },
   { field: 'nombreRecursoCompra',headerClassName: "super", headerName: 'Recurso Compra',width: 230 },
   { field: 'contrato_compra',headerClassName: "super", headerName: 'Contrato', flex: 1, minWidth: 140 },
-  { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 100 },
-  { field: 'nombreModelos',headerClassName: "super", headerName: 'Modelo', flex: 1, minWidth: 100 },
+  { field: 'nombreMarcas',headerClassName: "super", headerName: 'Marca', flex: 1, minWidth: 170 },
+  { field: 'nombreModelos',headerClassName: "super", headerName: 'Modelo', flex: 1, minWidth: 150 },
   // { field: 'fecha_actualizacion',headerClassName: "super", headerName: 'Fecha Actuali.', flex: 1, minWidth: 140 },
   { field: 'fecha_asignacion',headerClassName: "super", headerName: 'Fecha Asign.', flex: 1, minWidth: 140 },
   { field: 'observaciones',headerClassName: "super", headerName: 'Observaciones', flex: 1, minWidth: 140 },
@@ -154,6 +154,7 @@ const columns = [
             <ThemeProvider theme={theme}>
       <StripedDataGrid
         onCellClick={onSelect}
+        getRowHeight={() => 'auto'}
         getRowId={(row) => row.idradios}
         getRowClassName={(params) =>
           params.indexRelativeToCurrentPage % 2 !== 0 ? 'even' : 'odd'

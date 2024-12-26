@@ -75,7 +75,7 @@ export const DocumentoTarjeta = ({datos, formato}) => {
             
             <View style={styles.section} >
                
-                <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > CENTRO DE MANDO Y COMUNICACIONES C4 </Text> 
+                <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > CENTRO DE COMUNICACIONES, CÓMPUTO, CONTROL Y COMANDO (C-4) </Text> 
                 <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > DIRECCIÓN TÉCNICA </Text> 
                 <Text style={{ ...styles.title, margin: '0 0 5 0' }} > DEPARTAMENTO DE RADIOCOMUNICACIONES </Text> 
                 <Text  style={{ ...styles.title, textAlign: 'right', margin: '0 0 0 0', fontFamily: 'Times-Bold' }} > Folio: {datos.folio} </Text> 

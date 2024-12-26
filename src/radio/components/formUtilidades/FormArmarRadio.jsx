@@ -94,7 +94,7 @@ export const FormArmarRadio = ({usuario, radio, datoClick}, customStyles) => {
     const onSubmit = async (event) => {
         event.preventDefault();
         //setFormSubmitted(true);
-        // console.log(formValues);
+        console.log(formValues);
         //if (formValues.estatus.length <= 0) return;
         await startSavingEventarmar(formValues);
         await cambiarSue(formValues.radios_idradios);
@@ -159,6 +159,8 @@ export const FormArmarRadio = ({usuario, radio, datoClick}, customStyles) => {
                         {isActualizar?
                         (<Grid item xs={6}>
                             <Autocomplete
+                            clearOnBlur
+                                disableCloseOnSelect
                                     name="radios_idradios"
                                     disabled={isVer}
                                     value={formValues}
@@ -173,13 +175,13 @@ export const FormArmarRadio = ({usuario, radio, datoClick}, customStyles) => {
                                     inputValue={inputValue1}
                                     onInputChange={(event, newInputValue1) => {
                                         setInputValue1(newInputValue1);
-                                        {newInputValue1 === "" 
-                                        setFormValues({
-                                            ...formValues,
-                                            ['radios_idradios']: null,
-                                            ['serie']:newInputValue1
-                                        });
-                                    }
+                                    //     {newInputValue1 === "" 
+                                    //     setFormValues({
+                                    //         ...formValues,
+                                    //         ['radios_idradios']: null,
+                                    //         ['serie']:newInputValue1
+                                    //     });
+                                    // }
                                     }}
                                     options={tableSue}
                                     getOptionLabel={(tableSue) => tableSue.serie || ""}
@@ -239,13 +241,13 @@ export const FormArmarRadio = ({usuario, radio, datoClick}, customStyles) => {
                                     inputValue={inputValue}
                                     onInputChange={(event, newInputValue) => {
                                         setInputValue(newInputValue);
-                                        {newInputValue === "" 
-                                        setFormValues({
-                                            ...formValues,
-                                            ['fk_accesorio_bateria']: null,
-                                            ['serie_bateria']:newInputValue
-                                        });
-                                    }
+                                    //     {newInputValue === "" 
+                                    //     setFormValues({
+                                    //         ...formValues,
+                                    //         ['fk_accesorio_bateria']: null,
+                                    //         ['serie_bateria']:newInputValue
+                                    //     });
+                                    // }
                                     }}
                                     options={accesoriosFiltradoBateria}
                                     getOptionLabel={(accesoriosFiltradoBateria) => accesoriosFiltradoBateria.serie_bateria || ""}

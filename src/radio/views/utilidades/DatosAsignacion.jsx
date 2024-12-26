@@ -26,7 +26,7 @@ export const DatosAsignacion = ({styles, datos}) => {
     { cofre === true ? cofre ='- Cofre ' : cofre ="" }   
     { portac === true ? portac ='- Porta carátula ' : portac ="" }   
     { cuelloc === true ? cuelloc ='- Cuello cisne' : cuelloc ="" }
-
+    console.log(datos.marcaRadio)
 
   return (
     <>
@@ -105,9 +105,19 @@ export const DatosAsignacion = ({styles, datos}) => {
         <View style={styles.tableRow}> 
           <View style={styles.tableCol}>
             <View style={styles.tableCell}>
+              
+              {
+               
+                datos.marcaRadio === "MOTOROLA"?
                 <Text style={{...styles.text, textAlign: 'left'}}>  
-                    RFSI: 
+                    ID:                
                 </Text>
+                :
+                <Text style={{...styles.text, textAlign: 'left'}}>  
+                    RFSI:                
+                </Text>
+
+              }
             </View>
           </View>
           <View style={styles.tableCol}>

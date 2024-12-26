@@ -196,7 +196,7 @@ let styles1 = StyleSheet.create({
 
 
 export const ImprimirHServicio = ({datos, formato}) => {
-//  console.log( datos)
+ console.log( radioApi)
 { datos.fk_foto1 === null && datos.fk_foto2 === null ? 
     styles = styles2 :
     styles = styles1
@@ -209,7 +209,8 @@ export const ImprimirHServicio = ({datos, formato}) => {
             
             <View style={styles.section} >
                 <Image style={styles.image} src={`http://172.16.21.222:8000/api/v0/documentos/users/${formato[0].fk_logo_ssypc}`} />
-                <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > CENTRO DE MANDO Y COMUNICACIONES C4 </Text> 
+                {/* <Image style={styles.image} src={`${radioApi}/documentos/users/${formato[0].fk_logo_ssypc}`} /> */}
+                <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > CENTRO DE COMUNICACIONES, CÓMPUTO, CONTROL Y COMANDO (C-4) </Text> 
                 <Text style={{ ...styles.title, fontFamily: 'Times-Bold' }} > DIRECCIÓN TÉCNICA </Text> 
                 <Text style={{ ...styles.title, margin: '0 0 5 0' }} > DEPARTAMENTO DE RADIOCOMUNICACIONES </Text> 
 
